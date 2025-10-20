@@ -5,7 +5,7 @@ Purpose
 - Keep the repository as the source of record for submissions and versioned exports.
 
 Master Doc (paste the live link here)
-- URL: https://docs.google.com/document/d/REPLACE_WITH_DOC_ID/edit
+- URL: https://docs.google.com/document/d/1UNgMY-j79bSRKWwWHNSnh-pQHx01gnRJWoODecDzF1g/edit
 - Quick open: double-click `Proposal-Shared-Doc.webloc` in this folder on macOS.
 
 Create and share (owner or PM)
