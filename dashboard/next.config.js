@@ -5,7 +5,6 @@ const nextConfig = {
   },
   // Ensure we can use external modules without issues
   transpilePackages: ['recharts', 'lucide-react'],
-  output: 'export' // Next 13+ static export
 };
 
 module.exports = nextConfig;

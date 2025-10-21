@@ -231,7 +231,7 @@ export function createMCPServer() {
           if (!args?.id) {
             throw new Error("Risk ID is required");
           }
-          const result = await getRiskById(args.id);
+          const result = await getRiskById(String(args.id));
           return {
             content: [
               {
@@ -318,7 +318,7 @@ export function createMCPServer() {
           if (!args?.region) {
             throw new Error("Region is required");
           }
-          const result = await getWeatherForRegion(args.region);
+          const result = await getWeatherForRegion(String(args.region));
           return {
             content: [
               {
