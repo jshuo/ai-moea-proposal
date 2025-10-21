@@ -1,4 +1,4 @@
-# 🧠 AI Project Funding Proposal Summary (18-Month Pilot Plan)
+# 🧠 AI Project Funding Proposal Meeting Summary (18-Month Pilot Plan)
 
 ## 1. Proposal Overview
 - A draft for a government-funded AI project was developed using AI tools to accelerate preparation amid limited internal resources.
