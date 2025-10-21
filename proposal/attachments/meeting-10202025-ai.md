@@ -20,11 +20,12 @@
 ### Phase 1 (4.5 months): Proof-of-Concept & Foundations
 - Implement the first anomaly-detection prototype using historical battery/sensor data.
 - Develop AI-driven dashboards for management visualization and anomaly insights.
-- Validate early metrics and collect data for reinforcement learning training.
+- Deploy a natural-language query interface to allow human-in-the-loop analytics.
+
 
 ### Phase 2 (7.5 months): Reinforcement Learning & Language Integration
+- Validate early metrics and collect data for reinforcement learning training.
 - Integrate Reinforcement Learning (RL) for adaptive thresholding and decision optimization.
-- Deploy a natural-language query interface to allow human-in-the-loop analytics.
 - Demonstrate incremental improvements in prediction accuracy and reliability performance.
 
 ### Phase 3 (6 months): Multi-Agent Orchestration & Export-Ready Pilot
