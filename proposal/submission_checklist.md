@@ -341,6 +341,12 @@ ITracXing Co., Ltd.
 - [ ] 大學合作確認信
 - [ ] 公司組織圖
 - [ ] 研發人員名冊
+- [ ] 新增成員履歷（中文PDF，置於 `proposal/attachments/CVs/`）：
+  - [ ] Sean
+  - [ ] Gary
+  - [ ] Neil（台中）
+  - [ ] 鄺宏（台中，Kuang-Hung）
+  - [ ] 謝子元（台中，Tze-Yuenn）
 
 ### 可延後補充
 - [ ] 完整合作契約書 → 審查後補

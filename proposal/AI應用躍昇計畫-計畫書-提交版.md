@@ -1,4 +1,3 @@
-
 # 經濟部科技研究發展專案
 ## A+企業創新研發淬鍊計畫
 ## AI應用躍昇計畫計畫書（提交版）
@@ -139,7 +138,7 @@ Phase I: AI原型與資料管道 (4.5個月, 27%) — 起始 2026/01/01
 - A1 自然語言查詢 (8%) – ItracXing 準旺科技
 - A2 電池異常偵測 (10%) – ItracXing 準旺科技
 - A3 Kalman降噪 (5%) – ItracXing 準旺科技
-- A4 MCP資料庫存取/查詢整合 (4%) – ItracXing 準旺科技 〈由原Phase III提前〉
+- A4 MCP資料庫存取/查詢整合 (4%) – ItracXing 準旺科技 
 
 Phase II: RL整合 (7.5個月, 47%)
 - B1 DQN/SAC警示優化 (15%) – ItracXing 準旺科技 + ITRI(驗證)
@@ -254,15 +253,54 @@ gantt
 # 參、研發團隊說明
 
 ## 一、計畫主持人資歷
-- 姓名：Jeff Shuo｜職稱：CIO｜性別：□男 □女 □其他（擇一）｜產業領域：資訊服務  
-- 重要成就：供應鏈AI/IoT整合專案多項；國際合作與產品化經驗。  
-- **學歷/經歷/參與計畫**：依模板表格填入（附履歷）。
+- 姓名：Jeff Shuo｜職稱：CIO｜性別：男｜產業領域：資訊服務  
+- 重要成就：20年以上AI/IoT/嵌入式系統領域經驗，主導多智能體協作、AI安全、供應鏈區塊鏈專案。美國/台灣跨國團隊管理，具備AI安全、合規、可解釋性系統設計與產品化實績。  
+- **學歷/經歷/參與計畫**：  
+  - 學歷：  
+    - M.S. Electrical Engineering and Computer Science, University of Illinois at Chicago (1992)  
+    - MBA, San Diego State University (2005)  
+  - 經歷：  
+    - AI Agent Architect   
+      - 主導, 設計，整合 LLM, Reinforcement Learning, LangChain/LangGraph、RAG、MCP、ReAct等多智能體協作技術  
+      - 供應鏈安全  
+    - Qualcomm Inc. — Director of Engineering（2004–2018）  
+      - 領導100+ IoT/AR/VR/智慧裝置專案，50+工程師團隊管理  
+      - Python/Keras/Node.js自動化資源分配系統  
+    - HTC Corp. — Sr. Technical Manager（2003–2004）  
+      - 領導協定工程團隊，開發首款Windows Mobile Phone  
+    - Qualcomm Inc. — Sr. Engineer（1997–2003）  
+      - 嵌入式驅動、CDMA/GlobalStar手機、RF/LCD/Bluetooth/ATE軟體  
+    - Motorola Inc. — Sr. Engineer（1994–1997）  
+      - 海外CDMA基地台/手機工廠支援，Windows OOD/OOP校正軟體  
+    - IBM — Software Engineer（1993–1994）  
+      - AS/400 I/O子系統C++驅動開發  
+  - 參與計畫/專案：  
+    - Phoenix Multi-Agent SOC（2024–2025）：多智能體協作、AI安全、合規審查  
+    - SecuX AI SOC、供應鏈區塊鏈標籤、HSM安全簽章  
+    - Qualcomm/HTC/Google智慧裝置、嵌入式系統  
+  - 技術專長：  
+    - 多智能體協作（LangChain, LangGraph, AutoGPT, ReAct, MCP）  
+    - AI安全、合規、可解釋性系統設計  
+    - 嵌入式RTOS、ARM、Linux/Yocto、IoT（BLE, NB-IoT）  
+    - 區塊鏈/Web3（ERC-1056, ERC-3643, DID, RWA Tokenization）  
+    - 安全硬體（HSM, FIDO2, PKI）  
+  - 投入月數：18個月（100%）  
+  - 附：完整履歷PDF已置於 `proposal/attachments/CVs/Jeff_Shuo_Resume.pdf`
 
 ## 二、參與計畫人力統計（單位：人）
 > 依模板表格填入：公司別、學歷別、性別、平均年資、待聘人數（待聘≤總人數30%）
 
 ## 三、參與計畫人員簡歷表
 > 依模板：主持人、關鍵研發、一般研發、待聘人員（投入月數需對齊預定進度與人月總量120）。
+
+### 團隊結構（新增成員名單）
+- Sean｜角色：AI工程師｜地點：台北｜專長：自然語言處理（NLP）、LLM應用、語意查詢系統、Semantic query systems、Large Language Model (LLM) applications、Natural Language Processing (NLP)｜分工：A1 自然語言查詢（8%）｜備註：請補履歷，並置於 `proposal/attachments/CVs/`
+- Gary｜角色：資料科學家｜地點：台北｜專長：異常偵測、時序資料分析、電池健康預測、Anomaly detection、Time series data analysis、Battery health prediction｜分工：A2 電池異常偵測（10%）｜備註：請補履歷，並置於 `proposal/attachments/CVs/`
+- Neil（台中）｜角色：演算法工程師｜地點：台中｜專長：訊號處理、Kalman濾波、感測器資料降噪、Signal processing、Kalman filtering、Sensor data denoising｜分工：A3 Kalman降噪（5%）｜備註：請補履歷，並置於 `proposal/attachments/CVs/`
+- 鄺宏（台中，Kuang-Hung）｜角色：全端工程師｜地點：台中｜專長：資料庫設計、API整合、雲端部署、Database design、API integration、Cloud deployment｜分工：A4 MCP資料庫存取/查詢整合（4%）｜備註：請補履歷，並置於 `proposal/attachments/CVs/`
+- 謝子元（台中，Tze-Yuenn）｜角色：軟體工程師｜地點：台中｜專長：後端開發、資料管道建置、系統整合、Backend development、Data pipeline construction、System integration｜分工：A1–A4 支援與維運｜備註：請補履歷，並置於 `proposal/attachments/CVs/`
+
+> 後續將於「參與計畫人員簡歷表」區塊補齊上述人員之：學歷、專長、投入月數與分工（Phase 對應 A1–C5），並於附件夾 `proposal/attachments/CVs/` 提供中文履歷PDF。
 
 ---
 
