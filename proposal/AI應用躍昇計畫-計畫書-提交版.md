@@ -332,7 +332,6 @@ gantt
 - 專長：自然語言處理（NLP）、語意查詢、LLM應用、Semantic Query Systems  
 - 分工：A1 自然語言查詢系統（8%）  
 - 投入月數：12個月  
-- 備註：請補履歷，並置於 proposal/attachments/CVs/
 
 ### 🔹關鍵研發人員 #2
 
