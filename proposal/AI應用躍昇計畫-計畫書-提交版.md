@@ -203,11 +203,15 @@
 
 ### （2）計畫工作項目實施方式（含百分比/單位）
 ```
+
 Phase I: AI原型與資料管道 (4.5個月, 27%) — 起始 2026/01/01
 - A1 自然語言查詢 (8%) – ItracXing 準旺科技
 - A2 電池異常偵測 (10%) – ItracXing 準旺科技
 - A3 Kalman降噪 (5%) – ItracXing 準旺科技
-- A4 MCP資料庫存取/查詢整合 (4%) – ItracXing 準旺科技 
+- A4 MCP資料庫存取/查詢整合 (4%) – ItracXing 準旺科技
+
+![AI自然語言查詢系統原型（Phase I成果示意）](attachments/nlp-laas-1.png)
+
 
 Phase II: RL整合 (7.5個月, 47%)
 - B1 DQN/SAC警示優化 (15%) – ItracXing 準旺科技 + ITRI(驗證)
