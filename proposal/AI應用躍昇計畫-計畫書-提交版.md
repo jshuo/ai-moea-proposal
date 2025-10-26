@@ -212,20 +212,20 @@ Phase I: AI原型與資料管道 (4.5個月, 27%) — 起始 2026/01/01
 
 <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 8px;">
   <figure>
+    <figcaption style="font-size:1.2em; font-weight:bold; margin-bottom:8px;">▲ 圖1：系統首頁介面，支援英文查詢 系統即時回傳異常事件摘要，並顯示關鍵感測器資料與警示原因。</figcaption>
     <img src="./attachments/nlp-laas-1.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
-    <figcaption>▲ 圖1：系統首頁介面，支援英文查詢 系統即時回傳異常事件摘要，並顯示關鍵感測器資料與警示原因。</figcaption>
   </figure>
   <figure>
+    <figcaption style="font-size:1.2em; font-weight:bold; margin-bottom:8px;">▲ 圖2：系統首頁介面，支援繁體中文查詢，使用者可直接輸入物流、感測器或事件相關問題。</figcaption>
     <img src="./attachments/nlp-laas-2.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
-    <figcaption>▲ 圖2：系統首頁介面，支援繁體中文查詢，使用者可直接輸入物流、感測器或事件相關問題。</figcaption>
   </figure>
   <figure>
+    <figcaption style="font-size:1.2em; font-weight:bold; margin-bottom:8px;">▲ 圖3：查詢「本月誤報率」可獲得統計分析結果，系統自動解釋指標來源並提供改善建議。</figcaption>
     <img src="./attachments/nlp-laas-3.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
-    <figcaption>▲ 圖3：查詢「本月誤報率」可獲得統計分析結果，系統自動解釋指標來源並提供改善建議。</figcaption>
   </figure>
   <figure>
+    <figcaption style="font-size:1.2em; font-weight:bold; margin-bottom:8px;">▲ 圖4：支援多輪追問，使用者可針對查詢結果進行細部追問，系統自動串接資料庫即時回應。</figcaption>
     <img src="./attachments/nlp-laas-4.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
-    <figcaption>▲ 圖4：支援多輪追問，使用者可針對查詢結果進行細部追問，系統自動串接資料庫即時回應。</figcaption>
   </figure>
 </div>
 
