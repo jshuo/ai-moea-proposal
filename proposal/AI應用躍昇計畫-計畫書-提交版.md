@@ -202,7 +202,7 @@
 - **導入方式**：API整合（Arviem）、雲端部署、邊緣韌體OTA、分階訓練上線。
 
 ### （2）計畫工作項目實施方式（含百分比/單位）
-```
+
 
 Phase I: AI原型與資料管道 (4.5個月, 27%) — 起始 2026/01/01
 - A1 自然語言查詢 (8%) – ItracXing 準旺科技
@@ -210,8 +210,24 @@ Phase I: AI原型與資料管道 (4.5個月, 27%) — 起始 2026/01/01
 - A3 Kalman降噪 (5%) – ItracXing 準旺科技
 - A4 MCP資料庫存取/查詢整合 (4%) – ItracXing 準旺科技
 
-![AI自然語言查詢系統原型（Phase I成果示意）](attachments/nlp-laas-1.png)
-
+<div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 8px;">
+  <figure>
+    <img src="./attachments/nlp-laas-1.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
+    <figcaption>▲ 圖1：系統首頁介面，支援英文查詢 系統即時回傳異常事件摘要，並顯示關鍵感測器資料與警示原因。</figcaption>
+  </figure>
+  <figure>
+    <img src="./attachments/nlp-laas-2.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
+    <figcaption>▲ 圖2：系統首頁介面，支援繁體中文查詢，使用者可直接輸入物流、感測器或事件相關問題。</figcaption>
+  </figure>
+  <figure>
+    <img src="./attachments/nlp-laas-3.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
+    <figcaption>▲ 圖3：查詢「本月誤報率」可獲得統計分析結果，系統自動解釋指標來源並提供改善建議。</figcaption>
+  </figure>
+  <figure>
+    <img src="./attachments/nlp-laas-4.png" alt="AI自然語言查詢系統原型（Phase I成果示意）" style="width:100%;"/>
+    <figcaption>▲ 圖4：支援多輪追問，使用者可針對查詢結果進行細部追問，系統自動串接資料庫即時回應。</figcaption>
+  </figure>
+</div>
 
 Phase II: RL整合 (7.5個月, 47%)
 - B1 DQN/SAC警示優化 (15%) – ItracXing 準旺科技 + ITRI(驗證)
@@ -226,7 +242,7 @@ Phase III: 多智能體部署 (6個月, 26%)
 - C3 生產部署 (6%) – ItracXing 準旺科技
 - C4 API與文件 (3%) – ItracXing 準旺科技
 - C5 驗收與交付 (2%) – ItracXing 準旺科技 + ITRI
-```
+
 
 ### 國際輸出規劃
 與 Arviem 合作切入歐洲市場，2026 目標進入德/荷，建立台歐聯合解決方案品牌。
