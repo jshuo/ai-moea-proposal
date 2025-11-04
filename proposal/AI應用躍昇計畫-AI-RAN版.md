@@ -109,7 +109,7 @@ AI-RAN、O-RAN、Edge Intelligence、5G NTN、Reinforcement Learning、Multi-Age
 | <span style="background-color:yellow">高資料成本與延遲</span> | <span style="background-color:yellow">Open RAN 邊緣推論先行過濾與壓縮事件，再進行上行傳輸</span> |
 | 安全竄改風險（BLE 鎖、管理介面） | 以 RAN 切片隔離物流裝置並搭配私有 5G 核心，強化端到端防護 |
 | 被動式監控 | 整合 RL 之異常偵測於 RAN 邊緣，提供預測性告警 |
-<span style="background-color:yellow">此設計將 Arviem 解決方案由「雲端 AI」重塑為「RAN 邊緣 AI（AI-at-RAN-edge）」。</span>
+<mark>此設計將 Arviem 解決方案由「雲端 AI」重塑為「RAN 邊緣 AI（AI-at-RAN-edge）」。</mark>
 
 ---
 
