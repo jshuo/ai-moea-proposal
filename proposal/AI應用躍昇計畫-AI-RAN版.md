@@ -95,7 +95,7 @@ AI-RAN、O-RAN、Edge Intelligence、5G NTN、Reinforcement Learning、Multi-Age
 |---|---|---|
 | 異常偵測 | 規則引擎準確率低 | AI-RAN xApp 模組於邊緣即時推論，準確率≥90% |
 | 警示優化 | 閾值固定、誤報高 | RL Edge Agent 自動學習優先級，誤報率≤15% |
-| <span style="background-color:yellow">通訊連線</span> | <span style="background-color:yellow">依賴基地台或雲端</span> | <span style="background-color:yellow">O-RAN + NTN衛星回傳，離岸覆蓋率≥99%</span> |
+| <mark>通訊連線</mark> | <mark>依賴基地台或雲端</mark> | <mark>O-RAN + NTN衛星回傳，離岸覆蓋率≥99%</mark> |
 | 資料處理 | 雲端集中運算 | 邊緣推論+聯邦學習，本地隱私保護 |
 | 安全防護 | 靜態密鑰與帳號漏洞 | AI-RAN切片安全策略，通訊全程加密與動態驗證 |
 
@@ -105,10 +105,12 @@ AI-RAN、O-RAN、Edge Intelligence、5G NTN、Reinforcement Learning、Multi-Age
 
 | 問題 | O-RAN / AI-RAN 貢獻 |
 |---|---|
-| <span style="background-color:yellow">海上連線落差（Ocean Connectivity Gaps）</span> | <span style="background-color:yellow">AI-RAN 節點結合 NTN 衛星回傳，維持不中斷連線</span> |
-| <span style="background-color:yellow">高資料成本與延遲</span> | <span style="background-color:yellow">Open RAN 邊緣推論先行過濾與壓縮事件，再進行上行傳輸</span> |
+| <mark>海上連線落差（Ocean Connectivity Gaps）</mark> | <mark>AI-RAN 節點結合 NTN 衛星回傳，維持不中斷連線</mark> |
+| <mark>高資料成本與延遲</mark> | <mark>Open RAN 邊緣推論先行過濾與壓縮事件，再進行上行傳輸</mark> |
 | 安全竄改風險（BLE 鎖、管理介面） | 以 RAN 切片隔離物流裝置並搭配私有 5G 核心，強化端到端防護 |
 | 被動式監控 | 整合 RL 之異常偵測於 RAN 邊緣，提供預測性告警 |
+
+
 <mark>此設計將 Arviem 解決方案由「雲端 AI」重塑為「RAN 邊緣 AI（AI-at-RAN-edge）」。</mark>
 
 ---
