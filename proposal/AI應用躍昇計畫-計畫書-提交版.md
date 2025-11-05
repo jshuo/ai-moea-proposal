@@ -667,6 +667,55 @@ gantt
 
 本計畫結案後三年內，將透過與工研院（ITRI）合作之 AI-RAN/O-RAN 延伸投資，建立可商轉之 AI 邊緣運算網路平台，形成智慧物流監控與 5G 低延遲運算整合之新興應用場域，作為後續國際輸出與標準化推動的基礎。該合作亦將作為 AI-RAN 國產化生態系的示範案例，強化產業鏈結與國際合作潛力。
 
+````mermaid
+
+flowchart LR
+  %% High-level architecture
+  subgraph Edge["Edge (Ship, AI-RAN)"]
+    direction TB
+    Sensors["IoT Sensors"]:::sensor
+    EdgeApps["5G Edge Apps (TC605)"]:::edge
+    AIRAN["AI-RAN Functions"]:::edge
+    NTN["Satellite/NTN"]:::link
+    Sensors --> EdgeApps
+  end
+
+  subgraph Cloud["Cloud Services"]
+    direction TB
+    DL["Data Lake / Time-Series DB"]:::cloud
+    Analytics["Analytics & Scoring"]:::cloud
+    Policy["RL/Policy Engine"]:::cloud
+    API["Open APIs / Webhooks"]:::cloud
+    DL --> Analytics --> Policy
+    DL --- API
+  end
+
+  subgraph Users["Users"]
+    direction TB
+    Ops["Operations Dashboard"]:::ui
+    Alerts["Alerts"]:::ui
+    Client["Client Portal"]:::ui
+  end
+
+  EdgeApps -->|Telemetry| NTN
+  AIRAN -->|Internet| NTN
+  EdgeApps --- AIRAN
+  NTN --> DL
+  DL --> Ops
+  Analytics --> Alerts
+  API --> Client
+  Policy -. control .- NTN
+
+  classDef sensor fill:#fff7e6,stroke:#b80,stroke-width:1px;
+  classDef edge fill:#eefcff,stroke:#38a,stroke-width:1px;
+  classDef link fill:#eef7ff,stroke:#06c,stroke-width:1px,stroke-dasharray: 4 2;
+  classDef cloud fill:#f1faff,stroke:#07a,stroke-width:1px;
+  classDef ui fill:#eefaf1,stroke:#2a7,stroke-width:1px;
+
+
+
+````
+
 ## 六、風險評估與因應對策
 
 ### 詳細風險矩陣與應對策略

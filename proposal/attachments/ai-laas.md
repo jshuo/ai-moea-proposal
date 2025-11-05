@@ -5,14 +5,11 @@ flowchart LR
   subgraph Edge["Edge (Ship, AI-RAN)"]
     direction TB
     Sensors["IoT Sensors"]:::sensor
-    EdgeApps["Edge Apps"]:::edge
-    Sensors --> EdgeApps
-  end
-
-  subgraph Connectivity["Connectivity"]
-    direction TB
+    EdgeApps["5G Edge Apps (TC605)"]:::edge
+    AIRAN["AI-RAN Functions"]:::edge
     NTN["Satellite/NTN"]:::link
-    Port5G["Port 5G/LTE<br/>Wi-Fi (fallback)"]:::link
+    Sensors --> EdgeApps
+    EdgeApps ~~~ HandheldNote
   end
 
   subgraph Cloud["Cloud Services"]
@@ -33,14 +30,13 @@ flowchart LR
   end
 
   EdgeApps -->|Telemetry| NTN
-  EdgeApps -->|Near port| Port5G
+  AIRAN -->|Internet| NTN
+  EdgeApps --- AIRAN
   NTN --> DL
-  Port5G --> DL
   DL --> Ops
   Analytics --> Alerts
   API --> Client
-  Policy -. control .- EdgeApps
-  EdgeApps -. edge insights .-> Analytics
+  Policy -. control .- NTN
 
   classDef sensor fill:#fff7e6,stroke:#b80,stroke-width:1px;
   classDef edge fill:#eefcff,stroke:#38a,stroke-width:1px;
