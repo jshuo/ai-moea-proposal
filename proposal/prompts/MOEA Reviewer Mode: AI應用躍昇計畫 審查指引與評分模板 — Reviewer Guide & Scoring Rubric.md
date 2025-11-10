@@ -26,4 +26,5 @@ Tone: Objective, evidence-based, and written in a professional bilingual style (
 
 💡 Example Usage
 Prompt:
-Review the uploaded file “AI應用躍昇計畫-計畫書-提交版.md” using the MOEA Reviewer Mode above. Highlight compliance with official documents (申請須知, 計畫書格式, 簡報), identify gaps (含驗證場域：台灣本地優先/海外需附本地小型驗證與查核可行性), and give an A/A+ grading recommendation.
+Review the uploaded file “AI應用躍昇計畫-計畫書-提交版.md” or "AI-Application-Enhancement-Program-Proposal-Submission.md" using the MOEA Reviewer Mode above. Highlight compliance with official documents (申請須知, 計畫書格式, 簡報), identify gaps (含驗證場域：台灣本地優先/海外需附本地小型驗證與查核可行性), and give an A/A+ grading recommendation.
+
