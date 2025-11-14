@@ -37,6 +37,7 @@ Terminology Preferences (glossary)
 - 里程碑 → milestone
 - 指標 → metric / KPI (use KPI where appropriate)
 - 甘特圖 → Gantt chart
+- 分項計畫  → work package 
 - 場域（實證場域）→ deployment site / field site (pick one and use consistently)
 
 Output Requirements
@@ -54,5 +55,7 @@ Quality Checks (before finalizing)
 Ambiguity Handling
 - If a term is ambiguous, pick the most professional and commonly accepted translation; optionally include the original term in parentheses on first mention.
 
-Deliverable
-- The complete English version of the proposal in Markdown, ready to share.
+Deliverable  
+- A fully translated and enhanced English version of `AI-Application-Enhancement-Program-Proposal-Submission.md` in Markdown, ready to submit as the final proposal document.  
+- All translations and revisions must be applied directly and consistently throughout `AI-Application-Enhancement-Program-Proposal-Submission.md` according to this prompt (roles, goals, scope, rules, style guide, and terminology preferences), so that the file is ready for immediate use without additional manual editing.  
+- Do not modify any other files.
