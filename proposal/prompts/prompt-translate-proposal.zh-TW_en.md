@@ -41,6 +41,7 @@ Terminology Preferences (glossary)
 - 場域（實證場域）→ deployment site / field site (pick one and use consistently)
 
 Output Requirements
+- Project Abstract should be less than 200 Words
 - Return the translated document in Markdown only (no extra commentary).
 - Preserve original line breaks and spacing where possible.
 - Ensure all headings, lists, and tables render correctly in Markdown.
@@ -56,6 +57,8 @@ Ambiguity Handling
 - If a term is ambiguous, pick the most professional and commonly accepted translation; optionally include the original term in parentheses on first mention.
 
 Deliverable  
-- A fully translated and enhanced English version of `AI-Application-Enhancement-Program-Proposal-Submission.md` in Markdown, ready to submit as the final proposal document.  
-- All translations and revisions must be applied directly and consistently throughout `AI-Application-Enhancement-Program-Proposal-Submission.md` according to this prompt (roles, goals, scope, rules, style guide, and terminology preferences), so that the file is ready for immediate use without additional manual editing.  
-- Do not modify any other files.
+
+A polished, publication-ready English translation of the file:
+`AI-Application-Enhancement-Program-Proposal-Submission.md`
+
+Apply changes **directly to the file** and do not output in chat.
