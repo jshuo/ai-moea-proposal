@@ -260,6 +260,7 @@
 【摘要】工作包以痛點為主軸，分A–E執行並設查核點；國際合作強化場域驗證與輸出，KPI 與里程碑對齊以確保投資效益。
 
 ### （1）場域、驗證項目與導入方式
+
 - **驗證項目**（依分項計畫呈現）：
    - 分項計畫A（M1–M11）：BHI建立、RUL預測、降噪SNR、電池壽命延長率。
    - 分項計畫B（M1–M5）：NLQ正確率/延遲、報告自動化、人工作業時數降低。
@@ -930,105 +931,17 @@ $$
 
 依模板：主持人、關鍵研發、一般研發、待聘人員（投入月數需對齊預定進度與人月總量120）。
 
-
-| 姓名               | 職稱/角色          | 學歷             | 專長/分工                                                    | 投入月數 | 性別 | 公司      |
-| -------------------- | -------------------- | ------------------ | -------------------------------------------------------------- | ---------- | ------ | ----------- |
-| Jeff Shuo          | CIO／主持人        | 碩士／碩士       | 多智能體協作、AI安全、嵌入式系統                             | 18       | 男   | ITracXing |
-| Sean               | AI工程師           | 碩士（資工）     | NLP、LLM、語意查詢、A1自然語言查詢                           | 12       | 男   | ITracXing |
-| 林昶睿 (Gary Lin)  | AI組長／資料科學家 | 碩士（資訊工程） | LangChain、多智能體系統、LLM應用、異常偵測、時序分析、A2分工 | 12       | 男   | ITracXing |
-| 蔡乙民 (Neil Tsai) | 機器學習工程師     | 碩士（資訊工程） | 學習排序/成本敏感學習、Kalman濾波、訊號處理、A3分工          | 12       | 男   | ITracXing |
-| 郭冠宏 (Lark Kuo)  | 全端／IoT工程師    | 碩士（資訊工程） | 資料庫設計、API整合、IoT系統整合、A4分工                     | 12       | 男   | ITracXing |
-| 朱只耘 (Cliff Chu) | 前端／軟體工程師   | 學士（資訊工程） | React、Next.js、TypeScript、Tailwind CSS、A1–A4支援         | 10       | 男   | ITracXing |
-| （待聘）           | AI工程師           | 碩士（AI／資工） | 學習排序、聯邦學習、分項計畫C／D分工                  | 12       | 女   | ITracXing |
-
----
-
-## 四、團隊成員說明（依分工與角色）
+| 姓名        | 職稱／角色             | 學歷                                       | 專長／分工                                                                                                                                                                                            | 投入月數 | 性別 | 公司        |
+| --------- | ----------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | -- | --------- |
+| Jeff Shuo | CIO／計畫主持人         | 碩士 (Univ. of Illinois at Chicago Electrical Engineering and Computer Science, MBA San Diego State Univ. )                                  | 多智能體協作、AI 安全、嵌入式與 IoT–Edge–Cloud 架構設計、國際場域整合；負責全案技術決策、架構審查、分項 A1–A4、C/D 之整合與對外協調                                                                                                                 | 18   | 男  | ITracXing |
+| 盧孝彰       | 韌體工程師／IoT Edge 開發 | 碩士（Musician’s Institute GIT Performance） | 精通 C/C++、Python、Java、Go，多執行緒與通訊協定、記憶體管理與效能優化；熟悉 ARM Cortex、RTOS、UART/SPI/I2C 驅動與硬體測試；具嵌入式 AI/ML 經驗，熟悉 RESTful API、MQTT、WebSocket，負責感測器端韌體、IoT 通訊與 A1–A4 Edge 資料上報                                | 12   | 男  | ITracXing |
+| 林昶睿       | 專案經理／AI 應用規劃      | 學士（國立勤益科大資工系）                            | 具 Python 與影像辨識背景（TensorFlow、YOLO），應用於人臉辨識、情緒分析與年齡預測；具大數據分析與統計建模實務；熟悉 NLP、語音辨識（STT）、LLM 文字生成與 Chatbot，並結合 RL 優化互動；負責 AI 系統架構設計、模型部署與跨部門協作，統籌 A2 NLQ/報表與 A3/A4 AI 應用整合                             | 12   | 男  | ITracXing |
+| 蔡以民       | 後端工程師             | 碩士（國立勤益科大資工系）                            | 後端系統開發與維運（API 設計、資料庫規劃、伺服器部署），熟悉 TypeScript、Node.js、Golang、FastAPI；具 TensorFlow、OpenCV、Scikit-learn 基礎，能配合 AI 團隊實作服務；熟悉 Docker、Nginx、CI/CD，自動化部署至正式環境；負責 A1–A4 之後端服務與資料管線實作                      | 12   | 男  | ITracXing |
+| 郭冠宏       | 網頁全端工程師           | 碩士（國立勤益科大資工系）                            | 全端開發（React、Vue.js、Next.js、Node.js、FastAPI），即時儀表板與資料視覺化（Chart.js、D3.js、ECharts）；RESTful API 串接與權限驗證；熟悉 Hugging Face、LangChain、OpenAI API 等 AI 服務整合；負責 A1–A4 前後端整合、監控介面與 Smart TOTE／風險預警 Dashboard | 12   | 男  | ITracXing |
+| 朱只耘       | Flutter 工程師       | 學士（國立勤益科大資工系）                            | 精通 Flutter（Dart、MVVM、Provider、Riverpod），可獨立開發 iOS/Android App；熟悉 RESTful API、GraphQL、WebSocket 串接；具行動端 AI 整合（對話、推薦、行為預測、語音控制），熟悉 Firebase、SQLite、Hive；負責 A2–A4 之行動端 App 與現場使用者介面                 | 10   | 男  | ITracXing |
+| （待聘）      | AI 工程師            | 碩士（AI／資工）                                | 學習排序（Learning-to-Rank）、聯邦學習（Federated Learning）、模型調校與大規模訓練；預計負責中後期 AI 代理訓練與驗證，支援分項 C/D 之多場域資料建模與部署                                                                                               | 12   | 女  | ITracXing |
 
 
-### 🔹研發人員 #1
-- 姓名：盧孝彰
-- 職稱：韌體工程師
-- 最高學歷：Musician’s Institute GIT Performance Master
-- 專長與技能：
-   - 精通 C/C++、Python、Java、Go；多執行緒、通訊協定、記憶體管理與效能優化
-   - 熟悉 ARM Cortex、RTOS、UART/SPI/I2C，驅動開發、除錯與硬體測試
-   - 具備嵌入式 AI/機器學習應用經驗
-   - 熟悉 RESTful API、MQTT、WebSocket，韌體與雲端/後端整合，打造 IoT 架構
-   - 敏捷開發與跨部門協作；熟悉 Git、Jenkins、Docker，自動化從開發到部署
-
-### 🔹研發人員 #2
-- 姓名：林昶睿
-- 職稱：專案經理
-- 最高學歷：國立勤益科技大學 資訊工程系 學士
-- 主要經歷：
-   - 威寶數位科技股份有限公司 — 軟體工程師（2020/07～2022/04）
-   - 準旺科技股份有限公司 — 專案經理（2022/04～至今）
-- 專長與技能：
-   - 具備 Python 與影像辨識背景，熟悉 TensorFlow、YOLO，應用於人臉辨識、情緒分析、年齡預測
-   - 具備大數據分析實務，運用線性回歸與統計建模進行預測與決策支援
-   - 熟悉 NLP、語音辨識（STT）、LLM 文字生成與 Chatbot，並結合強化學習優化互動
-   - 智慧系統整合與專案規劃：系統架構設計、模型部署、跨部門協作與專案落地
-
----
-
-### 🔹研發人員 #3
-- 姓名：蔡以民
-- 職稱：後端工程師
-- 最高學歷：國立勤益科技大學 資訊工程系 碩士
-- 主要經歷：
-   - 威寶數位科技股份有限公司 — 軟體工程師（2020/12～2022/04）
-   - 準旺科技股份有限公司 — 後端工程師（2022/04～至今）
-- 專長與技能：
-   - 後端系統開發與維運：API 設計、資料庫規劃、伺服器部署
-   - 熟悉 TypeScript、Node.js、Golang、FastAPI，能快速開發高效服務
-   - 具備良好程式結構與問題解決能力（Vibe Coding 實作經驗）
-   - 具備 AI 應用基礎：TensorFlow、OpenCV、Scikit-learn
-   - 熟悉 Docker、Nginx、CI/CD，自動化部署至正式環境
-   - 熟悉 Git、容器化與 RESTful API，能與前端與 AI 團隊協作
-
----
-
-### 🔹研發人員 #4
-- 姓名：郭冠宏
-- 職稱：網頁全端工程師
-- 最高學歷：國立勤益科技大學 資訊工程系 碩士
-- 專長與技能：
-   - 前後端整合：React、Vue.js、Next.js、Node.js、FastAPI，全流程開發
-   - 前端互動與視覺化：Chart.js、D3.js、ECharts，即時儀表板與分析介面
-   - RESTful API 串接、跨域請求處理、Token 驗證與授權
-   - AI × 前端整合：Hugging Face、LangChain、OpenAI API（聊天、摘要、推薦、語意搜尋）
-   - 資料庫與雲端部署：MySQL、MongoDB、Redis、Docker、AWS，自動化佈署
-   - 使用者體驗設計思維，結合 AI 提升互動性與智能化
-
----
-
-### 🔹研發人員 #5
-- 姓名：朱只耘
-- 職稱：Flutter 工程師
-- 最高學歷：國立勤益科技大學 資訊工程系 學士
-- 專長與技能：
-   - 精通 Flutter（Dart、MVVM、Provider、Riverpod），獨立開發 iOS/Android
-   - App 架構與資料串接：RESTful API、GraphQL、WebSocket
-   - 介面設計與互動動畫，依使用者行為優化流程與呈現
-   - 行動應用 AI 整合：對話、推薦、行為預測、語音控制
-   - 熟悉 Firebase、SQLite、Hive，推播、登入驗證、即時同步
-   - 具備專案規劃與跨平台協作能力，自需求到上架部署
-
----
-
-
-
-### 🔹待聘人員
-
-**（待聘）AI工程師**
-
-- 學歷：碩士（AI／資工）
-- 專長：學習排序（Learning-to-Rank）、聯邦學習（FL）、模型調校
-- 分工：中後期 AI代理訓練與驗證
-- 投入月數：12個月
-- 性別：女
-- 公司：ItracXing
 
 # 肆、計畫經費需求（千元）
 
