@@ -1298,7 +1298,7 @@ IoT hardware revenue is led by ItracXing; Arviem receives revenue shares or chan
 
 Note: This is a post-project revenue scenario for planning only, not a target KPI.
 
-#### (2) Revenue Forecast (2026–2029, Conservative Scenario)
+#### (2) Revenue Forecast (2026–2029 + O-RAN/AI-RAN Projects/Licensing)
 
 | Item | 2026 (USD) | 2027 (USD) | 2028 (USD) | 2029 (USD) |
 | --- | --- | --- | --- | --- |
