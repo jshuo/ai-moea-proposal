@@ -58,7 +58,7 @@ Use real reviewer language:
 ---
 
 ## 📄 Output Format
-generatee the following to MOEA_Reviewer_Simulated_Feedbacks.md file using markdown syntax
+generate the markdown syntax output and overwrite MOEA_Reviewer_Simulated_Feedbacks.md file 
 
 1. Overall Alignment Summary  
 2. Technical Strengths & Weaknesses Table  
