@@ -8,3 +8,4 @@ Master Doc (paste the live link here)
 - URL: https://docs.google.com/document/d/1UNgMY-j79bSRKWwWHNSnh-pQHx01gnRJWoODecDzF1g/edit
 
 
+https://ai-moea.netlify.app 
