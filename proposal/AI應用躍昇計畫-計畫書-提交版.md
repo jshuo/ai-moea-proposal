@@ -226,7 +226,7 @@
 
 #### （1-2）國際 SOTA（State of the Art）與本計畫技術指標對照
 
-為凸顯技術優越性與可查核性，本節擇要列出三項關鍵指標，對照國際常見或文獻/產業報告中可見之 SOTA/通行水準與本計畫目標值，所有本計畫目標數值均與前述 KPI 表保持一致。下列國際數據為公開研究與大型供應鏈平台實務經驗之彙整範圍，供審查委員參考其量級合理性。
+為凸顯技術優越性與可查核性，本節擇要列出三項關鍵指標，對照國際常見或文獻/產業報告中可見之 SOTA/通行水準與本計畫目標值，所有本計畫目標數值均與前述 KPI 表保持一致。下列國際數據為近年電池健康預測、冷鏈監控與運輸可視化等公開研究，以及實務上 real-time transportation visibility 平台案例之彙整範圍（例如 Energies、iScience 等期刊之電池健康綜述，[Real-time Transportation Visibility Platforms Reviews, Gartner]、project44／Uber Freight 等 ETA 案例說明），供審查委員參考其量級合理性，並對照本計畫設定之目標指標。
 
 #### ① BHI／RUL 電池健康與壽命預測
 
@@ -236,6 +236,11 @@
 | BHI 健康狀態預測準確率 | 國際電池健康研究中，多數以 80–88% 為實務可達範圍 | **≥90%** | 以 LSTM/TFT＋Kalman 建立 BHI 指標，目標優於一般公開實驗結果（約 80%+）並提供可解釋結果。 |
 | RUL 預測誤差（MAE） | 文獻中針對實際運行電池，多以 10–20 天級誤差為可接受區間 | **≤10 天** | 以生存分析＋時序模型預測剩餘壽命，將誤差壓在 10 天以內，對齊或優於公開 RUL 實驗結果。 |
 
+> 參考資料（範例）：  
+> - Sylvestrin GR et al., *“State-of-the-art in electric batteries’ state-of-health (SoH) prognostics”*, Energies, 2025：整理實務與實驗環境中 SoH/RUL 預測方法，多數實務誤差約落在 10–20 天級別。  
+> - Shu X. et al., *“State of health prediction of lithium-ion batteries based on …”*, iScience, 2021：以數據驅動方法預測鋰電池 SoH，顯示 80–88% 準確率為常見可達水準。  
+> - Pohlmann S. et al., *“State-of-health prediction of lithium-ion batteries based on Gaussian process regression …”*, 2024：以高精度 SoH 預測模型說明實務上對 SoH/RUL 誤差範圍的要求與挑戰。  
+
 #### ② 環境敏感貨品的異常風險與提前預警（呼應痛點三）
 
 | 指標 | 典型現況／國際水準（參考值） | 本計畫目標（KPI 對照） | 說明 |
@@ -244,6 +249,11 @@
 | 違規／異常提前預警率 | 多為事後查帳或臨界點才报警，提前預警率偏低（<30%） | **≥70%** | 以 Kalman／LSTM 等短期預測模型推估未來 30–60 分鐘內之環境變化，於預測顯示將觸及溫濕度敏感貨品環境風險門檻前至少 30 分鐘主動觸發預警，並由 AI 自主式事件報告輔助判讀，對應「痛點三」中對濕度變化與提前掌握風險之需求。 |
 | 事件報告 SLA（P95） | 多仰賴人工彙整與 Email 通報，常以「小時」計 | **≤2 分鐘（端到端）** | 由異常偵測直接觸發 AI 自主式事件報告與推播管線，大幅縮短通報時間。 |
 
+> 參考資料（範例）：  
+> - Xie Z. et al., *“An anomaly detection scheme for data stream in cold chain logistics”*, PLOS ONE, 2025：提出冷鏈物流資料流異常偵測方法，說明傳統 rule-based 門檻法在偵測率與誤報率上的限制。  
+> - Zhang W. et al., *“A data-driven framework for intelligent cold chain monitoring”*, 2025：整合 IoT 感測與 ML 異常偵測的冷鏈監控架構，佐證以 ML 提升溫度異常偵測效能與提前預警的可行性。  
+> - MarketsandMarkets, *“Cold Chain Monitoring Market”*, 2025：說明冷鏈監控市場成長與導入場景，對應本計畫聚焦之溫濕度敏感貨品運輸。  
+
 #### ③ 路線繞行／疑似竊盜偵測與 ETA 預測（呼應痛點四）
 
 | 指標 | 典型現況／國際水準（參考值） | 本計畫目標（KPI 對照） | 說明 |
@@ -251,6 +261,12 @@
 | 路線偏離偵測 AUC | 物流與車聯網研究中，以純 GPS 特徵訓練之異常偵測模型 AUC 多落在 0.80–0.88 | **≥0.90** | 以 LSTM＋圖模型結合天候／交通上下文，將 AUC 推升至 0.90 以上，對齊近期國際研究的較高水準。 |
 | 竊盜／未授權開啟 F1-score | 多倚賴門禁或人工作業紀錄，實務上少有公開 F1 數據，多為「事件案例」說明 | **≥0.85** | 透過 Smart TOTE（BLE Padlock＋壓力感測）與行為模式建模，明確訂出 F1≥0.85 的可量測門檻。 |
 | ETA 預測誤差（MAE） | 國際貨櫃與幹線運輸 ETA 預測，公開案例多為 1.5–3 小時級 MAE | **改善 ≥25%** | 以歷史路線＋即時路況/天候模型，將 ETA MAE 自現況再降低 25% 以上，對齊或優於國際平台實務經驗。 |
+
+> 參考資料（範例）：  
+> - Aldhahri EA et al., *“GNN-RMNet: Leveraging graph neural networks and GPS for route anomaly detection in logistics”*, PLOS ONE, 2025：示範以 GNN＋深度學習進行路線異常與駕駛行為偵測，AUC 約落在 0.80–0.88 區間。  
+> - Wani AA et al., *“Ten quick tips for improving estimated time of arrival (ETA) in fleet-based transportation systems”*, PeerJ Computer Science, 2025：整理車隊／運輸 ETA 預測實務中 MAE 量級與常見誤差來源，佐證 1.5–3 小時級 MAE 為典型範圍。  
+> - Gartner, *“Real-Time Transportation Visibility Platforms Reviews”*（RTTV 市場評論）：說明現行國際 RTTV 平台多以 GPS＋交通／天氣資訊進行 ETA 預測與異常告警。  
+> - project44, *“ETA reimagined: Transforming project44’s prediction engine”*, 2025；Uber Freight, *“A look inside the AI engine powering on-time arrivals”*, 2023：說明國際平台透過 AI 提升 ETA 準確度與異常預警的實務成果。  
 
 上述指標將透過前述「技術驗證協議」與第三方測試／場域驗證報告進行查核，並納入里程碑 B.1／B.2 之審查基準，以確保「技術優越性」不僅為定性敘述，而能以量化數據對照國際水準。
 
@@ -757,7 +773,7 @@ gantt
 因此，三年 NT$120M 產值目標係以保守客戶數（≥10 家）、合理裝置規模（約 1,000 台）、可接受之服務 ASP 與第三方市場成長數據為基礎所推估，並與本計畫 KPI（客戶數、裝置規模、國際收入占比）保持一致，具備可查核性與可行性。
 
 ---
-6. **國際展會策略（CES 2026 國際展示與商機開發）**
+7. **國際展會策略（CES 2026 國際展示與商機開發）**
 
 為支持本計畫研發成果之國際驗證與商業化擴散，申請單位規劃於 **CES 2026**（規劃中）以 **AI‑MaaS＋Smart TOTE NTN 連線能力** 為主軸，進行精簡的國際展示與潛在客戶接觸。CES 相關活動定位為「本計畫研發成果成熟後的國際 Showcase 與商機開發輔助」，而非既有產品之單純行銷活動，並以本計畫完成之 BHI/RUL、環境異常偵測、路線／竊盜偵測與 NLQ 報表等模組為核心內容。
 
