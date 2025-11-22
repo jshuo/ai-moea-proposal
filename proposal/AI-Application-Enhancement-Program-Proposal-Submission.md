@@ -195,6 +195,8 @@ The project converts these four pain points into AI solutions and measurable KPI
 
 Explains mapping from four industry pain points to Work Packages A–D AI techniques and objectives, plus data/model flow: A outputs BHI/RUL & sensor trust to B for query/report; C/D generate environment & route anomalies → trigger B’s AI reporting pipeline.
 
+To balance innovation and feasibility, the project separates adoption of multi-agent collaboration, Reinforcement Learning (RL), and Federated Learning (FL) into two tiers: mandatory MVP and exploratory PoC. The MVP (single-agent) prioritizes delivery of core functions—sensor health management (BHI/RUL), environment and route anomaly detection, and NLQ + AI autonomous event reporting—meeting defined KPIs (F1, AUC, MAE, latency, labor hours reduction) in one international and one Taiwan site; these are required for acceptance. Multi-agent scheduling and risk co-decision, RL-based dynamic sampling and communication rate adjustment, and cross-site FL model aggregation are positioned as cloud-layer prototypes/PoCs to be attempted but not enforced as acceptance criteria. This layered approach enables commercially valuable AI monitoring and reporting within 18 months while preserving flexibility for validating frontier techniques and later productization.
+
 #### (1) Adoption Objectives: Pain Point → Work Package → AI Solution
 
 | Industry Pain Point | Work Package | Core AI Techniques | Purpose & Target Outcomes |
