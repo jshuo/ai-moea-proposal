@@ -9,8 +9,7 @@ Goal
 Do-Not-Translate (preserve exactly, including bold markers, punctuation, and line breaks)
 ```
 準旺科技股份有限公司
-- **計畫名稱：** AI智慧供應鏈風險預測與通訊整合應用系統開發計畫
-(AI-Driven Smart Supply-Chain Risk Prediction and Connectivity Integration System)
+
 ```
 
 Scope & Rules
