@@ -512,6 +512,60 @@
   - 國際合作示範：以台灣為技術中心，建立「AI-MaaS for Logistics」輸出路徑。
   - 人才與技術升級：學研與實務雙向交流，導入 GDPR/AI Act 等國際合規實務。
 
+### （4）系統架構與資料流向
+
+下圖呈現本計畫之端到端系統架構，展示分項計畫 A–D 如何整合為完整的智慧供應鏈監控與風險預警解決方案：
+
+```mermaid 
+flowchart TD
+  %% ========== Device & Model Layer ==========
+  subgraph S["Device & Model 層"]
+    S1["Smart TOTE / Gateway<br/>收集感測資料"]
+    S2["AI 模型推論<br/>• 分項A: BHI/RUL 預測<br/>• 分項C: 環境異常偵測<br/>• 分項D: 路線/竊盜偵測<br/>↓ 輸出 risk_score / metrics"]
+  end
+
+  %% ========== Event & Alert Engine ==========
+  subgraph E["事件與告警引擎"]
+    E1["寫入事件佇列 / DB<br/>MODEL_EVAL 事件"]
+    E2["告警規則評估<br/>risk_score / 門檻 / 條件"]
+    E3["去重與抑制<br/>避免重複告警"]
+    E4["建立 Alert 物件<br/>alert_id / severity / details"]
+  end
+
+  %% ========== (Optional) LLM Explanation ==========
+  subgraph L["(選配) LLM 說明層"]
+    L1["將 Alert JSON 放入 Prompt"]
+    L2["LLM 產生中英摘要＋建議行動"]
+  end
+
+  %% ========== Notification Layer ==========
+  subgraph N["通知服務與通路"]
+    N1["選擇接收人與通道<br/>依客戶/嚴重度"]
+    N2["發送通知<br/>Email / LINE / Slack / Webhook"]
+    N3["紀錄通知歷程<br/>供 SLA / ESG 報表"]
+  end
+
+  %% Flow
+  S1 --> S2 --> E1
+  E1 --> E2 --> E3 --> E4
+
+  E4 --> L1 --> L2 --> N1
+  E4 -->|不使用 LLM 時<br/>直接套固定模板| N1
+
+  N1 --> N2 --> N3
+```
+
+**架構說明**：
+
+1. **Device & Model 層**：Smart TOTE 感測器收集溫濕度、GPS、開關狀態等資料，經由分項計畫 A（BHI/RUL）、C（環境異常）、D（路線/竊盜）之 AI 模型推論，輸出風險分數與指標。
+
+2. **事件與告警引擎**：模型輸出寫入事件佇列，經告警規則評估、去重與抑制後，建立結構化 Alert 物件，確保高優先級事件不被淹沒。
+
+3. **LLM 說明層（選配）**：對應分項計畫 B 之 AI 自主式事件報告功能，可將 Alert JSON 轉換為中英文摘要與建議行動；若不使用 LLM 則直接套用固定模板，兼顧成本與彈性。
+
+4. **通知服務與通路**：依客戶與嚴重度選擇接收人與通道（Email/LINE/Slack/Webhook），並記錄通知歷程供 SLA 與 ESG 報表稽核，確保治理透明度。
+
+此架構設計展現本計畫之三大特色：（1）模組化 AI 功能可獨立擴充；（2）治理機制（去重、審計、SLA）內建於流程；（3）彈性部署（可選配 LLM 或固定模板）降低採用門檻。
 
 ### 四、計畫執行時程及查核點
 
