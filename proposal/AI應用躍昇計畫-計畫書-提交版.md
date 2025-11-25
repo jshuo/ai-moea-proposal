@@ -514,46 +514,66 @@
 
 ### （4）系統架構與資料流向
 
-下圖呈現本計畫之端到端系統架構，展示分項計畫 A–D 如何整合為完整的智慧供應鏈監控與風險預警解決方案：
+下圖呈現本計畫之端到端系統架構與資料流向（圖 2-2），展示分項計畫 A–D 如何整合為完整的智慧供應鏈監控與風險預警解決方案：
 
+**圖 2-2：系統架構與資料流向（推論與告警流程）**
+
+**圖 2-2A：前端流程 - 資料收集與告警生成**
 ```mermaid 
-flowchart TD
+flowchart LR
   %% ========== Device & Model Layer ==========
-  subgraph S["Device & Model 層"]
-    S1["Smart TOTE / Gateway<br/>收集感測資料"]
-    S2["AI 模型推論<br/>• 分項A: BHI/RUL 預測<br/>• 分項C: 環境異常偵測<br/>• 分項D: 路線/竊盜偵測<br/>↓ 輸出 risk_score / metrics"]
+  subgraph S["裝置與模型層 (Device & Model Layer)<br/>📡 感測資料經過加密傳輸與身分驗證後，寫入 iTracXing/Arviem Cloud"]
+    S1["Smart TOTE / Gateway<br/>🔐 加密傳輸｜身分驗證<br/>收集感測資料"]
+    S2["AI 模型推論 (Inference)<br/>• 分項 A：BHI/RUL 模型（電池健康與壽命預測）<br/>• 分項 C：環境異常模型（溫濕度偵測）<br/>• 分項 D：路線/竊盜模型（GPS/開箱異常）<br/>↓ 輸出 risk_score / metrics"]
   end
 
   %% ========== Event & Alert Engine ==========
-  subgraph E["事件與告警引擎"]
+  subgraph E["事件與告警引擎 (Alert Rule Engine)"]
     E1["寫入事件佇列 / DB<br/>MODEL_EVAL 事件"]
-    E2["告警規則評估<br/>risk_score / 門檻 / 條件"]
+    E2["告警規則評估 (Alert Rule Evaluation)<br/>risk_score / 動態閾值 / 條件"]
     E3["去重與抑制<br/>避免重複告警"]
     E4["建立 Alert 物件<br/>alert_id / severity / details"]
-  end
-
-  %% ========== (Optional) LLM Explanation ==========
-  subgraph L["(選配) LLM 說明層"]
-    L1["將 Alert JSON 放入 Prompt"]
-    L2["LLM 產生中英摘要＋建議行動"]
-  end
-
-  %% ========== Notification Layer ==========
-  subgraph N["通知服務與通路"]
-    N1["選擇接收人與通道<br/>依客戶/嚴重度"]
-    N2["發送通知<br/>Email / LINE / Slack / Webhook"]
-    N3["紀錄通知歷程<br/>供 SLA / ESG 報表"]
   end
 
   %% Flow
   S1 --> S2 --> E1
   E1 --> E2 --> E3 --> E4
-
-  E4 --> L1 --> L2 --> N1
-  E4 -->|不使用 LLM 時<br/>直接套固定模板| N1
-
-  N1 --> N2 --> N3
+  
+  E4 --> OUTPUT["➡️ Alert 物件傳遞至後端流程"]
+  
+  style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
 ```
+
+**圖 2-2B：後端流程 - 報告生成與通知**
+```mermaid 
+flowchart LR
+  INPUT["⬅️ Alert 物件<br/>(來自告警引擎)"]
+  
+  %% ========== (Optional) LLM Explanation ==========
+  subgraph L["(選配) LLM 說明層<br/>👉 分項 B：AI 自主事件報告 / NLQ Dashboard"]
+    L1["將 Alert JSON 放入 Prompt"]
+    L2["LLM 產生中英摘要＋建議行動"]
+  end
+
+  %% ========== Notification Layer ==========
+  subgraph N["通知服務與通路<br/>資安與隱私規範：符合 GDPR/資料合規"]
+    N1["選擇接收人與通道<br/>依客戶/嚴重度"]
+    N2["發送通知<br/>Email / LINE / Slack / Webhook"]
+    N3["紀錄通知歷程<br/>供 SLA / ESG 報表稽核"]
+  end
+
+  %% Flow
+  INPUT --> L1
+  INPUT -->|不使用 LLM 時<br/>直接套固定模板| N1
+  L1 --> L2 --> N1
+  N1 --> N2 --> N3
+  
+  style INPUT fill:#f9f,stroke:#333,stroke-width:2px
+```
+
+> **架構說明與訓練流程補充**：  
+> 本圖為上線後之「**推論與告警流程**」（Inference & Alert Pipeline），展示即時資料如何流經 AI 模型、告警引擎與通知服務。  
+> **模型訓練與再訓練流程**（Training & Re-training）則於離線環境進行，採用歷史資料與標註事件集，並於「貳、計畫內容與實施方法」之「分項計畫 A–D」各節詳述；訓練完成後之模型權重定期佈署至本圖之「AI 模型推論」節點。
 
 **架構說明**：
 
