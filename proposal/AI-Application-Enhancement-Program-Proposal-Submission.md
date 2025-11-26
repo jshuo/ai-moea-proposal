@@ -468,6 +468,80 @@ This project is led by ItracXing (Taiwan) in collaboration with Arviem AG (Switz
   - International collaboration showcase: establish an “AI-MaaS for Logistics” export pathway with Taiwan as the technology hub.
   - Talent and technology uplift: two-way exchange between academia and industry, incorporating GDPR/AI Act compliance practices.
 
+  ### (4) System Architecture and Data Flow
+
+  The diagram below presents the end-to-end system architecture and data flow of this project (Figure 2-2), demonstrating how Work Packages A–D integrate into a complete intelligent supply chain monitoring and risk warning solution:
+
+  **Figure 2-2: System Architecture and Data Flow (Inference and Alert Pipeline)**
+
+  **Figure 2-2A: Frontend Process - Data Collection and Alert Generation**
+  ```mermaid 
+  flowchart LR
+    %% ========== Device & Model Layer ==========
+    subgraph S["Device & Model Layer<br/>📡 Sensor data transmitted via encrypted channels with authentication to iTracXing/Arviem Cloud"]
+      S1["Smart TOTE / Gateway<br/>🔐 Encrypted transmission | Authentication<br/>Collect sensor data"]
+      S2["AI Model Inference<br/>• Work Package A: BHI/RUL models (battery health & life prediction)<br/>• Work Package C: Environmental anomaly models (temp/humidity detection)<br/>• Work Package D: Route/theft models (GPS/opening anomalies)<br/>↓ Output risk_score / metrics"]
+    end
+
+    %% ========== Event & Alert Engine ==========
+    subgraph E["Event & Alert Engine"]
+      E1["Write to event queue / DB<br/>MODEL_EVAL event"]
+      E2["Alert Rule Evaluation<br/>risk_score / dynamic thresholds / conditions"]
+      E3["Deduplication & Suppression<br/>Avoid duplicate alerts"]
+      E4["Create Alert object<br/>alert_id / severity / details"]
+    end
+
+    %% Flow
+    S1 --> S2 --> E1
+    E1 --> E2 --> E3 --> E4
+    
+    E4 --> OUTPUT["➡️ Alert object passed to backend process"]
+    
+    style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
+  ```
+
+  **Figure 2-2B: Backend Process - Report Generation and Notification**
+  ```mermaid 
+  flowchart LR
+    INPUT["⬅️ Alert object<br/>(from Alert Engine)"]
+    
+    %% ========== (Optional) LLM Explanation ==========
+    subgraph L["(Optional) LLM Explanation Layer<br/>👉 Work Package B: AI Autonomous Event Report / NLQ Dashboard"]
+      L1["Insert Alert JSON into Prompt"]
+      L2["LLM generates summary + recommended actions<br/>(Chinese/English)"]
+    end
+
+    %% ========== Notification Layer ==========
+    subgraph N["Notification Service & Channels<br/>Security & Privacy: GDPR/compliance compliant"]
+      N1["Select recipients & channels<br/>By customer/severity"]
+      N2["Send notifications<br/>Email / LINE / Slack / Webhook"]
+      N3["Log notification history<br/>For SLA / ESG report auditing"]
+    end
+
+    %% Flow
+    INPUT --> L1
+    INPUT -->|Without LLM<br/>Use fixed template directly| N1
+    L1 --> L2 --> N1
+    N1 --> N2 --> N3
+    
+    style INPUT fill:#f9f,stroke:#333,stroke-width:2px
+  ```
+
+  > **Architecture Notes and Training Flow Supplement**:  
+  > This diagram illustrates the post-deployment "**Inference and Alert Pipeline**," showing how real-time data flows through AI models, alert engines, and notification services.  
+  > The **Model Training and Re-training Flow** is conducted offline using historical data and labeled event sets, detailed in the "Work Packages A–D" sections under "II. Project Content and Implementation Methods"; trained model weights are periodically deployed to the "AI Model Inference" node in this diagram.
+
+  **Architecture Description**:
+
+  1. **Device & Model Layer**: Smart TOTE sensors collect temperature/humidity, GPS, and door state data, which are processed through AI models from Work Package A (BHI/RUL), C (environmental anomaly), and D (route/theft) to output risk scores and metrics.
+
+  2. **Event & Alert Engine**: Model outputs are written to an event queue, evaluated by alert rules, deduplicated and suppressed, then formalized into structured Alert objects to ensure high-priority events are not overwhelmed.
+
+  3. **LLM Explanation Layer (Optional)**: Corresponding to Work Package B's AI autonomous event reporting, can convert Alert JSON into Chinese/English summaries with recommended actions; if LLM is not used, fixed templates are applied directly, balancing cost and flexibility.
+
+  4. **Notification Service & Channels**: Recipients and channels (Email/LINE/Slack/Webhook) are selected based on customer and severity, with notification history logged for SLA and ESG report auditing, ensuring governance transparency.
+
+  This architecture design demonstrates three key features of the project: (1) modular AI functions can be independently scaled; (2) governance mechanisms (deduplication, auditing, SLA) are built into the process; (3) flexible deployment (optional LLM or fixed templates) lowers adoption barriers.
 
 ### IV. Project Execution Timeline and Checkpoints
 
