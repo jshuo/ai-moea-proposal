@@ -18,6 +18,10 @@ AI-MaaS 指的是「以 AI 持續監控營運或資產，並以訂閱或使用�
 - 監控設備、感測器、IoT 裝置狀態
 - 監控營運 KPI、異常事件、SLA 違約等
 
+When suggesting應用場景, explicitly consider實際可獲利的物流與海運案例，例如：
+- 將 **FedEx 核准的貨物追蹤器與 IoT 感測器**（溫度、震動、位置等）視為資料來源，設計可按事件量收費的 AI-MaaS / AI-LaaS 監控方案（如風險預警、保險定價優化、延誤與毀損預測）。
+- 以 **Maersk 等大型貨櫃海運營運** 作為參考標的，思考如何把「航線規劃、艙位與營收管理、港口營運與延誤風險」包裝成 AI-MaaS 監控層或 AI-LaaS 方案，只在這些場景能清楚說明獲利模式與單位經濟時，才將其納入簡報。
+
 **Note on Terminology:**
 Please briefly clarify the distinction between **AI-MaaS (Monitoring-as-a-Service)** and **AI-LaaS (Logistics-as-a-Service)** if relevant, emphasizing that MaaS is the broader "monitoring layer" applicable across industries (including logistics), whereas LaaS is specific to logistics operations. Focus the pitch on the scalability of the *Monitoring* aspect.
 
