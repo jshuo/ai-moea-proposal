@@ -149,17 +149,16 @@ export function extractEnvironmentalEvents(
         id: anomaly.id,
         type: 'environmental',
         severity,
-        timestamp: anomaly.detectedAt,
+        timestamp: anomaly.timestamp,
         title: `Environmental Anomaly: ${anomaly.type.replace('_', ' ')}`,
         description: anomaly.description,
-        deviceId: report.deviceId,
+        deviceId: report.shipmentId,
         metrics: {
           value: anomaly.value,
           threshold: anomaly.threshold,
-          duration: anomaly.duration || 0,
-          confidenceScore: report.analysis.confidenceScore,
+          confidenceScore: report.riskScore,
         },
-        recommendation: anomaly.recommendedAction,
+        recommendation: anomaly.recommendation,
       });
     }
   }
@@ -176,82 +175,29 @@ export function extractRouteEvents(
   const events: EventSummary[] = [];
   
   for (const result of results) {
-    // Route deviations
-    for (const deviation of result.routeDeviation.deviations) {
+    // Route anomalies
+    for (const anomaly of result.anomalies) {
+      let severity: 'critical' | 'high' | 'medium' | 'low' = 'low';
+      if (anomaly.severity === 'critical') severity = 'critical';
+      else if (anomaly.severity === 'high') severity = 'high';
+      else if (anomaly.severity === 'medium') severity = 'medium';
+      
       events.push({
-        id: deviation.id,
-        type: 'route',
-        severity: 'medium',
-        timestamp: deviation.timestamp,
-        title: `Route Deviation: ${deviation.type}`,
-        description: deviation.description,
+        id: anomaly.id,
+        type: anomaly.type.includes('tamper') || anomaly.type.includes('opening') ? 'theft' : 'route',
+        severity,
+        timestamp: anomaly.timestamp,
+        title: `Route Anomaly: ${anomaly.type.replace(/_/g, ' ')}`,
+        description: anomaly.description,
         location: {
-          lat: deviation.detectedAt.lat,
-          lng: deviation.detectedAt.lng,
+          lat: anomaly.location.latitude,
+          lng: anomaly.location.longitude,
         },
         deviceId: result.deviceId,
         metrics: {
-          distanceFromRoute: deviation.distanceFromRoute,
+          confidence: anomaly.confidence,
         },
-      });
-    }
-    
-    // Suspicious stops
-    for (const stop of result.suspiciousStops) {
-      if (!stop.isAuthorized) {
-        events.push({
-          id: `stop-${result.deviceId}-${stop.location.timestamp?.getTime()}`,
-          type: 'route',
-          severity: stop.riskScore > 70 ? 'high' : 'medium',
-          timestamp: stop.location.timestamp || new Date(),
-          title: `Unauthorized Stop Detected`,
-          description: stop.explanation,
-          location: {
-            lat: stop.location.lat,
-            lng: stop.location.lng,
-            name: stop.location.name,
-          },
-          deviceId: result.deviceId,
-          metrics: {
-            duration: stop.duration,
-            riskScore: stop.riskScore,
-          },
-        });
-      }
-    }
-    
-    // Tamper events
-    for (const tamper of result.tamperEvents) {
-      events.push({
-        id: tamper.id,
-        type: 'theft',
-        severity: tamper.severity === 'critical' ? 'critical' : 'high',
-        timestamp: tamper.timestamp,
-        title: `Tamper Alert: ${tamper.type}`,
-        description: tamper.description,
-        location: tamper.location ? {
-          lat: tamper.location.lat,
-          lng: tamper.location.lng,
-        } : undefined,
-        deviceId: result.deviceId,
-        recommendation: tamper.action,
-      });
-    }
-    
-    // Geofence violations
-    for (const violation of result.geofenceViolations) {
-      events.push({
-        id: `geo-${result.deviceId}-${violation.timestamp.getTime()}`,
-        type: 'route',
-        severity: violation.isEntry ? 'low' : 'high',
-        timestamp: violation.timestamp,
-        title: `Geofence ${violation.isEntry ? 'Entry' : 'Exit'}: ${violation.geofenceName}`,
-        description: `Device ${violation.isEntry ? 'entered' : 'exited'} ${violation.geofenceName}`,
-        location: {
-          lat: violation.location.lat,
-          lng: violation.location.lng,
-        },
-        deviceId: result.deviceId,
+        recommendation: anomaly.recommendation,
       });
     }
   }
@@ -432,8 +378,8 @@ function generateEnvironmentalSection(
   if (shipmentWithIssues.length > 0) {
     content += `**Shipments with Anomalies:**\n\n`;
     for (const r of shipmentWithIssues.slice(0, 5)) {
-      content += `- **${r.deviceId}** (${r.analysis.cargoType}): ${r.anomalies.length} anomalie(s)\n`;
-      content += `  - Quality Impact: ${r.analysis.qualityImpact}\n`;
+      content += `- **${r.shipmentId}** (${r.containerId}): ${r.anomalies.length} anomalie(s)\n`;
+      content += `  - Compliance Status: ${r.complianceStatus}\n`;
     }
   }
   
@@ -460,10 +406,18 @@ function generateRouteSection(
   }
   
   // Summary
-  const totalDeviations = results.reduce((sum, r) => sum + r.routeDeviation.deviations.length, 0);
-  const totalTampers = results.reduce((sum, r) => sum + r.tamperEvents.length, 0);
-  const totalViolations = results.reduce((sum, r) => sum + r.geofenceViolations.length, 0);
-  const avgRisk = results.reduce((sum, r) => sum + r.riskScore, 0) / results.length;
+  const totalDeviations = results.reduce((sum, r) => sum + r.statistics.deviationCount, 0);
+  const totalTampers = results.reduce((sum, r) => sum + r.anomalies.filter(a => a.type.includes('tamper') || a.type.includes('opening')).length, 0);
+  const totalViolations = results.reduce((sum, r) => sum + r.anomalies.filter(a => a.type === 'geofence_violation').length, 0);
+  
+  // Calculate average risk based on anomaly severity
+  const avgRisk = results.reduce((sum, r) => {
+    const criticalCount = r.anomalies.filter(a => a.severity === 'critical').length;
+    const highCount = r.anomalies.filter(a => a.severity === 'high').length;
+    const totalAnomalies = r.anomalies.length;
+    const riskScore = totalAnomalies > 0 ? ((criticalCount * 100 + highCount * 70) / totalAnomalies) : 0;
+    return sum + riskScore;
+  }, 0) / results.length;
   
   content += `**Summary:**\n`;
   content += `- Routes monitored: **${results.length}**\n`;
@@ -473,15 +427,24 @@ function generateRouteSection(
   content += `- Geofence violations: **${totalViolations}**\n\n`;
   
   // High-risk shipments
-  const highRisk = results.filter(r => r.riskScore > 70).sort((a, b) => b.riskScore - a.riskScore);
+  const resultsWithRisk = results.map(r => {
+    const criticalCount = r.anomalies.filter(a => a.severity === 'critical').length;
+    const highCount = r.anomalies.filter(a => a.severity === 'high').length;
+    const totalAnomalies = r.anomalies.length;
+    const riskScore = totalAnomalies > 0 ? ((criticalCount * 100 + highCount * 70) / totalAnomalies) : 0;
+    return { ...r, calculatedRisk: riskScore };
+  });
+  
+  const highRisk = resultsWithRisk.filter(r => r.calculatedRisk > 70).sort((a, b) => b.calculatedRisk - a.calculatedRisk);
   if (highRisk.length > 0) {
     content += `**High-Risk Shipments:**\n\n`;
     content += `| Device | Risk Score | Deviations | Tampers | Status |\n`;
     content += `|--------|------------|------------|---------|--------|\n`;
     
     for (const r of highRisk.slice(0, 10)) {
-      const statusEmoji = r.riskScore > 80 ? '🔴' : '🟠';
-      content += `| ${r.deviceId} | ${r.riskScore.toFixed(0)} | ${r.routeDeviation.deviations.length} | ${r.tamperEvents.length} | ${statusEmoji} |\n`;
+      const statusEmoji = r.calculatedRisk > 80 ? '🔴' : '🟠';
+      const tamperCount = r.anomalies.filter(a => a.type.includes('tamper') || a.type.includes('opening')).length;
+      content += `| ${r.deviceId} | ${r.calculatedRisk.toFixed(0)} | ${r.statistics.deviationCount} | ${tamperCount} | ${statusEmoji} |\n`;
     }
     content += `\n`;
   }
@@ -490,10 +453,11 @@ function generateRouteSection(
   if (totalTampers > 0) {
     content += `**Tamper Events:**\n\n`;
     for (const r of results) {
-      for (const t of r.tamperEvents) {
+      const tamperAnomalies = r.anomalies.filter(a => a.type.includes('tamper') || a.type.includes('opening'));
+      for (const t of tamperAnomalies) {
         const emoji = t.severity === 'critical' ? '🚨' : '⚠️';
         content += `- ${emoji} **${r.deviceId}**: ${t.type} - ${t.description}\n`;
-        content += `  - Action: ${t.action}\n`;
+        content += `  - Recommendation: ${t.recommendation}\n`;
       }
     }
     content += `\n`;
@@ -543,14 +507,14 @@ function generateRecommendations(
   }
   
   // Route recommendations
-  const tamperShipments = routeResults.filter(r => r.tamperEvents.length > 0);
+  const tamperShipments = routeResults.filter(r => r.anomalies.some(a => a.type.includes('tamper') || a.type.includes('opening')));
   if (tamperShipments.length > 0) {
     recommendations.push(
       `🔒 **Security**: Investigate tamper alerts on ${tamperShipments.length} shipment(s)`
     );
   }
   
-  const deviatedRoutes = routeResults.filter(r => r.routeDeviation.deviations.length > 0);
+  const deviatedRoutes = routeResults.filter(r => r.statistics.deviationCount > 0);
   if (deviatedRoutes.length > 0) {
     recommendations.push(
       `🗺️ **Route**: Review route deviations on ${deviatedRoutes.length} shipment(s) - update planned routes if needed`
@@ -616,8 +580,8 @@ export function generateAIReport(
       ? batteryResults.reduce((sum, r) => sum + r.healthIndex.bhi, 0) / batteryResults.length
       : 100,
     environmentalAlerts: envReports.reduce((sum, r) => sum + r.anomalies.length, 0),
-    routeDeviations: routeResults.reduce((sum, r) => sum + r.routeDeviation.deviations.length, 0),
-    tamperEvents: routeResults.reduce((sum, r) => sum + r.tamperEvents.length, 0),
+    routeDeviations: routeResults.reduce((sum, r) => sum + r.statistics.deviationCount, 0),
+    tamperEvents: routeResults.reduce((sum, r) => sum + r.anomalies.filter(a => a.type.includes('tamper') || a.type.includes('opening')).length, 0),
     responseTimeSLA: {
       met: Math.floor(allEvents.length * 0.92),  // Simulated
       total: allEvents.length,
@@ -701,14 +665,14 @@ export function generateDailyDigest(
   // Devices summary
   const allDevices = new Set([
     ...batteryResults.map(r => r.deviceId),
-    ...envReports.map(r => r.deviceId),
+    ...envReports.map(r => r.shipmentId),
     ...routeResults.map(r => r.deviceId),
   ]);
   
   const needsAttentionDevices = new Set([
     ...batteryResults.filter(r => r.maintenanceRecommendation.urgency !== 'monitor').map(r => r.deviceId),
-    ...envReports.filter(r => r.anomalies.some(a => a.severity === 'critical' || a.severity === 'high')).map(r => r.deviceId),
-    ...routeResults.filter(r => r.tamperEvents.length > 0 || r.riskScore > 70).map(r => r.deviceId),
+    ...envReports.filter(r => r.anomalies.some(a => a.severity === 'critical' || a.severity === 'high')).map(r => r.shipmentId),
+    ...routeResults.filter(r => r.anomalies.some(a => a.severity === 'critical' || a.severity === 'high')).map(r => r.deviceId),
   ]);
   
   // Trend analysis
@@ -724,7 +688,7 @@ export function generateDailyDigest(
   if (batteryResults.some(r => r.maintenanceRecommendation.urgency === 'immediate')) {
     actionItems.push('Replace critical batteries immediately');
   }
-  if (routeResults.some(r => r.tamperEvents.length > 0)) {
+  if (routeResults.some(r => r.anomalies.some(a => a.type.includes('tamper') || a.type.includes('opening')))) {
     actionItems.push('Investigate tamper alerts');
   }
   if (envReports.some(r => r.anomalies.some(a => a.severity === 'critical'))) {
@@ -831,7 +795,7 @@ export function runAIReporterDemo(): AIReport {
   
   // Generate full report
   console.log('\n📝 Generating AI Report...\n');
-  const report = generateAIReport(batteryResults, envReports, routeResults, 'daily');
+  const report = generateAIReport(batteryResults, envReports.map(e => e.report), routeResults, 'daily');
   
   // Output summary
   console.log('📋 Report Generated:');
@@ -840,8 +804,8 @@ export function runAIReporterDemo(): AIReport {
   console.log(`   - Risk Score: ${report.metrics.overallRiskScore}/100`);
   console.log(`   - Total Events: ${
     batteryResults.length + 
-    envReports.reduce((s, r) => s + r.anomalies.length, 0) +
-    routeResults.reduce((s, r) => s + r.tamperEvents.length + r.routeDeviation.deviations.length, 0)
+    envReports.reduce((s, e) => s + e.report.anomalies.length, 0) +
+    routeResults.reduce((s, r) => s + r.anomalies.length, 0)
   }`);
   console.log(`\n📌 Top Recommendations:`);
   for (const rec of report.recommendations.slice(0, 3)) {
