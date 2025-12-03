@@ -1,13 +1,14 @@
 "use client";
 /**
- * AI Supply Chain Risk Prediction Demo Dashboard
- * Unified demo page showcasing all 4 sub-projects from the AI應用躍昇計畫
+ * CES 2026 AI Supply Chain Risk Prediction Dashboard
+ * Ultra High-Tech Version with Advanced Animations
  * 
- * Sub-projects:
- * A. Battery Health / RUL Prediction
- * B. Natural Language Query (NLQ) Interface
- * C. Environmental Anomaly Detection
- * D. Route/Theft Detection
+ * Enhanced with:
+ * - Glassmorphism & Holographic Effects
+ * - Particle Animations & Data Streams
+ * - Neon Accents & Gradient Flows
+ * - Real-time Pulse Indicators
+ * - Interactive 3D-style Cards
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -36,6 +37,9 @@ import {
   Radio,
   BarChart3,
   Settings,
+  Sparkles,
+  Cpu,
+  Globe2,
 } from 'lucide-react';
 
 // ============================================================================
@@ -90,6 +94,57 @@ interface ChatMessage {
   content: string;
   timestamp: Date;
 }
+
+// ============================================================================
+// ANIMATION COMPONENTS
+// ============================================================================
+
+const ParticleBackground: React.FC = () => {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(0,0,0,0))]" />
+      {[...Array(20)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-float"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${5 + Math.random() * 10}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const DataStream: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <div className={`absolute inset-0 overflow-hidden opacity-20 ${className || ''}`}>
+      {[...Array(5)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute h-px w-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-stream"
+          style={{
+            top: `${i * 20}%`,
+            animationDelay: `${i * 0.5}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const PulseRing: React.FC<{ color?: string }> = ({ color = 'cyan' }) => {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className={`absolute w-full h-full rounded-full bg-${color}-500/20 animate-ping`} />
+      <div className={`absolute w-3/4 h-3/4 rounded-full bg-${color}-500/20 animate-ping delay-75`} />
+      <div className={`absolute w-1/2 h-1/2 rounded-full bg-${color}-500/20 animate-ping delay-150`} />
+    </div>
+  );
+};
 
 // ============================================================================
 // MOCK DATA GENERATORS
@@ -247,24 +302,52 @@ const generateMockRouteEvents = (language: Language): RouteEvent[] => {
 // ============================================================================
 
 const SeverityBadge: React.FC<{ severity: string }> = ({ severity }) => {
-  const colors: Record<string, string> = {
-    critical: 'bg-red-100 text-red-800 border-red-200',
-    high: 'bg-orange-100 text-orange-800 border-orange-200',
-    medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    low: 'bg-blue-100 text-blue-800 border-blue-200',
-    info: 'bg-gray-100 text-gray-800 border-gray-200',
+  const colors: Record<string, { bg: string; text: string; border: string; glow: string }> = {
+    critical: { 
+      bg: 'bg-gradient-to-r from-red-500/20 to-pink-500/20', 
+      text: 'text-red-300', 
+      border: 'border-red-400/50',
+      glow: 'shadow-lg shadow-red-500/50'
+    },
+    high: { 
+      bg: 'bg-gradient-to-r from-orange-500/20 to-amber-500/20', 
+      text: 'text-orange-300', 
+      border: 'border-orange-400/50',
+      glow: 'shadow-lg shadow-orange-500/50'
+    },
+    medium: { 
+      bg: 'bg-gradient-to-r from-yellow-500/20 to-amber-500/20', 
+      text: 'text-yellow-300', 
+      border: 'border-yellow-400/50',
+      glow: 'shadow-lg shadow-yellow-500/50'
+    },
+    low: { 
+      bg: 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20', 
+      text: 'text-blue-300', 
+      border: 'border-blue-400/50',
+      glow: 'shadow-lg shadow-blue-500/50'
+    },
+    info: { 
+      bg: 'bg-gradient-to-r from-gray-500/20 to-slate-500/20', 
+      text: 'text-gray-300', 
+      border: 'border-gray-400/50',
+      glow: 'shadow-lg shadow-gray-500/50'
+    },
   };
+  const style = colors[severity] || colors.info;
   return (
-    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${colors[severity] || colors.info}`}>
+    <span className={`px-3 py-1.5 rounded-full text-xs font-bold border ${style.bg} ${style.text} ${style.border} ${style.glow} animate-pulse-subtle`}>
       {severity.toUpperCase()}
     </span>
   );
 };
 
 const TrendIndicator: React.FC<{ trend: string }> = ({ trend }) => {
-  if (trend === 'improving') return <TrendingUp className="w-4 h-4 text-green-500" />;
-  if (trend === 'degrading' || trend === 'critical') return <TrendingDown className="w-4 h-4 text-red-500" />;
-  return <Activity className="w-4 h-4 text-gray-500" />;
+  if (trend === 'improving') 
+    return <div className="relative"><PulseRing color="green" /><TrendingUp className="w-5 h-5 text-green-400 relative z-10 drop-shadow-glow-green" /></div>;
+  if (trend === 'degrading' || trend === 'critical') 
+    return <div className="relative"><PulseRing color="red" /><TrendingDown className="w-5 h-5 text-red-400 relative z-10 drop-shadow-glow-red animate-bounce-subtle" /></div>;
+  return <Activity className="w-5 h-5 text-cyan-400 animate-pulse" />;
 };
 
 const MetricCard: React.FC<{
@@ -275,43 +358,62 @@ const MetricCard: React.FC<{
   trend?: 'up' | 'down' | 'stable';
   color?: string;
 }> = ({ title, value, subtitle, icon, trend, color = 'blue' }) => {
-  const colorClasses: Record<string, string> = {
-    blue: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-blue-100',
-    green: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200 shadow-green-100',
-    red: 'bg-gradient-to-br from-red-50 to-red-100 border-red-200 shadow-red-100',
-    orange: 'bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 shadow-orange-100',
-    purple: 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 shadow-purple-100',
+  const colorClasses: Record<string, { card: string; icon: string; accent: string }> = {
+    blue: { 
+      card: 'from-blue-500/10 via-cyan-500/10 to-blue-500/10 border-cyan-400/30 hover:border-cyan-400/60', 
+      icon: 'from-blue-500 to-cyan-600', 
+      accent: 'text-cyan-400' 
+    },
+    green: { 
+      card: 'from-green-500/10 via-emerald-500/10 to-green-500/10 border-emerald-400/30 hover:border-emerald-400/60', 
+      icon: 'from-green-500 to-emerald-600', 
+      accent: 'text-emerald-400' 
+    },
+    red: { 
+      card: 'from-red-500/10 via-pink-500/10 to-red-500/10 border-red-400/30 hover:border-red-400/60', 
+      icon: 'from-red-500 to-pink-600', 
+      accent: 'text-red-400' 
+    },
+    orange: { 
+      card: 'from-orange-500/10 via-amber-500/10 to-orange-500/10 border-orange-400/30 hover:border-orange-400/60', 
+      icon: 'from-orange-500 to-amber-600', 
+      accent: 'text-orange-400' 
+    },
+    purple: { 
+      card: 'from-purple-500/10 via-violet-500/10 to-purple-500/10 border-purple-400/30 hover:border-purple-400/60', 
+      icon: 'from-purple-500 to-violet-600', 
+      accent: 'text-purple-400' 
+    },
   };
 
-  const iconColorClasses: Record<string, string> = {
-    blue: 'bg-blue-600 text-white',
-    green: 'bg-green-600 text-white',
-    red: 'bg-red-600 text-white',
-    orange: 'bg-orange-600 text-white',
-    purple: 'bg-purple-600 text-white',
-  };
+  const styles = colorClasses[color];
 
   return (
-    <div className={`p-5 rounded-xl border ${colorClasses[color]} shadow-lg hover:shadow-xl transition-shadow duration-200`}>
-      <div className="flex items-center justify-between mb-4">
-        <div className={`p-3 rounded-xl ${iconColorClasses[color]} shadow-md`}>{icon}</div>
-        {trend && (
-          <div className={`flex items-center gap-1 px-2 py-1 rounded-lg font-medium text-xs ${
-            trend === 'up' ? 'bg-green-100 text-green-700' : 
-            trend === 'down' ? 'bg-red-100 text-red-700' : 
-            'bg-gray-100 text-gray-600'
-          }`}>
-            {trend === 'up' ? <TrendingUp className="w-3 h-3" /> : 
-             trend === 'down' ? <TrendingDown className="w-3 h-3" /> : 
-             <Activity className="w-3 h-3" />}
-            <span>{trend === 'up' ? '上升' : trend === 'down' ? '下降' : '穩定'}</span>
+    <div className={`group relative p-6 rounded-2xl border bg-gradient-to-br ${styles.card} hover:shadow-2xl hover:shadow-${color}-500/30 transition-all duration-500 hover:scale-105 overflow-hidden`}>
+      <DataStream />
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-4">
+          <div className={`p-4 rounded-xl bg-gradient-to-br ${styles.icon} shadow-2xl shadow-${color}-500/50 group-hover:scale-110 transition-transform duration-300`}>
+            {icon}
           </div>
-        )}
-      </div>
-      <div>
-        <div className="text-3xl font-bold text-gray-900 mb-1">{value}</div>
-        <div className="text-sm font-medium text-gray-600">{title}</div>
-        {subtitle && <div className="text-xs text-gray-500 mt-1">{subtitle}</div>}
+          {trend && (
+            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-xs backdrop-blur-sm ${
+              trend === 'up' ? 'bg-green-500/20 text-green-300 border border-green-400/50' : 
+              trend === 'down' ? 'bg-red-500/20 text-red-300 border border-red-400/50' : 
+              'bg-gray-500/20 text-gray-300 border border-gray-400/50'
+            }`}>
+              {trend === 'up' ? <TrendingUp className="w-4 h-4" /> : 
+               trend === 'down' ? <TrendingDown className="w-4 h-4" /> : 
+               <Activity className="w-4 h-4" />}
+              <span>{trend === 'up' ? '上升' : trend === 'down' ? '下降' : '穩定'}</span>
+            </div>
+          )}
+        </div>
+        <div>
+          <div className={`text-4xl font-black ${styles.accent} mb-2 animate-glow`}>{value}</div>
+          <div className="text-sm font-semibold text-white/90">{title}</div>
+          {subtitle && <div className="text-xs text-white/60 mt-1">{subtitle}</div>}
+        </div>
       </div>
     </div>
   );
@@ -1052,63 +1154,73 @@ export default function AISupplyChainDemo() {
   }, [state.language]);
 
   const tabs = [
-    { id: 'overview', label: t('overview'), icon: <BarChart3 className="w-4 h-4" /> },
-    { id: 'battery', label: t('batteryHealth'), icon: <Battery className="w-4 h-4" /> },
-    { id: 'environmental', label: t('environmentalMonitoring'), icon: <Thermometer className="w-4 h-4" /> },
-    { id: 'route', label: t('routeSecurity'), icon: <Shield className="w-4 h-4" /> },
-    { id: 'nlq', label: t('aiAssistant'), icon: <MessageSquare className="w-4 h-4" /> },
-    { id: 'report', label: t('reportGeneration'), icon: <FileText className="w-4 h-4" /> },
+    { id: 'overview', label: t('overview'), icon: <BarChart3 className="w-5 h-5" />, color: 'cyan' },
+    { id: 'battery', label: t('batteryHealth'), icon: <Battery className="w-5 h-5" />, color: 'green' },
+    { id: 'environmental', label: t('environmentalMonitoring'), icon: <Thermometer className="w-5 h-5" />, color: 'orange' },
+    { id: 'route', label: t('routeSecurity'), icon: <Shield className="w-5 h-5" />, color: 'blue' },
+    { id: 'nlq', label: t('aiAssistant'), icon: <MessageSquare className="w-5 h-5" />, color: 'purple' },
+    { id: 'report', label: t('reportGeneration'), icon: <FileText className="w-5 h-5" />, color: 'pink' },
   ] as const;
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+      <ParticleBackground />
+      
+      {/* Animated Grid Background */}
+      <div className="fixed inset-0 bg-grid-pattern opacity-5 animate-grid-flow z-0" />
+      
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-700 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-white bg-opacity-20 rounded-xl backdrop-blur-sm">
-                <Zap className="w-7 h-7 text-white" />
+      <header className="relative z-20 border-b border-slate-700/50 bg-slate-900 shadow-xl">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between h-24">
+            <div className="flex items-center gap-5">
+              <div className="relative p-4 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-lg">
+                <Sparkles className="w-9 h-9 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">{t('appTitle')}</h1>
-                <p className="text-sm text-blue-100">{t('appSubtitle')}</p>
+                <h1 className="text-3xl font-bold text-white">
+                  {t('appTitle')}
+                </h1>
+                <p className="text-sm font-medium text-slate-300 flex items-center gap-2">
+                  <Cpu className="w-4 h-4" />
+                  {t('appSubtitle')} | CES 2026
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               {/* Language Switcher */}
-              <div className="flex gap-1 bg-white bg-opacity-10 rounded-lg p-1">
+              <div className="flex gap-2 bg-slate-800 rounded-lg p-1.5 border border-slate-600">
                 <button
                   onClick={() => setState(s => ({ ...s, language: 'zh' }))}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
                     state.language === 'zh'
-                      ? 'bg-white text-blue-600'
-                      : 'text-white hover:bg-white hover:bg-opacity-10'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-slate-300 hover:bg-slate-700'
                   }`}
                 >
                   中文
                 </button>
                 <button
                   onClick={() => setState(s => ({ ...s, language: 'en' }))}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
                     state.language === 'en'
-                      ? 'bg-white text-blue-600'
-                      : 'text-white hover:bg-white hover:bg-opacity-10'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-slate-300 hover:bg-slate-700'
                   }`}
                 >
                   EN
                 </button>
               </div>
               {state.lastUpdate && (
-                <div className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
-                  <Clock className="w-4 h-4 text-blue-100" />
-                  <span className="text-sm text-white font-medium">
+                <div className="flex items-center gap-3 px-5 py-2.5 bg-slate-800 rounded-lg border border-slate-600">
+                  <Clock className="w-5 h-5 text-slate-400" />
+                  <span className="text-sm text-slate-200 font-mono font-medium">
                     {state.lastUpdate.toLocaleTimeString('zh-TW')}
                   </span>
                 </div>
               )}
-              <button className="p-2 text-white hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors">
-                <Settings className="w-5 h-5" />
+              <button className="p-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all duration-200">
+                <Settings className="w-6 h-6" />
               </button>
             </div>
           </div>
@@ -1116,20 +1228,22 @@ export default function AISupplyChainDemo() {
       </header>
 
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-2 overflow-x-auto py-3">
-            {tabs.map(tab => (
+      <nav className="relative z-10 border-b border-slate-700/50 bg-slate-900">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex space-x-2 overflow-x-auto py-4 scrollbar-hide">
+            {tabs.map((tab, idx) => (
               <button
                 key={tab.id}
                 onClick={() => setState(s => ({ ...s, activeTab: tab.id }))}
-                className={`flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl transition-all whitespace-nowrap ${
+                className={`group relative flex items-center gap-2.5 px-5 py-3 text-sm font-semibold rounded-lg transition-all duration-200 whitespace-nowrap ${
                   state.activeTab === tab.id
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                 }`}
               >
-                {tab.icon}
+                <div>
+                  {tab.icon}
+                </div>
                 {tab.label}
               </button>
             ))}
@@ -1138,7 +1252,7 @@ export default function AISupplyChainDemo() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-10">
         {state.activeTab === 'overview' && (
           <OverviewTab batteries={batteries} envAlerts={envAlerts} routeEvents={routeEvents} language={state.language} />
         )}
@@ -1152,12 +1266,18 @@ export default function AISupplyChainDemo() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-800 to-gray-900 mt-12 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <footer className="relative z-10 border-t border-slate-700/50 bg-slate-900 mt-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
           <div className="text-center">
-            <p className="text-white font-semibold text-lg">{t('footerTitle')}</p>
-            <p className="text-gray-300 mt-2">{t('footerProjects')}</p>
-            <p className="text-gray-400 text-sm mt-4">{t('footerCopyright')}</p>
+            <p className="text-white font-bold text-xl mb-3">
+              {t('footerTitle')}
+            </p>
+            <p className="text-slate-300 font-medium">{t('footerProjects')}</p>
+            <div className="flex items-center justify-center gap-2 mt-6">
+              <Globe2 className="w-4 h-4 text-slate-400" />
+              <p className="text-slate-400 text-sm font-medium">CES 2026 | Las Vegas</p>
+            </div>
+            <p className="text-slate-500 text-xs mt-4">{t('footerCopyright')}</p>
           </div>
         </div>
       </footer>
