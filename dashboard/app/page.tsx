@@ -13,6 +13,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { translations } from '@/lib/translations';
 import type { Language } from '@/lib/translations';
 import {
@@ -888,7 +889,7 @@ const NLQTab: React.FC<{ language: Language }> = ({ language }) => {
             }`}>
               {msg.role === 'assistant' ? (
                 <div className="prose prose-sm max-w-none">
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
                 </div>
               ) : (
                 <p>{msg.content}</p>
@@ -1086,10 +1087,15 @@ ${routeEvents.map(e =>
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <FileText className="w-6 h-6 text-gray-600" />
-          <h3 className="text-lg font-semibold">{t('reportTitle')}</h3>
+      <div className="flex items-center justify-between bg-gradient-to-r from-slate-50 to-blue-50 p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg shadow-md">
+            <FileText className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900">{t('reportTitle')}</h3>
+            <p className="text-sm text-gray-600 mt-1">AI-powered risk analysis and insights</p>
+          </div>
         </div>
         <button
           onClick={generateReport}
@@ -1201,7 +1207,7 @@ ${routeEvents.map(e =>
             }
           `}} />
           <div className="report-markdown">
-            <ReactMarkdown>{report}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{report}</ReactMarkdown>
           </div>
         </div>
       ) : (
