@@ -1094,18 +1094,18 @@ const CO2Tab: React.FC<{
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            {/* Annual tCO2e per Site */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+            {/* Monthly Reduction */}
             <div className="bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl p-5 shadow-xl text-center">
               <div className="flex items-center justify-center mb-2">
                 <Leaf className="w-7 h-7 text-white animate-float" />
               </div>
               <div className="text-4xl font-bold text-white mb-1">
-                {annualReduction}
+                {Math.floor(co2Saved / 1000 * 10) / 10}
                 <span className="text-xl ml-1">tCO₂e</span>
               </div>
-              <div className="text-sm text-green-100 font-medium">{language === 'zh' ? '年減量/站點' : 'Annual / Site'}</div>
-              <div className="text-xs text-green-200 mt-1 opacity-80">{language === 'zh' ? '(試點階段)' : '(Pilot Phase)'}</div>
+              <div className="text-sm text-green-100 font-medium">{language === 'zh' ? '試點期間（本月）' : 'Pilot Period (Monthly)'}</div>
+              <div className="text-xs text-green-200 mt-1 opacity-80">{language === 'zh' ? `年化: ${annualReduction} tCO₂e/年` : `Annualized: ${annualReduction} tCO₂e/yr`}</div>
             </div>
             
             {/* Per Shipment Reduction */}
@@ -1118,7 +1118,7 @@ const CO2Tab: React.FC<{
                 <span className="text-xl ml-1">kg</span>
               </div>
               <div className="text-sm text-slate-300 font-medium">{language === 'zh' ? '每批次減量' : 'Per Shipment'}</div>
-              <div className="text-xs text-slate-400 mt-1">{language === 'zh' ? `基準: ${baselineEmissionsPerShipment} kg` : `Baseline: ${baselineEmissionsPerShipment} kg`}</div>
+              <div className="text-xs text-slate-400 mt-1">{language === 'zh' ? `定義: end-to-end 運送批次` : `Def: end-to-end shipment`}</div>
             </div>
             
             {/* Reduction Percentage */}
@@ -1132,6 +1132,19 @@ const CO2Tab: React.FC<{
               </div>
               <div className="text-sm text-slate-300 font-medium">{language === 'zh' ? '相對基準減少' : 'vs Baseline'}</div>
               <div className="text-xs text-slate-400 mt-1">{language === 'zh' ? '環保署方法' : 'EPA Method'}</div>
+            </div>
+            
+            {/* Baseline Emissions */}
+            <div className="bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl p-5 shadow-xl text-center border border-slate-600">
+              <div className="flex items-center justify-center mb-2">
+                <Activity className="w-7 h-7 text-slate-400" />
+              </div>
+              <div className="text-4xl font-bold text-slate-300 mb-1">
+                {baselineEmissionsPerShipment}
+                <span className="text-xl ml-1">kg</span>
+              </div>
+              <div className="text-sm text-slate-300 font-medium">{language === 'zh' ? '傳統作業基準' : 'Traditional Baseline'}</div>
+              <div className="text-xs text-slate-400 mt-1">{language === 'zh' ? '每批次排放' : 'per shipment'}</div>
             </div>
             
             {/* Trees Equivalent */}
@@ -1151,8 +1164,8 @@ const CO2Tab: React.FC<{
           <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
             <p className="text-base text-green-400 text-center">
               {language === 'zh' 
-                ? `🌱 試點階段目標: ${annualReduction} tCO₂e/年 | 每批次減少 ${reductionPerShipment} kg CO₂e (相較傳統作業減少 ${reductionPercentage}%)`
-                : `🌱 Pilot Target: ${annualReduction} tCO₂e/year | ${reductionPerShipment} kg CO₂e per shipment (${reductionPercentage}% reduction vs traditional)`}
+                ? `🌱 本月減量: ${Math.floor(co2Saved / 1000 * 10) / 10} tCO₂e | 年化推估: ${annualReduction} tCO₂e/年/站點（以每月 ${monthlyShipments} 批 end-to-end 運送推估）| 相較傳統作業減少 ${reductionPercentage}%`
+                : `🌱 Monthly: ${Math.floor(co2Saved / 1000 * 10) / 10} tCO₂e | Annualized: ${annualReduction} tCO₂e/yr/site (based on ${monthlyShipments} end-to-end shipments/mo) | ${reductionPercentage}% vs traditional`}
             </p>
           </div>
         </div>
@@ -1226,6 +1239,27 @@ const CO2Tab: React.FC<{
             <span className="font-mono text-green-400 font-bold text-3xl">
               {co2Saved.toLocaleString()} kg
             </span>
+          </div>
+        </div>
+        
+        {/* Double Counting Prevention Notice */}
+        <div className="bg-amber-500/10 rounded-lg border border-amber-500/30 p-4 mt-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-amber-200">
+              <div className="font-bold mb-1">{language === 'zh' ? '計算邊界聲明' : 'Calculation Boundary Statement'}</div>
+              <div className="text-amber-300/90 space-y-1">
+                <div>{language === 'zh' 
+                  ? '• 四項減碳分項彼此互斥，同一事件僅計算一次，避免重複計算'
+                  : '• Four reduction components are mutually exclusive; each event counted once to prevent double counting'}</div>
+                <div>{language === 'zh' 
+                  ? '• 每批次定義：從起運點到終點的完整 end-to-end 運送任務'
+                  : '• Per shipment definition: Complete end-to-end delivery from origin to destination'}</div>
+                <div>{language === 'zh' 
+                  ? '• 廢棄物防止僅計產品損失，不含運輸能耗（已列於路線優化）'
+                  : '• Waste prevention counts product loss only, excludes transport energy (covered in route optimization)'}</div>
+              </div>
+            </div>
           </div>
         </div>
         
