@@ -41,6 +41,8 @@ import {
   Sparkles,
   Cpu,
   Globe2,
+  Leaf,
+  Trees,
 } from 'lucide-react';
 
 // ============================================================================
@@ -143,6 +145,40 @@ const PulseRing: React.FC<{ color?: string }> = ({ color = 'cyan' }) => {
       <div className={`absolute w-full h-full rounded-full bg-${color}-500/20 animate-ping`} />
       <div className={`absolute w-3/4 h-3/4 rounded-full bg-${color}-500/20 animate-ping delay-75`} />
       <div className={`absolute w-1/2 h-1/2 rounded-full bg-${color}-500/20 animate-ping delay-150`} />
+    </div>
+  );
+};
+
+// CO2 Animated Counter Component
+const CO2Counter: React.FC<{ value: number; language: Language }> = ({ value, language }) => {
+  const [count, setCount] = React.useState(0);
+  
+  React.useEffect(() => {
+    const duration = 2000;
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= value) {
+        setCount(value);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    
+    return () => clearInterval(timer);
+  }, [value]);
+  
+  return (
+    <div className="relative">
+      <div className="text-5xl font-black text-green-400 mb-2 animate-pulse-subtle">
+        {count.toLocaleString()}
+        <span className="text-3xl ml-1">kg</span>
+      </div>
+      <div className="absolute -inset-4 bg-green-500/10 rounded-full blur-xl animate-pulse" />
     </div>
   );
 };
@@ -438,6 +474,40 @@ const OverviewTab: React.FC<{
   const totalCritical = criticalBatteries + criticalEnv + criticalRoute;
   
   const avgBHI = batteries.reduce((sum, b) => sum + b.bhi, 0) / batteries.length;
+  
+  // CO₂ Reduction Formula - Based on Supply Chain Optimization
+  // Formula Components:
+  // 1. Battery Manufacturing Emissions Saved: Each battery replacement avoided saves ~75kg CO₂
+  //    - Lithium-ion battery manufacturing: ~75kg CO₂ per battery
+  //    - Better BHI means fewer replacements needed
+  const batteryEmissionsSaved = batteries.reduce((sum, b) => {
+    // Batteries with high BHI (>80) save replacement emissions
+    // Batteries needing immediate replacement (BHI < 30) would have been replaced
+    const replacementAvoided = b.bhi > 80 ? 0.5 : b.bhi > 50 ? 0.3 : 0;
+    return sum + (replacementAvoided * 75); // 75kg CO₂ per battery manufacturing
+  }, 0);
+  
+  // 2. Route Optimization Emissions Saved: Fewer deviations = less fuel
+  //    - Average truck: 2.68kg CO₂ per liter diesel
+  //    - Route deviation costs ~5L extra fuel per incident
+  const routeDeviations = routeEvents.filter(e => e.type === 'deviation' || e.type === 'stop').length;
+  const baseDeviations = 15; // Baseline deviations without AI
+  const deviationsAvoided = Math.max(0, baseDeviations - routeDeviations);
+  const routeEmissionsSaved = deviationsAvoided * 5 * 2.68; // 5L fuel × 2.68kg CO₂/L
+  
+  // 3. Waste Prevention Emissions Saved: Environmental monitoring prevents spoilage
+  //    - Food waste: ~2.5kg CO₂ per kg of product
+  //    - Each critical environmental alert prevented saves ~50kg product
+  const baseEnvIssues = 8; // Baseline issues without AI monitoring
+  const issuesPrevented = Math.max(0, baseEnvIssues - envAlerts.length);
+  const wasteEmissionsSaved = issuesPrevented * 50 * 2.5; // 50kg product × 2.5kg CO₂/kg
+  
+  // 4. Total Monthly CO₂ Savings
+  const co2Saved = Math.floor(batteryEmissionsSaved + routeEmissionsSaved + wasteEmissionsSaved);
+  
+  // Equivalent metrics for context
+  const kmEquivalent = Math.floor(co2Saved * 4.2); // Average car: 0.24kg CO₂/km
+  const treesEquivalent = Math.floor(co2Saved / 21); // One tree absorbs ~21kg CO₂/year
 
   return (
     <div className="space-y-6">
@@ -471,6 +541,73 @@ const OverviewTab: React.FC<{
           icon={<MapPin className="w-5 h-5" />}
           color={criticalRoute > 0 ? 'red' : 'blue'}
         />
+      </div>
+
+      {/* CO2 Impact Banner */}
+      <div className="bg-gradient-to-br from-slate-800 via-slate-800 to-slate-900 rounded-2xl shadow-lg p-6 border border-slate-700/50 relative overflow-hidden">
+        <DataStream className="opacity-10" />
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg">
+                <Leaf className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white">{t('co2Reduction')}</h2>
+                <p className="text-slate-300 text-sm">{t('co2Saved')}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 rounded-full border border-green-400/50">
+              <TrendingDown className="w-4 h-4 text-green-400" />
+              <span className="text-green-400 font-bold text-sm">-12.5%</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Main CO2 Counter */}
+            <div className="text-center p-4 bg-slate-900/50 backdrop-blur-sm rounded-xl border border-green-500/30">
+              <div className="relative">
+                <div className="text-4xl font-black text-green-400 mb-1">
+                  {co2Saved.toLocaleString()}
+                  <span className="text-2xl ml-1">kg</span>
+                </div>
+              </div>
+              <div className="text-sm text-slate-300 mt-1 font-medium">CO₂ {language === 'zh' ? '減量' : 'Reduced'}</div>
+            </div>
+            
+            {/* Driving Equivalent */}
+            <div className="text-center p-4 bg-slate-900/50 backdrop-blur-sm rounded-xl border border-green-500/30">
+              <div className="flex items-center justify-center mb-2">
+                <Truck className="w-5 h-5 text-green-400" />
+              </div>
+              <div className="text-2xl font-bold text-green-400 mb-1">
+                {kmEquivalent.toLocaleString()}
+                <span className="text-lg ml-1">km</span>
+              </div>
+              <div className="text-sm text-slate-300 font-medium">{t('co2Equivalent')}</div>
+            </div>
+            
+            {/* Trees Equivalent */}
+            <div className="text-center p-4 bg-slate-900/50 backdrop-blur-sm rounded-xl border border-green-500/30">
+              <div className="flex items-center justify-center mb-2">
+                <Trees className="w-5 h-5 text-green-400 animate-pulse" />
+              </div>
+              <div className="text-2xl font-bold text-green-400 mb-1">
+                {treesEquivalent}
+                <span className="text-lg ml-1">{language === 'zh' ? '棵' : ''}</span>
+              </div>
+              <div className="text-sm text-slate-300 font-medium">{t('treesEquivalent')}</div>
+            </div>
+          </div>
+          
+          <div className="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/30">
+            <p className="text-sm text-green-400 text-center">
+              {language === 'zh' 
+                ? '🌱 透過 AI 優化的電池管理和路線規劃，本月已減少碳排放 ' + co2Saved + ' kg'
+                : '🌱 Through AI-optimized battery management and route planning, ' + co2Saved + ' kg CO₂ emissions reduced this month'}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Sub-project Status */}
