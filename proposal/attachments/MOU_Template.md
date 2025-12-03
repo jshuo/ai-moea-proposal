@@ -36,7 +36,7 @@ A company organized and existing under the laws of Switzerland.
 The cooperation shall cover two phases to ensure both the successful submission of the proposal and the subsequent execution of the Project.
 
 ### Phase 1: Proposal Preparation & Feasibility (Immediate)
-To accelerate proposal submission and demonstrate early commitment, **Arviem agrees to provide US0,000 to ItracXing**.
+To accelerate proposal submission and demonstrate early commitment, **Arviem agrees to provide USD 10,000 (ten thousand U.S. dollars) to ItracXing**.
 *   **Purpose:** To offset costs for professional proposal writing, documentation, translation, and preliminary feasibility analysis for the MOEA application.
 *   **Payment:** ItracXing shall invoice Arviem upon signing of this MOU.
 
@@ -75,7 +75,7 @@ Subject to the approval of the MOEA grant, the Parties agree to collaborate on t
 To comply with MOEA subsidy requirements regarding autonomous technology development:
 
 1.  **Background IP:** All IP existing prior to this Project remains the property of the respective owner.
-2.  **Project IP (Foreground IP):** All AI models, algorithms, source code, and hardware designs developed by ItracXing under this Project **shall remain the sole property of ItracXing**.
+2.  **Project IP (Foreground IP):** All AI models, algorithms, source code, and hardware designs developed by ItracXing under this Project **shall remain the sole property of ItracXing**, and shall be primarily developed and maintained in Taiwan (R.O.C.) by ItracXing's R&D team.
 3.  **Data Rights:** Raw data provided by Arviem remains the property of Arviem. ItracXing is granted a license to use such data for the purpose of the Project and model training.
 
 ## 5. TERM AND TERMINATION

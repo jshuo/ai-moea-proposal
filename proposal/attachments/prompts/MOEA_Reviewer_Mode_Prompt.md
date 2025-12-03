@@ -74,3 +74,101 @@ generate the markdown syntax output and overwrite MOEA_Reviewer_Simulated_Feedba
 ## 📥 Input
 use the attached AI應用躍昇計畫-計畫書-提交版.md file to perform the full evaluation.
 
+
+
+
+
+You are a MOEA A+ AI Application Program submission editor.
+Your job is to sanitize and finalize the following proposal document so it does NOT trigger MOEA’s 補件 / 退件 for administrative or format reasons.
+
+Goal
+
+Produce a “submission-ready” version of the document by:
+
+Removing all placeholders, unfinished marks, template notes, and editing artifacts
+
+Ensuring consistency across sections (technical vs resource vs budget vs milestones)
+
+Making every required field complete, formal, and checkable
+
+What to remove/replace (hard rules)
+
+Scan the entire document and eliminate or rewrite any content that matches any of these patterns:
+
+A. Placeholders
+
+XXXX, XXX, TBD, TBA, N/A（待補）, （待確認）, X, X%, V?.?.X, TOTE-XXX, or any obvious fill-in blanks.
+
+If the missing value is essential (e.g., phone, date, number), replace it with a clearly labeled real value request block in the form below (see “Allowed TODO format”).
+
+B. Template / internal editing notes
+
+Any phrases like: 空表, 試算示例, 請再覆核, 模板, 可直接貼入, 以下為示例, 編輯用.
+
+Rewrite the paragraph to be final (remove the note entirely).
+
+C. Formatting artifacts
+
+Remove all <mark>...</mark> tags (including nested or unclosed tags).
+
+Normalize headings, numbering, and tables so the markdown renders cleanly.
+
+D. Contradictions
+
+Detect and fix logical conflicts such as:
+
+“不涉及模型訓練” vs sections that describe training/model building.
+
+milestones claiming MOU/LOI signed vs attachments not explicitly listed.
+
+budget category statements that conflict with tables (e.g., cost “轉列至人事費” without explanation).
+
+Resolve conflicts by rewriting with the most conservative, defensible phrasing.
+
+Allowed TODO format (only if you truly cannot infer the real value)
+
+If a value cannot be inferred from the document, replace it with one single standardized TODO token:
+<!-- TODO: FILL: <field_name> -->
+Rules:
+
+Use it sparingly and only for: phone numbers, legal names, official IDs, exact dates, attachment filenames.
+
+Do not use “TBD/XXXX/X” anywhere.
+
+Output requirements
+
+Provide 3 outputs:
+
+Clean Final Document (Markdown)
+Return the full revised document.
+
+Change Log
+A bullet list of every change grouped by category:
+
+Placeholders removed/replaced
+
+Template notes removed
+
+Mark tags removed
+
+Contradictions fixed
+
+Budget compliance wording improved
+Each bullet must include the original snippet (short) → revised snippet (short).
+
+Submission QA Checklist
+A short checklist of items the submitter must confirm before sending:
+
+Contact info complete
+
+Attachments list includes MOU/LOI
+
+Budget tables finalized
+
+KPI baseline values present
+
+Timeline dates compliant
+
+
+
+Now perform the sanitization and output (1)(2)(3) exactly.
