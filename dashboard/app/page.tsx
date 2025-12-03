@@ -410,7 +410,7 @@ const MetricCard: React.FC<{
           )}
         </div>
         <div>
-          <div className={`text-4xl font-black ${styles.accent} mb-2 animate-glow`}>{value}</div>
+          <div className={`text-4xl font-black ${styles.accent} mb-2`}>{value}</div>
           <div className="text-sm font-semibold text-white/90">{title}</div>
           {subtitle && <div className="text-xs text-white/60 mt-1">{subtitle}</div>}
         </div>
@@ -1094,16 +1094,16 @@ ${routeEvents.map(e =>
         <button
           onClick={generateReport}
           disabled={isGenerating}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 shadow-lg font-medium transition-all"
+          className="flex items-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 shadow-lg hover:shadow-xl font-semibold text-sm transition-all duration-200 hover:scale-105 disabled:hover:scale-100 border border-blue-500/50"
         >
           {isGenerating ? (
             <>
-              <RefreshCw className="w-4 h-4 animate-spin" />
+              <RefreshCw className="w-5 h-5 animate-spin" />
               {t('generating')}
             </>
           ) : (
             <>
-              <BarChart3 className="w-4 h-4" />
+              <BarChart3 className="w-5 h-5" />
               {t('generateReport')}
             </>
           )}
@@ -1111,8 +1111,96 @@ ${routeEvents.map(e =>
       </div>
 
       {report ? (
-        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-          <div className="prose prose-sm max-w-none">
+        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+          <style dangerouslySetInnerHTML={{__html: `
+            .report-markdown h1 {
+              font-size: 2.5rem;
+              font-weight: 800;
+              color: #111827;
+              border-bottom: 4px solid #2563eb;
+              padding-bottom: 1rem;
+              margin-bottom: 2rem;
+              margin-top: 0;
+            }
+            .report-markdown h2 {
+              font-size: 1.875rem;
+              font-weight: 700;
+              color: #111827;
+              border-bottom: 2px solid #d1d5db;
+              padding-bottom: 0.75rem;
+              margin-top: 2.5rem;
+              margin-bottom: 1.5rem;
+            }
+            .report-markdown h3 {
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: #1d4ed8;
+              margin-top: 1.5rem;
+              margin-bottom: 1rem;
+            }
+            .report-markdown p {
+              font-size: 1.125rem;
+              line-height: 1.75;
+              color: #1f2937;
+              margin-bottom: 1rem;
+            }
+            .report-markdown strong {
+              font-weight: 700;
+              color: #111827;
+              font-size: 1.125rem;
+            }
+            .report-markdown ul, .report-markdown ol {
+              font-size: 1.125rem;
+              color: #1f2937;
+              margin: 1.5rem 0;
+              padding-left: 2rem;
+              line-height: 2;
+            }
+            .report-markdown li {
+              margin-bottom: 0.75rem;
+              line-height: 1.75;
+            }
+            .report-markdown table {
+              width: 100%;
+              border-collapse: separate;
+              border-spacing: 0;
+              border: 2px solid #d1d5db;
+              border-radius: 0.5rem;
+              overflow: hidden;
+              margin: 2rem 0;
+              font-size: 1.125rem;
+            }
+            .report-markdown thead {
+              background: linear-gradient(to right, #2563eb, #4f46e5);
+            }
+            .report-markdown th {
+              padding: 1rem;
+              font-weight: 700;
+              font-size: 1.125rem;
+              color: white;
+              text-align: left;
+              border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            }
+            .report-markdown td {
+              padding: 1rem;
+              border-bottom: 1px solid #e5e7eb;
+              color: #1f2937;
+              font-size: 1.125rem;
+            }
+            .report-markdown tbody tr:hover {
+              background-color: #f9fafb;
+              transition: background-color 0.2s;
+            }
+            .report-markdown tbody tr:last-child td {
+              border-bottom: none;
+            }
+            .report-markdown hr {
+              border: none;
+              border-top: 2px solid #e5e7eb;
+              margin: 2rem 0;
+            }
+          `}} />
+          <div className="report-markdown">
             <ReactMarkdown>{report}</ReactMarkdown>
           </div>
         </div>
