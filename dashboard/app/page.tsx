@@ -1220,11 +1220,18 @@ ${routeEvents.map(e =>
 // ============================================================================
 
 export default function AISupplyChainDemo() {
+  // Detect user's timezone and set default language
+  const getDefaultLanguage = (): Language => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // Taiwan timezones: Asia/Taipei
+    return timezone === 'Asia/Taipei' ? 'zh' : 'en';
+  };
+
   const [state, setState] = useState<DemoState>({
     activeTab: 'overview',
     isLoading: false,
     lastUpdate: null,
-    language: 'zh',
+    language: getDefaultLanguage(),
   });
 
   const [batteries, setBatteries] = useState<BatteryDevice[]>([]);
