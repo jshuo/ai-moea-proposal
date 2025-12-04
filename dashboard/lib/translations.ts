@@ -227,13 +227,13 @@ export const translations: Record<Language, Translations> = {
     tamperAlerts: 'tamper alerts',
     
     // Project Names
-    projectA: 'Project A: BHI/RUL Prediction',
+    projectA: 'Work Package A: BHI/RUL Prediction',
     projectADesc: 'Battery Health & Lifetime Prediction',
-    projectB: 'Project B: Natural Language Query',
+    projectB: 'Work Package B: Natural Language Query',
     projectBDesc: 'AI Assistant Real-time Response',
-    projectC: 'Project C: Environmental Anomaly Detection',
+    projectC: 'Work Package C: Environmental Anomaly Detection',
     projectCDesc: 'Temperature, Humidity, Vibration Monitoring',
-    projectD: 'Project D: Route & Theft Detection',
+    projectD: 'Work Package D: Route & Theft Detection',
     projectDDesc: 'Smart TOTE Security Monitoring',
     
     // Common
@@ -300,7 +300,7 @@ export const translations: Record<Language, Translations> = {
     
     // Footer
     footerTitle: 'AI Smart Supply Chain Risk Prediction System',
-    footerProjects: 'Projects: A (BHI/RUL) | B (NLQ) | C (Environmental) | D (Route Security)',
+    footerProjects: 'Work Packages: A (BHI/RUL) | B (NLQ) | C (Environmental) | D (Route Security)',
     footerCopyright: '© 2025 AI Application Advancement Program · Demo Version',
     
     // Trend indicators
@@ -424,13 +424,13 @@ export const translations: Record<Language, Translations> = {
     tamperAlerts: '個篡改警報',
     
     // Project Names
-    projectA: '分項計畫 A: BHI/RUL 預測',
+    projectA: '工作包 A: BHI/RUL 預測',
     projectADesc: '電池健康與壽命預測',
-    projectB: '分項計畫 B: 自然語言查詢',
+    projectB: '工作包 B: 自然語言查詢',
     projectBDesc: 'AI 助理即時回應',
-    projectC: '分項計畫 C: 環境異常偵測',
+    projectC: '工作包 C: 環境異常偵測',
     projectCDesc: '溫濕度、震動監控',
-    projectD: '分項計畫 D: 路線防竊偵測',
+    projectD: '工作包 D: 路線防竊偵測',
     projectDDesc: 'Smart TOTE 安全監控',
     
     // Common
@@ -497,7 +497,7 @@ export const translations: Record<Language, Translations> = {
     
     // Footer
     footerTitle: 'AI 智慧供應鏈風險預測系統',
-    footerProjects: '分項計畫: A (BHI/RUL) | B (NLQ) | C (環境異常) | D (路線防竊)',
+    footerProjects: '工作包: A (BHI/RUL) | B (NLQ) | C (環境異常) | D (路線防竊)',
     footerCopyright: '© 2025 AI應用躍昇計畫 · Demo 版本',
     
     // Trend indicators
