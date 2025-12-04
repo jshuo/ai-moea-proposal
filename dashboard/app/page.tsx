@@ -14,9 +14,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import dynamic from 'next/dynamic';
 import { translations } from '@/lib/translations';
 import type { Language } from '@/lib/translations';
+
+const ChartRenderer = dynamic(() => import('../components/ChartRenderer'), {
+  ssr: false,
+});
+
 import {
   Battery,
   Thermometer,
@@ -619,6 +624,9 @@ const OverviewTab: React.FC<{
               <li>• {t('sampleQuestion1')}</li>
               <li>• {t('sampleQuestion2')}</li>
               <li>• {t('sampleQuestion3')}</li>
+              <li>• {t('sampleQuestion4')}</li>
+              <li>• {t('sampleQuestion5')}</li>
+              <li>• {t('sampleQuestion6')}</li>
             </ul>
           </div>
         </div>
@@ -934,8 +942,8 @@ const NLQTab: React.FC<{ language: Language; batteries: BatteryDevice[]; envAler
     if (lowerQuery.includes('battery') || lowerQuery.includes('電池') || lowerQuery.includes('trend') || lowerQuery.includes('趨勢')) {
       const chartData = batteries.map(b => ({
         name: b.name,
-        BHI: b.healthIndex,
-        RUL: b.remainingLife,
+        BHI: b.bhi,
+        RUL: b.rul,
       }));
       return {
         type: 'bar' as const,
@@ -1040,7 +1048,7 @@ const NLQTab: React.FC<{ language: Language; batteries: BatteryDevice[]; envAler
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map(msg => (
           <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[80%] rounded-xl p-4 shadow-md ${
+            <div className={`${msg.role === 'user' ? 'max-w-[80%]' : 'w-[68%]'} rounded-xl p-4 shadow-md ${
               msg.role === 'user' 
                 ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white' 
                 : 'bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 border border-gray-200'
@@ -1051,69 +1059,7 @@ const NLQTab: React.FC<{ language: Language; batteries: BatteryDevice[]; envAler
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
                   </div>
                   {msg.chartData && (
-                    <div className="mt-4 bg-white rounded-lg p-4 border border-gray-200">
-                      <h4 className="text-sm font-semibold text-gray-700 mb-3">{msg.chartData.title}</h4>
-                      <ResponsiveContainer width="100%" height={300}>
-                        {msg.chartData.type === 'bar' && (
-                          <BarChart data={msg.chartData.data}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            {msg.chartData.data[0]?.BHI !== undefined && (
-                              <>
-                                <Bar dataKey="BHI" fill="#3b82f6" name="Battery Health Index" />
-                                <Bar dataKey="RUL" fill="#10b981" name="Remaining Life (days)" />
-                              </>
-                            )}
-                            {msg.chartData.data[0]?.count !== undefined && (
-                              <Bar dataKey="count" fill="#f59e0b" name="Count" />
-                            )}
-                          </BarChart>
-                        )}
-                        {msg.chartData.type === 'pie' && (
-                          <PieChart>
-                            <Pie
-                              data={msg.chartData.data}
-                              cx="50%"
-                              cy="50%"
-                              labelLine={false}
-                              label={(entry) => `${entry.name}: ${entry.value}`}
-                              outerRadius={80}
-                              fill="#8884d8"
-                              dataKey="value"
-                            >
-                              {msg.chartData.data.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'][index % 5]} />
-                              ))}
-                            </Pie>
-                            <Tooltip />
-                            <Legend />
-                          </PieChart>
-                        )}
-                        {msg.chartData.type === 'line' && (
-                          <LineChart data={msg.chartData.data}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} />
-                          </LineChart>
-                        )}
-                        {msg.chartData.type === 'area' && (
-                          <AreaChart data={msg.chartData.data}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Area type="monotone" dataKey="value" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.6} />
-                          </AreaChart>
-                        )}
-                      </ResponsiveContainer>
-                    </div>
+                    <ChartRenderer chartData={msg.chartData} />
                   )}
                 </>
               ) : (
