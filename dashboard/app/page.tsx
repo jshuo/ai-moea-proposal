@@ -14,6 +14,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { translations } from '@/lib/translations';
 import type { Language } from '@/lib/translations';
 import {
@@ -98,6 +99,11 @@ interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  chartData?: {
+    type: 'line' | 'bar' | 'pie' | 'area';
+    data: any[];
+    title: string;
+  };
 }
 
 // ============================================================================
@@ -908,7 +914,7 @@ const RouteTab: React.FC<{ events: RouteEvent[]; language: Language }> = ({ even
 };
 
 // NLQ Tab
-const NLQTab: React.FC<{ language: Language }> = ({ language }) => {
+const NLQTab: React.FC<{ language: Language; batteries: BatteryDevice[]; envAlerts: EnvironmentalAlert[]; routeEvents: RouteEvent[] }> = ({ language, batteries, envAlerts, routeEvents }) => {
   const t = (key: keyof typeof translations.en) => translations[language][key];
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -921,6 +927,60 @@ const NLQTab: React.FC<{ language: Language }> = ({ language }) => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const generateChartData = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+    
+    // Battery trend chart
+    if (lowerQuery.includes('battery') || lowerQuery.includes('電池') || lowerQuery.includes('trend') || lowerQuery.includes('趨勢')) {
+      const chartData = batteries.map(b => ({
+        name: b.name,
+        BHI: b.healthIndex,
+        RUL: b.remainingLife,
+      }));
+      return {
+        type: 'bar' as const,
+        data: chartData,
+        title: language === 'zh' ? '電池健康狀況' : 'Battery Health Status',
+      };
+    }
+    
+    // Environmental alerts distribution
+    if (lowerQuery.includes('environment') || lowerQuery.includes('環境') || lowerQuery.includes('alert') || lowerQuery.includes('警報') || lowerQuery.includes('distribution') || lowerQuery.includes('分布')) {
+      const alertTypes: { [key: string]: number } = {};
+      envAlerts.forEach(alert => {
+        alertTypes[alert.type] = (alertTypes[alert.type] || 0) + 1;
+      });
+      const chartData = Object.entries(alertTypes).map(([type, count]) => ({
+        name: type,
+        value: count,
+      }));
+      return {
+        type: 'pie' as const,
+        data: chartData,
+        title: language === 'zh' ? '環境警報分布' : 'Environmental Alert Distribution',
+      };
+    }
+    
+    // Route events timeline
+    if (lowerQuery.includes('route') || lowerQuery.includes('路線') || lowerQuery.includes('event') || lowerQuery.includes('事件') || lowerQuery.includes('timeline') || lowerQuery.includes('時間')) {
+      const severityCounts: { [key: string]: number } = { critical: 0, high: 0, medium: 0, low: 0 };
+      routeEvents.forEach(event => {
+        severityCounts[event.severity] = (severityCounts[event.severity] || 0) + 1;
+      });
+      const chartData = Object.entries(severityCounts).map(([severity, count]) => ({
+        name: severity.charAt(0).toUpperCase() + severity.slice(1),
+        count: count,
+      }));
+      return {
+        type: 'bar' as const,
+        data: chartData,
+        title: language === 'zh' ? '路線事件嚴重程度' : 'Route Event Severity',
+      };
+    }
+    
+    return null;
+  };
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
     
@@ -932,21 +992,25 @@ const NLQTab: React.FC<{ language: Language }> = ({ language }) => {
     };
     
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
     setInput('');
     setIsLoading(true);
 
     // Simulate AI response
     setTimeout(() => {
       let response = '';
+      const chartData = generateChartData(currentInput);
       
-      if (input.includes('電池') || input.includes('更換') || input.includes('BHI') || 
-          input.toLowerCase().includes('battery') || input.toLowerCase().includes('replace')) {
+      if (currentInput.includes('電池') || currentInput.includes('更換') || currentInput.includes('BHI') || 
+          currentInput.toLowerCase().includes('battery') || currentInput.toLowerCase().includes('replace')) {
         response = t('batteryStatusReport');
-      } else if (input.includes('異常') || input.includes('今天') || input.includes('警報') ||
-                 input.toLowerCase().includes('anomal') || input.toLowerCase().includes('today') || input.toLowerCase().includes('alert')) {
+      } else if (currentInput.includes('異常') || currentInput.includes('今天') || currentInput.includes('警報') ||
+                 currentInput.toLowerCase().includes('anomal') || currentInput.toLowerCase().includes('today') || currentInput.toLowerCase().includes('alert')) {
         response = t('todayAnomaliesReport');
-      } else if (input.includes('TOTE') || input.includes('路線') || input.toLowerCase().includes('route')) {
+      } else if (currentInput.includes('TOTE') || currentInput.includes('路線') || currentInput.toLowerCase().includes('route')) {
         response = t('routeAnalysisReport');
+      } else if (chartData) {
+        response = language === 'zh' ? '這是您請求的數據可視化圖表：' : 'Here is the data visualization you requested:';
       } else {
         response = t('thankYouInquiry');
       }
@@ -956,6 +1020,7 @@ const NLQTab: React.FC<{ language: Language }> = ({ language }) => {
         role: 'assistant',
         content: response,
         timestamp: new Date(),
+        chartData: chartData || undefined,
       };
       
       setMessages(prev => [...prev, aiMessage]);
@@ -981,9 +1046,76 @@ const NLQTab: React.FC<{ language: Language }> = ({ language }) => {
                 : 'bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 border border-gray-200'
             }`}>
               {msg.role === 'assistant' ? (
-                <div className="prose prose-sm max-w-none">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
-                </div>
+                <>
+                  <div className="prose prose-sm max-w-none">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                  </div>
+                  {msg.chartData && (
+                    <div className="mt-4 bg-white rounded-lg p-4 border border-gray-200">
+                      <h4 className="text-sm font-semibold text-gray-700 mb-3">{msg.chartData.title}</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        {msg.chartData.type === 'bar' && (
+                          <BarChart data={msg.chartData.data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            {msg.chartData.data[0]?.BHI !== undefined && (
+                              <>
+                                <Bar dataKey="BHI" fill="#3b82f6" name="Battery Health Index" />
+                                <Bar dataKey="RUL" fill="#10b981" name="Remaining Life (days)" />
+                              </>
+                            )}
+                            {msg.chartData.data[0]?.count !== undefined && (
+                              <Bar dataKey="count" fill="#f59e0b" name="Count" />
+                            )}
+                          </BarChart>
+                        )}
+                        {msg.chartData.type === 'pie' && (
+                          <PieChart>
+                            <Pie
+                              data={msg.chartData.data}
+                              cx="50%"
+                              cy="50%"
+                              labelLine={false}
+                              label={(entry) => `${entry.name}: ${entry.value}`}
+                              outerRadius={80}
+                              fill="#8884d8"
+                              dataKey="value"
+                            >
+                              {msg.chartData.data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'][index % 5]} />
+                              ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend />
+                          </PieChart>
+                        )}
+                        {msg.chartData.type === 'line' && (
+                          <LineChart data={msg.chartData.data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} />
+                          </LineChart>
+                        )}
+                        {msg.chartData.type === 'area' && (
+                          <AreaChart data={msg.chartData.data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Area type="monotone" dataKey="value" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.6} />
+                          </AreaChart>
+                        )}
+                      </ResponsiveContainer>
+                    </div>
+                  )}
+                </>
               ) : (
                 <p>{msg.content}</p>
               )}
@@ -1622,7 +1754,7 @@ export default function AISupplyChainDemo() {
         {state.activeTab === 'battery' && <BatteryTab devices={batteries} language={state.language} />}
         {state.activeTab === 'environmental' && <EnvironmentalTab alerts={envAlerts} language={state.language} />}
         {state.activeTab === 'route' && <RouteTab events={routeEvents} language={state.language} />}
-        {state.activeTab === 'nlq' && <NLQTab language={state.language} />}
+        {state.activeTab === 'nlq' && <NLQTab language={state.language} batteries={batteries} envAlerts={envAlerts} routeEvents={routeEvents} />}
         {state.activeTab === 'co2' && (
           <CO2Tab batteries={batteries} envAlerts={envAlerts} routeEvents={routeEvents} language={state.language} />
         )}

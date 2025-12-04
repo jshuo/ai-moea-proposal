@@ -18,6 +18,7 @@ interface Translations {
   environmentalMonitoring: string;
   routeSecurity: string;
   aiAssistant: string;
+  co2Tab: string;
   reportGeneration: string;
   
   // Overview
@@ -94,6 +95,13 @@ interface Translations {
   generating: string;
   noReport: string;
   clickToGenerate: string;
+  
+  // CO2 & Sustainability
+  co2Reduction: string;
+  co2Saved: string;
+  co2Equivalent: string;
+  treesEquivalent: string;
+  carbonFootprint: string;
   
   // Footer
   footerTitle: string;
@@ -205,6 +213,7 @@ export const translations: Record<Language, Translations> = {
     environmentalMonitoring: 'Environmental',
     routeSecurity: 'Route Security',
     aiAssistant: 'AI Assistant',
+    co2Tab: 'CO₂ Impact',
     reportGeneration: 'Reports',
     
     // Overview
@@ -273,7 +282,7 @@ export const translations: Record<Language, Translations> = {
     nlqPlaceholder: 'Type your question...',
     send: 'Send',
     analyzing: 'Analyzing...',
-    greeting: 'Hello! I\'m your AI Supply Chain Risk Assistant. I can help you with:\n\n- Battery health status and lifetime predictions\n- Environmental anomaly detection results\n- Route deviations and security events\n- Overall risk assessment\n\nHow can I help you?',
+    greeting: 'Hello! I\'m your AI Supply Chain Risk Assistant. I can help you with:\n\n- Battery health status and lifetime predictions\n  • Try: "Show me battery trends" for interactive chart\n- Environmental anomaly detection results\n  • Try: "Show environment alert distribution" for pie chart\n- Route deviations and security events\n  • Try: "Show route event timeline" for severity analysis\n- Overall risk assessment\n\nHow can I help you?',
     
     // Report
     reportTitle: 'AI Event Report Generation',
@@ -281,6 +290,13 @@ export const translations: Record<Language, Translations> = {
     generating: 'Generating...',
     noReport: 'No report generated yet',
     clickToGenerate: 'Click "Generate Report" to create an AI risk report',
+    
+    // CO2 & Sustainability
+    co2Reduction: 'CO₂ Reduction',
+    co2Saved: 'CO₂ Saved This Month',
+    co2Equivalent: 'km driving avoided',
+    treesEquivalent: 'trees planted equivalent',
+    carbonFootprint: 'Carbon Footprint',
     
     // Footer
     footerTitle: 'AI Smart Supply Chain Risk Prediction System',
@@ -318,6 +334,9 @@ export const translations: Record<Language, Translations> = {
     sampleQuestion1: '"Which batteries need replacement?"',
     sampleQuestion2: '"Any anomalies today?"',
     sampleQuestion3: '"TOTE-001 route deviation status"',
+    sampleQuestion4: '"Show me battery trends"',
+    sampleQuestion5: '"Show environment alert distribution"',
+    sampleQuestion6: '"Show route event timeline"',
     tryAsking: 'Try asking:',
     
     // NLQ Responses
@@ -391,6 +410,7 @@ export const translations: Record<Language, Translations> = {
     environmentalMonitoring: '環境監控',
     routeSecurity: '路線安全',
     aiAssistant: 'AI 助理',
+    co2Tab: 'CO₂ 減量',
     reportGeneration: '報告生成',
     
     // Overview
@@ -459,7 +479,7 @@ export const translations: Record<Language, Translations> = {
     nlqPlaceholder: '輸入您的問題...',
     send: '發送',
     analyzing: '分析中...',
-    greeting: '您好！我是 AI 供應鏈風險助理。我可以幫您查詢:\n\n- 電池健康狀態與壽命預測\n- 環境異常偵測結果\n- 路線偏離與安全事件\n- 整體風險評估\n\n請問有什麼可以幫您的?',
+    greeting: '您好！我是 AI 供應鏈風險助理。我可以幫您查詢:\n\n- 電池健康狀態與壽命預測\n  • 試試看：「顯示電池趨勢」查看互動圖表\n- 環境異常偵測結果\n  • 試試看：「顯示環境警報分佈」查看圓餅圖\n- 路線偏離與安全事件\n  • 試試看：「顯示路線事件時間線」查看嚴重程度分析\n- 整體風險評估\n\n請問有什麼可以幫您的?',
     
     // Report
     reportTitle: 'AI 事件報告生成',
@@ -467,6 +487,13 @@ export const translations: Record<Language, Translations> = {
     generating: '生成中...',
     noReport: '尚未生成報告',
     clickToGenerate: '點擊「生成報告」按鈕以創建 AI 風險報告',
+    
+    // CO2 & Sustainability
+    co2Reduction: 'CO₂ 減量',
+    co2Saved: '本月減少碳排',
+    co2Equivalent: '公里駕駛減少',
+    treesEquivalent: '相當於種樹',
+    carbonFootprint: '碳足跡',
     
     // Footer
     footerTitle: 'AI 智慧供應鏈風險預測系統',
@@ -504,6 +531,9 @@ export const translations: Record<Language, Translations> = {
     sampleQuestion1: '「哪些電池需要更換?」',
     sampleQuestion2: '「今天有什麼異常?」',
     sampleQuestion3: '「TOTE-001 的路線偏離情況」',
+    sampleQuestion4: '「顯示電池趨勢」',
+    sampleQuestion5: '「顯示環境警報分佈」',
+    sampleQuestion6: '「顯示路線事件時間線」',
     tryAsking: '試試問:',
     
     // NLQ Responses
