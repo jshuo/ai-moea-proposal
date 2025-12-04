@@ -139,6 +139,9 @@ interface Translations {
   sampleQuestion1: string;
   sampleQuestion2: string;
   sampleQuestion3: string;
+  sampleQuestion4: string;
+  sampleQuestion5: string;
+  sampleQuestion6: string;
   tryAsking: string;
   
   // NLQ Responses
