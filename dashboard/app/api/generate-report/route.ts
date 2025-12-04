@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ChatOpenAI } from '@langchain/openai';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { StringOutputParser } from '@langchain/core/output_parsers';
 
 export async function POST(request: NextRequest) {
   try {
@@ -6,90 +9,95 @@ export async function POST(request: NextRequest) {
     
     const { language, metrics, batteries, envAlerts, routeEvents, date, reportId } = context;
     
-    // Construct prompt for LLM
-    const systemPrompt = language === 'zh'
-      ? `你是一位專業的供應鏈風險分析師。根據提供的數據，生成一份詳細的中文 AI 供應鏈風險日報。報告應包含執行摘要、關鍵指標、電池健康分析、環境監控、路線安全和建議行動。使用 Markdown 格式，語氣專業且具有洞察力。`
-      : `You are a professional supply chain risk analyst. Generate a detailed AI Supply Chain Risk Daily Report in English based on the provided data. The report should include an executive summary, key indicators, battery health analysis, environmental monitoring, route security, and recommended actions. Use Markdown format with a professional and insightful tone.`;
-
-    const userPrompt = `
-Generate a comprehensive supply chain risk report with the following data:
-
-**Report Metadata:**
-- Date: ${date}
-- Report ID: ${reportId}
-- Language: ${language}
-
-**Key Metrics:**
-- Total Critical Issues: ${metrics.totalCritical}
-- Critical Battery Issues: ${metrics.criticalBat}
-- Critical Environmental Alerts: ${metrics.criticalEnv}
-- Critical Route Events: ${metrics.criticalRoute}
-- Average Battery Health Index: ${metrics.avgBHI}%
-- Total Batteries Monitored: ${metrics.totalBatteries}
-- Total Environmental Alerts: ${metrics.totalEnvAlerts}
-- Total Route Events: ${metrics.totalRouteEvents}
-- Tamper Alerts: ${metrics.tamperAlerts}
-
-**Battery Details (Critical/Warning):**
-${JSON.stringify(batteries, null, 2)}
-
-**Environmental Alerts:**
-${JSON.stringify(envAlerts, null, 2)}
-
-**Route Security Events:**
-${JSON.stringify(routeEvents, null, 2)}
-
-${language === 'zh' 
-  ? `請生成一份專業的中文報告，包含：
-1. 標題和報告元數據
-2. 執行摘要（使用表情符號和粗體突出關鍵問題）
-3. 關鍵指標表格
-4. 電池健康分析（列出需要更換的設備）
-5. 環境監控分析
-6. 路線安全分析
-7. 建議行動清單（至少3項）
-8. 報告生成時間戳記
-
-使用專業術語，提供可操作的見解。` 
-  : `Generate a professional English report including:
-1. Title and report metadata
-2. Executive summary (use emojis and bold for critical issues)
-3. Key indicators table
-4. Battery health analysis (list devices needing replacement)
-5. Environmental monitoring analysis
-6. Route security analysis
-7. Recommended actions list (at least 3 items)
-8. Report generation timestamp
-
-Use professional terminology and provide actionable insights.`}
-`;
-
-    // Call OpenAI API (or other LLM)
-    const llmResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt },
-        ],
-        temperature: 0.7,
-        max_tokens: 2000,
-      }),
+    // Initialize LangChain components
+    const model = new ChatOpenAI({
+      modelName: 'gpt-4o',
+      temperature: 0.7,
+      maxTokens: 2000,
+      openAIApiKey: process.env.OPENAI_API_KEY,
     });
 
-    if (!llmResponse.ok) {
-      const error = await llmResponse.json();
-      console.error('OpenAI API error:', error);
-      throw new Error('Failed to generate report from LLM');
-    }
+    // Create prompt template for the report
+    const reportInstructions = language === 'zh' 
+      ? `請生成一份專業的中文 AI 供應鏈風險日報，包含：
+1. 標題 (# AI 供應鏈風險日報) 和報告元數據
+2. 執行摘要（使用表情符號和粗體突出關鍵問題）
+3. 關鍵指標表格 (使用 Markdown 表格格式)
+4. 電池健康分析（分析趨勢並列出需要更換的設備）
+5. 環境監控分析（分析異常模式和風險等級）
+6. 路線安全分析（評估篡改和偏離風險）
+7. 建議行動清單（至少3項具體可執行的建議）
+8. 報告生成時間戳記
 
-    const llmData = await llmResponse.json();
-    const report = llmData.choices[0].message.content;
+使用專業術語，提供深入的可操作見解，並基於數據趨勢提出預測性建議。`
+      : `Generate a professional AI Supply Chain Risk Daily Report in English including:
+1. Title (# AI Supply Chain Risk Daily Report) and report metadata
+2. Executive summary (use emojis and bold for critical issues)
+3. Key indicators table (use Markdown table format)
+4. Battery health analysis (analyze trends and list devices needing replacement)
+5. Environmental monitoring analysis (analyze anomaly patterns and risk levels)
+6. Route security analysis (assess tampering and deviation risks)
+7. Recommended actions list (at least 3 specific actionable recommendations)
+8. Report generation timestamp
+
+Use professional terminology, provide in-depth actionable insights, and offer predictive recommendations based on data trends.`;
+
+    const promptTemplate = PromptTemplate.fromTemplate(`
+You are a professional supply chain risk analyst with expertise in IoT-enabled logistics, battery health management, cold chain monitoring, and predictive maintenance.
+
+**Report Metadata:**
+- Date: {date}
+- Report ID: {reportId}
+- Language: {language}
+
+**Key Metrics:**
+- Total Critical Issues: {totalCritical}
+- Critical Battery Issues: {criticalBat}
+- Critical Environmental Alerts: {criticalEnv}
+- Critical Route Events: {criticalRoute}
+- Average Battery Health Index: {avgBHI}%
+- Total Batteries Monitored: {totalBatteries}
+- Total Environmental Alerts: {totalEnvAlerts}
+- Total Route Events: {totalRouteEvents}
+- Tamper Alerts: {tamperAlerts}
+
+**Battery Details (Critical/Warning):**
+{batteriesJson}
+
+**Environmental Alerts:**
+{envAlertsJson}
+
+**Route Security Events:**
+{routeEventsJson}
+
+**Instructions:**
+{instructions}
+
+Generate the report in Markdown format. Be thorough and professional.
+`);
+
+    // Create the chain
+    const chain = promptTemplate.pipe(model).pipe(new StringOutputParser());
+
+    // Invoke the chain
+    const report = await chain.invoke({
+      date,
+      reportId,
+      language: language === 'zh' ? 'Chinese (Traditional)' : 'English',
+      totalCritical: metrics.totalCritical,
+      criticalBat: metrics.criticalBat,
+      criticalEnv: metrics.criticalEnv,
+      criticalRoute: metrics.criticalRoute,
+      avgBHI: metrics.avgBHI,
+      totalBatteries: metrics.totalBatteries,
+      totalEnvAlerts: metrics.totalEnvAlerts,
+      totalRouteEvents: metrics.totalRouteEvents,
+      tamperAlerts: metrics.tamperAlerts,
+      batteriesJson: JSON.stringify(batteries, null, 2),
+      envAlertsJson: JSON.stringify(envAlerts, null, 2),
+      routeEventsJson: JSON.stringify(routeEvents, null, 2),
+      instructions: reportInstructions,
+    });
 
     return NextResponse.json({ report });
   } catch (error) {

@@ -1446,97 +1446,29 @@ const ReportTab: React.FC<{
       )}
 
       {report ? (
-        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-          <style dangerouslySetInnerHTML={{__html: `
-            .report-markdown h1 {
-              font-size: 2.5rem;
-              font-weight: 800;
-              color: #111827;
-              border-bottom: 4px solid #2563eb;
-              padding-bottom: 1rem;
-              margin-bottom: 2rem;
-              margin-top: 0;
-            }
-            .report-markdown h2 {
-              font-size: 1.875rem;
-              font-weight: 700;
-              color: #111827;
-              border-bottom: 2px solid #d1d5db;
-              padding-bottom: 0.75rem;
-              margin-top: 2.5rem;
-              margin-bottom: 1.5rem;
-            }
-            .report-markdown h3 {
-              font-size: 1.5rem;
-              font-weight: 600;
-              color: #1d4ed8;
-              margin-top: 1.5rem;
-              margin-bottom: 1rem;
-            }
-            .report-markdown p {
-              font-size: 1.125rem;
-              line-height: 1.75;
-              color: #1f2937;
-              margin-bottom: 1rem;
-            }
-            .report-markdown strong {
-              font-weight: 700;
-              color: #111827;
-              font-size: 1.125rem;
-            }
-            .report-markdown ul, .report-markdown ol {
-              font-size: 1.125rem;
-              color: #1f2937;
-              margin: 1.5rem 0;
-              padding-left: 2rem;
-              line-height: 2;
-            }
-            .report-markdown li {
-              margin-bottom: 0.75rem;
-              line-height: 1.75;
-            }
-            .report-markdown table {
-              width: 100%;
-              border-collapse: separate;
-              border-spacing: 0;
-              border: 2px solid #d1d5db;
-              border-radius: 0.5rem;
-              overflow: hidden;
-              margin: 2rem 0;
-              font-size: 1.125rem;
-            }
-            .report-markdown thead {
-              background: linear-gradient(to right, #2563eb, #4f46e5);
-            }
-            .report-markdown th {
-              padding: 1rem;
-              font-weight: 700;
-              font-size: 1.125rem;
-              color: white;
-              text-align: left;
-              border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            }
-            .report-markdown td {
-              padding: 1rem;
-              border-bottom: 1px solid #e5e7eb;
-              color: #1f2937;
-              font-size: 1.125rem;
-            }
-            .report-markdown tbody tr:hover {
-              background-color: #f9fafb;
-              transition: background-color 0.2s;
-            }
-            .report-markdown tbody tr:last-child td {
-              border-bottom: none;
-            }
-            .report-markdown hr {
-              border: none;
-              border-top: 2px solid #e5e7eb;
-              margin: 2rem 0;
-            }
-          `}} />
-          <div className="report-markdown">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{report}</ReactMarkdown>
+        <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-2xl p-10 border border-gray-200">
+          <div style={{fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', lineHeight: '1.7', color: '#1a1a1a'}}>
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({node, ...props}) => <h1 style={{fontSize: '2.5em', fontWeight: '800', margin: '0 0 1.5rem 0', background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingBottom: '0.5rem', borderBottom: '3px solid #3b82f6'}} {...props} />,
+                h2: ({node, ...props}) => <h2 style={{fontSize: '1.875em', fontWeight: '700', margin: '2.5rem 0 1rem 0', color: '#1e40af', paddingBottom: '0.5rem', borderBottom: '2px solid #e5e7eb'}} {...props} />,
+                h3: ({node, ...props}) => <h3 style={{fontSize: '1.5em', fontWeight: '600', margin: '1.5rem 0 0.75rem 0', color: '#2563eb'}} {...props} />,
+                p: ({node, ...props}) => <p style={{margin: '0 0 1.25rem 0', fontSize: '1.05rem', lineHeight: '1.8', color: '#374151'}} {...props} />,
+                ul: ({node, ...props}) => <ul style={{margin: '1rem 0 1.5rem 0', paddingLeft: '2rem', listStyleType: 'disc'}} {...props} />,
+                ol: ({node, ...props}) => <ol style={{margin: '1rem 0 1.5rem 0', paddingLeft: '2rem'}} {...props} />,
+                li: ({node, ...props}) => <li style={{margin: '0.5rem 0', lineHeight: '1.8', color: '#374151'}} {...props} />,
+                table: ({node, ...props}) => <table style={{borderCollapse: 'separate', borderSpacing: '0', width: '100%', margin: '2rem 0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', borderRadius: '0.75rem', overflow: 'hidden'}} {...props} />,
+                thead: ({node, ...props}) => <thead style={{background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)'}} {...props} />,
+                th: ({node, ...props}) => <th style={{padding: '1rem 1.25rem', textAlign: 'left', color: '#ffffff', fontWeight: '700', fontSize: '0.95rem', letterSpacing: '0.025em', textTransform: 'uppercase'}} {...props} />,
+                td: ({node, ...props}) => <td style={{padding: '1rem 1.25rem', borderBottom: '1px solid #e5e7eb', color: '#1f2937', fontSize: '1rem', backgroundColor: '#ffffff'}} {...props} />,
+                tbody: ({node, ...props}) => <tbody style={{backgroundColor: '#ffffff'}} {...props} />,
+                strong: ({node, ...props}) => <strong style={{fontWeight: '700', color: '#1e40af'}} {...props} />,
+                hr: ({node, ...props}) => <hr style={{border: 'none', height: '2px', background: 'linear-gradient(to right, transparent, #e5e7eb, transparent)', margin: '2.5rem 0'}} {...props} />,
+              }}
+            >
+              {report}
+            </ReactMarkdown>
           </div>
         </div>
       ) : (
