@@ -1209,6 +1209,60 @@ gantt
 | 朱只耘       | Flutter 工程師       | 學士（國立勤益科大資工系）                            | 精通 Flutter（Dart、MVVM、Provider、Riverpod），可獨立開發 iOS/Android App；熟悉 RESTful API、GraphQL、WebSocket 串接；具行動端 AI 整合（對話、推薦、行為預測、語音控制），熟悉 Firebase、SQLite、Hive；負責分項 B–D 之行動端 App 與現場使用者介面（如異常推播、現場處置回報與查詢），並支援國際客戶 PoC 場景之行動展示與輕量使用情境。 | 10   | 男  | ITracXing | B、C、D       |
 | （待聘）      | AI 工程師            | 碩士（AI／資工）                                | 學習排序（Learning-to-Rank）、聯邦學習（Federated Learning）、模型調校與大規模訓練；預計負責中後期 AI 模型訓練與驗證，優先支援分項 C/D 之多場域資料建模與部署，並視需求補強分項 A/B 之高階模型優化與維運人力（作為各分項尚未覆蓋能力之備援與擴充）。 | 12   | 女  | ITracXing | C、D（視需求 A/B） |
 
+
+### 四、技術內容說明
+```mermaid
+flowchart LR
+  subgraph Device ["Edge Device (Smart IoT Tracker)"]
+    V["電壓量測 V(t)"]
+    T["溫度量測 T(t) (optional)"]
+    TS[Timestamp 時間戳記]
+  end
+
+  subgraph Cloud ["雲端資料平台 / IoT Backend"]
+    RAW["原始 Telemetry<br/>V, T, TS, 上報頻率, 狀態"]
+    PROC["資料前處理<br/>排序、清洗、補值、對齊 Δt"]
+    FAIL["故障 / 失效事件偵測<br/>最後上報時間、電壓低於門檻"]
+    RULLBL["RUL 標籤計算<br/>RUL(t) = t_failure - t"]
+    FEAT["特徵工程<br/>電壓斜率、平均值、波動度、溫度統計…"]
+  end
+
+  V --> RAW
+  T --> RAW
+  TS --> RAW
+
+  RAW --> PROC
+  PROC --> FAIL
+  PROC --> FEAT
+  FAIL --> RULLBL
+
+  FEAT -.->|輸入特徵→| LSTM_INPUT[(LSTM 輸入張量)]
+  RULLBL -.->|監督標籤→| LSTM_LABEL[(LSTM 目標張量)]
+```
+
+以上圖的 LSTM 輸入／標籤，作為下圖之模型訓練／推論的起點。
+
+```mermaid
+flowchart LR
+  subgraph Model ["AI 模型訓練 / 推論"]
+    LSTM[("LSTM/GRU<br/>時間序列模型")]
+    PRED["RUL 預測<br/>(剩餘可服務壽命 天/小時)"]
+    ALERT["維運決策<br/>更換電池 / 避免派出將掛掉的節點"]
+  end
+
+  LSTM_INPUT[(來自前一圖之特徵)] --> LSTM
+  LSTM_LABEL[(來自前一圖之標籤)] --> LSTM
+  LSTM --> PRED
+  PRED --> ALERT
+```
+
+
+
+如圖 4-1 所示，本計畫之 RUL 預測模組以 NTN（Non-Terrestrial Network，非地面網路） 智慧追蹤器回傳的電壓時間序列、（選用）溫度資訊與時間戳記為基礎，於雲端重建各感測節點之放電軌跡與實際失效時間，計算剩餘可服務壽命（Remaining Useful Life, RUL）標籤。系統採用時間序列預測模型（如 LSTM/GRU）學習「電壓變化型態 × 使用情境」與 RUL 的關聯，於營運階段即時輸出每一節點的剩餘可服務天數，並觸發預防性維護與電池更換決策，以降低非預期離線事件並提升監測可用率。
+
+圖 4-1：RUL 預測流程示意
+
+
 ## 肆、計畫經費需求（千元）
 
 【摘要】本節說明人事、租賃／雲端、合作研發、差旅與風險準備金等各科目經費配置，補助款與自籌款各 50%，並以里程碑節點控管撥付風險；所有金額與比例均已依實際規劃完整填列，可供查核。
