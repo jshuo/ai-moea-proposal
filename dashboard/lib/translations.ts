@@ -230,8 +230,8 @@ export const translations: Record<Language, Translations> = {
     tamperAlerts: 'tamper alerts',
     
     // Project Names
-    projectA: 'Work Package A: BHI/RUL Prediction',
-    projectADesc: 'Battery Health & Lifetime Prediction',
+    projectA: 'Work Package A: Battery RUL Prediction',
+    projectADesc: 'Battery Remaining Lifetime Prediction',
     projectB: 'Work Package B: Natural Language Query',
     projectBDesc: 'AI Assistant Real-time Response',
     projectC: 'Work Package C: Environmental Anomaly Detection',
@@ -303,7 +303,7 @@ export const translations: Record<Language, Translations> = {
     
     // Footer
     footerTitle: 'AI Smart Supply Chain Risk Prediction System',
-    footerProjects: 'Work Packages: A (BHI/RUL) | B (NLQ) | C (Environmental) | D (Route Security)',
+    footerProjects: 'Work Packages: A (RUL) | B (NLQ) | C (Environmental) | D (Route Security)',
     footerCopyright: '© 2025 AI Application Advancement Program · Demo Version',
     
     // Trend indicators
@@ -343,7 +343,7 @@ export const translations: Record<Language, Translations> = {
     tryAsking: 'Try asking:',
     
     // NLQ Responses
-    batteryStatusReport: '## Battery Health Status Report\n\nBased on latest data analysis:\n\n**Needs Immediate Replacement:**\n- 🔴 TOTE-001 (Smart TOTE #1): BHI 28%, RUL only 14 days remaining\n\n**Needs Scheduling Soon:**\n- 🟠 GPS-TRACKER-B2: BHI 62%, RUL 120 days\n- 🟡 TOTE-002: BHI 78%, RUL 340 days\n\n**Recommendation:** Prioritize replacing TOTE-001 battery to avoid operational disruption.',
+    batteryStatusReport: '## Battery Health Status Report\n\nBased on latest data analysis:\n\n**Needs Immediate Replacement:**\n- 🔴 TOTE-001 (Smart TOTE #1): RUL only 14 days remaining (very low capacity)\n\n**Needs Scheduling Soon:**\n- 🟠 GPS-TRACKER-B2: RUL 120 days remaining\n- 🟡 TOTE-002: RUL 340 days remaining\n\n**Recommendation:** Prioritize replacing TOTE-001 battery to avoid operational disruption.',
     needsImmediateReplacement: 'Needs Immediate Replacement',
     needsScheduling: 'Needs Scheduling Soon',
     recommendation: 'Recommendation',
@@ -427,13 +427,13 @@ export const translations: Record<Language, Translations> = {
     tamperAlerts: '個篡改警報',
     
     // Project Names
-    projectA: '工作包 A: BHI/RUL 預測',
-    projectADesc: '電池健康與壽命預測',
-    projectB: '工作包 B: 自然語言查詢',
+    projectA: '分項計畫A: 電池壽命 (RUL) 預測',
+    projectADesc: '電池剩餘壽命預測',
+    projectB: '分項計畫B: 自然語言查詢',
     projectBDesc: 'AI 助理即時回應',
-    projectC: '工作包 C: 環境異常偵測',
+    projectC: '分項計畫C: 環境異常偵測',
     projectCDesc: '溫濕度、震動監控',
-    projectD: '工作包 D: 路線防竊偵測',
+    projectD: '分項計畫D: 路線防竊偵測',
     projectDDesc: 'Smart TOTE 安全監控',
     
     // Common
@@ -500,7 +500,7 @@ export const translations: Record<Language, Translations> = {
     
     // Footer
     footerTitle: 'AI 智慧供應鏈風險預測系統',
-    footerProjects: '工作包: A (BHI/RUL) | B (NLQ) | C (環境異常) | D (路線防竊)',
+    footerProjects: '工作包: A (RUL) | B (NLQ) | C (環境異常) | D (路線防竊)',
     footerCopyright: '© 2025 AI應用躍昇計畫 · Demo 版本',
     
     // Trend indicators
@@ -540,7 +540,7 @@ export const translations: Record<Language, Translations> = {
     tryAsking: '試試問:',
     
     // NLQ Responses
-    batteryStatusReport: '## 電池健康狀態報告\n\n根據最新數據分析:\n\n**需要立即更換:**\n- 🔴 TOTE-001 (Smart TOTE #1): BHI 28%, RUL 僅剩 14 天\n\n**需要近期排程:**\n- 🟠 GPS-TRACKER-B2: BHI 62%, RUL 120 天\n- 🟡 TOTE-002: BHI 78%, RUL 340 天\n\n**建議:** 優先更換 TOTE-001 的電池，以避免運營中斷。',
+    batteryStatusReport: '## 電池健康狀態報告\n\n根據最新數據分析:\n\n**需要立即更換:**\n- 🔴 TOTE-001 (Smart TOTE #1): RUL 僅剩 14 天 (容量嚴重衰退)\n\n**需要近期排程:**\n- 🟠 GPS-TRACKER-B2: RUL 120 天\n- 🟡 TOTE-002: RUL 340 天\n\n**建議:** 優先更換 TOTE-001 的電池，以避免運營中斷。',
     needsImmediateReplacement: '需要立即更換',
     needsScheduling: '需要近期排程',
     recommendation: '建議',

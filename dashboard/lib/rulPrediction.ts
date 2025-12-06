@@ -1,7 +1,7 @@
 // lib/rulPrediction.ts
 /**
  * Remaining Useful Life (RUL) Prediction Module
- * Enhanced battery analytics with survival analysis and deep learning approaches
+ * Enhanced battery analytics with survival analysis and degradation modelling
  * 
  * Implements:
  * - Kaplan-Meier survival estimation
@@ -9,7 +9,7 @@
  * - Time series forecasting for capacity degradation
  * - Confidence intervals for predictions
  * 
- * Reference: AI應用躍昇計畫 - 分項計畫A (BHI/RUL)
+ * Reference: AI應用躍昇計畫 - 分項計畫A (RUL)
  */
 
 // ============================================================================
@@ -25,21 +25,6 @@ export interface BatteryHealthData {
   chargeCycles: number;
   internalResistance?: number; // mΩ
   dischargeRate?: number;     // C-rate
-}
-
-export interface BatteryHealthIndex {
-  deviceId: string;
-  timestamp: Date;
-  bhi: number;                // 0-100 (composite health score)
-  components: {
-    capacityHealth: number;
-    voltageHealth: number;
-    temperatureImpact: number;
-    cycleHealth: number;
-    resistanceHealth: number;
-  };
-  trend: 'improving' | 'stable' | 'degrading' | 'critical';
-  confidence: number;
 }
 
 export interface RULPrediction {
@@ -76,85 +61,6 @@ export interface MaintenanceRecommendation {
   scheduledDate?: Date;
   estimatedCost?: number;
   riskIfDelayed: string;
-}
-
-// ============================================================================
-// BATTERY HEALTH INDEX (BHI) CALCULATION
-// ============================================================================
-
-/**
- * Calculate Battery Health Index (composite score)
- */
-export function calculateBHI(
-  data: BatteryHealthData,
-  nominalCapacity: number = 100,
-  nominalVoltage: number = 3.7,
-  maxCycles: number = 3500
-): BatteryHealthIndex {
-  // Component health scores (0-100 each)
-  
-  // 1. Capacity health (most important - 40% weight)
-  const capacityHealth = Math.max(0, Math.min(100, data.capacity));
-  
-  // 2. Voltage health (25% weight)
-  // Normal range: 2.8V - 4.2V for Li-ion
-  const voltageRange = 4.2 - 2.8;
-  const voltageNormalized = (data.voltage - 2.8) / voltageRange;
-  const voltageHealth = Math.max(0, Math.min(100, voltageNormalized * 100));
-  
-  // 3. Temperature impact (15% weight)
-  // Optimal: 20-25°C, degraded performance outside this range
-  let temperatureImpact = 100;
-  if (data.temperature < 0 || data.temperature > 45) {
-    temperatureImpact = 50;  // Severe impact
-  } else if (data.temperature < 10 || data.temperature > 35) {
-    temperatureImpact = 75;  // Moderate impact
-  } else if (data.temperature < 20 || data.temperature > 25) {
-    temperatureImpact = 90;  // Minor impact
-  }
-  
-  // 4. Cycle health (15% weight)
-  const cycleRatio = data.chargeCycles / maxCycles;
-  const cycleHealth = Math.max(0, (1 - cycleRatio) * 100);
-  
-  // 5. Internal resistance health (5% weight) - if available
-  let resistanceHealth = 100;
-  if (data.internalResistance) {
-    // Typical: 50-100 mΩ new, >200 mΩ degraded
-    resistanceHealth = Math.max(0, 100 - (data.internalResistance - 50) / 1.5);
-  }
-  
-  // Weighted composite BHI
-  const bhi = 
-    capacityHealth * 0.40 +
-    voltageHealth * 0.25 +
-    temperatureImpact * 0.15 +
-    cycleHealth * 0.15 +
-    resistanceHealth * 0.05;
-  
-  // Determine trend based on BHI
-  let trend: BatteryHealthIndex['trend'] = 'stable';
-  if (bhi < 30) trend = 'critical';
-  else if (bhi < 50) trend = 'degrading';
-  else if (bhi > 90) trend = 'improving';
-  
-  // Confidence based on data quality
-  const confidence = data.internalResistance ? 0.90 : 0.85;
-  
-  return {
-    deviceId: data.deviceId,
-    timestamp: data.timestamp,
-    bhi: Math.round(bhi * 10) / 10,
-    components: {
-      capacityHealth,
-      voltageHealth,
-      temperatureImpact,
-      cycleHealth,
-      resistanceHealth,
-    },
-    trend,
-    confidence,
-  };
 }
 
 // ============================================================================
@@ -420,10 +326,9 @@ export function predictRUL(
 // ============================================================================
 
 /**
- * Generate maintenance recommendation based on BHI and RUL
+ * Generate maintenance recommendation based on RUL and current status
  */
 export function generateMaintenanceRecommendation(
-  bhi: BatteryHealthIndex,
   rul: RULPrediction
 ): MaintenanceRecommendation {
   let urgency: MaintenanceRecommendation['urgency'] = 'monitor';
@@ -432,21 +337,21 @@ export function generateMaintenanceRecommendation(
   let riskIfDelayed = 'None - device operating normally';
   
   // Critical conditions
-  if (bhi.bhi < 30 || rul.predictedRUL < 14) {
+  if (rul.predictedRUL < 14) {
     urgency = 'immediate';
     recommendedAction = 'Replace battery immediately to prevent operational failure';
     scheduledDate = new Date();
     riskIfDelayed = 'High risk of device failure and data loss';
   }
   // Urgent conditions
-  else if (bhi.bhi < 50 || rul.predictedRUL < 30) {
+  else if (rul.predictedRUL < 30) {
     urgency = 'soon';
     recommendedAction = 'Schedule battery replacement within 2 weeks';
     scheduledDate = new Date(Date.now() + 14 * 86400000);
     riskIfDelayed = 'Device may fail unexpectedly, causing monitoring gaps';
   }
   // Scheduled maintenance
-  else if (bhi.bhi < 70 || rul.predictedRUL < 90) {
+  else if (rul.predictedRUL < 90) {
     urgency = 'scheduled';
     recommendedAction = 'Plan battery replacement during next maintenance window';
     scheduledDate = new Date(Date.now() + rul.predictedRUL * 0.8 * 86400000);
@@ -454,7 +359,7 @@ export function generateMaintenanceRecommendation(
   }
   
   return {
-    deviceId: bhi.deviceId,
+    deviceId: rul.deviceId,
     urgency,
     recommendedAction,
     scheduledDate,
@@ -476,7 +381,6 @@ export interface BatteryAnalysisResult {
     temperature: number;
     cycles: number;
   };
-  healthIndex: BatteryHealthIndex;
   rulPrediction: RULPrediction;
   maintenanceRecommendation: MaintenanceRecommendation;
   survivalCurve?: SurvivalCurve;
@@ -490,15 +394,11 @@ export function analyzeBattery(
   currentData: BatteryHealthData,
   history: BatteryHealthData[]
 ): BatteryAnalysisResult {
-  // Calculate BHI
-  const healthIndex = calculateBHI(currentData);
-  
   // Predict RUL
   const rulPrediction = predictRUL(currentData, history);
   
   // Generate maintenance recommendation
   const maintenanceRecommendation = generateMaintenanceRecommendation(
-    healthIndex,
     rulPrediction
   );
   
@@ -510,10 +410,6 @@ export function analyzeBattery(
   aiSummary += `- Voltage: **${currentData.voltage.toFixed(2)}V**\n`;
   aiSummary += `- Temperature: **${currentData.temperature}°C**\n`;
   aiSummary += `- Charge Cycles: **${currentData.chargeCycles}**\n\n`;
-  
-  aiSummary += `📊 **Health Index (BHI)**: **${healthIndex.bhi.toFixed(1)}/100**\n`;
-  aiSummary += `- Trend: ${healthIndex.trend.toUpperCase()}\n`;
-  aiSummary += `- Confidence: ${(healthIndex.confidence * 100).toFixed(0)}%\n\n`;
   
   aiSummary += `⏱️ **Remaining Useful Life (RUL)**:\n`;
   aiSummary += `- Predicted: **${rulPrediction.predictedRUL} days**\n`;
@@ -545,7 +441,6 @@ export function analyzeBattery(
       temperature: currentData.temperature,
       cycles: currentData.chargeCycles,
     },
-    healthIndex,
     rulPrediction,
     maintenanceRecommendation,
     aiSummary,
@@ -631,8 +526,6 @@ export function runRULDemo(): BatteryAnalysisResult {
   const result = analyzeBattery(currentData, history);
   
   console.log('📋 Analysis Results:');
-  console.log(`   - BHI Score: ${result.healthIndex.bhi}/100`);
-  console.log(`   - Trend: ${result.healthIndex.trend}`);
   console.log(`   - Predicted RUL: ${result.rulPrediction.predictedRUL} days`);
   console.log(`   - 95% CI: ${result.rulPrediction.confidenceInterval.lower}-${result.rulPrediction.confidenceInterval.upper} days`);
   console.log(`   - End of Life: ${result.rulPrediction.endOfLife.toISOString().split('T')[0]}`);

@@ -115,14 +115,14 @@ export function extractBatteryEvents(
       type: 'battery',
       severity,
       timestamp: r.analysisTimestamp,
-      title: `Battery Health Alert - ${r.deviceId}`,
-      description: `BHI: ${r.healthIndex.bhi}/100, RUL: ${r.rulPrediction.predictedRUL} days. ${r.maintenanceRecommendation.recommendedAction}`,
+      title: `Battery RUL Alert - ${r.deviceId}`,
+      description: `RUL: ${r.rulPrediction.predictedRUL} days, capacity: ${r.currentStatus.capacity}%. ${r.maintenanceRecommendation.recommendedAction}`,
       deviceId: r.deviceId,
       metrics: {
-        bhi: r.healthIndex.bhi,
-        rul: r.rulPrediction.predictedRUL,
+        rulDays: r.rulPrediction.predictedRUL,
         capacity: r.currentStatus.capacity,
-        trend: r.healthIndex.trend,
+        temperature: r.currentStatus.temperature,
+        cycles: r.currentStatus.cycles,
       },
       recommendation: r.maintenanceRecommendation.recommendedAction,
     };
@@ -290,12 +290,12 @@ function generateBatterySection(
   }
   
   // Summary statistics
-  const avgBHI = batteryResults.reduce((sum, r) => sum + r.healthIndex.bhi, 0) / batteryResults.length;
   const avgRUL = batteryResults.reduce((sum, r) => sum + r.rulPrediction.predictedRUL, 0) / batteryResults.length;
+  const avgCapacity = batteryResults.reduce((sum, r) => sum + r.currentStatus.capacity, 0) / batteryResults.length;
   const critical = batteryResults.filter(r => r.maintenanceRecommendation.urgency === 'immediate').length;
   
   content += `**Fleet Summary:**\n`;
-  content += `- Average BHI: **${avgBHI.toFixed(1)}/100**\n`;
+  content += `- Average capacity: **${avgCapacity.toFixed(1)}%**\n`;
   content += `- Average RUL: **${Math.round(avgRUL)} days**\n`;
   content += `- Devices needing immediate attention: **${critical}**\n\n`;
   
@@ -306,13 +306,13 @@ function generateBatterySection(
   
   if (needsAttention.length > 0) {
     content += `**Devices Requiring Maintenance:**\n\n`;
-    content += `| Device | BHI | RUL (days) | Urgency | Primary Factor |\n`;
-    content += `|--------|-----|------------|---------|----------------|\n`;
+    content += `| Device | Capacity (%) | RUL (days) | Urgency | Primary Factor |\n`;
+    content += `|--------|---------------|------------|---------|----------------|\n`;
     
     for (const r of needsAttention.slice(0, 10)) {
       const urgencyEmoji = r.maintenanceRecommendation.urgency === 'immediate' ? '🔴' :
                           r.maintenanceRecommendation.urgency === 'soon' ? '🟠' : '🟡';
-      content += `| ${r.deviceId} | ${r.healthIndex.bhi.toFixed(1)} | ${r.rulPrediction.predictedRUL} | ${urgencyEmoji} ${r.maintenanceRecommendation.urgency} | ${r.rulPrediction.factors.primaryFactor} |\n`;
+      content += `| ${r.deviceId} | ${r.currentStatus.capacity.toFixed(1)} | ${r.rulPrediction.predictedRUL} | ${urgencyEmoji} ${r.maintenanceRecommendation.urgency} | ${r.rulPrediction.factors.primaryFactor} |\n`;
     }
     content += `\n`;
   }
@@ -324,7 +324,7 @@ function generateBatterySection(
     visualizationType: 'chart',
     data: batteryResults.map(r => ({
       deviceId: r.deviceId,
-      bhi: r.healthIndex.bhi,
+      capacity: r.currentStatus.capacity,
       rul: r.rulPrediction.predictedRUL,
       urgency: r.maintenanceRecommendation.urgency,
     })),
@@ -577,7 +577,7 @@ export function generateAIReport(
       allEvents.filter(e => e.severity === 'medium').length * 5
     ),
     avgBatteryHealth: batteryResults.length > 0
-      ? batteryResults.reduce((sum, r) => sum + r.healthIndex.bhi, 0) / batteryResults.length
+      ? batteryResults.reduce((sum, r) => sum + r.currentStatus.capacity, 0) / batteryResults.length
       : 100,
     environmentalAlerts: envReports.reduce((sum, r) => sum + r.anomalies.length, 0),
     routeDeviations: routeResults.reduce((sum, r) => sum + r.statistics.deviationCount, 0),
