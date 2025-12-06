@@ -84,7 +84,7 @@ We explain “source, assumptions, formulas, and validation” for each figure i
 | Indicator                      | Target     | Derivation / Formula                                                                                                                                          | Main Assumptions                                                                 | Data Source / Validation                                  |
 |-------------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------------|
 | Sensor Availability           | ≥95%       | Baseline 90%; predictive maintenance lowers unplanned offline rate ≈ (pre-failure alert intervention rate 70% × failure events 7% × avoidance rate 80%) → +~5% | Annual failures/offline events ≈7% of daily devices; early alerts enable swaps   | 30-day continuous uptime stats; field validation          |
-| RUL Prediction Accuracy       | ≥90%       | Small sample initial test (n≈120 devices, 86–88% accuracy) + multivariate features (temp/transmission freq) +2–4% → 90%                                      | Feature gains ≤5% (conservative)                                                 | Subproject A test set; quarterly model evaluation         |
+| RUL Prediction Accuracy       | ≥90%       | Small sample initial test (n≈120 devices, 86–88% accuracy) + multivariate features (temp/transmission freq) +2–4% → 90%                                      | Feature gains ≤5% (conservative)                                                 | Work Package A test set; quarterly model evaluation         |
 | RUL MAE                       | ≤10 days   | Simple threshold baseline error 18–22 days; survival analysis + time series reduces 30–50% (literature) → take 50%: 20 × 0.5 = 10 days                        | Sufficient retirement/maintenance labels (>50 cases)                             | Survival analysis tests; hold-out MAE                     |
 | Env. anomaly F1-score         | ≥0.88      | Rule-based baseline ≈0.70; add change-point (+0.08–0.10) + event alignment (+0.06–0.08) → 0.86–0.88 → choose upper bound                                     | Gains from change-point and alignment are independent (non-overlapping)          | Labeled event set; F1 calculation                         |
 | Route deviation AUC           | ≥0.90      | Pure GPS model AUC 0.82–0.85; add road-network and behavioral context +0.04–0.06 → 0.86–0.91 → choose 0.90                                                   | Context features are stable; sample size >1,000 tracks                            | Test-set ROC; quarterly validation                        |
@@ -237,7 +237,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   Example: A smart warehouse deployed hundreds of environmental sensors. One sensor’s Li battery progressively degraded and dropped suddenly during summer heat, causing early offline. The gap was only noticed days later when reports were reviewed, and during the offline period warehouse temperature spiked, damaging sensitive goods. This illustrates the lack of RUL prediction and preventive maintenance: once a sensor dies, data gaps form and critical events are missed in real time. By contrast, industry leaders have begun adopting robust battery monitoring and maintenance for IoT devices. For instance, a global shipping leader’s smart containers track sensor battery levels in real time to ensure continuous operation across long trips without mid-journey power loss.
 
-  → Need: Introduce battery RUL prediction models and preventive maintenance. Use ML over voltage, temperature, and discharge curves to predict battery depletion and notify for proactive replacement. Integrate with Subproject B’s AI autonomous incident report so that when sensors go offline, the system auto-reports and marks the last valid data point, enabling rapid intervention and improving availability (mapped to Subproject A).
+  → Need: Introduce battery RUL prediction models and preventive maintenance. Use ML over voltage, temperature, and discharge curves to predict battery depletion and notify for proactive replacement. Integrate with Work Package B’s AI autonomous incident report so that when sensors go offline, the system auto-reports and marks the last valid data point, enabling rapid intervention and improving availability (mapped to Work Package A).
 
   #### Pain Point 2 | Report generation is time-consuming and lacks interactivity (manual aggregation, delayed decisions)
 
@@ -245,7 +245,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   Example: A food logistics supervisor weekly compiles a cold-chain performance report by exporting temperature/humidity series, downloading GPS tracks, and gathering WMS door logs. Hours are spent copy-pasting into Excel, repeatedly aligning units and timestamps. One case misattributed a delay due to time misalignment across sources, only corrected later in meetings. Teams end up chasing data lineage and consistency instead of acting promptly. Traditional tools also impede ad-hoc Q&A: even when managers know the question, systems don’t easily yield answers without IT support.
 
-  → Need: Deploy AI autonomous incident reporting and NLQ so aggregation and reporting are automated; managers ask in natural language and get instant insights. With a domain semantic layer and NL-to-SQL, questions like “How many over-temp alerts in the South warehouse yesterday and main causes?” translate safely into queries and answers, significantly reducing manual efforts and information delay (mapped to Subproject B).
+  → Need: Deploy AI autonomous incident reporting and NLQ so aggregation and reporting are automated; managers ask in natural language and get instant insights. With a domain semantic layer and NL-to-SQL, questions like “How many over-temp alerts in the South warehouse yesterday and main causes?” translate safely into queries and answers, significantly reducing manual efforts and information delay (mapped to Work Package B).
 
   #### Pain Point 3 | Hard to grasp risks for environment-sensitive goods in time (humidity swings, weak root-cause tracing)
 
@@ -253,7 +253,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   Example: Premium coffee beans stored a week at a port warehouse during monsoon season faced poor ventilation and rain, with humidity over 80% for long periods. Sensors captured data but no timely alert was raised. A week later, bags showed mold and cargo was scrapped. If alerts had been timely, loss might have been avoided. Industry notes that real-time monitoring combined with AI alerts can prevent issues before they escalate.
 
-  → Need: Build temperature/humidity anomaly detection and AI autonomous alerting. For sustained threshold breaches or rapid swings, automatically notify via SMS/app, triggering predefined response flows. Add AI autonomous incident reports to summarize related data (doors, equipment state, weather) and generate natural-language explanations and likely causes to aid rapid triage, reducing damage risk (mapped to Subproject C).
+  → Need: Build temperature/humidity anomaly detection and AI autonomous alerting. For sustained threshold breaches or rapid swings, automatically notify via SMS/app, triggering predefined response flows. Add AI autonomous incident reports to summarize related data (doors, equipment state, weather) and generate natural-language explanations and likely causes to aid rapid triage, reducing damage risk (mapped to Work Package C).
 
   #### Pain Point 4 | Route detours and suspected theft are not identified promptly (GPS deviation, manual judgment)
 
@@ -261,7 +261,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   Example: Semiconductor cargo routes: Hsinchu factory → Port of Taipei (truck, ~2 days) → port dwell (~1 day) → Rotterdam (sea, ~10 days) → port dwell (~2 days) → Eindhoven (truck, ~2 days). Systems often alert only when truck exceeds expected window, a reactive approach. If models learn historical congestion and operations, they can pre-alert expected major delays before departure, shifting to feed-forward management. If models learn normal routes and dwell points for common lanes, deviations, abnormal reroutes, or high-risk area stops raise theft/fraud warnings in real time, not after playback.
 
-  → Need: Build route anomaly and theft detection using GPS/NTN trajectories, geo-fences, pressure/lock events, and behavioral features to detect deviation, dwell, and unauthorized opening with reduced false alarms and improved precision. Integrate AI autonomous reporting for efficient investigations (mapped to Subproject D).
+  → Need: Build route anomaly and theft detection using GPS/NTN trajectories, geo-fences, pressure/lock events, and behavioral features to detect deviation, dwell, and unauthorized opening with reduced false alarms and improved precision. Integrate AI autonomous reporting for efficient investigations (mapped to Work Package D).
 
   The project addresses these four pain points with Subprojects A–D, each delivering AI solutions with measurable KPIs to systemically enhance reliability, safety, and international competitiveness.
 
@@ -273,7 +273,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   #### (1) Introduction Goals: Pain Points → Subprojects → AI Solutions
 
-  | Pain Point | Subproject | Core AI | Purpose & Target Outcomes |
+  | Pain Point | Work Package | Core AI | Purpose & Target Outcomes |
   | --- | --- | --- | --- |
   | Sensor reliability shortfalls (battery, interference, data loss) | A. Sensor Reliability Optimization | Battery RUL prediction; predictive maintenance | Predict battery degradation/failure and schedule maintenance proactively; raise availability from 90% to ≥95%; enable intelligent maintenance scheduling. |
   | Reports are slow and not interactive | B. AI Autonomous Reporting & NLQ | NLQ; NL-to-SQL; LLM report generation | Natural-language access for managers/operators; reduce report time from “hours manual” to “seconds automated,” NLQ P95 latency <60 s, accuracy ≥90%. |
@@ -335,10 +335,10 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   | Item | Before (Issues) | After (Outcomes) |
   | --- | --- | --- |
-  | Sensor reliability & intelligent maintenance (Pain Point 1 / Subproject A) | No forecast for battery/drift/offline, causing data gaps, costly re-measurement, and harder anomaly interpretation; higher O&M costs. | Battery RUL prediction + predictive maintenance; Availability ≥95%; RUL MAE ≤10 days; data completeness ≥95%; lower unplanned downtime and maintenance costs. |
-  | Report generation & decision efficiency (Pain Point 2 / Subproject B) | Manual aggregation; requests via tickets/emails; hours/days delays; poor traceability of queries. | NLQ + auto-reporting; leaders/operators ask via NL; report generation “hours → <45 s” (M1–M6 initial); audit trails retained; scheduled executive/weekly/monthly auto-reports. |
-  | Environment-sensitive goods risk (Pain Point 3 / Subproject C) | Mostly post-hoc review; lack real-time alerting and plain-language explanations; missed intervention windows. | Change-point/stat thresholds + simple rules for T/H anomalies; align with box-open/segment events; auto-trigger Subproject B AI report/push; “summary + recommended actions”; Early-warning ≥70%; violation rate ↓ ≥30%; report SLA (P95) ≤ 2 min. |
-  | Route detours, reasonable delays vs. theft (Pain Point 4 / Subproject D) | Retrospective GPS playback/manual judgment; hard to separate reasonable delay vs. suspicious reroute; unauthorized opening discovered post-factum. | GPS/NTN trajectory + behavior modeling; Smart TOTE BLE Padlock/pressure detect unauthorized opening; label “reasonable delay” vs. “suspicious reroute/dwell/unlawful opening”; F1 ≥0.85; false alarms ≤15%; response time <30 min. |
+  | Sensor reliability & intelligent maintenance (Pain Point 1 / Work Package A) | No forecast for battery/drift/offline, causing data gaps, costly re-measurement, and harder anomaly interpretation; higher O&M costs. | Battery RUL prediction + predictive maintenance; Availability ≥95%; RUL MAE ≤10 days; data completeness ≥95%; lower unplanned downtime and maintenance costs. |
+  | Report generation & decision efficiency (Pain Point 2 / Work Package B) | Manual aggregation; requests via tickets/emails; hours/days delays; poor traceability of queries. | NLQ + auto-reporting; leaders/operators ask via NL; report generation “hours → <45 s” (M1–M6 initial); audit trails retained; scheduled executive/weekly/monthly auto-reports. |
+  | Environment-sensitive goods risk (Pain Point 3 / Work Package C) | Mostly post-hoc review; lack real-time alerting and plain-language explanations; missed intervention windows. | Change-point/stat thresholds + simple rules for T/H anomalies; align with box-open/segment events; auto-trigger Work Package B AI report/push; “summary + recommended actions”; Early-warning ≥70%; violation rate ↓ ≥30%; report SLA (P95) ≤ 2 min. |
+  | Route detours, reasonable delays vs. theft (Pain Point 4 / Work Package D) | Retrospective GPS playback/manual judgment; hard to separate reasonable delay vs. suspicious reroute; unauthorized opening discovered post-factum. | GPS/NTN trajectory + behavior modeling; Smart TOTE BLE Padlock/pressure detect unauthorized opening; label “reasonable delay” vs. “suspicious reroute/dwell/unlawful opening”; F1 ≥0.85; false alarms ≤15%; response time <30 min. |
 
   #### (3) Security and Data Governance (Compliance)
 
@@ -364,24 +364,24 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   - Validation (by subproject)
 
-    - Subproject A (M1–M11) | Sensor reliability optimization  
+    - Work Package A (M1–M11) | Sensor reliability optimization  
       - Battery life indicators and stability (compare 3 batches for variance)  
       - RUL MAE ≤10 days (20% hold-out validation)  
       - Data quality/stability indices achieved (pre/post signal quality comparison for same sensor)  
       - Data completeness ≥95%, availability ≥95% (30-day continuous records)
 
-    - Subproject B (M1–M5) | NLQ & AI autonomous reporting  
+    - Work Package B (M1–M5) | NLQ & AI autonomous reporting  
       - NLQ accuracy ≥90% (200+ labeled queries)  
       - NLQ P95 latency <180 s (stress test 500–1,000 QPS)  
       - Auto-report generation completion ≥95% (100 reports vs. human versions)  
       - Manual hours ↓ ≥70% (baseline vs. post-adoption)
 
-    - Subproject C (M4–M15) | Environment anomalies & reporting (MVP)  
+    - Work Package C (M4–M15) | Environment anomalies & reporting (MVP)  
       - T/H anomaly F1-score ≥0.88 (event dataset)  
       - Early-warning rate ≥70% (≥30 min in advance; exogenous features as needed)  
       - Report SLA (P95) ≤2 min (alert → report → push end-to-end)
 
-    - Subproject D (M4–M15) | Route anomalies & theft (Smart TOTE)  
+    - Work Package D (M4–M15) | Route anomalies & theft (Smart TOTE)  
       - Route deviation AUC ≥0.90 (20 real route anomaly samples)  
       - Theft/unauthorized opening F1 ≥0.85 (BLE pressure/light/open events)  
       - ETA MAE ≤15 min (historical deliveries/test sets)  
@@ -389,7 +389,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   ### (2) Subprojects
 
-  #### Subproject A | Sensor Reliability Optimization
+  #### Work Package A | Sensor Reliability Optimization
 
   Objective: Raise availability from ~90% and lower unplanned downtime by modeling battery RUL for predictive maintenance.
 
@@ -415,7 +415,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   MVP Acceptance: Availability ≥95%; RUL MAE ≤10 days; data completeness ≥95%. PoC (non-hard acceptance): multi-site long-term trend analysis; cross-customer generalization.
 
-  #### Subproject B | On-demand Reporting and NLQ
+  #### Work Package B | On-demand Reporting and NLQ
 
   Allow leaders/operators to obtain insights in natural language and auto-generate weekly/monthly reports and prioritized executive summaries.
 
@@ -440,7 +440,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   MVP Acceptance: NLQ accuracy ≥90%, P95 <60 s, report hours ↓ ≥50%. PoC: multi-agent report choreography; cross-language executive templates.
 
-  #### Subproject C | Environment Anomaly Detection & AI Incident Reporting (MVP)
+  #### Work Package C | Environment Anomaly Detection & AI Incident Reporting (MVP)
 
   Focus on T/H-sensitive goods (e.g., coffee beans). MVP delivers anomaly detection + alert → AI report for actionable summaries; add exogenous features and predictive models as needed for stronger early warning.
 
@@ -461,11 +461,11 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
   - Monitor F1, early-warning rate, false alarms, report SLA; data/model drift monitoring; periodic retraining.
 
   C6. Deployment & Showcase
-  - Real-time anomalies trigger Subproject B’s AI report using templates; Email/app pushes with time window, affected batches, aligned evidence, suggested actions; dashboard drill-down and NLQ jump (C×B integration).
+  - Real-time anomalies trigger Work Package B’s AI report using templates; Email/app pushes with time window, affected batches, aligned evidence, suggested actions; dashboard drill-down and NLQ jump (C×B integration).
 
   MVP Acceptance: F1 ≥0.88; early-warning ≥70%; SLA ≤2 min; violation ↓ ≥30%. PoC: multi-site T/H model sharing/tuning; cross-region risk heatmaps.
 
-  #### Subproject D | Theft Detection and Route Monitoring
+  #### Work Package D | Theft Detection and Route Monitoring
 
   Model route deviation, suspicious dwell, and behaviors to identify reroutes/theft; optimize alert prioritization.
 
@@ -505,7 +505,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
     %% ========== Device & Model Layer ==========
     subgraph S["Device & Model Layer<br/>📡 Sensor data is transmitted securely with identity verification, then written to the iTracXing/Arviem Cloud"]
       S1["Smart TOTE / Gateway<br/>🔐 Encrypted transport｜Identity verification<br/>Collect sensor data"]
-      S2["AI Model Inference<br/>• Subproject A: Battery RUL prediction model<br/>• Subproject C: Environmental anomaly model (T/H detection)<br/>• Subproject D: Route/theft model (GPS/unauthorized opening)<br/>↓ Output risk_score / metrics"]
+      S2["AI Model Inference<br/>• Work Package A: Battery RUL prediction model<br/>• Work Package C: Environmental anomaly model (T/H detection)<br/>• Work Package D: Route/theft model (GPS/unauthorized opening)<br/>↓ Output risk_score / metrics"]
     end
 
     %% ========== Event & Alert Engine ==========
@@ -531,7 +531,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
     INPUT["⬅️ Alert object<br/>(from the alert engine)"]
 
     %% ========== (Optional) LLM Explanation ==========
-    subgraph L["(Optional) LLM Explanation Layer<br/>👉 Subproject B: AI autonomous incident report / NLQ Dashboard"]
+    subgraph L["(Optional) LLM Explanation Layer<br/>👉 Work Package B: AI autonomous incident report / NLQ Dashboard"]
       L1["Place Alert JSON into Prompt"]
       L2["LLM produces bilingual (EN/ZH) summary + recommended actions"]
     end
@@ -559,14 +559,14 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
   Architecture explanation:
   1. Device & Model Layer: Smart TOTE sensors collect temperature/humidity, GPS, and open/close state, then run AI inferences from Subprojects A (battery RUL), C (environment anomalies), and D (route/theft) to output risk scores and metrics.
   2. Event & Alert Engine: Model outputs are written to an event queue, evaluated by alert rules, deduplicated/suppressed, and turned into structured Alert objects so high-priority events are not drowned out.
-  3. LLM Explanation Layer (optional): Corresponding to Subproject B’s autonomous incident reporting, Alert JSON is converted to bilingual summaries and recommended actions; if not using LLM, fixed templates are applied to balance cost and flexibility.
+  3. LLM Explanation Layer (optional): Corresponding to Work Package B’s autonomous incident reporting, Alert JSON is converted to bilingual summaries and recommended actions; if not using LLM, fixed templates are applied to balance cost and flexibility.
   4. Notification services & channels: Recipients and channels (Email/LINE/Slack/Webhook) are chosen by customer/severity; notification history is logged for SLA and ESG audits to ensure governance transparency.
 
   This architecture highlights three core features: (1) modular AI functions that scale independently; (2) built-in governance (dedup, audit, SLA) in the flow; (3) flexible deployment (LLM optional or fixed templates) to lower adoption barriers.
 
   ### (4) Technical Content
 
-  RUL prediction flow overview
+  #### RUL prediction flow overview
 
   ```mermaid
   flowchart LR
@@ -617,7 +617,7 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   Figure 4-1: RUL prediction flow overview
 
-  Environmental anomaly (temperature/humidity) flow overview
+  #### Environmental anomaly (temperature/humidity) flow overview
 
   ```mermaid
   flowchart LR
@@ -655,12 +655,12 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
     subgraph APPS["Application layer｜alerts & reporting"]
       T_ALERT[Real-time alert service<br/>SMS / Email / ChatOps]
-      T_DASH[Monitoring dashboard<br/>cold-chain route / cargo viz"]
+      T_DASH[Monitoring dashboard<br/>cold-chain route / cargo viz]
       T_REPORT[Audit & compliance reports<br/>claims / compliance / audit files]
     end
 
     subgraph FEEDBACK["Feedback & continual learning"]
-      T_LABEL[Human labeling & feedback<br/>true anomaly / false positive"]
+      T_LABEL[Human labeling & feedback<br/>true anomaly / false positive]
       T_RETRAIN[Periodic re-training pipeline]
     end
 
@@ -835,9 +835,9 @@ Note: This table lists key AI modules and technical paths, separating MVP/must-h
 
 | Module | Type | Key Milestones (Month) | End-of-project KPI | Notes |
 | --- | --- | --- | --- | --- |
-| Environmental anomaly detection + risk scoring (Temp/Humidity + event alignment) | MVP | M6 prototype, M12 site validation | F1 ≥ 0.85, violation rate ↓ ≥ 30%, incident report SLA (P95) ≤ 2 min | Must-achieve; maps to Pain Point 3, Subproject C |
-| NLQ + automated reporting (AI autonomous summaries and management dashboard) | MVP | M6 prototype, M12 internal trial, M18 site rollout | NLQ accuracy ≥ 90%, P95 latency ≤ 60 s, reporting work-hours ↓ ≥ 50% | Must-achieve; maps to Pain Point 2, Subproject B |
-| Route/theft anomaly detection (Smart TOTE + GPS/Padlock) | MVP | M12 model demo, M18 site validation | Route deviation AUC ≥ 0.90, theft/unauthorized opening F1 ≥ 0.85, critical alert response < 30 min | Must-achieve; maps to Pain Point 4, Subproject D |
+| Environmental anomaly detection + risk scoring (Temp/Humidity + event alignment) | MVP | M6 prototype, M12 site validation | F1 ≥ 0.85, violation rate ↓ ≥ 30%, incident report SLA (P95) ≤ 2 min | Must-achieve; maps to Pain Point 3, Work Package C |
+| NLQ + automated reporting (AI autonomous summaries and management dashboard) | MVP | M6 prototype, M12 internal trial, M18 site rollout | NLQ accuracy ≥ 90%, P95 latency ≤ 60 s, reporting work-hours ↓ ≥ 50% | Must-achieve; maps to Pain Point 2, Work Package B |
+| Route/theft anomaly detection (Smart TOTE + GPS/Padlock) | MVP | M12 model demo, M18 site validation | Route deviation AUC ≥ 0.90, theft/unauthorized opening F1 ≥ 0.85, critical alert response < 30 min | Must-achieve; maps to Pain Point 4, Work Package D |
 | Multi-party Federated Learning (collaborative data across sites) | Extended | M12 FL architecture and PoC plan, M18 ≥1 cross-site PoC | ≥2–3 nodes in FL training; 1 privacy/FL whitepaper; centralized vs FL performance gap ≤ 5% | Advanced; emphasizes collaboration/GDPR/alliance; not a hard acceptance gate |
 | Training AI Coding / vibe coding process | Support | M3 internal guidelines, M9 CI integration, ongoing | Typical dev lead time ↓ ≥ 20–30%, major defect rate does not rise (vs 2024 baseline) | Internal R&D efficiency/quality controls; supports Subprojects A–D; not an external KPI |
 
@@ -865,23 +865,23 @@ gantt
   axisFormat  %Y-%m
   excludes    weekends
 
-  section Subproject A Battery RUL Prediction
+  section Work Package A Battery RUL Prediction
   A1–A3: Battery life models & data pipelines      :a1, 2026-01-01, 4m
   A4–A6: RUL/TFT & survival analysis               :a2, 2026-04-15, 6m
 
-  section Subproject B Reporting Automation & NLQ
+  section Work Package B Reporting Automation & NLQ
   B1–B3: NL-to-SQL & RAG                           :b1, 2026-01-01, 3.5m
   B4–B6: Auto reporting & Executive Alert          :b2, 2026-03-01, 2.5m
 
-  section Subproject C Environmental Anomalies & AI Incident Reports (MVP)
+  section Work Package C Environmental Anomalies & AI Incident Reports (MVP)
   C1–C3: Rules/change-points & event alignment     :c1, 2026-04-01, 8m
   C4–C6: Alert → AI report integration & explainability :c2, 2026-10-01, 4m
 
-  section Subproject D Route / Theft Detection
+  section Work Package D Route / Theft Detection
   D1–D4: LSTM/graph models & dynamic alerts        :d1, 2026-04-01, 9m
   D5–D6: Adaptive sampling & deployment            :d2, 2026-10-01, 5m
 
-  milestone Subproject B / Early usable (A.1)      :m1, 2026-05-31, 0d
+  milestone Work Package B / Early usable (A.1)      :m1, 2026-05-31, 0d
   milestone Subprojects C/D mid validation (B.1)   :m2, 2026-09-30, 0d
   milestone Subprojects A/C/D site validation (B.2):m3, 2027-03-31, 0d
   milestone Final acceptance (C.1)                 :m4, 2027-06-30, 0d
@@ -894,23 +894,23 @@ gantt
 - 2026/01–2026/05 (M1–M5; Milestone A.1)
   - Goal: Subprojects A/B early usability
   - Key deliverables:
-    - Subproject A: battery life data pipelines and preprocessing (A1–A3), initial RUL model
-    - Subproject B: NL-to-SQL & RAG basics (B1–B3), auto-reporting & Executive Alert prototype live (early B4–B6)
+    - Work Package A: battery life data pipelines and preprocessing (A1–A3), initial RUL model
+    - Work Package B: NL-to-SQL & RAG basics (B1–B3), auto-reporting & Executive Alert prototype live (early B4–B6)
   - Checkpoint: A.1 (end of 2026/05)
 
 - 2026/04–2026/09 (M4–M9; Milestone B.1)
   - Goal: Subprojects C/D mid-stage models
   - Key deliverables:
-    - Subproject C: rules/change-points & event alignment (C1–C3), alert → AI report integration meeting F1/SLA goals
-    - Subproject D: route/theft detection LSTM/graph models (D1–D4), dynamic alert logic running in test sites
+    - Work Package C: rules/change-points & event alignment (C1–C3), alert → AI report integration meeting F1/SLA goals
+    - Work Package D: route/theft detection LSTM/graph models (D1–D4), dynamic alert logic running in test sites
   - Checkpoint: B.1 (end of 2026/09)
 
 - 2026/04–2027/03 (M4–M15; Milestone B.2)
   - Goal: Subprojects A/C/D site validation
   - Key deliverables:
-    - Subproject A: RUL model running continuously in sites, availability and MAE meet targets
-    - Subproject C: environmental anomalies meet early-warning rate and report SLA in sites
-    - Subproject D: real routes A/B tests meet F1 and ETA MAE improvement targets
+    - Work Package A: RUL model running continuously in sites, availability and MAE meet targets
+    - Work Package C: environmental anomalies meet early-warning rate and report SLA in sites
+    - Work Package D: real routes A/B tests meet F1 and ETA MAE improvement targets
   - Checkpoint: B.2 (end of 2027/03)
 
 - 2027/01–2027/06 (M13–M18; Milestone C.1)
@@ -955,8 +955,8 @@ To ensure quality and controllability, adopt milestone-based disbursement and se
 
 | Milestone | Period | Key milestones (subprojects) | Disbursement | Amount | Retainage |
 | --- | --- | --- | --- | --- | --- |
-| Milestone A (A.1) | M1–M5 | Subproject B early usable + Subproject A data pipelines/preprocessing | 40% | 3,600K | — |
-| Milestone B (B.1/B.2) | M4–M15 | Subprojects C/D models & validation + Subproject A RUL/life extension | 35% | 3,150K | — |
+| Milestone A (A.1) | M1–M5 | Work Package B early usable + Work Package A data pipelines/preprocessing | 40% | 3,600K | — |
+| Milestone B (B.1/B.2) | M4–M15 | Subprojects C/D models & validation + Work Package A RUL/life extension | 35% | 3,150K | — |
 | Milestone C (C.1) | M13–M18 | Final acceptance + production deployment (cross-subproject integration) | 20% | 1,800K | 5% (450K)* |
 | Final acceptance | M18+ | Pass acceptance tests | 5% | 450K | — |
 | Total | — | — | 100% | 9,000K | — |
@@ -1000,7 +1000,7 @@ This mechanism ensures efficient use of public funds, early issue detection, and
 | Indicator                                 | Baseline                                 | End Target                                | Measurement method / Data source                                           |
 |-------------------------------------------|-------------------------------------------|-------------------------------------------|----------------------------------------------------------------------------|
 | Sensor reliability (Availability)         | 90% (2024 annual average)                 | ≥95%                                       | IoT device monitoring system; daily online rate and data completeness; monthly summary |
-| RUL prediction accuracy                   | No baseline (new model)                   | ≥90%                                       | Classification accuracy on Subproject A validation set; quarterly updates  |
+| RUL prediction accuracy                   | No baseline (new model)                   | ≥90%                                       | Classification accuracy on Work Package A validation set; quarterly updates  |
 | RUL prediction error (MAE)                | No baseline (rule-based baseline)         | ≤10 days                                   | MAE between RUL predictions and actual life; quarterly updates             |
 | Environmental anomaly detection F1-score  | Current rule-based ≈ 0.7                  | ≥0.88                                      | F1 on complete event sample set; quarterly audits                          |
 | Route deviation AUC / theft alert F1      | None (first-time introduction)            | AUC ≥0.90, F1 ≥0.85                        | Validated with independent test set and site data; quarterly audits        |
@@ -1230,17 +1230,17 @@ Additionally, all CES 2026 and other international trade show costs (booth, trav
 | KPI                                  | Baseline                     | Target                  | Measurement                                     | Data Source                       | Frequency        |
 |--------------------------------------|------------------------------|-------------------------|-------------------------------------------------|------------------------------------|------------------|
 | Sensor reliability (Availability)    | 90% (2024 annual average)    | ≥95%                    | Online rate / data completeness                 | iTracXing IoT Sensor DB            | Monthly          |
-| RUL prediction accuracy              | No baseline (new model)      | ≥90%                    | Predicted RUL vs actual life                    | Subproject A validation set        | Quarterly        |
-| RUL prediction error (MAE)           | No baseline (new model)      | ≤10 days                | MAE between predicted and actual life           | Subproject A model                 | Quarterly        |
-| NLQ response latency (P95)           | Manual >10 minutes           | <60 seconds             | API P95 latency                                 | Subproject B NLQ Gateway log       | Weekly           |
-| NLQ query accuracy                   | None (first-time introduction) | ≥92%                  | NL-to-SQL query accuracy                        | Subproject B model                 | Quarterly        |
-| Environmental early-warning rate     | 0–2 hours (existing systems) | ≥70%                    | Warning trigger time − anomaly time             | Subproject C sensor DB             | Monthly          |
-| Environmental incident report SLA (P95) | None (first-time introduction) | ≤2 minutes           | End-to-end latency: alert → report → push       | Subproject B×C event/report pipeline | Monthly        |
-| Route deviation AUC                  | None (first-time introduction) | ≥0.90                 | ROC-AUC                                         | Subproject D GPS/NTN time series   | Quarterly        |
-| Theft alert F1-score                 | None (first-time introduction) | ≥0.85                 | Confusion matrix → F1                           | Subproject D GPS/NTN / event labels | Quarterly       |
-| ETA prediction error (MAE)           | ≈ 1.8–3.2 hours              | ≥25% improvement        | ETA estimate vs actual arrival                  | Subproject D model                 | Monthly          |
-| ESG: ineffective transport reduction | None (first-time measurement) | ≥10–12%               | Mileage comparison before/after optimization    | Subproject D routing log           | Semiannual       |
-| ESG: reduced T/H anomaly rate        | Anomaly rate X% (2024)       | ≥15% improvement        | Anomaly event statistics                        | Subproject C sensor DB             | Quarterly        |
+| RUL prediction accuracy              | No baseline (new model)      | ≥90%                    | Predicted RUL vs actual life                    | Work Package A validation set        | Quarterly        |
+| RUL prediction error (MAE)           | No baseline (new model)      | ≤10 days                | MAE between predicted and actual life           | Work Package A model                 | Quarterly        |
+| NLQ response latency (P95)           | Manual >10 minutes           | <60 seconds             | API P95 latency                                 | Work Package B NLQ Gateway log       | Weekly           |
+| NLQ query accuracy                   | None (first-time introduction) | ≥92%                  | NL-to-SQL query accuracy                        | Work Package B model                 | Quarterly        |
+| Environmental early-warning rate     | 0–2 hours (existing systems) | ≥70%                    | Warning trigger time − anomaly time             | Work Package C sensor DB             | Monthly          |
+| Environmental incident report SLA (P95) | None (first-time introduction) | ≤2 minutes           | End-to-end latency: alert → report → push       | Work Package B×C event/report pipeline | Monthly        |
+| Route deviation AUC                  | None (first-time introduction) | ≥0.90                 | ROC-AUC                                         | Work Package D GPS/NTN time series   | Quarterly        |
+| Theft alert F1-score                 | None (first-time introduction) | ≥0.85                 | Confusion matrix → F1                           | Work Package D GPS/NTN / event labels | Quarterly       |
+| ETA prediction error (MAE)           | ≈ 1.8–3.2 hours              | ≥25% improvement        | ETA estimate vs actual arrival                  | Work Package D model                 | Monthly          |
+| ESG: ineffective transport reduction | None (first-time measurement) | ≥10–12%               | Mileage comparison before/after optimization    | Work Package D routing log           | Semiannual       |
+| ESG: reduced T/H anomaly rate        | Anomaly rate X% (2024)       | ≥15% improvement        | Anomaly event statistics                        | Work Package C sensor DB             | Quarterly        |
 | Reporting work-hours                 | ≈200 hours/month (manual)    | ≤100 hours/month        | PMO timesheet system                            | PMO / timesheet system             | Monthly          |
 | Service availability                 | 99.0% (current monitoring)   | ≥99.5%                  | Annual uptime / total time                      | Monitoring (Grafana / Datadog)     | Weekly/Monthly   |
 
@@ -1487,7 +1487,7 @@ To clarify IP ownership and application timelines, the following items, months, 
 | IoT Sampling Optimization via Event Triggers and Variance-Driven Method | Invention/Utility Patent | TW | 2026/05 filing (IDF 2026/03, draft 2026/04) | ItracXing Technology Co., Ltd. | Subprojects A/B early outputs |
 | Explainable Supply Chain Anomaly Detection System | Invention Patent | TW | 2026/06 filing (novelty search 2026/04) | ItracXing Technology Co., Ltd. | Subprojects A/B integration (A2→B1) |
 | Multi-Agent Supply Chain Monitoring with Federated Learning | PCT (International) | PCT | 2026/10 filing (priority from TW case) | ItracXing Technology Co., Ltd. | International layout, extend to US/EU |
-| Battery RUL Prediction Module | Software Copyright | TW | 2026/02 registration | ItracXing Technology Co., Ltd. | Subproject A outputs (A2/A3) |
+| Battery RUL Prediction Module | Software Copyright | TW | 2026/02 registration | ItracXing Technology Co., Ltd. | Work Package A outputs (A2/A3) |
 | Multi-Agent Task Scheduler (MCP/Agent Orchestrator) | Software Copyright | TW | 2026/08 registration | ItracXing Technology Co., Ltd. | Subprojects C/D outputs (B1/B2) |
 
 Ownership and Licensing Principles
@@ -1560,9 +1560,9 @@ This section lists the PI, key R&D staff, general R&D, and open positions, with 
 
 | Name | Title/Role | Education | Expertise/Responsibilities | Person-Months | Gender | Company | Subprojects |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| Jeff Shuo | CIO/PI | MS (Univ. of Illinois at Chicago EECS), MBA (SDSU) | Multi-agent collaboration; AI safety; embedded and IoT–Edge–Cloud architecture; international site integration. Leads overall technical decisions, architecture review, cross-subproject integration; leads Subproject A (battery RUL), aligns Subproject B (NLQ/reporting) with A/C/D data and models; oversees final acceptance planning. | 18 | M | ItracXing | A, B, C, D |
-| Hsiao-Chang Lu | Firmware Engineer/IoT Edge Dev | MS (Musician’s Institute GIT Performance) | C/C++/Python/Java/Go, multithreading, protocols, memory/performance optimization; ARM Cortex, RTOS, UART/SPI/I2C drivers and hardware testing; embedded AI/ML; REST/MQTT/WebSocket. Responsible for Subproject A sensor firmware and battery/state monitoring uploads; supports Subproject C (T/H monitoring) and Subproject D (Smart TOTE lock/pressure/location) edge integration. | 12 | M | ItracXing | A, C, D |
-| Chang-Rui Lin | PM/AI Application Planner | BS (NCUT CS) | Python and vision (TensorFlow, YOLO): face recognition, emotion analysis, age prediction; big data and stats modeling; NLP, STT, LLM text generation, chatbot; multimodal AI interaction optimization. Leads Subproject B NLQ/auto-reporting and multi-agent AI architecture; assists A/C/D modeling/evaluation; oversees final demo script and content integration. | 12 | M | ItracXing | A, B, C, D |
+| Jeff Shuo | CIO/PI | MS (Univ. of Illinois at Chicago EECS), MBA (SDSU) | Multi-agent collaboration; AI safety; embedded and IoT–Edge–Cloud architecture; international site integration. Leads overall technical decisions, architecture review, cross-subproject integration; leads Work Package A (battery RUL), aligns Work Package B (NLQ/reporting) with A/C/D data and models; oversees final acceptance planning. | 18 | M | ItracXing | A, B, C, D |
+| Hsiao-Chang Lu | Firmware Engineer/IoT Edge Dev | MS (Musician’s Institute GIT Performance) | C/C++/Python/Java/Go, multithreading, protocols, memory/performance optimization; ARM Cortex, RTOS, UART/SPI/I2C drivers and hardware testing; embedded AI/ML; REST/MQTT/WebSocket. Responsible for Work Package A sensor firmware and battery/state monitoring uploads; supports Work Package C (T/H monitoring) and Work Package D (Smart TOTE lock/pressure/location) edge integration. | 12 | M | ItracXing | A, C, D |
+| Chang-Rui Lin | PM/AI Application Planner | BS (NCUT CS) | Python and vision (TensorFlow, YOLO): face recognition, emotion analysis, age prediction; big data and stats modeling; NLP, STT, LLM text generation, chatbot; multimodal AI interaction optimization. Leads Work Package B NLQ/auto-reporting and multi-agent AI architecture; assists A/C/D modeling/evaluation; oversees final demo script and content integration. | 12 | M | ItracXing | A, B, C, D |
 | Yi-Min Tsai | Backend Engineer | MS (NCUT CS) | Backend dev/Ops (API design, DB planning, server deployment); TypeScript/Node.js/Golang/FastAPI; TensorFlow/OpenCV/Scikit-learn foundations; Docker/Nginx/CI/CD; automated production deployment. Implements backend services and data pipelines for A–D (RUL, NLQ, environmental, route/theft APIs/ETL); supports integration testing and production deployment. | 12 | M | ItracXing | A, B, C, D |
 | Kuan-Hung Kuo | Web Full-Stack Engineer | MS (NCUT CS) | Full-stack (React, Vue.js, Next.js, Node.js, FastAPI); realtime dashboards and data viz (Chart.js, D3.js, ECharts); REST API integration and auth; integrates AI services (Hugging Face, LangChain, OpenAI API). Responsible for A–D frontend/backend integration, monitoring UI, Smart TOTE/risk alert dashboards; oversees final showcase UI and international demo site/admin. | 12 | M | ItracXing | A, B, C, D |
 | Zhi-Yun Chu | Flutter Engineer | BS (NCUT CS) | Flutter (Dart, MVVM, Provider, Riverpod); independent iOS/Android app dev; REST/GraphQL/WebSocket integration; mobile AI integration (chat, recommendation, behavior prediction, voice control); Firebase/SQLite/Hive. Builds mobile apps and onsite UIs for B–D (alert push, incident reporting, queries); supports international customer PoC mobile demos/light usage scenarios. | 10 | M | ItracXing | B, C, D |
