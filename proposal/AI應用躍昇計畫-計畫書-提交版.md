@@ -107,7 +107,7 @@
 | CO₂ 減量 | ≈80+ 噸（10–15%） | ΔCO₂ = 年里程 350,000 km ×10% ×0.8 kg ×3 年 ≈84 噸（取 80+） | 排放因子 0.8 kg/km | 里程/油耗/模型 |
 
 #### 3. 核心模型/估算方法簡述
-- 電池壽命預測（RUL）：時序深度學習 (LSTM/TFT) 搭配生存分析 (Cox / Kaplan-Meier)。  
+- 電池壽命預測（RUL）：時序深度學習 (LSTM/TFT) 搭配生存分析。  
 - 異常偵測：統計門檻 + 變化點 (CUSUM/BOCPD) + 事件對齊（箱門/路段）。  
 - 路線偏離/ETA：GPS 時序編碼 + 圖路網 (GNN) 特徵；ETA 誤差改善→路線調度→無效里程下降。  
 - NLQ：語意層 (Domain Ontology) + NL-to-SQL 模板約束 + 澄清回合（拒答策略降低 hallucination）。  
@@ -337,7 +337,6 @@
 | ETA 預測誤差（MAE） | 國際貨櫃與幹線運輸 ETA 預測，公開案例多為 1.5–3 小時級 MAE | **改善 ≥25%** | 以歷史路線資料與時序模型，將 ETA MAE 自現況再降低 25% 以上，對齊或優於國際平台實務經驗。 |
 
 > 參考資料（範例）：  
-> - Aldhahri EA et al., *“GNN-RMNet: Leveraging graph neural networks and GPS for route anomaly detection in logistics”*, PLOS ONE, 2025：示範以 GNN＋深度學習進行路線異常與駕駛行為偵測，AUC 約落在 0.80–0.88 區間。  
 > - Wani AA et al., *“Ten quick tips for improving estimated time of arrival (ETA) in fleet-based transportation systems”*, PeerJ Computer Science, 2025：整理車隊／運輸 ETA 預測實務中 MAE 量級與常見誤差來源，佐證 1.5–3 小時級 MAE 為典型範圍。  
 > - Gartner, *“Real-Time Transportation Visibility Platforms Reviews”*（RTTV 市場評論）：說明現行國際 RTTV 平台多以 GPS＋交通／天氣資訊進行 ETA 預測與異常告警。  
 > - project44, *“ETA reimagined: Transforming project44’s prediction engine”*, 2025；Uber Freight, *“A look inside the AI engine powering on-time arrivals”*, 2023：說明國際平台透過 AI 提升 ETA 準確度與異常預警的實務成果。  
@@ -434,9 +433,9 @@
 **A3. 建立數據集（Dataset for Modeling）**
 - 整合歷史資料與事件標註（故障/維護），形成可回溯的訓練與驗證集。
 
-**A4. 建模與訓練（Modeling & Training）**
+-**A4. 建模與訓練（Modeling & Training）**
 - 採用 **RNN/LSTM/TFT（Temporal Fusion Transformer）**等時序深度學習模型，分析電池放電曲線與電壓衰退趨勢，直接建立電池壽命（RUL）預測模型。
-- 使用 **生存分析（Survival Analysis）**技術（如 Cox 比例風險模型、Kaplan-Meier 估計）預測 RUL，考量右截斷資料與不確定性。
+- 使用 **生存分析（Survival Analysis）**技術預測 RUL，考量右截斷資料與不確定性。
 - 輔以簡單規則與門檻檢查，確保模型輸出穩定與可落地。
 
 **A5. 評估與優化（Evaluation & Optimization）**
@@ -512,8 +511,8 @@
 
 **D4. 建模與訓練**
 - 使用 **時序模型（LSTM/GRU）** 分析 GPS 軌跡與移動模式，辨識偏離、異常停留與速度變化。
-- 採用 **圖模型（Graph Neural Networks）** 建構路網關係與運輸行為特徵，區分合理延誤與異常繞路。
-- 建立 **動態警示優先序機制**：使用 **Learning-to-Rank（LTR）** 技術與成本敏感學習，根據風險程度、歷史模式與即時情境評分警示。
+- 採用路網結構與運輸行為特徵建構模型，區分合理延誤與異常繞路。
+- 建立 **動態警示優先序機制**：結合成本敏感學習與營運規則，根據風險程度、歷史模式與即時情境評分警示。
 - 整合 **Smart TOTE 之 BLE Padlock 與壓力感測器**資訊，偵測未授權開箱事件。
 - 實現 **自適應閾值調整**：根據場域特性、時段與貨物類型動態調整異常偵測的敏感度，降低誤報率。
 
@@ -1092,7 +1091,7 @@ gantt
 
 - 技術升級：  
   - 建立電池壽命預測（RUL）、環境異常偵測、路線／竊盜偵測與 NLQ 報表等完整 AI 模組，形成可複製的「AI Logistics MaaS」產品線。  
-  - 建立可解釋 AI、Learning-to-Rank、聯邦學習與多智能體協作等能力，強化未來 AI 合規與治理專案競爭力。
+  - 建立可解釋 AI、聯邦學習與多智能體協作等能力，強化未來 AI 合規與治理專案競爭力。
 
 - 產品與商業模式：  
   - 由專案導入轉型為「IoT 裝置 + AI-MaaS／LaaS 訂閱」服務模式，提高毛利與估值。  
@@ -1253,7 +1252,7 @@ gantt
 1. **技術發表與專業社群**
 
 - 於國內外研討會（智慧物流、AI in Supply Chain、溫濕度敏感貨品與竊盜防範技術論壇等）發表 1–2 篇技術論文或實證報告。  
-- 面向國內 AI／資料科學社群辦理技術分享會，介紹可解釋 AI、Learning-to-Rank 與多智能體協作實務。
+- 面向國內 AI／資料科學社群辦理技術分享會，介紹可解釋 AI 與多智能體協作實務。
 
 2. **產業工作坊與導入藍圖**
 
@@ -1536,7 +1535,7 @@ gantt
     - MBA, San Diego State University (2005)
   - 經歷：
     - AI Agent Architect
-      - 主導, 設計，整合 LLM, Learning-to-Rank/動態閾值, LangChain/LangGraph、RAG、MCP、ReAct 等多智能體協作技術
+      - 主導, 設計，整合 LLM, 動態閾值, LangChain/LangGraph、RAG、MCP、ReAct 等多智能體協作技術
       - 供應鏈安全
     - Qualcomm Inc. — Director of Engineering（2004–2018）
       - 領導100+ IoT/AR/VR/智慧裝置專案，50+工程師團隊管理
@@ -1583,7 +1582,7 @@ gantt
 | 蔡以民       | 後端工程師             | 碩士（國立勤益科大資工系）                            | 後端系統開發與維運（API 設計、資料庫規劃、伺服器部署），熟悉 TypeScript、Node.js、Golang、FastAPI；具 TensorFlow、OpenCV、Scikit-learn 基礎，能配合 AI 團隊實作服務；熟悉 Docker、Nginx、CI/CD，自動化部署至正式環境；負責分項 A–D 之後端服務與資料管線實作（含電池壽命預測（RUL）、NLQ、環境預測、路線／竊盜偵測等 API／ETL），並支援整體結案之整合測試與上線部署。 | 12   | 男  | ITracXing | A、B、C、D    |
 | 郭冠宏       | 網頁全端工程師           | 碩士（國立勤益科大資工系）                            | 全端開發（React、Vue.js、Next.js、Node.js、FastAPI），即時儀表板與資料視覺化（Chart.js、D3.js、ECharts）；RESTful API 串接與權限驗證；熟悉 Hugging Face、LangChain、OpenAI API 等 AI 服務整合；負責分項 A–D 之前後端整合、監控介面與 Smart TOTE／風險預警 Dashboard，並統籌整體結案展示介面與國際 Demo 網站／管理後台。 | 12   | 男  | ITracXing | A、B、C、D    |
 | 朱只耘       | Flutter 工程師       | 學士（國立勤益科大資工系）                            | 精通 Flutter（Dart、MVVM、Provider、Riverpod），可獨立開發 iOS/Android App；熟悉 RESTful API、GraphQL、WebSocket 串接；具行動端 AI 整合（對話、推薦、行為預測、語音控制），熟悉 Firebase、SQLite、Hive；負責分項 B–D 之行動端 App 與現場使用者介面（如異常推播、現場處置回報與查詢），並支援國際客戶 PoC 場景之行動展示與輕量使用情境。 | 10   | 男  | ITracXing | B、C、D       |
-| （待聘）      | AI 工程師            | 碩士（AI／資工）                                | 學習排序（Learning-to-Rank）、聯邦學習（Federated Learning）、模型調校與大規模訓練；預計負責中後期 AI 模型訓練與驗證，優先支援分項 C/D 之多場域資料建模與部署，並視需求補強分項 A/B 之高階模型優化與維運人力（作為各分項尚未覆蓋能力之備援與擴充）。 | 12   | 女  | ITracXing | C、D（視需求 A/B） |
+| （待聘）      | AI 工程師            | 碩士（AI／資工）                                | 聯邦學習（Federated Learning）、模型調校與大規模訓練；預計負責中後期 AI 模型訓練與驗證，優先支援分項 C/D 之多場域資料建模與部署，並視需求補強分項 A/B 之高階模型優化與維運人力（作為各分項尚未覆蓋能力之備援與擴充）。 | 12   | 女  | ITracXing | C、D（視需求 A/B） |
 
 
 
