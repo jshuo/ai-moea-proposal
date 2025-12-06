@@ -658,6 +658,78 @@ flowchart LR
 圖 4-1：RUL 預測流程示意
 
 
+#### 環境異常 (溫濕度) 預測流程示意
+
+```mermaid
+flowchart LR
+  %% 上游：邊緣層與雲端資料平台（以「特徵庫」為連接點）
+
+  subgraph EDGE["邊緣層｜Smart TOTE / IoT 感測器"]
+    T_SENSOR[溫濕度感測器<br/>Temp / RH ]
+    T_GATEWAY[閘道器<br/>BLE / LTE / NTN]
+  end
+
+  subgraph INGEST["雲端資料平台｜資料蒐集與特徵工程"]
+    T_STREAM[串流資料蒐集<br/>Time-series Ingest]
+    T_FEATURE[特徵工程<br/>區段平均值 / 梯度 / 積分暴露量]
+    T_STORE[(Feature Store<br/>特徵庫)]
+  end
+
+  %% Data flow (上游)
+  T_SENSOR --> T_GATEWAY
+  T_GATEWAY --> T_STREAM
+  T_STREAM --> T_FEATURE
+  T_FEATURE --> T_STORE
+```
+
+
+
+```mermaid
+flowchart LR
+  %% 下游：AI/ML、應用層與回饋（由「特徵庫」作為輸入）
+
+  T_STORE[(Feature Store<br/>特徵庫)]
+
+  subgraph AIML["AI/ML 環境異常偵測引擎"]
+    T_MODEL[環境異常偵測模型<br/>LSTM / Isolation Forest / BOCPD]
+    T_RULE[規範規則比對<br/>Good Distribution Practice / SOP 門檻]
+    T_SCORE[(風險評分引擎<br/>Risk Score 0–100)]
+  end
+
+  subgraph APPS["應用層｜警示與報表"]
+    T_ALERT[即時告警服務<br/>SMS / Email / ChatOps]
+    T_DASH[監控儀表板<br/>冷鏈路線 / 貨況視覺化]
+    T_REPORT[稽核與合規報表<br/>客訴 / 理賠 / 稽核文件]
+  end
+
+  subgraph FEEDBACK["回饋與持續學習"]
+    T_LABEL[人工標註與回饋<br/>真實異常 / 誤報標記]
+    T_RETRAIN[週期性重訓流程<br/>Model Retraining Pipeline]
+  end
+
+  %% Data flow（下游）
+  T_STORE --> T_MODEL
+  T_STORE --> T_RULE
+
+  T_MODEL -->|異常機率 / Score| T_SCORE
+  T_RULE -->|門檻違規事件| T_SCORE
+
+  T_SCORE -->|高風險| T_ALERT
+  T_SCORE --> T_DASH
+  T_SCORE --> T_REPORT
+
+  %% Feedback loop
+  T_ALERT --> T_LABEL
+  T_DASH --> T_LABEL
+  T_LABEL --> T_RETRAIN
+  T_RETRAIN --> T_MODEL
+```
+
+圖 4-2：環境異常 (溫濕度) 預測流程示意
+
+本節說明環境異常（溫濕度）預測的端到端流程與責任分工。上游由 Smart TOTE／IoT 感測器透過閘道器將溫度、相對濕度與時間戳資料以串流方式匯入雲端，完成清洗、對齊與特徵工程（區段平均、梯度、累積暴露量），統一寫入特徵庫供下游消費。下游以異常偵測模型（如 LSTM、Isolation Forest、BOCPD）結合規範門檻（GDP／場域 SOP）進行風險評分並觸發告警，同步更新儀表板與生成稽核／合規報表。告警與儀表板的使用回饋（真異常／誤報標記）會回流模型重訓管線，形成持續學習閉環，確保 F1-score、提前預警率與報告 SLA 等關鍵指標穩定達標。
+
+
 #### Routing Anomaly and Theft Detection 
 
 ```mermaid 
@@ -714,13 +786,7 @@ flowchart LR
 
 ```
 
-如圖 4-2 所示，本計畫之資料處理架構由邊緣智慧鎖與智慧貨箱所回傳之 GPS 行車軌跡、鎖狀態（開關與竄改事件）、壓力感測等時間序列資料出發，先透過雲端資料平台完成即時遙測資料蒐集與時序化儲存。其後，系統於雲端進行特徵工程（Feature Engineering），將原始感測資料轉換為「路徑偏移、停留時間、異常開鎖事件統計、壓力量測變化」等高階特徵，並統一存入特徵庫（Feature Store）中，作為後續各類 AI 模型與應用服務的一致性輸入來源，提高模型重複使用性與跨應用的一致性。
-
-圖 4-2：邊緣感測資料至雲端特徵庫之處理流程示意
-
-如圖 4-3 所示，本計畫之 AI 風險預測與異常偵測模組直接消費特徵庫中之特徵，透過無監督學習模型（如 Isolation Forest 或 LSTM Autoencoder）學習「正常運輸行為」模式，並輸出異常分數，再進一步轉換為 0–1 之風險分數（risk_score）。同時，系統內建規則引擎（Rule Engine），可依據營運需求設定地理圍籬、開鎖時間窗、壓力門檻等營運規則。最終由決策融合模組（Decision Fusion）綜合 AI 風險分數與規則觸發結果，決定是否推送即時告警（SMS/Email/LINE/Webhook）、在營運儀表板上標示異常事件，並自動生成每日／每週風險分析報表，協助業者快速掌握高風險運輸路徑與異常場站。
-
-圖 4-3：特徵庫驅動之 AI 異常偵測與應用服務流程示意
+如圖 4-3 所示，本計畫以「邊緣→雲端→特徵庫→AI/規則→決策輸出」之端到端流程運作：邊緣智慧鎖與智慧貨箱回傳 GPS 行車軌跡、鎖狀態（開關／竄改）、壓力感測等時間序列資料，雲端資料平台完成即時匯入與時序化儲存後，進行特徵工程（路徑偏移、停留時間、異常開鎖事件統計、壓力量測變化等），並統一寫入特徵庫（Feature Store），提供一致且可重用的模型輸入。AI 異常偵測模組（如 Isolation Forest、LSTM Autoencoder）自特徵庫學習「正常運輸行為」，輸出異常分數並轉換為 0–1 風險分數（risk_score）；同時規則引擎依營運需求設定地理圍籬、開鎖時間窗與壓力門檻等。決策融合（Decision Fusion）綜合 AI 風險分數與規則觸發，推送即時告警（SMS/Email/LINE/Webhook）、在營運儀表板標註異常事件，並自動生成每日／每週風險分析報表，協助快速掌握高風險運輸路徑與異常場站。
 
 ### 多方協作聯邦學習（FL）作為可擴張商機與機會
 
