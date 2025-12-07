@@ -48,7 +48,7 @@ Project Contact
 
 ---
 
-## Project Abstract (≤1 page; may be public)
+## Project Abstract
 
 ### Company Profile
 
@@ -1071,37 +1071,49 @@ Total derivative investment: ≈ NT$6,500 thousand.
 ---
 
 #### (3) Energy Saving and Carbon Reduction Benefits
+Explain how this project achieves energy saving, carbon reduction, and ESG benefits through battery life optimization, route optimization, waste prevention, and IoT device life extension, with transparent assumptions and illustrative formulas for CO₂ reduction composition.
 
-> Explains how adaptive sampling, route optimization, and early anomaly warnings achieve energy and ESG benefits, with transparent assumptions and formulas to estimate CO₂ reductions.
+1. CO₂ reduction composition and illustrative values (CO₂ calculation formulas)
 
-1. Reduce ineffective transportation and waste from T/H violations
+- Battery optimization — reduced battery manufacturing emissions: ≈ 1,950 kg CO₂e  
+  Use battery Remaining Useful Life (RUL) prediction and predictive maintenance to avoid unnecessary early replacement and disposal, reducing per‑battery manufacturing emissions.
 
-- With early warning for environmental anomalies and AI autonomous incident reporting, violation rates for T/H-sensitive goods are expected to decrease by ≥30%, reducing scrap, returns, and re-shipment.
-- Assume monitoring 1,000 batches of high-value goods per year, with 5% needing re-shipment due to environmental anomalies. If violations drop by 30%, about 15–20 long-distance re-shipments can be avoided annually.
-  - In the Smart TOTE business model, ~USD 2 per shipment AI monitoring costs under 1% of shipment value or asset cost; however, preventing just one re-shipment or scrap offsets dozens to hundreds of shipments’ AI fees while reducing ineffective transportation and CO₂ emissions, delivering both financial and ESG benefits.
+- Route optimization — reduced fuel consumption: ≈ 1,728 kg CO₂e  
+  Route anomaly detection and ETA optimization reduce ineffective detours and idling, cutting fuel use.
 
-2. Route optimization and reduction of ineffective mileage
+- Waste prevention — avoid product damage: ≈ 11,000 kg CO₂e  
+  Early environmental anomaly warnings plus AI autonomous incident reports reduce scrap and rework for temperature/humidity‑sensitive goods, converted using per‑unit product waste emission factors.
 
-- Route anomaly detection and ETA optimization help operations eliminate unreasonable detours and suspicious dwell, replacing inefficient routes with better dispatch.
-- The ESG KPI “ineffective transport reduction ≥10–12%” is computed by comparing mileage and fuel before and after route optimization.
+- IoT device life extension — longer equipment lifespan: ≈ 46 kg CO₂e  
+  Battery/device health management extends IoT device service life, lowering manufacturing and disposal emissions of new devices.
 
-3. CO₂ reduction estimate (illustrative formula)
+- Illustrative total reduction:  
+  ΔCO₂,total ≈ 1,950 + 1,728 + 11,000 + 46 ≈ 14,725 kg CO₂e (illustrative value for one representative site/year).
 
-Let:
+2. Calculation boundary statement
 
-- D_base: annual mileage before introduction (km)
-- r: ineffective transport reduction ratio (10% conservative)
-- EF_CO2: per-km CO₂ emission factor (kg CO₂/km)
+- The four reduction components (battery optimization, route optimization, waste prevention, IoT device life extension) are mutually exclusive; each event is counted once to avoid double counting.  
+- “Per shipment batch” is defined as end‑to‑end transport from origin to destination, including interim warehousing and transshipment.  
+- Waste prevention includes only product loss‑related emissions and does not double count transport energy (transport energy is included under “route optimization/fuel reduction”).  
+- The 14,725 kg CO₂e figure is an illustrative estimate for a representative site/year. Summed across sites/years, it aligns with earlier KPIs: three‑year cumulative CO₂ reduction ≈ 10–15% (≈ 80+ tons CO₂e).
 
-Three-year cumulative CO₂ reduction:
+3. Measurement methods and data sources
 
-ΔCO₂ ≈ D_base × r × EF_CO₂ × 3
+Calculation standards  
+- Follow ISO 14064‑1 for organizational GHG inventory and tracking.  
+- Map to GHG Protocol Scopes 1–3: fuel use (Scope 1), purchased electricity/refrigerants (Scope 2), outsourced transport/product waste (Scope 3).  
+- Reference Taiwan EPA carbon footprint guidance and related technical documents for emission factors and activity data selection.
 
-Using typical fleets for T/H-sensitive goods and general trucks at ~0.8–1.0 kg CO₂/km and 300,000–400,000 km/year, with 10% ineffective transport reduction across three years, cumulative CO₂ reduction is ≈ 80+ tons CO₂e, aligning with the summary table’s “three-year CO₂ reduction ~10–15% (≈80+ tons CO₂e).”
+Data sources  
+- Real‑time IoT sensors and Smart TOTE devices: mileage, fuel estimation, device lifespan, environmental anomaly logs.  
+- Emission factors from Taiwan EPA and international public databases (energy, transport, waste).  
+- Industry benchmarks (EPD, LCA reports, supplier product carbon footprints) used as per‑unit product/equipment baselines.
 
-4. Data and method transparency
-
-- Energy and carbon indicators will be based on actual mileage, fuel usage, and anomaly statistics, with assumptions and data sources disclosed in the closure report.
+Emission factor baselines (illustrative)  
+- Battery manufacturing: ≈ 75 kg CO₂e per cell (source: EPD/battery environmental product declarations).  
+- Diesel combustion: ≈ 2.68 kg CO₂e per liter (source: EPA published emission factors).  
+- Food waste: ≈ 2.5 kg CO₂e per kg (source: LCA literature and environmental product declarations).  
+- IoT device manufacturing: ≈ 45 kg CO₂e per unit (source: industry averages and supplier environmental declarations).
 
 ---
 
