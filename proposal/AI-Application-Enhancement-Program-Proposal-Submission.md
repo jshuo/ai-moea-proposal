@@ -2,7 +2,7 @@
 
 ## A+ Enterprise Innovation R&D Refinement Program
 
-## AI Application Enhancement Program Proposal (Submission Version)
+## AI Application Enhancement Program Proposal
 
 AI Smart Supply Chain Risk Prediction and Communications Integration System Development Project  
 Project Period: From January 1, 2026 to June 30, 2027
