@@ -493,26 +493,30 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   MVP Acceptance: AUC ≥0.90; F1 ≥0.85; ETA MAE improvement ≥25%; false alarms ≤15%; response <30 min. PoC: multi-site road-network collaborative modeling; cross-site FL aggregation; multi-agent alert-priority orchestration demo.
 
-  ### (4) System Architecture and Data Flow
+  ### (4) System Architecture, Dashboard, and Technical Description
 
-  The diagram below presents the end-to-end system architecture and data flow (Figure 2-2), showing how Subprojects A–D integrate into a complete smart supply chain monitoring and risk warning solution:
+  Diagram 4-1: Dashboard
 
-  Figure 2-2: System architecture and data flow (inference and alert pipeline)
+  ![alt text](ai-maas-dashboard-ch-tw.png)
 
-  Figure 2-2A: Front-end flow — data collection and alert generation
+  The following diagram presents the end-to-end system architecture and data flow (Diagram 4-2), showing how Subprojects A–D integrate into a complete smart supply chain monitoring and risk warning solution:
+
+  Diagram 4-2: System Architecture (Inference and Alert Pipeline)
+
+  Diagram 4-2A: Frontend Flow — Data Collection and Alert Generation
   ```mermaid
   flowchart LR
     %% ========== Device & Model Layer ==========
-    subgraph S["Device & Model Layer<br/>📡 Sensor data is transmitted securely with identity verification, then written to the iTracXing/Arviem Cloud"]
-      S1["Smart TOTE / Gateway<br/>🔐 Encrypted transport｜Identity verification<br/>Collect sensor data"]
-      S2["AI Model Inference<br/>• Work Package A: Battery RUL prediction model<br/>• Work Package C: Environmental anomaly model (T/H detection)<br/>• Work Package D: Route/theft model (GPS/unauthorized opening)<br/>↓ Output risk_score / metrics"]
+    subgraph S["Device & Model Layer<br/>📡 Sensor data is transmitted securely with authentication and written to iTracXing/Arviem Cloud"]
+      S1["Smart TOTE / Gateway<br/>🔐 Encrypted transmission | Identity verification<br/>Collect sensor data"]
+      S2["AI Model Inference<br/>• Subproject A: Battery Remaining Useful Life (RUL)<br/>• Subproject C: Environmental anomaly (Temp/Humidity)<br/>• Subproject D: Route/Theft (GPS/Unauthorized opening)<br/>↓ Output risk_score / metrics"]
     end
 
     %% ========== Event & Alert Engine ==========
-    subgraph E["Event & Alert Engine"]
-      E1["Write to event queue / DB<br/>MODEL_EVAL event"]
-      E2["Alert Rule Evaluation<br/>risk_score / dynamic thresholds / conditions"]
-      E3["Deduplication & Suppression<br/>Avoid duplicate alerts"]
+    subgraph E["Event & Alert Rule Engine"]
+      E1["Write to event queue / DB<br/>MODEL_EVAL events"]
+      E2["Alert rule evaluation<br/>risk_score / dynamic thresholds / conditions"]
+      E3["Deduplication and suppression<br/>Avoid duplicate alerts"]
       E4["Create Alert object<br/>alert_id / severity / details"]
     end
 
@@ -520,53 +524,55 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
     S1 --> S2 --> E1
     E1 --> E2 --> E3 --> E4
 
-    E4 --> OUTPUT["➡️ Alert object forwarded to backend flow"]
+    E4 --> OUTPUT["➡️ Alert object delivered to backend flow"]
 
     style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
   ```
 
-  Figure 2-2B: Backend flow — report generation and notification
+  Diagram 4-2B: Backend Flow — Report Generation and Notification
   ```mermaid
   flowchart LR
     INPUT["⬅️ Alert object<br/>(from the alert engine)"]
 
     %% ========== (Optional) LLM Explanation ==========
-    subgraph L["(Optional) LLM Explanation Layer<br/>👉 Work Package B: AI autonomous incident report / NLQ Dashboard"]
-      L1["Place Alert JSON into Prompt"]
-      L2["LLM produces bilingual (EN/ZH) summary + recommended actions"]
+    subgraph L["(Optional) LLM Explanation Layer<br/>👉 Subproject B: AI Autonomous Incident Report / NLQ Dashboard"]
+      L1["Put Alert JSON into prompt"]
+      L2["LLM generates bilingual summary + recommended actions"]
     end
 
     %% ========== Notification Layer ==========
-    subgraph N["Notification services & channels<br/>Security & privacy: GDPR/compliance ready"]
-      N1["Select recipients & channels<br/>by customer/severity"]
-      N2["Send notification<br/>Email / LINE / Slack / Webhook"]
-      N3["Log notification history<br/>for SLA / ESG reporting & audit"]
+    subgraph N["Notification services and channels<br/>Security & privacy compliance: GDPR/data governance"]
+      N1["Select recipients and channels<br/>by customer/severity"]
+      N2["Send notifications<br/>Email / LINE / Slack / Webhook"]
+      N3["Record notification history<br/>for SLA / ESG audit reports"]
     end
 
     %% Flow
     INPUT --> L1
-    INPUT -->|When not using LLM<br/>apply fixed templates| N1
+    INPUT -->|When not using LLM<br/>apply fixed templates directly| N1
     L1 --> L2 --> N1
     N1 --> N2 --> N3
 
     style INPUT fill:#f9f,stroke:#333,stroke-width:2px
   ```
 
-  Notes on architecture and training pipeline:
-  This diagram shows the production “inference and alert pipeline,” illustrating how real-time data flows through AI models, the alert engine, and notification services.
-  Model training and re-training are conducted offline using historical data and labeled event sets, detailed in “II. Project Content and Implementation Method” under Subprojects A–D. Trained model weights are periodically deployed to the “AI Model Inference” node shown above.
+  Architecture notes and training flow:
 
-  Architecture explanation:
-  1. Device & Model Layer: Smart TOTE sensors collect temperature/humidity, GPS, and open/close state, then run AI inferences from Subprojects A (battery RUL), C (environment anomalies), and D (route/theft) to output risk scores and metrics.
-  2. Event & Alert Engine: Model outputs are written to an event queue, evaluated by alert rules, deduplicated/suppressed, and turned into structured Alert objects so high-priority events are not drowned out.
-  3. LLM Explanation Layer (optional): Corresponding to Work Package B’s autonomous incident reporting, Alert JSON is converted to bilingual summaries and recommended actions; if not using LLM, fixed templates are applied to balance cost and flexibility.
-  4. Notification services & channels: Recipients and channels (Email/LINE/Slack/Webhook) are chosen by customer/severity; notification history is logged for SLA and ESG audits to ensure governance transparency.
+  This diagram shows the online Inference & Alert Pipeline, explaining how real-time data flows through AI models, the alert engine, and notification services. Model training and re-training are performed offline using historical data and labeled event sets, detailed under “II. Project Content and Implementation Method” in Subprojects A–D. Trained model weights are periodically deployed to the “AI Model Inference” node shown here.
 
-  This architecture highlights three core features: (1) modular AI functions that scale independently; (2) built-in governance (dedup, audit, SLA) in the flow; (3) flexible deployment (LLM optional or fixed templates) to lower adoption barriers.
+  Architecture description:
 
-  ### (4) Technical Content
+  1. Device & Model Layer: Smart TOTE sensors collect temperature/humidity, GPS, and open/close state. Subprojects A (battery RUL), C (environment anomalies), and D (route/theft) perform inference to output risk scores and metrics.
 
-  #### RUL prediction flow overview
+  2. Event & Alert Engine: Model outputs are written to an event queue, evaluated by alert rules, deduplicated/suppressed, and structured into Alert objects to ensure high-priority events are not buried.
+
+  3. LLM Explanation Layer (optional): For Subproject B’s AI autonomous incident reporting, the Alert JSON can be converted into bilingual summaries and recommended actions. If LLM is not used, fixed templates are applied, balancing cost and flexibility.
+
+  4. Notification Services and Channels: Recipients and channels (Email/LINE/Slack/Webhook) are chosen by customer and severity. Notification history is recorded for SLA and ESG audit reporting to ensure governance transparency.
+
+  This architecture showcases three key features: (1) modular AI functions that can be extended independently; (2) built-in governance mechanisms (deduplication, auditing, SLA); (3) flexible deployment (optional LLM vs fixed templates) to lower adoption barriers.
+
+  RUL prediction flow overview
 
   ```mermaid
   flowchart LR
@@ -576,12 +582,12 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
       TS[Timestamp]
     end
 
-    subgraph Cloud ["Cloud data platform / IoT backend"]
-      RAW["Raw telemetry<br/>V, T, TS, reporting rate, status"]
-      PROC["Preprocessing<br/>ordering, cleaning, imputation, Δt alignment"]
-      FAIL["Failure event detection<br/>last report time, voltage below threshold"]
+    subgraph Cloud ["Cloud Data Platform / IoT Backend"]
+      RAW["Raw telemetry<br/>V, T, TS, reporting frequency, status"]
+      PROC["Preprocessing<br/>sorting, cleaning, imputation, Δt alignment"]
+      FAIL["Failure / fault event detection<br/>last report time, voltage below threshold"]
       RULLBL["RUL label calculation<br/>RUL(t) = t_failure - t"]
-      FEAT["Feature engineering<br/>voltage slope, mean, volatility, temp stats…"]
+      FEAT["Feature engineering<br/>voltage slope, mean, variance, temp stats…"]
     end
 
     V --> RAW
@@ -593,48 +599,48 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
     PROC --> FEAT
     FAIL --> RULLBL
 
-    FEAT -.->|Feature input→| LSTM_INPUT[(LSTM input tensor)]
-    RULLBL -.->|Supervised label→| LSTM_LABEL[(LSTM target tensor)]
+    FEAT -.->|features →| LSTM_INPUT[(LSTM input tensor)]
+    RULLBL -.->|supervised labels →| LSTM_LABEL[(LSTM target tensor)]
   ```
 
-  The above LSTM input/labels feed into the model training/inference below.
+  The above LSTM inputs/labels serve as the starting point for the training/inference shown below.
 
   ```mermaid
   flowchart LR
-    subgraph Model ["AI model training / inference"]
+    subgraph Model ["AI Model Training / Inference"]
       LSTM[("LSTM/GRU<br/>time-series model")]
-      PRED["RUL prediction<br/>(remaining service life: days/hours)"]
-      ALERT["Ops decisions<br/>replace battery / avoid dispatching near-failure nodes"]
+      PRED["RUL prediction<br/>(remaining service life in days/hours)"]
+      ALERT["Ops decisions<br/>battery replacement / avoid dispatching near-failure nodes"]
     end
 
-    LSTM_INPUT[(from prior diagram)] --> LSTM
-    LSTM_LABEL[(from prior diagram)] --> LSTM
+    LSTM_INPUT[(from prior features)] --> LSTM
+    LSTM_LABEL[(from prior labels)] --> LSTM
     LSTM --> PRED
     PRED --> ALERT
   ```
 
-  As shown in Figure 4-1, the RUL module uses voltage time series from NTN (Non-Terrestrial Network) smart trackers, optional temperature, and timestamps to reconstruct discharge trajectories and actual failure times in the cloud, producing Remaining Useful Life (RUL) labels. Time-series models (LSTM/GRU) learn the relationship between “voltage patterns × usage context” and RUL, outputting per-node remaining service days during operations to trigger preventive maintenance and battery replacement, reducing unexpected offline events and improving monitoring availability.
+  As shown in Diagram 4-3, the RUL prediction module uses voltage time series from the NTN (Non-Terrestrial Network) smart tracker, optionally temperature, and timestamps, reconstructing discharge trajectories and actual failure times in the cloud to compute Remaining Useful Life (RUL) labels. Time-series models (e.g., LSTM/GRU) learn the relationship between “voltage patterns × usage context” and RUL, outputting real-time remaining service days per node during operations and triggering preventive maintenance/battery replacement decisions to reduce unexpected offline events and improve monitoring availability.
 
-  Figure 4-1: RUL prediction flow overview
+  Diagram 4-3: RUL Prediction Flow Overview
 
-  #### Environmental anomaly (temperature/humidity) flow overview
+  Environmental anomaly (Temp/Humidity) prediction flow overview
 
   ```mermaid
   flowchart LR
-    %% Upstream: edge and cloud data platform (Feature Store as the junction)
+    %% Upstream: edge layer and cloud data platform (connected via Feature Store)
 
     subgraph EDGE["Edge｜Smart TOTE / IoT sensors"]
       T_SENSOR[Temp/Humidity sensor<br/>Temp / RH]
       T_GATEWAY[Gateway<br/>BLE / LTE / NTN]
     end
 
-    subgraph INGEST["Cloud data platform｜ingest & feature engineering"]
-      T_STREAM[Streaming ingest<br/>Time-series collection]
-      T_FEATURE[Feature engineering<br/>segment mean / gradient / cumulative exposure]
+    subgraph INGEST["Cloud data platform｜ingestion & feature engineering"]
+      T_STREAM[Streaming ingestion<br/>time-series ingest]
+      T_FEATURE[Feature engineering<br/>segment averages / gradients / cumulative exposure]
       T_STORE[(Feature Store)]
     end
 
-    %% Data flow (upstream)
+    %% Data flow (Upstream)
     T_SENSOR --> T_GATEWAY
     T_GATEWAY --> T_STREAM
     T_STREAM --> T_FEATURE
@@ -643,33 +649,33 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   ```mermaid
   flowchart LR
-    %% Downstream: AI/ML, application layer & feedback (Feature Store as input)
+    %% Downstream: AI/ML, application layer, and feedback (Feature Store as input)
 
     T_STORE[(Feature Store)]
 
     subgraph AIML["AI/ML environmental anomaly engine"]
-      T_MODEL[Env anomaly detection<br/>LSTM / Isolation Forest / BOCPD]
-      T_RULE[Regulatory threshold check<br/>Good Distribution Practice / site SOP]
+      T_MODEL[Environmental anomaly model<br/>LSTM / Isolation Forest / BOCPD]
+      T_RULE[Regulatory/SOP rule checks<br/>Good Distribution Practice / site SOP thresholds]
       T_SCORE[(Risk scoring engine<br/>Risk Score 0–100)]
     end
 
-    subgraph APPS["Application layer｜alerts & reporting"]
-      T_ALERT[Real-time alert service<br/>SMS / Email / ChatOps]
-      T_DASH[Monitoring dashboard<br/>cold-chain route / cargo viz]
-      T_REPORT[Audit & compliance reports<br/>claims / compliance / audit files]
+    subgraph APPS["Application layer｜alerts & reports"]
+      T_ALERT[Real-time alerts<br/>SMS / Email / ChatOps]
+      T_DASH[Monitoring dashboard<br/>cold-chain route / cargo visualization]
+      T_REPORT[Audit & compliance reports<br/>claims / disputes / audit documents]
     end
 
-    subgraph FEEDBACK["Feedback & continual learning"]
-      T_LABEL[Human labeling & feedback<br/>true anomaly / false positive]
-      T_RETRAIN[Periodic re-training pipeline]
+    subgraph FEEDBACK["Feedback & continuous learning"]
+      T_LABEL[Human labeling & feedback<br/>true anomaly / false alarm tags]
+      T_RETRAIN[Periodic retraining pipeline<br/>Model Retraining]
     end
 
-    %% Data flow (downstream)
+    %% Data flow (Downstream)
     T_STORE --> T_MODEL
     T_STORE --> T_RULE
 
-    T_MODEL -->|anomaly prob / score| T_SCORE
-    T_RULE -->|threshold violations| T_SCORE
+    T_MODEL -->|anomaly probability / score| T_SCORE
+    T_RULE -->|threshold violation events| T_SCORE
 
     T_SCORE -->|high risk| T_ALERT
     T_SCORE --> T_DASH
@@ -682,164 +688,164 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
     T_RETRAIN --> T_MODEL
   ```
 
-  Figure 4-2: Environmental anomaly (temperature/humidity) flow overview
+  Diagram 4-4: Environmental anomaly (Temp/Humidity) prediction flow overview
 
-  This section explains the end-to-end environmental anomaly workflow and ownership. Upstream, Smart TOTE/IoT sensors stream temperature, relative humidity, and timestamps to the cloud via gateways. Data is cleaned, aligned, and feature-engineered (segment averages, gradients, cumulative exposure), then unified into the Feature Store for downstream use. Downstream, anomaly models (LSTM, Isolation Forest, BOCPD) combine regulatory thresholds (GDP/SOP) for risk scoring and alerting, while dashboards and audit/compliance reports are updated. User feedback on alerts and dashboards (true anomaly/false positive) loops into the re-training pipeline to ensure stable attainment of key metrics such as F1-score, early warning rate, and report SLA.
+  This section explains the end-to-end flow and responsibilities for environmental anomaly prediction. Upstream, Smart TOTE/IoT sensors stream temperature, relative humidity, and timestamps via the gateway to the cloud, where cleaning, alignment, and feature engineering (segment averages, gradients, cumulative exposure) are performed and written to a unified Feature Store. Downstream, anomaly detection models (e.g., LSTM, Isolation Forest, BOCPD) combined with regulatory/SOP thresholds (GDP/site SOP) produce risk scores and trigger alerts, while updating dashboards and generating audit/compliance reports. Feedback from alert usage and dashboards (true anomaly/false alarm tags) flows back into the retraining pipeline to form a continuous learning loop, ensuring stable attainment of F1-score, early warning rate, and report SLA KPIs.
 
+  Route anomaly and theft detection
 
-#### Routing Anomaly and Theft Detection
+  ```mermaid
+  flowchart LR
+    %% Diagram 1: Edge devices & cloud ingest → Feature Store
+    subgraph Edge["Edge / smart IoT devices"]
+      GPS[Routing data<br/>GPS, speed, route ID]
+      LOCK[Lock state<br/>open/close, tamper events]
+      PRESS[Pressure sensor<br/>kPa, pressure change ΔP]
+    end
 
-```mermaid
-flowchart LR
-  %% Fig. 1: Edge devices and cloud ingest → Feature Store
-  subgraph Edge["Edge / Smart IoT Devices"]
-    GPS[Routing data<br/>GPS, speed, route ID]
-    LOCK[Lock state<br/>open/close, tamper events]
-    PRESS[Pressure sensor<br/>kPa, pressure change ΔP]
-  end
+    subgraph Ingest["Cloud data platform"]
+      RAW[Telemetry ingest<br/>time-series storage]
+      FEAT[Feature engineering<br/>route deviation, dwell time,<br/>unlock events, pressure stats]
+      FEAT_HUB[(Feature Store)]
+    end
 
-  subgraph Ingest["Cloud Data Platform"]
-    RAW[Telemetry ingest<br/>time-series storage]
-    FEAT[Feature engineering<br/>route deviation, dwell time,<br/>unlock events, pressure stats]
+    GPS --> RAW
+    LOCK --> RAW
+    PRESS --> RAW
+
+    RAW --> FEAT
+    FEAT -->|features| FEAT_HUB
+  ```
+
+  ```mermaid
+  flowchart LR
+    %% Diagram 2: AI/ML → Application services (consume Feature Store)
     FEAT_HUB[(Feature Store)]
-  end
 
-  GPS --> RAW
-  LOCK --> RAW
-  PRESS --> RAW
+    subgraph AI["AI / ML anomaly detection engine"]
+      ISOF[Unsupervised models<br/>Isolation Forest / LSTM AE]
+      RISK[(Risk scoring<br/>risk_score 0–1)]
+      RULES[[Rule engine<br/>geofences, unlock time windows,<br/>pressure thresholds]]
+      FUSE[Decision fusion<br/>combine ML scores and rules]
+    end
 
-  RAW --> FEAT
-  FEAT -->|features| FEAT_HUB
-```
+    subgraph Apps["Application services"]
+      ALERT[Real-time alerts<br/>SMS / Email / LINE / Webhook]
+      DASH[Operations dashboard<br/>map, timeline, event viewer]
+      REPORT[AI reports<br/>daily/weekly risk summaries]
+    end
 
-```mermaid
-flowchart LR
-  %% Fig. 2: AI / ML → Application services (consume Feature Store)
-  FEAT_HUB[(Feature Store)]
+    FEAT_HUB --> ISOF
+    FEAT_HUB --> RISK
 
-  subgraph AI["AI / ML Anomaly Detection Engine"]
-    ISOF[Unsupervised models<br/>Isolation Forest / LSTM AE]
-    RISK[(Risk scoring<br/>risk_score 0–1)]
-    RULES[[Rule engine<br/>geofences, unlock time windows,<br/>pressure thresholds]]
-    FUSE[Decision fusion<br/>combine ML score and rules]
-  end
+    ISOF --> RISK
+    RISK --> FUSE
+    RULES --> FUSE
 
-  subgraph Apps["Application Layer"]
-    ALERT[Real-time alerts<br/>SMS / Email / LINE / Webhook]
-    DASH[Operations dashboard<br/>map, timeline, event view]
-    REPORT[AI reports<br/>daily/weekly risk summaries]
-  end
+    FUSE --> ALERT
+    FUSE --> DASH
+    FUSE --> REPORT
+  ```
 
-  FEAT_HUB --> ISOF
-  FEAT_HUB --> RISK
+  As shown in Diagram 4-5, the end-to-end flow is “Edge → Cloud → Feature Store → AI/Rules → Decisions.” Smart locks and smart boxes return GPS trajectories, lock state (open/close/tamper), and pressure time series. The cloud platform ingests and stores the data, performs feature engineering (route deviation, dwell time, abnormal unlock statistics, pressure changes), and writes to a unified Feature Store as reusable model inputs. The AI anomaly detection module (e.g., Isolation Forest, LSTM Autoencoder) learns “normal transport behavior” from the Feature Store, outputs an anomaly score and converts it to a 0–1 risk score. Meanwhile, the rule engine sets geofences, unlock windows, and pressure thresholds per operations needs. Decision fusion combines AI risk scores and rules to push real-time alerts (SMS/Email/LINE/Webhook), annotate anomalies on the operations dashboard, and auto-generate daily/weekly risk analysis reports to quickly highlight high-risk routes and sites.
 
-  ISOF --> RISK
-  RISK --> FUSE
-  RULES --> FUSE
+  Federated Learning (FL) for multi-party collaboration as an expandable business opportunity
 
-  FUSE --> ALERT
-  FUSE --> DASH
-  FUSE --> REPORT
-```
+  ```mermaid
+  flowchart LR
 
-As shown in Fig. 4-3, the project follows an end-to-end flow of “Edge → Cloud → Feature Store → AI/Rules → Decision Outputs.” Smart locks and smart totes send time-series data for GPS trajectories, lock state (open/close/tamper), and pressure sensing. The cloud platform ingests and stores the streams, performs feature engineering (route deviation, dwell time, abnormal unlock statistics, pressure change), and writes unified features into the Feature Store for consistent, reusable model inputs. The AI anomaly modules (e.g., Isolation Forest, LSTM Autoencoder) learn “normal transport behavior” from the Feature Store, output anomaly scores, and convert them into a 0–1 risk score (risk_score). In parallel, the rule engine configures geofences, unlock windows, and pressure thresholds per operational needs. Decision fusion combines AI risk scores and rule triggers to push real-time alerts (SMS/Email/LINE/Webhook), annotate anomalies on the operations dashboard, and auto-generate daily/weekly risk analysis reports to highlight high-risk routes and abnormal stops.
+    %% ===========================
+    %%   iTracXing Platform
+    %% ===========================
+    subgraph ITX["iTracXing Platform (Taiwan)"]
+      ITX_Data["iTracXing data<br>BLE / Padlock / NTN / TOTE"]
+      ITX_ML["iTracXing local FL training node"]
+      ITX_UI["iTracXing dashboard<br/>(iTracXing customers only)"]
+    end
 
-### Federated Learning (FL) for Multi-Party Collaboration as a Scalable Opportunity
-
-```mermaid
-flowchart LR
-
-  %% ===========================
-  %%   iTracXing Platform
-  %% ===========================
-  subgraph ITX["iTracXing Platform (Taiwan)"]
-    ITX_Data["iTracXing data<br>BLE / Padlock / NTN / TOTE"]
-    ITX_ML["iTracXing local FL training node"]
-    ITX_UI["iTracXing dashboard<br>(for iTracXing customers only)"]
-  end
-
-  ITX_Data --> ITX_ML
-  ITX_ML --> ITX_UI
+    ITX_Data --> ITX_ML
+    ITX_ML --> ITX_UI
 
 
-  %% ===========================
-  %%   Arviem Platform
-  %% ===========================
-  subgraph ARV["Arviem Platform (EU / US / APAC)"]
-    ARV_Data["Arviem data<br>JA Device / Motion / GPS"]
-    ARV_ML["Arviem local FL training node"]
-    ARV_UI["Arviem dashboard<br>(for Arviem customers only)"]
-  end
+    %% ===========================
+    %%   Arviem Platform
+    %% ===========================
+    subgraph ARV["Arviem Platform (EU/US/APAC)"]
+      ARV_Data["Arviem data<br>JA Device / Motion / GPS"]
+      ARV_ML["Arviem local FL training node"]
+      ARV_UI["Arviem dashboard<br/>(Arviem customers only)"]
+    end
 
-  ARV_Data --> ARV_ML
-  ARV_ML --> ARV_UI
-
-
-  %% ===========================
-  %%   Vector Platform
-  %% ===========================
-  subgraph VEC["Vector Platform (US / global retail loops)"]
-    VEC_Data["Vector LPMS data<br>retail / reverse logistics / Smart TOTE"]
-    VEC_ML["Vector local FL training node"]
-    VEC_UI["Vector dashboard<br>(for Vector customers only)"]
-  end
-
-  VEC_Data --> VEC_ML
-  VEC_ML --> VEC_UI
+    ARV_Data --> ARV_ML
+    ARV_ML --> ARV_UI
 
 
-  %% ===========================
-  %%   Federated Learning Aggregation
-  %% ===========================
-  ITX_ML -->|encrypted ΔW| AGG
-  ARV_ML -->|encrypted ΔW| AGG
-  VEC_ML -->|encrypted ΔW| AGG
+    %% ===========================
+    %%   Vector Platform
+    %% ===========================
+    subgraph VEC["Vector Platform (US / global retail loop)"]
+      VEC_Data["Vector LPMS data<br/>Retail / reverse logistics / Smart TOTE"]
+      VEC_ML["Vector local FL training node"]
+      VEC_UI["Vector dashboard<br/>(Vector customers only)"]
+    end
 
-  subgraph FED["Federated Learning Aggregation Layer"]
-    AGG["Secure aggregator<br>FedAvg / FedProx / FedAdam<br>(no raw data shared)"]
-    GM["Global shared model<br>Logistics risk prediction AI"]
-  end
+    VEC_Data --> VEC_ML
+    VEC_ML --> VEC_UI
 
-  AGG --> GM
 
-  %% Redistribute the global updated model
-  GM -->|updated model Wₜ₊₁| ITX_ML
-  GM -->|updated model Wₜ₊₁| ARV_ML
-  GM -->|updated model Wₜ₊₁| VEC_ML
-```
-Fig. 4-4
+    %% ===========================
+    %%   Federated Aggregation Layer
+    %% ===========================
+    ITX_ML -->|Encrypted ΔW| AGG
+    ARV_ML -->|Encrypted ΔW| AGG
+    VEC_ML -->|Encrypted ΔW| AGG
 
-Federated Learning will be a core part of AI systems over the next 5–10 years. Drivers include tightening privacy regulations (GDPR/PIPL/PDPA), multi-party data that cannot be centralized, the shift of training to Edge/IoT, joint evolution of cloud and device, and continued investment by large tech companies. For logistics and supply chains (shippers/carriers/forwarders/cold-chain/insurers/ports/satellite IoT), FL enables cross-organization model training without sharing raw data, directly overcoming “data cannot be centralized” adoption barriers.
+    subgraph FED["Federated Learning Aggregation Layer"]
+      AGG["Secure aggregator<br/>FedAvg / FedProx / FedAdam<br/>(no raw data shared)"]
+      GM["Global shared model<br/>Logistics risk prediction AI"]
+    end
 
-- Why now: Cross-border and privacy regulations require “learning without raw data transfer”; rising Edge/IoT data volumes and personalization needs make device-side training plus cloud aggregation essential.
-- Opportunity: Standard component for supply chain AI (aligned with Deloitte/McKinsey/BCG trends); “FL‑Ready models and pipelines” become compliant AI capabilities quickly embedded by channel partners (Arviem/Vector).
-- Monetization (scalable):
-  - Federated Training as a Service: bill per node/round/model size.
-  - Compliant AI package licensing (FL‑Ready Models): RUL, environmental anomalies, route deviation, theft detection.
-  - Edge node management and compliance consulting: GDPR/PIA, data governance, audits.
-- Growth engines:
-  1) Channel expansion (Arviem’s base → replicate across countries).
-  2) Model network effects (more sites → better global shared model).
-  3) Edge deployment scale (more Smart TOTE/Gateways → cumulative ops and subscription revenue).
-- Entry strategy:
-  - MVP delivers centralized viable models first; introduce FL aggregation (FedAvg/FedProx) as sites and regulations demand.
-  - Publish compliance whitepaper and audit tools for “data stays in-domain, parameters only,” lowering adoption barriers.
-  - Co-branded FL SDK/API with partners to shorten integration cycles.
-- Risks and mitigation: data quality gaps / non-IID federated data / unstable nodes → layered aggregation, adaptive weighting, node health checks and rollback; regulatory changes → annual external reviews and policy fallback.
+    AGG --> GM
 
-Conclusion: FL is not a standalone market but the foundational capability for privacy-preserving, multi-party collaborative AI. Centered on FL‑Ready supply chain AI components and services, combined with channel partners and edge node growth, it enables a high-margin, replicable, cross-border expansion strategy.
+    %% Redistribute globally updated model
+    GM -->|Updated model Wₜ₊₁| ITX_ML
+    GM -->|Updated model Wₜ₊₁| ARV_ML
+    GM -->|Updated model Wₜ₊₁| VEC_ML
+  ```
+  Diagram 4-6
+
+  Federated Learning will be a core component of AI systems over the next 5–10 years. Drivers include tightening privacy regulations (GDPR/PIPL/PDPA), multi-party collaboration where data cannot be centralized, the shift of training to Edge/IoT, co-evolution of cloud and devices, and continuous investment by major tech firms. For logistics and supply chains (shippers/carriers/forwarders/cold-chain/insurance/ports/satellite IoT), FL enables cross-institution collaborative training on shared models without sharing raw data, directly addressing “data cannot be centralized” adoption barriers.
+
+  - Why now: Cross-border and privacy laws enforce “learning without sending raw data”; Edge/IoT data volume and personalization needs make on-device training + cloud aggregation necessary.
+  - Business positioning: Standard component of supply chain AI (aligned with Deloitte/McKinsey/BCG trends); “FL-Ready models and pipelines” become compliant AI capabilities quickly embedded by channel partners (Arviem/Vector).
+  - Monetization (scalable):
+    - Federated Training as a Service: priced by node/round/model size.
+    - Compliant AI package licensing (FL-Ready Models): RUL/environment anomaly/route deviation/theft detection.
+    - Edge node management and compliance consulting: GDPR/PIA/data governance/audit.
+  - Growth engines:
+    1) Channel expansion (Arviem customer base → replicate across countries).
+    2) Model network effects (more sites participating → global shared model performance improves).
+    3) Edge deployment scale (Smart TOTE/Gateway nodes increase → ops and subscription revenue accumulates).
+  - Entry strategy:
+    - MVP delivers centralized usable models first; introduce FL aggregation (FedAvg/FedProx) as sites and regulations require.
+    - Provide technical/compliance whitepapers and audit tools for “data stays in-domain, only parameters uploaded” to lower adoption barriers.
+    - Co-branded FL SDK/API with partners to shorten integration cycles.
+  - Risks and mitigation: data quality variance / non-IID federated data / unstable nodes → use hierarchical aggregation, adaptive weighting, node health checks and rollback; regulatory changes → annual external compliance reviews and policy fallback strategies.
+
+  Conclusion: FL is not a standalone market but the foundational capability for “privacy-preserving multi-party collaborative AI.” Centered on FL-Ready supply chain AI components and services, combined with channel partners and edge node growth, this forms a high-margin, replicable, cross-border expansion business landscape.
 
 ### AI Modules × Milestones × KPI Overview
 
-Note: This table lists key AI modules and technical paths, separating MVP/must-have and extended/advanced items so reviewers can grasp priorities and targets in one minute.
+> Note: This table lists the project’s main AI modules and technical roadmap, separating MVP/mandatory items from extended/advanced items, so reviewers can grasp the technical focus and targets within 1 minute.
 
-| Module | Type | Key Milestones (Month) | End-of-project KPI | Notes |
+| Module | Type | Key Milestones (Month) | End-of-Project KPI | Notes |
 | --- | --- | --- | --- | --- |
-| Environmental anomaly detection + risk scoring (Temp/Humidity + event alignment) | MVP | M6 prototype, M12 site validation | F1 ≥ 0.85, violation rate ↓ ≥ 30%, incident report SLA (P95) ≤ 2 min | Must-achieve; maps to Pain Point 3, Work Package C |
-| NLQ + automated reporting (AI autonomous summaries and management dashboard) | MVP | M6 prototype, M12 internal trial, M18 site rollout | NLQ accuracy ≥ 90%, P95 latency ≤ 60 s, reporting work-hours ↓ ≥ 50% | Must-achieve; maps to Pain Point 2, Work Package B |
-| Route/theft anomaly detection (Smart TOTE + GPS/Padlock) | MVP | M12 model demo, M18 site validation | Route deviation AUC ≥ 0.90, theft/unauthorized opening F1 ≥ 0.85, critical alert response < 30 min | Must-achieve; maps to Pain Point 4, Work Package D |
-| Multi-party Federated Learning (collaborative data across sites) | Extended | M12 FL architecture and PoC plan, M18 ≥1 cross-site PoC | ≥2–3 nodes in FL training; 1 privacy/FL whitepaper; centralized vs FL performance gap ≤ 5% | Advanced; emphasizes collaboration/GDPR/alliance; not a hard acceptance gate |
-| Training AI Coding / vibe coding process | Support | M3 internal guidelines, M9 CI integration, ongoing | Typical dev lead time ↓ ≥ 20–30%, major defect rate does not rise (vs 2024 baseline) | Internal R&D efficiency/quality controls; supports Subprojects A–D; not an external KPI |
+| Battery Life Prediction (RUL, Smart Tracker) | MVP | M6 complete v1 RUL model and data pipeline; M12 site validation | RUL MAE ≤ 10 days; Early-warning rate ≥ 80%; Unplanned offline events ↓ ≥ 30% | Mandatory; maps to Pain Point 1 (sensor reliability and battery life), Work Package A |
+| Environmental Anomaly Detection + Risk Scoring (Temp/Humidity + Event Alignment) | MVP | M6 prototype; M12 site validation | F1 ≥ 0.85; Violation rate ↓ ≥ 30%; Incident report SLA (P95) ≤ 2 minutes | Mandatory; maps to Pain Point 3 (environment-sensitive goods risk), Work Package C |
+| NLQ + Auto Reporting (AI Autonomous Summaries & Management Dashboard) | MVP | M6 prototype; M12 internal trial; M18 site rollout | NLQ accuracy ≥ 90%; P95 latency ≤ 60 seconds; Reporting work-hours ↓ ≥ 50% | Mandatory; maps to Pain Point 2 (time-consuming reporting), Work Package B |
+| Route/Theft Anomaly Detection (Smart TOTE + GPS/Padlock) | MVP | M12 model demo; M18 site validation | Route deviation AUC ≥ 0.90; Theft/unauthorized opening F1 ≥ 0.85; Critical alert response time < 30 minutes | Mandatory; maps to Pain Point 4 (detours/theft), Work Package D |
+| Multi-Party Federated Learning (FL, cross-party data collaboration) | Extended | M12 complete FL architecture design and PoC plan; M18 complete ≥1 cross-site PoC | ≥ 2–3 nodes participate in FL training; deliver 1 “Privacy & Federated Learning Whitepaper”; centralized vs. FL performance gap ≤ 5% | Advanced; emphasizes collaboration/GDPR/alliance: multi-party collaboration, data stays in-domain, supports building international/local AI alliances (not a hard acceptance gate; technical/business extension) |
+| Training AI Coding / vibe coding process | Support | M3 establish internal dev guidelines; M9 integrate into CI; continuous optimization | Typical development lead time ↓ ≥ 20–30%; Major defect rate does not rise (vs. 2024 baseline) | Internal R&D efficiency/quality control; supports Work Packages A–D; not an external audit KPI |
 
 ### (5) International Cooperation Benefits
 
