@@ -495,9 +495,12 @@ ItracXing Technology: Focused on product development in IoT sensing and satellit
 
   ### (4) System Architecture, Dashboard, and Technical Description
 
-  Diagram 4-1: Dashboard
+**Figure 4-1: Operations Dashboard**
 
-  ![alt text](ai-maas-dashboard-ch-tw.png)
+![alt text](ai-maas-dashboard-en.png)
+
+Figure 4-1 shows the core operations dashboard of this project. It consolidates and displays key indicators including Battery Remaining Useful Life (RUL), environmental anomaly events (temperature/humidity), route and theft risks, AI autonomous reports, and international testbed status. Users can monitor multi-site KPIs, alert lists, and map/timeline visualizations in a single view, reducing cross-system lookup and manual compilation time. This serves as the primary interface for daily operations monitoring and routine management meetings.
+
 
   The following diagram presents the end-to-end system architecture and data flow (Diagram 4-2), showing how Subprojects A–D integrate into a complete smart supply chain monitoring and risk warning solution:
 
