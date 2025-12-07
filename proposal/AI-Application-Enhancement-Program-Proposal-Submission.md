@@ -575,7 +575,7 @@ Figure 4-1 shows the core operations dashboard of this project. It consolidates 
 
   This architecture showcases three key features: (1) modular AI functions that can be extended independently; (2) built-in governance mechanisms (deduplication, auditing, SLA); (3) flexible deployment (optional LLM vs fixed templates) to lower adoption barriers.
 
-  RUL prediction flow overview
+  ## RUL prediction flow overview##
 
   ```mermaid
   flowchart LR
@@ -626,7 +626,7 @@ Figure 4-1 shows the core operations dashboard of this project. It consolidates 
 
   Diagram 4-3: RUL Prediction Flow Overview
 
-  Environmental anomaly (Temp/Humidity) prediction flow overview
+  ### Environmental anomaly (Temp/Humidity) prediction flow overview##
 
   ```mermaid
   flowchart LR
@@ -695,7 +695,7 @@ Figure 4-1 shows the core operations dashboard of this project. It consolidates 
 
   This section explains the end-to-end flow and responsibilities for environmental anomaly prediction. Upstream, Smart TOTE/IoT sensors stream temperature, relative humidity, and timestamps via the gateway to the cloud, where cleaning, alignment, and feature engineering (segment averages, gradients, cumulative exposure) are performed and written to a unified Feature Store. Downstream, anomaly detection models (e.g., LSTM, Isolation Forest, BOCPD) combined with regulatory/SOP thresholds (GDP/site SOP) produce risk scores and trigger alerts, while updating dashboards and generating audit/compliance reports. Feedback from alert usage and dashboards (true anomaly/false alarm tags) flows back into the retraining pipeline to form a continuous learning loop, ensuring stable attainment of F1-score, early warning rate, and report SLA KPIs.
 
-  Route anomaly and theft detection
+  ## Route anomaly and theft detection##
 
   ```mermaid
   flowchart LR
@@ -752,7 +752,7 @@ Figure 4-1 shows the core operations dashboard of this project. It consolidates 
 
   As shown in Diagram 4-5, the end-to-end flow is “Edge → Cloud → Feature Store → AI/Rules → Decisions.” Smart locks and smart boxes return GPS trajectories, lock state (open/close/tamper), and pressure time series. The cloud platform ingests and stores the data, performs feature engineering (route deviation, dwell time, abnormal unlock statistics, pressure changes), and writes to a unified Feature Store as reusable model inputs. The AI anomaly detection module (e.g., Isolation Forest, LSTM Autoencoder) learns “normal transport behavior” from the Feature Store, outputs an anomaly score and converts it to a 0–1 risk score. Meanwhile, the rule engine sets geofences, unlock windows, and pressure thresholds per operations needs. Decision fusion combines AI risk scores and rules to push real-time alerts (SMS/Email/LINE/Webhook), annotate anomalies on the operations dashboard, and auto-generate daily/weekly risk analysis reports to quickly highlight high-risk routes and sites.
 
-  Federated Learning (FL) for multi-party collaboration as an expandable business opportunity
+  ## Federated Learning (FL) for multi-party collaboration as an expandable business opportunity##
 
   ```mermaid
   flowchart LR
