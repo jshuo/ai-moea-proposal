@@ -183,9 +183,11 @@
 
 ### 三、競爭態勢與技術優勢分析
 
-#### （1）國際競品比較
+本案定位為開放型、多承運人的 AI 監控與 FL-ready 平台，可成為 FedEx / Maersk 類承運人與 RKC 類 3PL 的技術供應者與白牌夥伴
 
-| 項目 | FedEx（含 SenseAware） | Maersk（含 Captain Peter / RCM） | RKC Logistics LLC | ItracXing & Arviem 聯盟（本案） |
+#### （1）國際競品比較
+| 項目 | FedEx（含 SenseAware） | Maersk（含 Captain Peter / RCM） | RKC Logistics LLC | **ItracXing & Arviem 聯盟（★本案）** |
+|------|------------------------|----------------------------------|-------------------|--------------------------------------|
 |------|------------------------|----------------------------------|-------------------|----------------------------------|
 | 供應鏈角色定位 | 全球整合快遞 / 小包裹承運人（integrator） | 全球海運與整合物流（特別是冷鏈／冷凍櫃） | 美國中小企業導向之卡車運輸與貨運經紀（3PL / broker + carrier） | ItracXing：台灣 AI 供應鏈監控平台；Arviem：瑞士第三方貨運可視化服務商（>5,000 家跨國貨主） |
 | 監控 / 可視化產品 | SenseAware ID / M4：多感測裝置＋雲端平台，即時監控位置、溫度、氣壓、衝擊等 | Remote Container Management（RCM）＋ Captain Peter：冷凍櫃溫度、濕度、氣體、位置等監控與告警 | 使用合作 TMS／tracking portal，提供貨況查詢與帳款管理，無自有 IoT 感測硬體 | Smart TOTE（智慧物流箱）＋ AI-MaaS：整合 BLE Padlock、壓力、溫濕度、GPS / LTE / NTN，搭配 RUL、環境異常、路線／竊盜偵測、NLQ 報表等 AI 模型 |
