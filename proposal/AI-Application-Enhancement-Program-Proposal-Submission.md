@@ -1,1776 +1,1816 @@
-# Ministry of Economic Affairs Technology R&D Project
+# 經濟部科技研究發展專案
 
-## A+ Enterprise Innovation R&D Refinement Program
+## A+企業創新研發淬鍊計畫
 
-## AI Application Enhancement Program Proposal
+## AI應用躍昇計畫計畫書
 
-AI Smart Supply Chain Risk Prediction and Communications Integration System Development Project  
-Project Period: From January 1, 2026 to June 30, 2027
+**AI智慧供應鏈風險預測與通訊整合應用系統開發計畫**  
+**計畫期間：自 2026年1月1日 至 2027年6月30日 止**
 
-Company Name: ItracXing Technology Co., Ltd.  
-Project Management Unit: Taipei Computer Association
-
----
-
-## Proposal Summary Table (Cover and Front Matter)
-
-### General Information (Currency unit: TWD thousand)
-
-- Project Title: AI Smart Supply Chain Risk Prediction and Communications Integration System Development Project
-- Applicant Company: ItracXing Technology Co., Ltd.
-- Mailing Address: B1, No. 20, Lane 1, Alley 768, Section 4, Bade Road, Nangang District, Taipei City
-- Program Category: A+ Enterprise Innovation R&D Refinement Program — AI Application Enhancement Program
-- Promotion Item: ☑ Other (Supply chain and logistics monitoring)
-- Project Duration: January 1, 2026 to June 30, 2027 (18 months total)
-
-Project Principal Investigator
-
-- Name: Jeff Shuo
-- Title: CIO
-- Phone: (09)82134834
-- Fax: N/A
-- Email: jeff.shuo@itracxing.com
-
-Annual Budget
-
-|      Year      | Gov. Subsidy | Company Self-funding | Total Budget | Total Person-Months |
-| :------------: | -----------: | -------------------: | -----------: | ------------------: |
-|     Year 1     |       9,000  |               9,000  |      18,000  |               120   |
-|     Total      |    9,000     |            9,000     |   18,000     |           120       |
-| Share of Total |      50.0%   |              50.0%   |       100%   |          —          |
-
-Project Contact
-
-- Name: Jeff Shuo
-- Title: CIO
-- Phone: (09)82134834
-- Email: jeff.shuo@itracxing.com
+公司名稱：ItracXing 準旺科技股份有限公司
+計畫管理單位：台北市電腦商業同業公會
 
 ---
 
-## Project Abstract
+## 計畫書摘要表（封面與前置文件）
 
-### Company Profile
+### 綜合資料（金額單位：千元）
 
-| Company Name | ItracXing Technology Co., Ltd. |
-| ------------ | ------------------------------- |
-| Founded      | March 2020                      |
-| Principal    | Dr. Chow                        |
-| Main Business| AI supply chain monitoring systems, IoT device management, data analytics platform |
+- **計畫名稱：** AI智慧供應鏈風險預測與通訊整合應用系統開發計畫
+- **申請公司名稱：** ItracXing 準旺科技股份有限公司
+- **通訊地址：** 臺北市南港區八德路4段768巷1弄20號地下樓
+- **計畫別：** A+企業創新研發淬鍊計畫—AI應用躍昇計畫
+- **推動項目：** ☑ 其他（供應鏈與物流監控）
+- **計畫起～訖時間：** 2026年1月1日 至 2027年6月30日（共18個月）
 
-### Project Summary (≤200 words)
+**計畫主持人**
 
-Industry Mapping: Eight Key Industries No. 7 (Electronics assembly extension: smart manufacturing/logistics & transportation).
+- 姓名：Jeff Shuo
+- 職稱：CIO
+- 電話：（09)82134834
+- 傳真：無
+- 電子信箱：jeff.shuo@itracxing.com
 
-Global smart logistics monitoring and traceability needs are rapidly growing; by 2030, logistics and transportation market size is projected to reach TWD 250.2 trillion. Co-driven by ItracXing and Arviem (Switzerland), this project targets four core pain points: insufficient sensor reliability, time-consuming report generation, difficulty in timely managing risks for environment-sensitive goods, and inability to promptly identify route detours and suspected theft. We will build four AI modules: battery Remaining Useful Life (RUL) prediction, NLQ + AI autonomous reporting, environmental anomaly detection, and route/theft detection. Within 18 months, we will complete at least one international and one domestic testbed (International: Arviem; Domestic: SimiQue), achieving sensor availability ≥95%, incident response time reduction ≥40%, temperature/humidity compliance violations reduced ≥30%, unauthorized opening/theft detection F1-score ≥0.85, and establish an exportable AI‑MaaS service model. Post-project, three-year cumulative output is estimated at ~TWD 120M, elevating Taiwan’s global visibility in AI smart logistics.
+**年度經費**
 
-The projected three-year TWD 120M output is grounded in a concrete Smart TOTE business model: the primary pricing is “per-box per-shipment AI monitoring service.” Each smart logistics box is charged ~USD 2 per end-to-end shipment, a marginal cost under 1% of shipment value or asset cost, yet significantly reduces environmental violations and theft risks. For 1,000 Smart TOTEs × average 50 shipments/year × 3 years, this yields ~USD 300K (~TWD 9.6M) AI monitoring subscription revenue; adding IoT hardware sales and consulting/licensing income composes the “~TWD 120M in three years (≈70% export)” basis detailed later.
 
-### Expected Benefits at Project Closure (Summary Table)
-Quantitative indicators — sources and estimation models
+|     年度     | 政府補助款 | 申請公司自籌款 | 計畫總經費 | 計畫人月數 |
+| :------------: | -----------: | ---------------: | -----------: | -----------: |
+|   第1年度   |      9,000 |          9,000 |     18,000 |        120 |
+|   **合計**   |  **9,000** |       **9,000** | **18,000** |    **120** |
+| 占總經費比例 |      50.0% |          50.0% |       100% |          - |
 
-We explain “source, assumptions, formulas, and validation” for each figure in the summary to avoid listing targets without logic. All indicators align with later KPI/milestones.
+**計畫聯絡人**
 
-#### 1) Overall logic for indicator formation
-1. Inventory 2024–2025 internal and partner (Arviem) historical data: sensor operating days, offline events, temperature/humidity violations, GPS tracks, average manual report hours, incident response time.
-2. Establish Baseline → map to improvement mechanisms (models/process) → estimate improvements (literature ranges + internal tests) → set “conservatively attainable” targets.
-3. Improvement ranges referencing three sources:  
-  - Internal small-scale pilots (Prototype/PoC)  
-  - Typical ranges from public research/industry reports (magnitude only; no verbatim citations)  
-  - Expected labor savings via process automation (generally 40–70%)
-
-#### 2) Quantitative indicator derivation
-
-| Indicator                      | Target     | Derivation / Formula                                                                                                                                          | Main Assumptions                                                                 | Data Source / Validation                                  |
-|-------------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------------|
-| Sensor Availability           | ≥95%       | Baseline 90%; predictive maintenance lowers unplanned offline rate ≈ (pre-failure alert intervention rate 70% × failure events 7% × avoidance rate 80%) → +~5% | Annual failures/offline events ≈7% of daily devices; early alerts enable swaps   | 30-day continuous uptime stats; field validation          |
-| RUL Prediction Accuracy       | ≥90%       | Small sample initial test (n≈120 devices, 86–88% accuracy) + multivariate features (temp/transmission freq) +2–4% → 90%                                      | Feature gains ≤5% (conservative)                                                 | Work Package A test set; quarterly model evaluation         |
-| RUL MAE                       | ≤10 days   | Simple threshold baseline error 18–22 days; survival analysis + time series reduces 30–50% (literature) → take 50%: 20 × 0.5 = 10 days                        | Sufficient retirement/maintenance labels (>50 cases)                             | Survival analysis tests; hold-out MAE                     |
-| Env. anomaly F1-score         | ≥0.88      | Rule-based baseline ≈0.70; add change-point (+0.08–0.10) + event alignment (+0.06–0.08) → 0.86–0.88 → choose upper bound                                     | Gains from change-point and alignment are independent (non-overlapping)          | Labeled event set; F1 calculation                         |
-| Route deviation AUC           | ≥0.90      | Pure GPS model AUC 0.82–0.85; add road-network and behavioral context +0.04–0.06 → 0.86–0.91 → choose 0.90                                                   | Context features are stable; sample size >1,000 tracks                            | Test-set ROC; quarterly validation                        |
-| Theft/unauthorized opening F1 | ≥0.85      | BLE padlock + pressure/light events → balanced samples yield Precision ≈0.87, Recall ≈0.83 → F1 ≈0.85                                                         | Enough simulated and field opening events (≥50)                                   | Event confusion matrix                                    |
-| NLQ Query Accuracy            | ≥92%       | Initial NL-to-SQL (template + semantic layer) 85–88%; add refusal/clarification rounds +4–6% → 89–94% → pick mid-high 92%                                     | QA set >200; clarification covers ≥30% ambiguous queries                          | Golden answers; manual sampling                           |
-| NLQ P95 Latency               | <60 s      | Parsing (<2s) + safety planning (<5s) + warehouse aggregation (<30s) + report assembly (<15s) → total <52s; 15% buffer                                        | Effective peak concurrency; indexing optimized                                    | Gateway/APM logs                                          |
-| Incident response time        | ≥40%↓      | Baseline 45–90 min (avg 60); auto-alert + instant report: detection <2 min + backup flow reduces manual data pulling 30–35 min → (60−35)/60 ≈42%             | Stable report templates; reliable notification pipeline                           | Event start/end timestamps                                 |
-| T/H violation rate            | ≥30%↓      | Baseline violation batch rate X; early warning 70% × successful intervention 45% → 0.70×0.45 ≈31.5% → take 30%                                                | Early warnings are acted upon (human intervention)                                 | Violation event statistics                                 |
-| Ineffective transport/loss    | ≥10–15%↓   | Ineffective miles ≈12–18% of total; route deviation + ETA improvements identify/adjust 60–70% → 0.15 ×0.65 ≈9.75% → round up 10–15%                          | Dispatch adoption ≥60%                                                            | Route/mileage comparisons                                  |
-| LOI/POC count                 | ≥2         | Target segments (Arviem clients + 5–8 domestic prospects) conversion 15–25% → (8×0.25)=2                                                                      | Clear pain-point mapping                                                          | Intent/agreements                                          |
-| Intl + domestic testbeds      | 1 intl + 1 domestic | Existing international partnership confirmed; domestic testbed from T/H-sensitive shipper                                                    | Dual track: technology + business                                                | Deployment/validation reports                              |
-| 3-year output base            | TWD 120M   | Clients 10 × avg annual revenue 1.5M × 3 years = 45M + IoT 1,000 units ×10K = 10M + consulting/licensing/expansion ≈65M → total ≈120M                        | Annual revenue includes subscription + consulting                                  | Financial model/contracts                                  |
-| Talent development (cross-domain) | ≥6     | Current 5; add 1 AI/female R&D; internal cross-training ≥2 → 5+1+2=8 (≥6)                                               | Hiring success ≥70%                                                               | HR/training records                                        |
-| Patent applications           | 2–3 (≥1 PCT) | Plan 2 domestic + 1 PCT (multi-agent/sampling)                                                                         | Positive novelty search                                                           | Application documents                                      |
-| Software copyrights           | 1–2        | Battery RUL module + NLQ orchestration core code                                                                        | Clear originality in code                                                         | Registration documents                                     |
-| Intl revenue share            | ≈70%       | From Arviem customer SaaS income 57.6M, intl ~40.3M → 40.3/57.6 ≈70%                                                    | Conservative intl conversion rate                                                 | Invoices/revenue                                           |
-| CO₂ reduction                 | ≈80+ tons (10–15%) | ΔCO₂ = annual miles 350,000 km ×10% ×0.8 kg ×3 years ≈84 tons → quote 80+                                           | Emission factor 0.8 kg/km                                                         | Mileage/fuel/model                                         |
-
-#### 3) Key models / estimation methods (brief)
-- Battery RUL: time-series deep learning (LSTM/TFT) + survival analysis.  
-- Anomaly detection: statistical thresholds + change-point (CUSUM/BOCPD) + event alignment (door/segment).  
-- Route deviation/ETA: GPS sequence encoding + graph road network (GNN) features; ETA error improvement → dispatch optimization → ineffective miles down.  
-- NLQ: domain ontology + NL-to-SQL templating constraints + clarification rounds (refusal policy reduces hallucinations).  
-- Cost/output: bottom-up (clients × ASP × devices) × top-down (channel penetration) cross-check.  
-- ESG: route optimization and predictive maintenance (avoid offline re-dispatch) → fewer ineffective trips; CO₂ estimated using public factors.
-
-#### 4) Validation and audit package
-- Quarterly model performance reports (RUL, anomalies, routes).  
-- Traceable event and mileage logs (raw + actions).  
-- NLQ audit: semantic transform, SQL, and result snapshots retained ≥12 months.  
-- Finance/output: cross-audit contracts/invoices/deployment lists.  
-- ESG: consolidated reports for mileage, interventions, and device energy saving (sampling rate changes).
-
-#### 5) Cooperation documents and attachments (International + Domestic)
-
-To strengthen “international cooperation,” “domestic demo testbeds,” and “in-Taiwan autonomous R&D” auditability, the following are prepared and attached:
-
-- International Cooperation / Testbed Proof:  
-  - Memorandum of Understanding (MOU) & Letter of Intent (LOI) between ItracXing Technology Co., Ltd. and Arviem AG (Attachment: MOU_Arviem.md).  
-  - Clarifies this proposal is under MOEA’s A+ Enterprise Innovation R&D Refinement Program—AI Application Enhancement; Arviem provides global routes and real logistics cases as the “international testbed,” commits USD 10,000 for proposal preparation and feasibility study, and grants data usage rights for model training and validation during the project.  
-  - Foreground IP is owned solely by ItracXing; R&D primarily conducted in Taiwan to meet “technical autonomy and local R&D” subsidy principles.
-
-- Domestic Demo Testbed Proof:  
-  - MOU — AI Smart Supply Chain Monitoring System Testbed Collaboration (Attachment: MOU_Simique.md), signed with intended domestic partner (e.g., SimiQue, Inc.).  
-  - Specifies the partner provides actual warehouse/fleet/transfer center as the “domestic demo testbed,” and supplies necessary de-identified operational data/resources to meet KPI: “at least 1 international + 1 domestic testbed validation.”  
-  - Data rights and confidentiality defined; project-developed AI models, algorithms, and software copyrights belong to ItracXing to avoid future IP disputes.
-
-These documents both support KPIs/milestones (e.g., testbeds, international cooperation, three-year output, intl revenue share) and concretely address reviewers’ concerns on “international cooperation feasibility,” “domestic testbed readiness,” and “IP/data rights clarity,” improving feasibility and execution confidence.
-
-#### 5) Risk buffer
-All targets are “conservatively attainable”: if any mid-term (M9–M10) model underperforms (e.g., F1 <0.83), activate backup (feature enhancement / threshold tuning / model blending) to ensure closure targets; business indicators (LOI/POC) updated iteratively; if lagging, accelerate secondary channel expansion.
-
-(This section may be public; no sensitive formula details)
-
-### Keywords
-
-Supply chain AI monitoring, explainable AI, multi-agent, IoT adaptive sampling, smart manufacturing, electronics assembly, logistics & transportation, smart logistics, Eight Key Industries No. 7
+- 姓名：Jeff Shuo
+- 職稱：CIO
+- 電話：（09)82134834
+- 電子信箱：jeff.shuo@itracxing.com
 
 ---
 
-## I. Project Participants
+## 計畫摘要
 
-Summary: This section presents the applicant’s positioning, R&D capacity, and partners, focusing on core capabilities in supply chain AI monitoring and international export foundations, as the basis for execution and KPI design.
+### 申請公司簡介
 
-### 1) Primary Applicant
 
-Company Overview
+| 公司名稱     | ItracXing 準旺科技股份有限公司              |
+| -------------- | --------------------------------------------- |
+| 創立日期     | 2020年3月                                   |
+| 負責人       | Dr. Chow                                    |
+| 主要營業項目 | AI供應鏈監控系統、IoT設備管理、數據分析平台 |
 
-- Basic Information
-  - Company: ItracXing Technology Co., Ltd.
-  - Established: 2020-03-15
-  - Industry: Information Services (Category J; Computer Systems Design)
-  - Top three shareholders/holdings: Founding team 60%, technical team 25%, strategic investor 15%
-  - R&D headcount / total employees: 12 / 15
-  - 2024 paid-in capital (TWD thousand): 10,000
-  - 2024 revenue / R&D expense (TWD thousand): 15,000 / 8,000
-- Business Model
-  - Core capabilities: AI-driven supply chain monitoring, IoT device management, adaptive sampling/dynamic thresholds, explainable AI
-  - Revenue streams: AI‑MaaS subscription, AI consulting, custom development
-  - Channels: Direct sales, strategic partners (Arviem), online platform
-  - Key customers: Arviem AG, etc.
-  - Cost structure: R&D personnel (60%), cloud resources (25%), operations (15%)
-  - Key partner: Arviem
-  - International export track record: Co-developing global markets with Arviem
-  - Inclusive workplace plan: Gender ratio ≥ ~1/3; plan to hire female R&D staff; flexible hours and remote work
+### 計畫摘要（≤200字）
 
-### 2) AI R&D capabilities of applicant/partners
+產業對應：八大產業第 7 項（電子組裝延伸：智慧製造／物流運輸）。
 
-ItracXing Technology: Focused on product development in IoT sensing and satellite communications, with proven integration of edge sensors, communications modules, and cloud platforms. Currently co-developing with international logistics monitoring partners to combine proprietary IoT devices with AI applications, building AI‑Monitor as a Service and AI Logistics as a Service subscription models targeting the global supply chain monitoring and smart logistics market. For this project, we provide an end-to-end solution from “edge sensors — satellite/cellular communications — cloud AI platform — decision dashboards,” improving AI adoption feasibility, industry diffusion, and international export potential, aligned with smart transportation/logistics priorities.
+全球智慧物流監控與可追溯需求快速成長，2030 年運輸與物流市場規模預估達 NT$250.2 兆。本計畫由 ItracXing 與瑞士 Arviem 共同推動，聚焦「感測器可靠度不足、報表產出耗時、環境敏感貨品風險難以及時掌握、路線繞行與疑似竊盜無法即時辨識」四大痛點，分別建置電池壽命預測（RUL）、NLQ＋AI 自主式報告、環境異常偵測與路線／竊盜偵測四項 AI 模組。18 個月內完成 **至少 1 家國際＋1 家國內場域**（國際場域：Arviem；國內場域：SimiQue），達成感測器可靠度 ≥95%、風險回應時間縮短 ≥40%、溫濕度敏感貨品環境違規率下降 ≥30%、竊盜／未授權開啟事件偵測 F1-score ≥0.85，並建立可輸出的 AI-MaaS 服務模式，預估結案後三年累積產值約 NT$120M，提升台灣在 AI 智慧物流領域之國際能見度。
 
-### 3) Competitive landscape and technical advantages
+本計畫之三年 NT$120M 產值並非僅為估算，而是建立在具體 **Smart TOTE 商業模式** 之上：主力收費模式為「每箱每趟 AI 監控服務」，每一個智慧物流箱每完成一次端到端運輸收取約 **USD 2 / TOTE / shipment**，相較於單趟貨值與箱體資產價值僅為不到 1% 的邊際成本，卻可大幅降低環境違規與竊盜風險。以 **1,000 個 Smart TOTE × 平均每年 50 趟 × 3 年** 為例，可形成約 **USD 300K（約 NT$9.6M）** 之 AI 監控訂閱收入，再加上 IoT 裝置銷售與顧問／授權收入，構成後文所述「三年累積產值約 NT$120M（其中約 70% 為出口收入）」之主要試算基礎。
 
-#### (1) International competitor comparison
 
-| Category                       | Typical player positioning               | Main strengths                | Current gaps                                                     | Our corresponding advantages                                                                 |
-|-------------------------------|------------------------------------------|-------------------------------|------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
-| Digital freight / visibility  | Booking, customs, tracking integration   | Mature platforms, broad base  | Limited integration of IoT sensor data and AI prediction; NLQ often static | Focused on “smart containers + sensors” RUL, environmental alerts, route anomaly detection; NLQ queries on incidents and risks |
-| Sensor/device vendors         | Provide temperature/location sensors     | Hardware variety, deployment  | Mostly rule-based alerts; lack explainable AI and cross-voyage/lane learning | Time-series models for explainable battery RUL and violation risk; emphasize transparency and auditability |
-| Cloud data / BI platforms     | Data warehousing, dashboards             | General-purpose, scalable     | Heavy customization needed for logistics IoT schema/SOP          | “Logistics IoT semantic layer + NL-to-SQL” core; built-in shipment, lane, container, events to cut customization |
+### 計畫結案時預期效益（摘要表）
+**計畫結案時預期效益（量化指標來源與推導模型說明）**
 
-#### (2) Technical innovation and differentiation
+以下說明摘要表中各數值之「來源、假設、推導公式與驗證方式」，避免僅列目標未交代形成邏輯；所有指標已與後文 KPI／里程碑一致。
 
-1. Sensor reliability & predictive maintenance: upgrade from “point alerts” to “predictable life and reliability management”  
-  - Analyze discharge/use patterns via time-series deep learning (LSTM/TFT) to build battery RUL, enabling proactive maintenance (“when it will fail,” not just “broken or not”).  
-  - Beyond simple voltage thresholds, also consider temperature, usage, and transmission frequency to reduce misjudgment and extend sensor lifespan.
+#### 1. 指標形成總體邏輯
+1. 先盤點 2024–2025 內部與合作場域（Arviem）歷史資料：感測器運作天數、離線事件、溫濕度違規紀錄、GPS 軌跡、人工報告平均工時、異常事件回應時間。
+2. 建立 Baseline（現況）→ 對應可改進機制（模型或流程）→ 估算改進幅度（文獻量級＋內部測試）→ 設定「保守可達」目標。
+3. 改進幅度參考三來源：  
+  - 內部小型試驗（Prototype / PoC）  
+  - 國際公開研究/產業報告之常見可達區間（僅量級，不引用原文）  
+  - 預期採用流程自動化替代人工的工時節省範圍（一般 40–70%）
 
-2. NLQ + semantic layer: from “viewing reports” to “ask a question, get the answer”  
-  - Logistics-specific semantic layer (Shipment, Lane, Container, Event), with NL-to-SQL safely transforming natural language into structured queries.  
-  - Aggregate sensor reliability/RUL, violations, route anomalies, and SLA metrics; executives can ask “T/H violation trends for Europe lanes this quarter?” instead of manual compilation.  
-  - Tooling constraints and refusal mechanisms avoid hallucinations and overreach, balancing usability and governance.
+#### 2. 量化指標推導表
 
-3. Environmental and route anomaly detection: staged rollout, lower false alarms  
-  - For temperature/humidity-sensitive goods, MVP uses “change-point + thresholds + event alignment” for anomalies and AI autonomous incident reports; set report SLA (P95 ≤ 2 min) and early warning targets.  
-  - Route anomaly detection combines GPS and dwell/behavioral features to differentiate “reasonable delays” from “detours/theft risk,” prioritizing truly high-risk events.
+| 指標 | 目標值 | 推導/公式 | 主要假設 | 資料來源/驗證 |
+|------|--------|-----------|----------|---------------|
+| 感測器可靠度 (Availability) | ≥95% | Baseline 90%；預測性維護使非計畫性離線率下降 ≈ (故障前預警可介入比率 70% × 故障事件 7% × 避免率 80%) → 提升約 5% | 年度故障/離線事件佔每日裝置數 ≈7%；提前預警可安排更換而不影響連續性 | 連續30天上線率統計；場域驗證報告 |
+| RUL 預測準確率     | ≥90% | 小型樣本初測（n≈120 裝置，分類準確 86–88%）＋加上多變量特徵（溫度/傳輸頻率）提升 2–4% → 目標 90% | 特徵新增帶來增益不超過 5%（保守） | 分項 A 測試集；季度模型評估 |
+| RUL MAE | ≤10 天 | 原始簡單門檻估計誤差 18–22 天；採生存分析 + 時序模型（文獻顯示可降 30–50%）→ 取 50% 改善下限：20 天 × 0.5 = 10 天 | 可取得足夠退役/維護標註（>50 件） | 生存分析測試；Hold‑out MAE |
+| 環境異常偵測 F1-score | ≥0.88 | Rule-based baseline F1-score ≈0.70；加入變化點偵測（+0.08≈0.10）＋事件對齊（再 +0.06≈0.08）→ 0.70 +0.16≈0.18 ≈ 0.86–0.88 → 取上限可達值 | 變化點偵測與對齊能獨立提升且誤差不疊加 | 標註事件集；F1-score 計算 |
+| 路線偏離偵測 AUC | ≥0.90 | 純 GPS 模型 AUC 0.82–0.85；加入路網圖與運輸行為上下文特徵可提升 ≈0.04–0.06 → 0.86–0.91 → 取 0.90 | 上下文特徵具穩定性；樣本量 >1,000 軌跡 | 測試集 ROC；季度驗證 |
+| 竊盜/未授權開啟 F1-score | ≥0.85 | BLE Padlock + 壓力/光感事件 → 正負樣本平衡後預期 Precision ≈0.87、Recall ≈0.83 → F1-score ≈0.85 | 有足夠模擬與場域實測開啟事件（≥50 次） | 事件混淆矩陣 |
+| NLQ 查詢正確率 | ≥92% | 初版 NL-to-SQL（模板+語意層）正確率估 85–88%；加入拒答/語意歧義澄清回合 +4–6% → 89–94% → 取中高值 92% | 問答集 >200；澄清流程覆蓋 ≥30% 歧義查詢 | 標準答案對照；人工抽驗 |
+| NLQ P95 延遲 | <60 秒 | 查詢分解/語意解析（<2s）＋安全規劃（<5s）＋資料倉儲聚合（<30s）＋報告編排（<15s）→ 累計 <52s；留 15% 緩衝 | 高峰並發調度有效；索引優化完成 | Gateway / APM 日誌 |
+| 風險回應時間縮短 | ≥40% | 現況 45–90 分（平均取 60 分）；自動告警 + 即時報告：偵測延遲 <2 分，備援流程減少人工取數 30–35 分 → (60−35)/60 ≈42% | 報告模板穩定；通知管線可靠 | 事件起訖時間戳 |
+| 溫濕度違規率下降 | ≥30% | 現況違規批次率 X；提前預警率 70% × 可介入成功率 45% → 0.70×0.45 ≈31.5% → 取 30% | 預警介入行為落實（人工處置） | 違規事件統計 |
+| 無效運輸/理賠損失降低 | ≥10–15% | 無效里程 ≈總里程 12–18%；路線偏離與 ETA 改善使其中 60–70% 被識別調整 → 0.15 ×0.65 ≈9.75% → 向上取整 10–15% | 調度採納率 ≥60% | 路線/里程對比 |
+| LOI/POC 數 | ≥2 件 | 目標客群（Arviem 客戶 + 國內 5–8 家潛在）轉換率保守 15–25% → (8×0.25)=2 | 有明確痛點對接 | 合作意向/文件 |
+| 國際＋國內場域驗證 | 1 國際＋1 國內 | 既有國際合作確定；國內場域由溫濕度敏感貨主提供示範環境 | 技術與業務雙軌推進 | 部署/驗證報告 |
+| 三年產值基礎 | NT$120M | 客戶數 10 × 年均收入 1.5M ×3 年=45M + IoT 裝置 1,000 台 ×10K=10M + 顧問/授權/擴充 ≈65M → 合計 ≈120M | 年均收入含訂閱+顧問 | 財務模型／合約 |
+| 人才培育（跨域） | ≥6 人 | 現有人力 5；新增 AI/女性研發 1；內部再訓練跨域 ≥2 → 5+1+2=8（≥6） | 招聘成功率 ≥70% | HR/訓練紀錄 |
+| 專利申請 | 2–3 件 (≥1 PCT) | 已規劃 2 件國內 + 1 件 PCT（跨多智能體/採樣） | 技術新穎性檢索可行 | 申請文件 |
+| 國際收入占比 | ≈70% | Arviem 客戶國際營收假設總 SaaS 收入 57.6M 中國際占 40.3M → 40.3/57.6 ≈70% | 國際客戶轉換率保守 | 發票/收入 |
+| CO₂ 減量 | ≈80+ 噸（10–15%） | ΔCO₂ = 年里程 350,000 km ×10% ×0.8 kg ×3 年 ≈84 噸（取 80+） | 排放因子 0.8 kg/km | 里程/油耗/模型 |
 
-4. Taiwan-first AI Logistics MaaS architecture: replicable, verifiable, diffusive  
-  - Modular “AI function XaaS” (RUL, environmental alerts, route anomalies, NLQ reporting) enables stepwise adoption by domestic SMEs (freight forwarders, warehousing, T/H-sensitive goods, security).  
-  - All models and decision processes retain audit trails to meet EU/GDPR and international client audit needs, emphasizing “explainable & traceable” AI governance.
+#### 3. 核心模型/估算方法簡述
+- 電池壽命預測（RUL）：時序深度學習 (LSTM/TFT) 搭配生存分析。  
+- 異常偵測：統計門檻 + 變化點 (CUSUM/BOCPD) + 事件對齊（箱門/路段）。  
+- 路線偏離/ETA：GPS 時序編碼結合路網與運輸行為特徵；ETA 誤差改善→路線調度→無效里程下降。  
+- NLQ：語意層 (Domain Ontology) + NL-to-SQL 模板約束 + 澄清回合（拒答策略降低 hallucination）。  
+- 成本/產值：自底向上 (客戶數 × ASP × 裝置數) 與自頂向下 (渠道客戶滲透率) 雙向交叉驗證。  
+- ESG：路線最佳化與預測性維護（避免離線重派）→ 無效運輸減少；採公開排放係數估算 CO₂。
+
+#### 4. 驗證與查核配套
+- 每季模型性能報告（電池壽命預測、異常、路線）。  
+- 事件與里程日誌可追溯（原始資料＋處置紀錄）。  
+- NLQ 查詢審計：語意轉換、SQL、結果快照留存 ≥12 個月。  
+- 財務與產值：客戶合約/發票/部署清單交叉稽核。  
+- ESG：行駛里程、預警介入紀錄、裝置節電（採樣頻率變動）集中報表。
+
+#### 5. 合作文件與附件說明（國際＋國內場域）
+
+為強化本計畫在「國際合作」、「國內示範場域」與「自主研發在台」之查核可近性，本案已備妥下列合作文件並於申請時一併檢附：
+
+- **國際合作／場域驗證證明**：  
+  - **Memorandum of Understanding (MOU) & Letter of Intent (LOI)** between ItracXing Technology Co., Ltd. and **Arviem AG**（附件：MOU_Arviem.md）。  
+  - 明定本計畫係依經濟部「A+企業創新研發淬鍊計畫—AI應用躍昇計畫」提出，Arviem 提供全球運輸路線與真實物流案例作為「國際示範場域」，並承諾以 **USD 10,000** 支應提案準備與可行性研究，同時授權專案期間模型訓練與驗證所需之資料使用權。  
+  - 前景智財（Foreground IP）明確約定由 ItracXing 單獨持有，且研發工作主要在台灣進行，以符合本計畫「技術自主性與在地研發」之補助原則。
+
+- **國內示範場域證明**：  
+  - **合作備忘錄 (MOU)** － AI 智慧供應鏈監控系統場域驗證合作（附件：MOU_Simique.md），由 ItracXing 與預定之國內合作夥伴（如：新邁高國際信息有限公司等）簽署。  
+  - 文件中明定乙方提供實際倉儲／車隊／轉運中心作為「國內示範場域」，並配合提供必要之去識別化營運數據與場域資源，以完成本計畫「**至少 1 家國際＋1 家國內場域驗證**」KPI。  
+  - 同步規範數據權利與保密義務，並重申本計畫期間所開發 AI 模型、演算法與軟體著作權歸 ItracXing 所有，避免日後在智財歸屬上產生爭議。
+
+上述合作文件一方面做為本計畫 KPI 與查核點（如場域驗證、國際合作、三年產值與國際收入占比等）之佐證來源，另一方面也具體回應審查委員對「國際合作是否具體落地」、「國內示範場域是否已明確到位」、「智財與資料權利是否清楚界定」等潛在疑慮，以提高計畫整體可行性與執行信心。
+
+#### 5. 風險緩衝
+所有目標採「保守可達」：若任一模型在中期 (M9–M10) 評估低於預期（例如 F1-score <0.83），啟動備援策略（特徵增強 / 閾值調教 / 模型混合）確保結案前達標；商業指標以 LOI/POC 滾動更新，未達時加速第二渠道拓拓展。
+
+（本節可公開，無涉商業機密公式細節）
+
+
+### 關鍵字
+
+供應鏈AI監控、可解釋AI、多智能體、IoT自適應採樣、智慧製造、電子組裝、物流運輸、智慧物流、八大產業第7項
 
 ---
 
-#### (3) Market entry and local strategy
+## 壹、計畫參與者介紹
 
-1. Start from existing international projects, feed benefits back to Taiwan testbeds  
-  - Use current international client projects as the first data/model validation source to quickly accumulate accuracy and cases.  
-  - Simultaneously build small pilots in Taiwan (e.g., 1–2 local forwarders/warehouses, dozens of smart containers/pallets).
+【摘要】本節說明申請單位之定位、研發能量與合作夥伴，聚焦供應鏈 AI 監控核心能力與國際輸出基礎，作為後續執行與 KPI 配置之依據。
 
-2. Focus on “high-value, high-risk goods”  
-  - Prioritize coffee beans, food ingredients, precision components—highly sensitive to T/H and losses—where project value is most visible.  
-  - By reducing loss/claims and improving ETA and risk warning precision, generate quantifiable ROI (cost savings + premium service).
+### 一、主要申請廠商
 
-3. Platform and licensing in parallel  
-  - Short-term use LaaS/MaaS subscriptions (priced by devices, containers, or query volume), lowering adoption thresholds.  
-  - Mid-to-long term provide model licensing and white-label offerings for Taiwan SIs/telcos to integrate into 5G/AI portfolios, forming a local ecosystem.
+**公司簡介**
 
-4. International cooperation and Taiwan’s value  
-  - Collaborate with international academia and industry (e.g., European logistics partners, universities) to publish papers and case studies, enhancing Taiwan’s visibility in “AI + logistics.”  
-  - All key models and platform core development are done in Taiwan, with Taiwan-based operations and maintenance teams to ensure technology and talent remain local.
-  ## II. Project Content and Implementation Method
+- **基本資料**
 
-  Summary: This section is guided by industry pain points to define AI solutions and work packages, clearly linking “pain point → solution → milestone → KPI,” and strengthening data governance and cybersecurity compliance to ensure measurability and traceability.
+  - 公司名稱：ItracXing 準旺科技股份有限公司
+  - 設立日期：2020.03.15
+  - 產業領域別：資訊服務業（J類；電腦系統設計）
+  - 前三大股東/持股：創辦團隊 60%，技術團隊 25%，策略投資人 15%
+  - 研發人員總數/全公司人數：12/15
+  - 2024實收資本額（千元）：10,000
+  - 2024營業額/研發費用（千元）：15,000 / 8,000
+- **商務模式**
 
-  ### 1. Project Background and Industry Pain Points
+   - 核心能力：AI驅動供應鏈監控、IoT裝置管理、自適應採樣/動態閾值、可解釋AI
+  - 收入項目：AI-MaaS訂閱、AI顧問、客製化開發
+  - 通路：直銷、策略夥伴（Arviem）、線上平台
+  - 主要客戶：Arviem AG 等
+  - 成本項目：研發人事（60%）、雲資源（25%）、營運（15%）
+   - 關鍵合作對象：Arviem
+   - 國際輸出實績：與 Arviem 共同耕耘全球市場
+  - 友善職場規劃：性別比例至少約 1/3，規劃增聘女性研發人員，提供彈性工時與遠端工作機制
 
-  The project focuses on four core pain points in smart logistics that directly affect operational reliability, decision efficiency, and customer experience, with Subprojects A–D addressing and solving them:
+### 二、申請/合作單位之 AI 研發能力說明
 
-  #### Pain Point 1 | Insufficient sensor reliability (battery degradation, environmental interference, data interruption)
+**ItracXing 準旺科技**：為專注於 IoT 感測與衛星通訊鏈路 之產品開發公司，具備終端感測器、通訊模組與雲端平台整合實績，現正與國際物流監控合作夥伴共同開發，將自有 IoT 裝置與 AI 應用結合，發展「AI-Monitor as a Service」與「AI Logistics as a Service」等服務型商業模式，鎖定全球供應鏈監控與智慧物流市場。於本計畫中可提供從「終端感測器—衛星／行動通訊—雲端 AI 平台—決策儀表板」的一體化解決方案，強化 AI 導入落地可行性、產業擴散性與國際輸出潛力，符合本計畫智慧運輸／智慧物流等關鍵產業之發展方向。
+ 
 
-  Current sensors mostly upload on fixed intervals and lack Remaining Useful Life (RUL) prediction. When devices go offline due to battery drain, signal attenuation, or environmental interference, issues are discovered passively after data has already been interrupted and anomalies have occurred, creating monitoring blind spots, hindering root cause analysis, and increasing O&M costs.
+### 三、競爭態勢與技術優勢分析
+#### This project is positioned as an open, multi‑carrier AI monitoring and FL‑ready platform, serving as a technology provider and white‑label partner for carriers like FedEx/Maersk and 3PLs like RKC
 
-  Example: A smart warehouse deployed hundreds of environmental sensors. One sensor’s Li battery progressively degraded and dropped suddenly during summer heat, causing early offline. The gap was only noticed days later when reports were reviewed, and during the offline period warehouse temperature spiked, damaging sensitive goods. This illustrates the lack of RUL prediction and preventive maintenance: once a sensor dies, data gaps form and critical events are missed in real time. By contrast, industry leaders have begun adopting robust battery monitoring and maintenance for IoT devices. For instance, a global shipping leader’s smart containers track sensor battery levels in real time to ensure continuous operation across long trips without mid-journey power loss.
-
-  → Need: Introduce battery RUL prediction models and preventive maintenance. Use ML over voltage, temperature, and discharge curves to predict battery depletion and notify for proactive replacement. Integrate with Work Package B’s AI autonomous incident report so that when sensors go offline, the system auto-reports and marks the last valid data point, enabling rapid intervention and improving availability (mapped to Work Package A).
-
-  #### Pain Point 2 | Report generation is time-consuming and lacks interactivity (manual aggregation, delayed decisions)
-
-  Reports require manual aggregation across systems: sensor time series, GPS tracks, door events, and environmental records, then assembled in spreadsheets or slides. This takes hours to days and is error-prone due to field/unit interpretation and version mismatches, delaying decisions. Traditional BI tools demand schema knowledge and query skills; supervisors often rely on IT to craft offline reports.
-
-  Example: A food logistics supervisor weekly compiles a cold-chain performance report by exporting temperature/humidity series, downloading GPS tracks, and gathering WMS door logs. Hours are spent copy-pasting into Excel, repeatedly aligning units and timestamps. One case misattributed a delay due to time misalignment across sources, only corrected later in meetings. Teams end up chasing data lineage and consistency instead of acting promptly. Traditional tools also impede ad-hoc Q&A: even when managers know the question, systems don’t easily yield answers without IT support.
-
-  → Need: Deploy AI autonomous incident reporting and NLQ so aggregation and reporting are automated; managers ask in natural language and get instant insights. With a domain semantic layer and NL-to-SQL, questions like “How many over-temp alerts in the South warehouse yesterday and main causes?” translate safely into queries and answers, significantly reducing manual efforts and information delay (mapped to Work Package B).
-
-  #### Pain Point 3 | Hard to grasp risks for environment-sensitive goods in time (humidity swings, weak root-cause tracing)
-
-  For humidity-sensitive goods (coffee beans, food ingredients, precision components), prolonged high humidity or volatility in transit/storage leads to mold, quality decline, scrap, and claims. Many systems only offer retrospective curves, lacking real-time alerts, automatic correlation to contextual events, and concise explanations.
-
-  Example: Premium coffee beans stored a week at a port warehouse during monsoon season faced poor ventilation and rain, with humidity over 80% for long periods. Sensors captured data but no timely alert was raised. A week later, bags showed mold and cargo was scrapped. If alerts had been timely, loss might have been avoided. Industry notes that real-time monitoring combined with AI alerts can prevent issues before they escalate.
-
-  → Need: Build temperature/humidity anomaly detection and AI autonomous alerting. For sustained threshold breaches or rapid swings, automatically notify via SMS/app, triggering predefined response flows. Add AI autonomous incident reports to summarize related data (doors, equipment state, weather) and generate natural-language explanations and likely causes to aid rapid triage, reducing damage risk (mapped to Work Package C).
-
-  #### Pain Point 4 | Route detours and suspected theft are not identified promptly (GPS deviation, manual judgment)
-
-  Current monitoring relies on retrospective GPS reviews and manual judgment, making it hard to separate “operationally reasonable detours” from “suspicious reroutes and abnormal dwell.” Unauthorised opening is often discovered post-factum at destination, missing the intervention window.
-
-  Example: Semiconductor cargo routes: Hsinchu factory → Port of Taipei (truck, ~2 days) → port dwell (~1 day) → Rotterdam (sea, ~10 days) → port dwell (~2 days) → Eindhoven (truck, ~2 days). Systems often alert only when truck exceeds expected window, a reactive approach. If models learn historical congestion and operations, they can pre-alert expected major delays before departure, shifting to feed-forward management. If models learn normal routes and dwell points for common lanes, deviations, abnormal reroutes, or high-risk area stops raise theft/fraud warnings in real time, not after playback.
-
-  → Need: Build route anomaly and theft detection using GPS/NTN trajectories, geo-fences, pressure/lock events, and behavioral features to detect deviation, dwell, and unauthorized opening with reduced false alarms and improved precision. Integrate AI autonomous reporting for efficient investigations (mapped to Work Package D).
-
-  The project addresses these four pain points with Subprojects A–D, each delivering AI solutions with measurable KPIs to systemically enhance reliability, safety, and international competitiveness.
-
-  ### 2. AI Introduction Plan
-
-  Description: Map the four pain points to Subprojects A–D, define AI techniques and goals, and detail pre/post benefits plus data governance/security to ensure measurability and auditability. Data/model flows: A produces RUL and sensor trust indicators → consumed by B for queries/reports; C/D produce environment and route anomaly events → trigger B’s AI reports and decision support.
-
-  To balance innovation and feasibility, multi-agent collaboration and federated learning (FL) are split into MVP and exploratory PoC layers. MVP delivers single-agent core functions—battery RUL & reliability, environment/route anomalies, NLQ + AI autonomous incident reporting—with F1/AUC/MAE/latency/work-hour KPIs achieved in 1 international and 1 Taiwan site, forming acceptance criteria. Multi-agent scheduling/risk co-decisions and cross-site FL aggregation are cloud prototype/PoC, attempted but not hard acceptance gates. This layered design ensures commercially valuable monitoring/reporting in 18 months while validating frontier tech and productizing later.
-
-  #### (1) Introduction Goals: Pain Points → Subprojects → AI Solutions
-
-  | Pain Point | Work Package | Core AI | Purpose & Target Outcomes |
-  | --- | --- | --- | --- |
-  | Sensor reliability shortfalls (battery, interference, data loss) | A. Sensor Reliability Optimization | Battery RUL prediction; predictive maintenance | Predict battery degradation/failure and schedule maintenance proactively; raise availability from 90% to ≥95%; enable intelligent maintenance scheduling. |
-  | Reports are slow and not interactive | B. AI Autonomous Reporting & NLQ | NLQ; NL-to-SQL; LLM report generation | Natural-language access for managers/operators; reduce report time from “hours manual” to “seconds automated,” NLQ P95 latency <60 s, accuracy ≥90%. |
-  | Environment-sensitive goods risk hard to catch early | C. Environment Anomaly Detection & AI Incident Report | Change-point/statistical thresholds; multivariate time series; event alignment | Detect prolonged threshold breaches/rapid swings; align with door/segment events; auto-trigger AI reports; Early-warning rate ≥70%; report SLA (P95) ≤ 2 min; violation reduction ≥30%. |
-  | Route detours and suspected theft not identified in time | D. Route Anomaly & Theft Detection (Smart TOTE) | GPS/NTN spatiotemporal modeling; geo-fence behavior; lock/pressure anomaly | Distinguish reasonable delay vs. true anomaly; detect detours, suspicious dwell, unauthorized opening; F1 ≥0.85; improve ETA MAE ≥25%; false alarms ≤15%; response time <30 min. |
-
-  Note: Smart TOTE supports BLE Padlock, pressure sensing, GPS/LTE/NTN connectivity for door/lock state and route tracking. Source: (V5.0.X) iTX Smart TOTE Specification
-
-  ---
-
-  #### (1-2) International SOTA vs. Project Targets
-
-  We list three core indicators comparing typical international ranges (literature/industry) and our targets. Targets align with KPI tables earlier. References are magnitude-level summaries from public battery RUL, cold-chain monitoring, and transportation visibility reports and platform examples.
-
-  ① Battery RUL Prediction
-
-  | Indicator | Typical Intl Level | Project Target | Notes |
-  | --- | --- | --- | --- |
-  | Sensor availability | ~85–90% (reactive maintenance) | ≥95% | RUL + preventive maintenance lowers unplanned downtime. |
-  | RUL accuracy | ~80–88% common | ≥90% | LSTM/TFT time-series models aim beyond typical public results. |
-  | RUL MAE | ~10–20 days acceptable | ≤10 days | Survival + time series targets ≤10 days. |
-
-  Sample references:
-  - Energies, 2025, SoH/RUL prognostics review: practical errors around 10–20 days.
-  - iScience, 2021: SoH prediction with ~80–88% accuracy ranges.
-  - Recent SoH works outline real-world requirements/challenges for error ranges.
-
-  ② Environment anomalies and early warning (Pain Point 3)
-
-  | Indicator | Typical Intl Level | Project Target | Notes |
-  | --- | --- | --- | --- |
-  | Env. anomaly F1 | Rule-based ~0.7–0.8 | ≥0.88 | Change-point + multivariate models + event alignment. |
-  | Early-warning rate | Often post-hoc, <30% | ≥70% | Short-term forecasting 30–60 min ahead to pre-alert. |
-  | Report SLA (P95) | Hours via manual/email | ≤2 min end-to-end | Direct alert → AI report → push pipeline. |
-
-  Sample references:
-  - Cold-chain anomaly detection schemes highlighting limits of rule-only approaches.
-  - Data-driven cold-chain monitoring frameworks showing ML gains in detection/early warning.
-  - Market growth reports contextualizing domain focus.
-
-  ③ Route anomaly/theft and ETA (Pain Point 4)
-
-  | Indicator | Typical Intl Level | Project Target | Notes |
-  | --- | --- | --- | --- |
-  | Route-deviation AUC | Pure GPS 0.80–0.88 | ≥0.90 | Add road-network + behavioral context features. |
-  | Theft/unauthorized opening F1 | Few public F1; case-based | ≥0.85 | BLE padlock + pressure + behavior modeling. |
-  | ETA MAE | 1.5–3 hr common | ≥25% improvement | Historical lane models reduce MAE ≥25%. |
-
-  Sample references:
-  - Fleet ETA tips summarizing MAE ranges and error sources.
-  - Visibility platform reviews: GPS + traffic/weather for ETA prediction and anomaly alerts.
-  - Project platform case notes on AI-driven ETA accuracy improvements.
-
-  These indicators will be audited via “technical validation agreements,” third-party tests, and site reports, linked to milestones B.1/B.2 to ensure quantitative, internationally benchmarked superiority.
-
-  ---
-
-  #### (2) Before vs. After (incl. Smart TOTE)
-
-  | Item | Before (Issues) | After (Outcomes) |
-  | --- | --- | --- |
-  | Sensor reliability & intelligent maintenance (Pain Point 1 / Work Package A) | No forecast for battery/drift/offline, causing data gaps, costly re-measurement, and harder anomaly interpretation; higher O&M costs. | Battery RUL prediction + predictive maintenance; Availability ≥95%; RUL MAE ≤10 days; data completeness ≥95%; lower unplanned downtime and maintenance costs. |
-  | Report generation & decision efficiency (Pain Point 2 / Work Package B) | Manual aggregation; requests via tickets/emails; hours/days delays; poor traceability of queries. | NLQ + auto-reporting; leaders/operators ask via NL; report generation “hours → <45 s” (M1–M6 initial); audit trails retained; scheduled executive/weekly/monthly auto-reports. |
-  | Environment-sensitive goods risk (Pain Point 3 / Work Package C) | Mostly post-hoc review; lack real-time alerting and plain-language explanations; missed intervention windows. | Change-point/stat thresholds + simple rules for T/H anomalies; align with box-open/segment events; auto-trigger Work Package B AI report/push; “summary + recommended actions”; Early-warning ≥70%; violation rate ↓ ≥30%; report SLA (P95) ≤ 2 min. |
-  | Route detours, reasonable delays vs. theft (Pain Point 4 / Work Package D) | Retrospective GPS playback/manual judgment; hard to separate reasonable delay vs. suspicious reroute; unauthorized opening discovered post-factum. | GPS/NTN trajectory + behavior modeling; Smart TOTE BLE Padlock/pressure detect unauthorized opening; label “reasonable delay” vs. “suspicious reroute/dwell/unlawful opening”; F1 ≥0.85; false alarms ≤15%; response time <30 min. |
-
-  #### (3) Security and Data Governance (Compliance)
-
-  - Data classification & sources: internal (device time series/events), external (route/geospatial); data catalog and lineage.
-  - Access control: RBAC/ABAC least privilege; read-only whitelists; audit logs retained ≥12 months.
-  - Personal/sensitive data: de-identification/anonymization (hash/mask); cross-border handled by regional deployment + FL.
-  - Compliance framework: GDPR/DPIA checks; third-party security scans (SAST/dependencies); regular vuln scans and DR drills (quarterly).
-  - Audit/versioning: data version control; model version/rollback; query routing and model outputs fully traceable.
-
-  ### 3. Execution Strategy
-
-  This section consolidates sites, international cooperation, and work packages (A–D) with execution strategies and methods, anchoring schedules and checkpoints.
-
-  Summary: Work packages follow pain points, executed as A–D with checkpoints; international cooperation strengthens site validation and export; KPIs and milestones aligned to ensure investment outcomes.
-
-  ### (1) Sites, Validation Items, and Introduction Methods
-
-  - Sites
-
-    - International: MOU with Arviem (Switzerland). Arviem provides intercontinental sea/air/cold-chain logistics sites for long-cycle operational data and international AI validation.
-
-    - Domestic: MOU with SimiQue (Taiwan). SimiQue provides defense logistics warehousing/transfer centers/fleet sites for device deployment, data collection, and effectiveness validation as a local demo site and foundation for diffusion.
-
-  - Validation (by subproject)
-
-    - Work Package A (M1–M11) | Sensor reliability optimization  
-      - Battery life indicators and stability (compare 3 batches for variance)  
-      - RUL MAE ≤10 days (20% hold-out validation)  
-      - Data quality/stability indices achieved (pre/post signal quality comparison for same sensor)  
-      - Data completeness ≥95%, availability ≥95% (30-day continuous records)
-
-    - Work Package B (M1–M5) | NLQ & AI autonomous reporting  
-      - NLQ accuracy ≥90% (200+ labeled queries)  
-      - NLQ P95 latency <180 s (stress test 500–1,000 QPS)  
-      - Auto-report generation completion ≥95% (100 reports vs. human versions)  
-      - Manual hours ↓ ≥70% (baseline vs. post-adoption)
-
-    - Work Package C (M4–M15) | Environment anomalies & reporting (MVP)  
-      - T/H anomaly F1-score ≥0.88 (event dataset)  
-      - Early-warning rate ≥70% (≥30 min in advance; exogenous features as needed)  
-      - Report SLA (P95) ≤2 min (alert → report → push end-to-end)
-
-    - Work Package D (M4–M15) | Route anomalies & theft (Smart TOTE)  
-      - Route deviation AUC ≥0.90 (20 real route anomaly samples)  
-      - Theft/unauthorized opening F1 ≥0.85 (BLE pressure/light/open events)  
-      - ETA MAE ≤15 min (historical deliveries/test sets)  
-      - Open/pressure-event detection accuracy ≥95% (≥50 open/close tests)
-
-  ### (2) Subprojects
-
-  #### Work Package A | Sensor Reliability Optimization
-
-  Objective: Raise availability from ~90% and lower unplanned downtime by modeling battery RUL for predictive maintenance.
-
-  A1. Objectives & Success Criteria
-  - Availability ≥95%; RUL MAE ≤10 days; data completeness ≥95%.
-
-  A2. Data Acquisition & Preparation
-  - Use device voltage, temperature, transmission frequency, and maintenance logs; fill gaps; establish life/degradation trends.
-
-  A3. Dataset for Modeling
-  - Integrate history and labeled events (failure/maintenance) to form traceable train/validation sets.
-
-  A4. Modeling & Training
-  - Use RNN/LSTM/TFT time-series models to learn discharge curves and voltage degradation for direct RUL prediction.
-  - Apply survival analysis to handle right-censoring and uncertainty.
-  - Add simple rules/threshold checks to stabilize outputs.
-
-  A5. Evaluation & Optimization
-  - Evaluate accuracy and error, provide concise explainability.
-
-  A6. Deployment & Showcase
-  - Provide RUL API and dashboard; support maintenance scheduling; timely early warnings for battery risk; optimize maintenance decisions.
-
-  MVP Acceptance: Availability ≥95%; RUL MAE ≤10 days; data completeness ≥95%. PoC (non-hard acceptance): multi-site long-term trend analysis; cross-customer generalization.
-
-  #### Work Package B | On-demand Reporting and NLQ
-
-  Allow leaders/operators to obtain insights in natural language and auto-generate weekly/monthly reports and prioritized executive summaries.
-
-  B1. Objectives & Success Criteria
-  - Report hours ↓ ≥50%; NLQ P95 <60 s; accuracy ≥90%.
-
-  B2. Data Preparation
-  - Build semantic layer and data dictionary; connect time series/events and external summaries.
-
-  B3. Dataset
-  - Compile common query patterns and report templates; maintainable data catalog.
-
-  B4. Modeling & Training
-  - Read-only, whitelisted DB connections; constrain query scope; avoid factual hallucinations.
-  - Build Executive Report Agent: metric extraction → semantic summary → anomaly explanation → suggested actions; support follow-ups and context.
-
-  B5. Evaluation & Optimization
-  - Monitor accuracy/latency; refusal and auditing; iterate templates.
-
-  B6. Deployment & Showcase
-  - Launch NLQ API, interactive dashboard, executive auto-report agent, scheduled reports; support C/D-triggered alerts flowing into report/push (Alert→Report Pipeline).
-
-  MVP Acceptance: NLQ accuracy ≥90%, P95 <60 s, report hours ↓ ≥50%. PoC: multi-agent report choreography; cross-language executive templates.
-
-  #### Work Package C | Environment Anomaly Detection & AI Incident Reporting (MVP)
-
-  Focus on T/H-sensitive goods (e.g., coffee beans). MVP delivers anomaly detection + alert → AI report for actionable summaries; add exogenous features and predictive models as needed for stronger early warning.
-
-  C1. Objectives & Success Criteria
-  - T/H anomaly F1 ≥0.88; early-warning ≥70%; report SLA (P95) ≤2 min; violation ↓ ≥30%.
-
-  C2. Data Preparation
-  - Use T/H, box open/close, and location/segment information (required).
-
-  C3. Dataset
-  - Build labeled anomalies (long-over-threshold, short-term volatility), align with packing/opening events; retain audit trails.
-
-  C4. Modeling & Training (MVP → Extension)
-  - MVP: change-point (e.g., CUSUM/BOCPD/rolling IQR) + statistical thresholds + simple rules; event alignment/labeling (suspected pre-loading/in-transit environment/frequent opening).
-  - Extension: add multivariate time series (LSTM/GRU/TFT) and exogenous features to strengthen early warning and explainability.
-
-  C5. Evaluation & Optimization
-  - Monitor F1, early-warning rate, false alarms, report SLA; data/model drift monitoring; periodic retraining.
-
-  C6. Deployment & Showcase
-  - Real-time anomalies trigger Work Package B’s AI report using templates; Email/app pushes with time window, affected batches, aligned evidence, suggested actions; dashboard drill-down and NLQ jump (C×B integration).
-
-  MVP Acceptance: F1 ≥0.88; early-warning ≥70%; SLA ≤2 min; violation ↓ ≥30%. PoC: multi-site T/H model sharing/tuning; cross-region risk heatmaps.
-
-  #### Work Package D | Theft Detection and Route Monitoring
-
-  Model route deviation, suspicious dwell, and behaviors to identify reroutes/theft; optimize alert prioritization.
-
-  D1. Objectives & Success Criteria
-  - AUC ≥0.90; F1 ≥0.85; ETA MAE improvement ≥25%; false alarms ≤15%; response <30 min.
-
-  D2. Data Preparation
-  - GPS position, speed, dwell points, route attributes.
-
-  D3. Dataset
-  - Trip slicing and anomaly labeling; add road-network features.
-
-  D4. Modeling & Training
-  - Time-series (LSTM/GRU) over trajectories and movement patterns for deviation/dwell/speed-change detection.
-  - Road-network structure and behavior features to separate reasonable delays vs. anomalous reroutes.
-  - Dynamic alert prioritization via cost-sensitive learning and ops rules with risk/context scoring.
-  - Integrate Smart TOTE BLE Padlock and pressure sensing to detect unauthorized opening.
-  - Adaptive thresholds by site/time/cargo type to reduce false alarms.
-
-  D5. Evaluation & Optimization
-  - Monitor AUC/F1 and latency; A/B testing.
-
-  D6. Deployment & Showcase
-  - Real-time anomaly/theft alerts; route replay; root-cause analysis; MCP agent orchestration across subprojects.
-
-  MVP Acceptance: AUC ≥0.90; F1 ≥0.85; ETA MAE improvement ≥25%; false alarms ≤15%; response <30 min. PoC: multi-site road-network collaborative modeling; cross-site FL aggregation; multi-agent alert-priority orchestration demo.
-
-  ### (4) System Architecture, Dashboard, and Technical Description
-
-**Figure 4-1: Operations Dashboard**
-
-![alt text](ai-maas-dashboard-en.png)
-
-Figure 4-1 shows the core operations dashboard of this project. It consolidates and displays key indicators including Battery Remaining Useful Life (RUL), environmental anomaly events (temperature/humidity), route and theft risks, AI autonomous reports, and international testbed status. Users can monitor multi-site KPIs, alert lists, and map/timeline visualizations in a single view, reducing cross-system lookup and manual compilation time. This serves as the primary interface for daily operations monitoring and routine management meetings.
-
-
-  The following diagram presents the end-to-end system architecture and data flow (Diagram 4-2), showing how Subprojects A–D integrate into a complete smart supply chain monitoring and risk warning solution:
-
-  Diagram 4-2: System Architecture (Inference and Alert Pipeline)
-
-  Diagram 4-2A: Frontend Flow — Data Collection and Alert Generation
-  ```mermaid
-  flowchart LR
-    %% ========== Device & Model Layer ==========
-    subgraph S["Device & Model Layer<br/>📡 Sensor data is transmitted securely with authentication and written to iTracXing/Arviem Cloud"]
-      S1["Smart TOTE / Gateway<br/>🔐 Encrypted transmission | Identity verification<br/>Collect sensor data"]
-      S2["AI Model Inference<br/>• Subproject A: Battery Remaining Useful Life (RUL)<br/>• Subproject C: Environmental anomaly (Temp/Humidity)<br/>• Subproject D: Route/Theft (GPS/Unauthorized opening)<br/>↓ Output risk_score / metrics"]
-    end
-
-    %% ========== Event & Alert Engine ==========
-    subgraph E["Event & Alert Rule Engine"]
-      E1["Write to event queue / DB<br/>MODEL_EVAL events"]
-      E2["Alert rule evaluation<br/>risk_score / dynamic thresholds / conditions"]
-      E3["Deduplication and suppression<br/>Avoid duplicate alerts"]
-      E4["Create Alert object<br/>alert_id / severity / details"]
-    end
-
-    %% Flow
-    S1 --> S2 --> E1
-    E1 --> E2 --> E3 --> E4
-
-    E4 --> OUTPUT["➡️ Alert object delivered to backend flow"]
-
-    style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
-  ```
-
-  Diagram 4-2B: Backend Flow — Report Generation and Notification
-  ```mermaid
-  flowchart LR
-    INPUT["⬅️ Alert object<br/>(from the alert engine)"]
-
-    %% ========== (Optional) LLM Explanation ==========
-    subgraph L["(Optional) LLM Explanation Layer<br/>👉 Subproject B: AI Autonomous Incident Report / NLQ Dashboard"]
-      L1["Put Alert JSON into prompt"]
-      L2["LLM generates bilingual summary + recommended actions"]
-    end
-
-    %% ========== Notification Layer ==========
-    subgraph N["Notification services and channels<br/>Security & privacy compliance: GDPR/data governance"]
-      N1["Select recipients and channels<br/>by customer/severity"]
-      N2["Send notifications<br/>Email / LINE / Slack / Webhook"]
-      N3["Record notification history<br/>for SLA / ESG audit reports"]
-    end
-
-    %% Flow
-    INPUT --> L1
-    INPUT -->|When not using LLM<br/>apply fixed templates directly| N1
-    L1 --> L2 --> N1
-    N1 --> N2 --> N3
-
-    style INPUT fill:#f9f,stroke:#333,stroke-width:2px
-  ```
-
-  Architecture notes and training flow:
-
-  This diagram shows the online Inference & Alert Pipeline, explaining how real-time data flows through AI models, the alert engine, and notification services. Model training and re-training are performed offline using historical data and labeled event sets, detailed under “II. Project Content and Implementation Method” in Subprojects A–D. Trained model weights are periodically deployed to the “AI Model Inference” node shown here.
-
-  Architecture description:
-
-  1. Device & Model Layer: Smart TOTE sensors collect temperature/humidity, GPS, and open/close state. Subprojects A (battery RUL), C (environment anomalies), and D (route/theft) perform inference to output risk scores and metrics.
-
-  2. Event & Alert Engine: Model outputs are written to an event queue, evaluated by alert rules, deduplicated/suppressed, and structured into Alert objects to ensure high-priority events are not buried.
-
-  3. LLM Explanation Layer (optional): For Subproject B’s AI autonomous incident reporting, the Alert JSON can be converted into bilingual summaries and recommended actions. If LLM is not used, fixed templates are applied, balancing cost and flexibility.
-
-  4. Notification Services and Channels: Recipients and channels (Email/LINE/Slack/Webhook) are chosen by customer and severity. Notification history is recorded for SLA and ESG audit reporting to ensure governance transparency.
-
-  This architecture showcases three key features: (1) modular AI functions that can be extended independently; (2) built-in governance mechanisms (deduplication, auditing, SLA); (3) flexible deployment (optional LLM vs fixed templates) to lower adoption barriers.
-
-  ## RUL prediction flow overview##
-
-  ```mermaid
-  flowchart LR
-    subgraph Device ["Edge Device (Smart IoT Tracker)"]
-      V["Voltage measurement V(t)"]
-      T["Temperature measurement T(t) (optional)"]
-      TS[Timestamp]
-    end
-
-    subgraph Cloud ["Cloud Data Platform / IoT Backend"]
-      RAW["Raw telemetry<br/>V, T, TS, reporting frequency, status"]
-      PROC["Preprocessing<br/>sorting, cleaning, imputation, Δt alignment"]
-      FAIL["Failure / fault event detection<br/>last report time, voltage below threshold"]
-      RULLBL["RUL label calculation<br/>RUL(t) = t_failure - t"]
-      FEAT["Feature engineering<br/>voltage slope, mean, variance, temp stats…"]
-    end
-
-    V --> RAW
-    T --> RAW
-    TS --> RAW
-
-    RAW --> PROC
-    PROC --> FAIL
-    PROC --> FEAT
-    FAIL --> RULLBL
-
-    FEAT -.->|features →| LSTM_INPUT[(LSTM input tensor)]
-    RULLBL -.->|supervised labels →| LSTM_LABEL[(LSTM target tensor)]
-  ```
-
-  The above LSTM inputs/labels serve as the starting point for the training/inference shown below.
-
-  ```mermaid
-  flowchart LR
-    subgraph Model ["AI Model Training / Inference"]
-      LSTM[("LSTM/GRU<br/>time-series model")]
-      PRED["RUL prediction<br/>(remaining service life in days/hours)"]
-      ALERT["Ops decisions<br/>battery replacement / avoid dispatching near-failure nodes"]
-    end
-
-    LSTM_INPUT[(from prior features)] --> LSTM
-    LSTM_LABEL[(from prior labels)] --> LSTM
-    LSTM --> PRED
-    PRED --> ALERT
-  ```
-
-  As shown in Diagram 4-3, the RUL prediction module uses voltage time series from the NTN (Non-Terrestrial Network) smart tracker, optionally temperature, and timestamps, reconstructing discharge trajectories and actual failure times in the cloud to compute Remaining Useful Life (RUL) labels. Time-series models (e.g., LSTM/GRU) learn the relationship between “voltage patterns × usage context” and RUL, outputting real-time remaining service days per node during operations and triggering preventive maintenance/battery replacement decisions to reduce unexpected offline events and improve monitoring availability.
-
-  Diagram 4-3: RUL Prediction Flow Overview
-
-  ### Environmental anomaly (Temp/Humidity) prediction flow overview##
-
-  ```mermaid
-  flowchart LR
-    %% Upstream: edge layer and cloud data platform (connected via Feature Store)
-
-    subgraph EDGE["Edge｜Smart TOTE / IoT sensors"]
-      T_SENSOR[Temp/Humidity sensor<br/>Temp / RH]
-      T_GATEWAY[Gateway<br/>BLE / LTE / NTN]
-    end
-
-    subgraph INGEST["Cloud data platform｜ingestion & feature engineering"]
-      T_STREAM[Streaming ingestion<br/>time-series ingest]
-      T_FEATURE[Feature engineering<br/>segment averages / gradients / cumulative exposure]
-      T_STORE[(Feature Store)]
-    end
-
-    %% Data flow (Upstream)
-    T_SENSOR --> T_GATEWAY
-    T_GATEWAY --> T_STREAM
-    T_STREAM --> T_FEATURE
-    T_FEATURE --> T_STORE
-  ```
-
-  ```mermaid
-  flowchart LR
-    %% Downstream: AI/ML, application layer, and feedback (Feature Store as input)
-
-    T_STORE[(Feature Store)]
-
-    subgraph AIML["AI/ML environmental anomaly engine"]
-      T_MODEL[Environmental anomaly model<br/>LSTM / Isolation Forest / BOCPD]
-      T_RULE[Regulatory/SOP rule checks<br/>Good Distribution Practice / site SOP thresholds]
-      T_SCORE[(Risk scoring engine<br/>Risk Score 0–100)]
-    end
-
-    subgraph APPS["Application layer｜alerts & reports"]
-      T_ALERT[Real-time alerts<br/>SMS / Email / ChatOps]
-      T_DASH[Monitoring dashboard<br/>cold-chain route / cargo visualization]
-      T_REPORT[Audit & compliance reports<br/>claims / disputes / audit documents]
-    end
-
-    subgraph FEEDBACK["Feedback & continuous learning"]
-      T_LABEL[Human labeling & feedback<br/>true anomaly / false alarm tags]
-      T_RETRAIN[Periodic retraining pipeline<br/>Model Retraining]
-    end
-
-    %% Data flow (Downstream)
-    T_STORE --> T_MODEL
-    T_STORE --> T_RULE
-
-    T_MODEL -->|anomaly probability / score| T_SCORE
-    T_RULE -->|threshold violation events| T_SCORE
-
-    T_SCORE -->|high risk| T_ALERT
-    T_SCORE --> T_DASH
-    T_SCORE --> T_REPORT
-
-    %% Feedback loop
-    T_ALERT --> T_LABEL
-    T_DASH --> T_LABEL
-    T_LABEL --> T_RETRAIN
-    T_RETRAIN --> T_MODEL
-  ```
-
-  Diagram 4-4: Environmental anomaly (Temp/Humidity) prediction flow overview
-
-  This section explains the end-to-end flow and responsibilities for environmental anomaly prediction. Upstream, Smart TOTE/IoT sensors stream temperature, relative humidity, and timestamps via the gateway to the cloud, where cleaning, alignment, and feature engineering (segment averages, gradients, cumulative exposure) are performed and written to a unified Feature Store. Downstream, anomaly detection models (e.g., LSTM, Isolation Forest, BOCPD) combined with regulatory/SOP thresholds (GDP/site SOP) produce risk scores and trigger alerts, while updating dashboards and generating audit/compliance reports. Feedback from alert usage and dashboards (true anomaly/false alarm tags) flows back into the retraining pipeline to form a continuous learning loop, ensuring stable attainment of F1-score, early warning rate, and report SLA KPIs.
-
-  ## Route anomaly and theft detection##
-
-  ```mermaid
-  flowchart LR
-    %% Diagram 1: Edge devices & cloud ingest → Feature Store
-    subgraph Edge["Edge / smart IoT devices"]
-      GPS[Routing data<br/>GPS, speed, route ID]
-      LOCK[Lock state<br/>open/close, tamper events]
-      PRESS[Pressure sensor<br/>kPa, pressure change ΔP]
-    end
-
-    subgraph Ingest["Cloud data platform"]
-      RAW[Telemetry ingest<br/>time-series storage]
-      FEAT[Feature engineering<br/>route deviation, dwell time,<br/>unlock events, pressure stats]
-      FEAT_HUB[(Feature Store)]
-    end
-
-    GPS --> RAW
-    LOCK --> RAW
-    PRESS --> RAW
-
-    RAW --> FEAT
-    FEAT -->|features| FEAT_HUB
-  ```
-
-  ```mermaid
-  flowchart LR
-    %% Diagram 2: AI/ML → Application services (consume Feature Store)
-    FEAT_HUB[(Feature Store)]
-
-    subgraph AI["AI / ML anomaly detection engine"]
-      ISOF[Unsupervised models<br/>Isolation Forest / LSTM AE]
-      RISK[(Risk scoring<br/>risk_score 0–1)]
-      RULES[[Rule engine<br/>geofences, unlock time windows,<br/>pressure thresholds]]
-      FUSE[Decision fusion<br/>combine ML scores and rules]
-    end
-
-    subgraph Apps["Application services"]
-      ALERT[Real-time alerts<br/>SMS / Email / LINE / Webhook]
-      DASH[Operations dashboard<br/>map, timeline, event viewer]
-      REPORT[AI reports<br/>daily/weekly risk summaries]
-    end
-
-    FEAT_HUB --> ISOF
-    FEAT_HUB --> RISK
-
-    ISOF --> RISK
-    RISK --> FUSE
-    RULES --> FUSE
-
-    FUSE --> ALERT
-    FUSE --> DASH
-    FUSE --> REPORT
-  ```
-
-  As shown in Diagram 4-5, the end-to-end flow is “Edge → Cloud → Feature Store → AI/Rules → Decisions.” Smart locks and smart boxes return GPS trajectories, lock state (open/close/tamper), and pressure time series. The cloud platform ingests and stores the data, performs feature engineering (route deviation, dwell time, abnormal unlock statistics, pressure changes), and writes to a unified Feature Store as reusable model inputs. The AI anomaly detection module (e.g., Isolation Forest, LSTM Autoencoder) learns “normal transport behavior” from the Feature Store, outputs an anomaly score and converts it to a 0–1 risk score. Meanwhile, the rule engine sets geofences, unlock windows, and pressure thresholds per operations needs. Decision fusion combines AI risk scores and rules to push real-time alerts (SMS/Email/LINE/Webhook), annotate anomalies on the operations dashboard, and auto-generate daily/weekly risk analysis reports to quickly highlight high-risk routes and sites.
-
-  ## Federated Learning (FL) for multi-party collaboration as an expandable business opportunity##
-
-  ```mermaid
-  flowchart LR
-
-    %% ===========================
-    %%   iTracXing Platform
-    %% ===========================
-    subgraph ITX["iTracXing Platform (Taiwan)"]
-      ITX_Data["iTracXing data<br>BLE / Padlock / NTN / TOTE"]
-      ITX_ML["iTracXing local FL training node"]
-      ITX_UI["iTracXing dashboard<br/>(iTracXing customers only)"]
-    end
-
-    ITX_Data --> ITX_ML
-    ITX_ML --> ITX_UI
-
-
-    %% ===========================
-    %%   Arviem Platform
-    %% ===========================
-    subgraph ARV["Arviem Platform (EU/US/APAC)"]
-      ARV_Data["Arviem data<br>JA Device / Motion / GPS"]
-      ARV_ML["Arviem local FL training node"]
-      ARV_UI["Arviem dashboard<br/>(Arviem customers only)"]
-    end
-
-    ARV_Data --> ARV_ML
-    ARV_ML --> ARV_UI
-
-
-    %% ===========================
-    %%   Vector Platform
-    %% ===========================
-    subgraph VEC["Vector Platform (US / global retail loop)"]
-      VEC_Data["Vector LPMS data<br/>Retail / reverse logistics / Smart TOTE"]
-      VEC_ML["Vector local FL training node"]
-      VEC_UI["Vector dashboard<br/>(Vector customers only)"]
-    end
-
-    VEC_Data --> VEC_ML
-    VEC_ML --> VEC_UI
-
-
-    %% ===========================
-    %%   Federated Aggregation Layer
-    %% ===========================
-    ITX_ML -->|Encrypted ΔW| AGG
-    ARV_ML -->|Encrypted ΔW| AGG
-    VEC_ML -->|Encrypted ΔW| AGG
-
-    subgraph FED["Federated Learning Aggregation Layer"]
-      AGG["Secure aggregator<br/>FedAvg / FedProx / FedAdam<br/>(no raw data shared)"]
-      GM["Global shared model<br/>Logistics risk prediction AI"]
-    end
-
-    AGG --> GM
-
-    %% Redistribute globally updated model
-    GM -->|Updated model Wₜ₊₁| ITX_ML
-    GM -->|Updated model Wₜ₊₁| ARV_ML
-    GM -->|Updated model Wₜ₊₁| VEC_ML
-  ```
-  Diagram 4-6
-
-  Federated Learning will be a core component of AI systems over the next 5–10 years. Drivers include tightening privacy regulations (GDPR/PIPL/PDPA), multi-party collaboration where data cannot be centralized, the shift of training to Edge/IoT, co-evolution of cloud and devices, and continuous investment by major tech firms. For logistics and supply chains (shippers/carriers/forwarders/cold-chain/insurance/ports/satellite IoT), FL enables cross-institution collaborative training on shared models without sharing raw data, directly addressing “data cannot be centralized” adoption barriers.
-
-  - Why now: Cross-border and privacy laws enforce “learning without sending raw data”; Edge/IoT data volume and personalization needs make on-device training + cloud aggregation necessary.
-  - Business positioning: Standard component of supply chain AI (aligned with Deloitte/McKinsey/BCG trends); “FL-Ready models and pipelines” become compliant AI capabilities quickly embedded by channel partners (Arviem/Vector).
-  - Monetization (scalable):
-    - Federated Training as a Service: priced by node/round/model size.
-    - Compliant AI package licensing (FL-Ready Models): RUL/environment anomaly/route deviation/theft detection.
-    - Edge node management and compliance consulting: GDPR/PIA/data governance/audit.
-  - Growth engines:
-    1) Channel expansion (Arviem customer base → replicate across countries).
-    2) Model network effects (more sites participating → global shared model performance improves).
-    3) Edge deployment scale (Smart TOTE/Gateway nodes increase → ops and subscription revenue accumulates).
-  - Entry strategy:
-    - MVP delivers centralized usable models first; introduce FL aggregation (FedAvg/FedProx) as sites and regulations require.
-    - Provide technical/compliance whitepapers and audit tools for “data stays in-domain, only parameters uploaded” to lower adoption barriers.
-    - Co-branded FL SDK/API with partners to shorten integration cycles.
-  - Risks and mitigation: data quality variance / non-IID federated data / unstable nodes → use hierarchical aggregation, adaptive weighting, node health checks and rollback; regulatory changes → annual external compliance reviews and policy fallback strategies.
-
-  Conclusion: FL is not a standalone market but the foundational capability for “privacy-preserving multi-party collaborative AI.” Centered on FL-Ready supply chain AI components and services, combined with channel partners and edge node growth, this forms a high-margin, replicable, cross-border expansion business landscape.
-
-### AI Modules × Milestones × KPI Overview
-
-> Note: This table lists the project’s main AI modules and technical roadmap, separating MVP/mandatory items from extended/advanced items, so reviewers can grasp the technical focus and targets within 1 minute.
-
-| Module | Type | Key Milestones (Month) | End-of-Project KPI | Notes |
+#### (1) International Competitor Comparison
+| Item | FedEx (incl. SenseAware) | Maersk (incl. Captain Peter / RCM) | RKC Logistics LLC | ItracXing & Arviem Alliance (★This Project) |
 | --- | --- | --- | --- | --- |
-| Battery Life Prediction (RUL, Smart Tracker) | MVP | M6 complete v1 RUL model and data pipeline; M12 site validation | RUL MAE ≤ 10 days; Early-warning rate ≥ 80%; Unplanned offline events ↓ ≥ 30% | Mandatory; maps to Pain Point 1 (sensor reliability and battery life), Work Package A |
-| Environmental Anomaly Detection + Risk Scoring (Temp/Humidity + Event Alignment) | MVP | M6 prototype; M12 site validation | F1 ≥ 0.85; Violation rate ↓ ≥ 30%; Incident report SLA (P95) ≤ 2 minutes | Mandatory; maps to Pain Point 3 (environment-sensitive goods risk), Work Package C |
-| NLQ + Auto Reporting (AI Autonomous Summaries & Management Dashboard) | MVP | M6 prototype; M12 internal trial; M18 site rollout | NLQ accuracy ≥ 90%; P95 latency ≤ 60 seconds; Reporting work-hours ↓ ≥ 50% | Mandatory; maps to Pain Point 2 (time-consuming reporting), Work Package B |
-| Route/Theft Anomaly Detection (Smart TOTE + GPS/Padlock) | MVP | M12 model demo; M18 site validation | Route deviation AUC ≥ 0.90; Theft/unauthorized opening F1 ≥ 0.85; Critical alert response time < 30 minutes | Mandatory; maps to Pain Point 4 (detours/theft), Work Package D |
-| Multi-Party Federated Learning (FL, cross-party data collaboration) | Extended | M12 complete FL architecture design and PoC plan; M18 complete ≥1 cross-site PoC | ≥ 2–3 nodes participate in FL training; deliver 1 “Privacy & Federated Learning Whitepaper”; centralized vs. FL performance gap ≤ 5% | Advanced; emphasizes collaboration/GDPR/alliance: multi-party collaboration, data stays in-domain, supports building international/local AI alliances (not a hard acceptance gate; technical/business extension) |
-| Training AI Coding / vibe coding process | Support | M3 establish internal dev guidelines; M9 integrate into CI; continuous optimization | Typical development lead time ↓ ≥ 20–30%; Major defect rate does not rise (vs. 2024 baseline) | Internal R&D efficiency/quality control; supports Work Packages A–D; not an external audit KPI |
+| Supply Chain Role | Global integrator for express/small parcels (integrator) | Global ocean carrier and integrated logistics (especially reefer/cold chain) | US SMB‑focused trucking and freight brokerage (3PL / broker + carrier) | ItracXing: Taiwan AI supply chain monitoring platform; Arviem: Swiss third‑party transportation visibility provider (>5,000 multinational shippers) |
+| Monitoring / Visibility Products | SenseAware ID / M4: multi‑sensor devices + cloud platform for real‑time location, temperature, pressure, shock, etc. | Remote Container Management (RCM) + Captain Peter: monitoring and alerts for reefer temperature, humidity, gases, location, etc. | Uses partner TMS/tracking portal for shipment status and billing; no proprietary IoT sensing hardware | Smart TOTE + AI‑MaaS: integrates BLE padlock, pressure, T/H, GPS/LTE/NTN with AI modules for RUL, environmental anomalies, route/theft detection, NLQ reports |
+| Business Model for Monitoring | Subscription + single‑journey fees as premium add‑ons to FedEx transport, targeting healthcare/high‑value goods | Digital add‑on for Maersk Reefer, often bundled with Maersk ocean rates/contracts; not sold independently | Typical 3PL/broker model: margin on freight and service fees; tracking is a basic digital add‑on, not a high‑value IoT product | 1) USD 2 / TOTE / shipment (per‑shipment); 2) USD 8–12 / TOTE / month; 3) AI‑MaaS / consulting / licensing NT$1–2M per customer per year; 4) Channel margin 50:50 rev‑share with Arviem |
+| Data & Ecosystem Tier | Devices/data fully within FedEx ecosystem; customers can only view on FedEx platform; no cross‑carrier/open FL capability | Centered on Maersk reefer fleet and vessels; data/platform controlled by Maersk; relatively closed ecosystem | Relies on TMS/fleet standard event reporting; limited data granularity, lacks high‑frequency multi‑sensor IoT data | ItracXing retains Foreground IP; Arviem provides global testbeds and customers; supports cross‑site Federated Learning (FL), with white‑label model export to multiple logistics/3PLs |
+| Key Differences vs. This Project | Closed, single‑carrier proprietary solution: strong global network/reliability, but not white‑labelable to other logistics providers | Ocean reefer with single carrier control: strong reefer visibility, mainly serving its own fleet | Service‑oriented 3PL, lacks IoT + AI monitoring; weaker in RUL, environmental risk prediction, etc. | Open, multi‑carrier AI monitoring platform: Smart TOTE + AI‑MaaS + FL‑Ready core, can be a tech provider and white‑label partner for carriers like FedEx/Maersk and 3PLs like RKC |
 
-### (5) International Cooperation Benefits
 
-The project is led by ItracXing (Taiwan), in collaboration with Arviem AG (Switzerland), which serves as the International Testbed.
+#### （2）技術創新與差異化優勢  
 
-- Scope:
-  - Arviem: provides global sites, IoT devices and data access, joint validation, and customer onboarding (export value).
 
-- Value to Taiwan:
-  - International showcase: Taiwan as the technical hub, establishing the “AI‑MaaS for Logistics” export path.
-  - Talent and technology uplift: academia–industry exchange, real-world GDPR/AI Act compliance practices.
+1. **感測器可靠度與預測性維護：從「單點告警」升級為「可預測的壽命與可靠度管理」**  
+  - 以時序深度學習（如 LSTM/TFT）分析電池放電與使用型態，建立電池壽命（RUL）預測模型，不僅回報「壞了沒」，更能提前預測「何時會壞」。  
+   - 與多數僅看電壓門檻的方案相比，可同時考量溫度、使用型態與傳輸頻率，降低誤判並延長感測器壽命。
 
-### IV. Project Schedule and Checkpoints
+2. **NLQ＋語意層：從「看報表」變成「問問題就給答案」**  
+  - 設計物流專用語意層（Shipment、Lane、Container、Event 等），並以 NL-to-SQL 將自然語言查詢安全地轉成結構化查詢。  
+  - 匯總感測器可靠度與電池壽命、違規事件、路線異常與 SLA 指標，高階主管可直接詢問「本季歐洲線溫濕度違規趨勢？」而非人工拉報表。  
+   - 採工具約束與拒答機制，避免幻覺與越權查詢，兼顧「易用」與「治理」。
 
-This section’s Gantt chart aligns with “Planned Schedule & Checkpoints” and “AI Functions—Milestones—KPI Mapping,” using milestone codes A.1/B.1/B.2/C.1 consistently.
+3. **環境異常偵測與路線異常偵測：分層導入、降低誤報**  
+  - 針對溫/濕度敏感貨品，以「變化點＋門檻＋事件對齊」作為 MVP 進行異常偵測與AI自主式事件報告；並設定報告 SLA（P95 ≤ 2 分）與提前預警率目標。  
+   - 路線異常偵測則結合 GPS 與停留模式等運輸行為特徵，區分「合理延誤」與「異常繞路／竊盜風險」，優先處理真正高風險案件。
 
-### Gantt (2026/01–2027/06, 18 months; subproject view)
+4. **台灣優先之 AI Logistics MaaS 架構：可複製、可驗證、可擴散**  
+  - 系統設計為模組化「AI 功能 XaaS」（電池壽命預測（RUL）、環境預警、路線異常、NLQ 報表），可由本國中小型貨代、倉儲、溫濕度敏感貨品與安防（竊盜風險）相關業者逐步採用。  
+   - 所有模型與決策過程保留審計軌跡，因應 EU/GDPR 與國際客戶的稽核需求，強調「可解釋、可追蹤」的 AI 治理。
+
+---
+
+#### （3）市場切入與在台落地策略  
+
+1. **從既有國際專案出發，回饋台灣場域**  
+   - 以現有國際客戶專案為第一波資料與模型驗證來源，快速累積模型準確度與案例。  
+   - 同步在台灣建置小規模試點（例如：1–2 家本地貨代／倉儲業者、數十個智慧貨櫃／托盤）
+
+2. **聚焦「高價值、高風險貨品」切入**  
+   - 以咖啡豆、食品原料、精密零組件等為優先目標貨種，這些貨品對溫濕度與貨損極為敏感，也最能體現本計畫之價值。  
+   - 透過降低貨損與理賠成本，以及更精準的 ETA 與風險預警，形成可量化的 ROI（Cost saving ＋ Premium service）。
+
+3. **平台化與授權模式併行**  
+   - 短期採 LaaS／MaaS 訂閱模式（按設備數、貨櫃數或查詢量計價），降低客戶採用門檻。  
+   - 中長期可提供模型授權與白標方案，讓台灣系統整合商或電信業者將本技術整合至自家 5G/AI 方案中，形成在地生態系。
+
+4. **國際合作與台灣價值**  
+   - 透過與國際學研與業者合作（如歐洲物流夥伴、大學等），共同發表論文與實證報告，提升台灣在「AI＋物流」領域之能見度。  
+   - 所有關鍵模型與平台核心開發均在台灣完成，並優先在台灣建立營運與維運團隊，確保技術與人才留在本地。
+
+
+
+
+## 貳、計畫內容與實施方法
+
+【摘要】本節由產業痛點引導 AI 解法與工作包，明確串連「痛點→解法→里程碑→KPI」，並補強資料治理與資安合規，確保量測可行與可追蹤。
+### 一、計畫緣起與產業痛點
+
+本計畫聚焦智慧物流場域中，最直接影響「營運可靠度、決策效率與客戶體驗」的四大核心痛點，並以分項計畫 A–D 具體承接與解決：
+#### 痛點一｜感測器可靠度不足（電池衰退、環境干擾、資料中斷）
+
+現行感測器多以固定週期回傳資料，缺乏對自身電池壽命（RUL）的預測能力。一旦因電量衰退、訊號衰減或環境干擾導致感測器離線，通常都是在資料已中斷、異常已發生後才被動察覺，造成監控盲區，難以追溯問題發生時的狀況，並導致維運成本提高。
+
+以具體情境為例：某智慧倉儲部署了數百個環境感測器監控溫溼度，其中一個感測器的鋰電池因長期運作逐漸衰退，於夏季高溫期間電量驟降導致裝置提前離線。然而直到幾天後管理人員檢查報表時，才發現該區域的資料已中斷，而在感測器離線的這段期間倉庫內溫度曾飆升，導致多批溫度敏感貨品受損。這種事後才察覺的情形說明：缺乏電池壽命（RUL）預測與預防性維護機制，使得感測器一旦沒電故障，就會產生資料缺口而錯失關鍵事件的即時偵測。相較之下，業界領先者已開始為物聯網裝置導入更完整的電池壽命監測與維護流程。例如全球航運龍頭馬士基（Maersk）的智慧貨櫃就即時追蹤感測器的電池電量狀態，以確保裝置在長途運輸中持續運作、不會中途斷電。
+
+→ **需求：** 導入電池壽命預測（Remaining Useful Life, RUL）模型，建立可預測的感測器壽命管理與預防性維護機制。例如透過機器學習分析電池電壓、溫度和放電曲線，提前預測電池何時可能耗盡，主動通知更換。同時，串接分項計畫 B 的 AI 自主式事件報告，讓系統在感測器異常離線時自動通報並標記最後有效資料點，以協助維運人員迅速介入處置，提升整體系統可用度（此需求對應分項計畫 A）。
+
+#### 痛點二｜報表產出耗時且缺乏互動（人工彙整、決策延滯）
+
+目前報表生成流程需要跨系統手動彙整感測器時序資料、GPS 軌跡、開關門事件與環境紀錄，再以 Excel 表格或簡報人工整理。此流程往往耗費數小時至數日，且容易因欄位解讀不同或檔案版本不一致而造成錯漏，進而延誤決策。實務上常見情況是報表送達決策者手中時，數據可能已經過時。
+
+以具體情境為例：某食品物流公司的運輸主管每週需製作一份冷鏈運輸績效報告。他必須先從環境感測器系統匯出溫溼度時序資料，從車隊管理系統下載 GPS 行車軌跡，並彙整倉儲管理系統中的開門紀錄和警報事件。接著花費數小時將不同來源的資料複製貼上到同一份 Excel，中途還得反覆核對欄位單位與時戳對齊。曾經有一次，因不同資料版本時間對不上的誤差，報告中誤判了一起延誤事件的原因，直到事後開會討論才被現場人員指出。這種人工拼湊的做法容易導致供應鏈團隊忙於追查數字出處、校正不一致的資料，而無法及時採取行動。此外，傳統商業智慧工具要求使用者了解資料庫結構和專業查詢語法，現場主管即使知道想問什麼問題，也往往難以從系統即時取出答案，只能倚賴 IT 人員離線製作特定報表。
+
+→ **需求：** 部署 AI 自主式事件報告與自然語言查詢（NLQ）平台，讓資料彙整與報表產出由 AI 自動完成，管理者可隨時以對話方式提問並即時獲取洞見。例如，引入供應鏈知識圖譜與語意分析引擎，使用者只需以自然語言發問（如「昨天南區倉庫有幾筆超溫警報？原因多為何？」），系統即可自動轉換為查詢邏輯並給出答案。此機制將顯著降低人工整理與資訊延遲的成本（此需求對應分項計畫 B）。
+
+#### 痛點三｜環境敏感貨品的異常風險難以及時掌握（濕度變化、原因追溯不足）
+
+對濕度高度敏感的貨品（如咖啡豆、食品原料、精密零組件），在運輸與倉儲過程中若遭遇長時間濕度偏高或劇烈波動，容易導致發霉、品質下降、報廢，以及日後的索賠爭議。然而，多數現行系統僅能事後查看溫濕度曲線，缺乏即時異常提醒、自動紀錄環境劇變時的關聯事件，以及提供簡明的事件說明。據統計，冷鏈不當造成的商品損耗每年高達數百億美元。
+
+以具體情境為例：一家精品咖啡豆進口商有一批生豆海運進口，在夏季梅雨季節的港口中轉倉庫存放了一週。由於期間環境通風不佳，加上當週連日暴雨，倉庫內濕度長時間維持在 80% 以上。儘管感測器完整記錄了濕度數據，但業者並未即時獲得警報提醒。等到一週後倉庫人員巡檢時，才發現部分咖啡豆麻袋表面出現受潮發霉的跡象，最後不得不全數報廢。此事件凸顯出若系統能即時警示，就可能避免損失。業界已指出，若能即時監測並搭配 AI 智慧警報，在問題發生前即可介入防範。
+
+→ **需求：** 建立溫／濕度異常偵測與 AI 自主式告警機制。例如，設定當環境濕度連續超過閾值達 X 分鐘或短時間內劇烈波動時，自動以短信或 APP 通知相關人員，並啟動預定應變流程。同時導入 AI 自主式事件報告，於異常發生後自動彙整該時段的相關數據（如門禁紀錄、設備狀態、氣象資料等），並以自然語言生成事件說明與可能原因分析，協助管理者快速判讀與追溯，降低環境敏感貨品受損風險（此需求對應分項計畫 C）。
+
+
+#### 痛點四｜路線繞行與疑似竊盜風險無法即時辨識（GPS 偏離、人工作業判讀）
+
+現行運輸監控多仰賴事後檢視 GPS 記錄或人工判讀，難以區分「因營運因素造成的合理繞行」與「可疑繞路、異常停留」等高風險事件。貨櫃或貨箱遭未授權開啟時，也常於到倉後才被發現，錯失即時介入的時間窗口。  
+以具體情境為例：假設貨主為半導體大廠（如自新竹出貨之晶圓或設備），典型運輸路線包含「新竹工廠→台北港（卡車，約 2 天）→台北港候港（約 1 天）→荷蘭鹿特丹港（海運，約 10 天）→鹿特丹港候港（約 2 天）→荷蘭 Eindhoven（卡車，約 2 天）」。現行系統大多在「卡車超過 2 天尚未抵達台北港」時才觸發逾時告警，屬於事後反應；若能在卡車尚未出發前即結合歷史壅塞與營運資訊，預先偵測到將出現大規模延誤，便可主動提醒供應商與其客戶「此批貨物預計延誤」，改為前饋式管理。同樣地，若模型能學習「新竹↔台北港↔鹿特丹↔Eindhoven」等常見路線之合理路徑與停留點，當卡車偏離合乎邏輯之路徑、出現異常繞行或停留在高風險區域時，即可發出疑似竊盜或詐欺之預警，而非事後回放軌跡才發現。  
+→ **需求**：建置結合 GPS／NTN 軌跡、GeoFencing、壓力／鎖具事件與路線行為特徵的路線異常與竊盜偵測模型，以即時辨識偏移、停留與未授權開啟事件，降低誤報、提升察覺精準度，並串接AI自主式事件報告提升事件調查效率（對應分項計畫 D）。
+
+本計畫即是從上述四大痛點出發，分別透過分項計畫 A–D 建立對應之 AI 解決方案與可量測之 KPI，以系統化方式提升智慧物流之可靠度、安全性與國際競爭力。
+
+
+### 二、計畫導入 AI 規劃  
+
+【說明】本節說明本計畫如何從「四大產業痛點」出發，對應至分項計畫 A–D 之 AI 技術與導入目標，並補充導入前後效益與資料治理/資安機制，確保成果可量測與可查核。另四個分項之間之資料與模型流向如下：A 產出之電池壽命預測（RUL）指標與感測器可信度 → 提供 B 作為查詢與報表指標；C/D 產生之環境與路線異常事件 → 觸發 B 的 AI 報告與決策支援。
+
+為兼顧技術創新與執行可行性，本計畫對多智能體協作與聯邦學習（FL）之導入，明確區分為「必達 MVP」與「探索性 PoC」兩層。MVP 部分，以單一代理為主體，優先完成電池壽命預測（RUL）與感測器可靠度管理、環境與路徑異常偵測及 NLQ＋AI 自主事件報告等核心功能，並在 1 個國際場域與 1 個台灣場域達成既定 F1-score、AUC、MAE、延遲與工時改善等 KPI，作為計畫驗收之必要成果。多智能體排程與風險協同決策、跨場域 FL 模型聚合等，則定位為雲端協作層之 prototype／PoC，優先嘗試但不列為硬性驗收門檻。透過此分層設計，計畫得以在 18 個月內交付具商用價值之 AI 監控與報告功能，同時保留對前沿技術進行驗證與後續產品化布局的彈性。
+
+#### (1) 導入技術目標：痛點 → 分項計畫 → AI 解法
+
+| 產業痛點（Pain Point） | 對應分項計畫 | 主要 AI 技術 | 導入目的與成效目標 |
+| --- | --- | --- | --- |
+| **痛點一｜感測器可靠度不足（電池衰退、環境干擾、資料遺失）** | **A. 感測器可靠度優化** | 電池壽命預測（RUL）、預測性維護模型 | 透過 AI 化電池壽命預測（RUL）模型，建立預測性維護機制，提前偵測電池衰退與故障風險，使感測器可靠度由 **90% → 95%+**，並實現智能化維護排程。 |
+| **痛點二｜報告產出耗時且缺乏互動（人工彙整、決策延遲）** | **B. AI 自主式報告與即時查詢（NLQ）** | 自然語言查詢（NLQ）、NL-to-SQL、LLM 報告生成 | 讓管理階層與營運人員可用自然語言下指令取得數據與報告，將報告產出由 **「人工數小時 → 自動數秒」**，NLQ P95 延遲目標設定為 <60 秒、查詢正確率 ≥90%。 |
+| **痛點三｜環境敏感貨品的異常風險難以及時掌握（濕度變化、原因追溯不足）** | **C. 敏感貨品環境異常偵測與 AI 自主式事件報告** | 變化點/統計門檻異常偵測、多變量時序模型、事件對齊（箱體開關/路段） | 以 Smart TOTE 溫/濕度 (T/H) 與箱體開關事件為核心，偵測「長時間超標/短時間劇烈波動」並結合 AI 自主式事件報告，目標「違規提前預警率 ≥70%、事件報告 SLA（P95） ≤2 分鐘」，協助提前掌握環境異常風險並追溯原因，降低貨損與索賠風險。 |
+| **痛點四｜路線繞行與疑似竊盜風險無法即時辨識（GPS 偏離、人工作業判讀）** | **D. 路線異常與竊盜偵測（Smart TOTE）** | GPS/NTN 時空軌跡模型、Geo-fence 行為分析、鎖具/壓力感測異常偵測 | 利用 Smart TOTE 之 **GPS/LTE/NTN 路線資料 + BLE Padlock/壓力感測開關狀態**，結合路線行為模式分析，辨識「合理延誤 vs. 真正異常」，實現 **繞行、可疑停留、非法開箱/竊盜** 之即時預警，目標達成偵測 F1-score ≥0.85、ETA MAE 改善 ≥25%、警示誤報率 ≤15%、關鍵警示回應時間 <30 分鐘，呼應痛點四所述「無法即時辨識」風險。 |
+
+
+> Smart TOTE 具備 BLE Padlock、壓力感測、GPS/LTE/NTN 連線能力，可進行箱體開關、鎖狀態與路線即時追蹤。  
+> 來源：(V5.0.X) iTX Smart TOTE Specification
+
+
+---
+
+#### （1-2）國際 SOTA（State of the Art）與本計畫技術指標對照
+
+為凸顯技術優越性與可查核性，本節擇要列出三項關鍵指標，對照國際常見或文獻/產業報告中可見之 SOTA/通行水準與本計畫目標值，所有本計畫目標數值均與前述 KPI 表保持一致。下列國際數據為近年電池壽命（RUL）預測、冷鏈監控與運輸可視化等公開研究，以及實務上 real-time transportation visibility 平台案例之彙整範圍（例如 Energies、iScience 等期刊之相關綜述，[Real-time Transportation Visibility Platforms Reviews, Gartner]、project44／Uber Freight 等 ETA 案例說明），供審查委員參考其量級合理性，並對照本計畫設定之目標指標。
+
+#### ① 電池壽命預測（RUL）
+
+| 指標 | 典型現況／國際水準（參考值） | 本計畫目標（KPI 對照） | 說明 |
+| --- | --- | --- | --- |
+| 感測器可靠度（Availability） | 約 85–90%（多為被動維護，故障後更換） | **≥95%** | 導入電池壽命預測（RUL）與預防性維護後，透過狀態監測與預警降低非計畫性停機。 |
+| RUL 預測準確率           | 多數實務與研究顯示 80–88% 為常見可達範圍 | **≥90%** | 以 LSTM/TFT 等時序模型建立 RUL 預測模型，目標優於一般公開實驗結果（約 80%+）並提供可解釋結果。 |
+| RUL 預測誤差（MAE） | 文獻中針對實際運行電池，多以 10–20 天級誤差為可接受區間 | **≤10 天** | 以生存分析＋時序模型預測剩餘壽命，將誤差壓在 10 天以內，對齊或優於公開 RUL 實驗結果。 |
+
+> 參考資料（範例）：  
+> - Sylvestrin GR et al., *“State-of-the-art in electric batteries’ state-of-health (SoH) prognostics”*, Energies, 2025：整理實務與實驗環境中 SoH/RUL 預測方法，多數實務誤差約落在 10–20 天級別。  
+> - Shu X. et al., *“State of health prediction of lithium-ion batteries based on …”*, iScience, 2021：以數據驅動方法預測鋰電池 SoH，顯示 80–88% 準確率為常見可達水準。  
+> - Pohlmann S. et al., *“State-of-health prediction of lithium-ion batteries based on Gaussian process regression …”*, 2024：以高精度 SoH 預測模型說明實務上對 SoH/RUL 誤差範圍的要求與挑戰。  
+
+#### ② 環境敏感貨品的異常風險與提前預警（呼應痛點三）
+
+| 指標 | 典型現況／國際水準（參考值） | 本計畫目標（KPI 對照） | 說明 |
+| --- | --- | --- | --- |
+| 環境異常偵測 F1-score | 國際溫濕度敏感貨品監控與設備廠商多採門檻＋rule-based，公開案例 F1 約 0.7–0.8 | **≥0.88** | 以變化點偵測與多變量時序模型進行短期預測，搭配箱體開關與路段事件對齊，將偵測效能提高至 0.88 以上，優於一般門檻式做法。 |
+| 違規／異常提前預警率 | 多為事後查帳或臨界點才报警，提前預警率偏低（<30%） | **≥70%** | 以短期預測模型推估未來 30–60 分鐘內之環境變化，於預測顯示將觸及溫濕度敏感貨品環境風險門檻前至少 30 分鐘主動觸發預警，並由 AI 自主式事件報告輔助判讀，對應「痛點三」中對濕度變化與提前掌握風險之需求。 |
+| 事件報告 SLA（P95） | 多仰賴人工彙整與 Email 通報，常以「小時」計 | **≤2 分鐘（端到端）** | 由異常偵測直接觸發 AI 自主式事件報告與推播管線，大幅縮短通報時間。 |
+
+> 參考資料（範例）：  
+> - Xie Z. et al., *“An anomaly detection scheme for data stream in cold chain logistics”*, PLOS ONE, 2025：提出冷鏈物流資料流異常偵測方法，說明傳統 rule-based 門檻法在偵測率與誤報率上的限制。  
+> - Zhang W. et al., *“A data-driven framework for intelligent cold chain monitoring”*, 2025：整合 IoT 感測與 ML 異常偵測的冷鏈監控架構，佐證以 ML 提升溫度異常偵測效能與提前預警的可行性。  
+> - MarketsandMarkets, *“Cold Chain Monitoring Market”*, 2025：說明冷鏈監控市場成長與導入場景，對應本計畫聚焦之溫濕度敏感貨品運輸。  
+
+#### ③ 路線繞行／疑似竊盜偵測與 ETA 預測（呼應痛點四）
+
+| 指標 | 典型現況／國際水準（參考值） | 本計畫目標（KPI 對照） | 說明 |
+| --- | --- | --- | --- |
+| 路線偏離偵測 AUC | 物流與車聯網研究中，以純 GPS 特徵訓練之異常偵測模型 AUC 多落在 0.80–0.88 | **≥0.90** | 以 LSTM 等時序模型結合路網與運輸行為上下文特徵，將 AUC 推升至 0.90 以上，對齊近期國際研究的較高水準。 |
+| 竊盜／未授權開啟 F1-score | 多倚賴門禁或人工作業紀錄，實務上少有公開 F1 數據，多為「事件案例」說明 | **≥0.85** | 透過 Smart TOTE（BLE Padlock＋壓力感測）與行為模式建模，明確訂出 F1≥0.85 的可量測門檻。 |
+| ETA 預測誤差（MAE） | 國際貨櫃與幹線運輸 ETA 預測，公開案例多為 1.5–3 小時級 MAE | **改善 ≥25%** | 以歷史路線資料與時序模型，將 ETA MAE 自現況再降低 25% 以上，對齊或優於國際平台實務經驗。 |
+
+> 參考資料（範例）：  
+> - Wani AA et al., *“Ten quick tips for improving estimated time of arrival (ETA) in fleet-based transportation systems”*, PeerJ Computer Science, 2025：整理車隊／運輸 ETA 預測實務中 MAE 量級與常見誤差來源，佐證 1.5–3 小時級 MAE 為典型範圍。  
+> - Gartner, *“Real-Time Transportation Visibility Platforms Reviews”*（RTTV 市場評論）：說明現行國際 RTTV 平台多以 GPS＋交通／天氣資訊進行 ETA 預測與異常告警。  
+> - project44, *“ETA reimagined: Transforming project44’s prediction engine”*, 2025；Uber Freight, *“A look inside the AI engine powering on-time arrivals”*, 2023：說明國際平台透過 AI 提升 ETA 準確度與異常預警的實務成果。  
+
+上述指標將透過前述「技術驗證協議」與第三方測試／場域驗證報告進行查核，並納入里程碑 B.1／B.2 之審查基準，以確保「技術優越性」不僅為定性敘述，而能以量化數據對照國際水準。
+
+---
+
+#### (2) 導入前（現況）與導入後（預期結果）對照（含 Smart TOTE）
+
+| 項目                                  | 導入前（現況問題）                                                   | 導入後（預期成果）                                                                                                                                                         |
+| ----------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **感測器可靠度與智能維護<br>（痛點一 / 分項計畫A）**    | 感測器電池衰退與離線無法事先預測，常出現「資料中斷、補測成本高」，造成異常判讀困難與維運成本上升。           | 透過 AI 化電池壽命預測（RUL）模型，建立預測性維護機制，提前辨識電池衰退與故障風險，**可靠度（Availability）提升至 ≥95%，RUL 預測 MAE ≤10天，資料完整性 ≥95%**，降低非計畫性停機與維運成本。                                                           |
+| **報告產出與決策效率<br>（痛點二 / 分項計畫B）**      | 報表需由人工作業彙整，多數查詢需「寄信/開工單 → 等待數小時至數日」，決策延遲且難以追蹤誰查了什麼資料。       | 建置 NLQ + 自動報告系統，高層與營運直接以自然語言詢問；**報告生成由數小時縮短為 <45 秒**（初期 M1-M6 目標），並保留查詢審計軌跡，支援高階管理報告與例行週/月報自動產製。                                                                               |
+| **環境敏感貨品之違規與品質風險<br>（痛點三 / 分項計畫C）** | 多數仍屬「事後查帳」，缺乏即時異常提醒與簡明說明，無法快速判讀成因與處置，錯失提前介入時機。        | 以變化點/統計門檻＋簡單規則偵測溫/濕度異常，對齊箱體開關/路段事件，自動觸發分項 B 的 AI 報告與推播，產出「事件摘要＋建議處置」。**提前預警率 ≥70%，違規率下降 ≥30%，事件報告 SLA（P95） ≤ 2 分鐘**。                                          |
+| **路線繞行、合理延誤與潛在竊盜<br>（痛點四 / 分項計畫D）** | 目前多依賴事後 GPS 回看與人工判斷，「合理延誤」與「繞路偷運」難以區分；貨櫃被開箱、鎖具遭破壞多在事後才被發現。 | 以 GPS/NTN 時空軌跡與路線行為模型建立路線預測及異常模型，搭配 Smart TOTE **BLE Padlock/壓力感測** 資訊辨識未授權開箱；系統即時標註「合理延誤」與「可疑繞行/停留/非法開箱」，**F1-score ≥0.85、警示誤報率 ≤15%、關鍵警示回應時間 <30 分鐘**。 |
+
+
+#### (3) 資訊安全與資料治理（合規機制）
+
+- 資料分級與來源：內部（裝置時序/事件）、外部（路線/地理）；建立數據目錄與血緣。
+- 存取控管：依職能與最小權限原則（RBAC/ABAC）、唯讀白名單查詢、審計日誌保存≥1年。
+- 個資/敏感資料：去識別化/匿名化（雜湊/遮罩）、跨境傳輸以區域化部署與聯邦學習（FL）處理。
+- 合規框架：GDPR/DPIA 檢核、第三方資安掃描（SAST/依賴）、定期弱掃與備援演練（每季）。
+- 稽核與版本：資料版本控管、模型版本/回滾、查詢路由與模型輸出全程可追溯。
+
+
+
+### 三、計畫導入執行策略
+本節綜整導入場域、國際合作與工作包（A–D）之執行策略與方法，作為後續時程與查核點之依據。
+ 
+【摘要】工作包以痛點為主軸，分A–D執行並設查核點；國際合作強化場域驗證與輸出，KPI 與里程碑對齊以確保投資效益。
+
+### （1）場域、驗證項目與導入方式
+
+- 場域規劃
+
+  - 國際場域部分，已與瑞士 Arviem 簽署合作備忘錄（MOU），由 Arviem 提供跨洲際海運、空運與冷鏈等國際物流場域，作為長週期實際運輸資料之蒐集來源與 AI 模型之國際實證場域。
+
+  - 國內場域部分，已與台灣 SimiQue（新邁高國際信息有限公司）簽署《國內場域試導入合作備忘錄》，由 SimiQue 提供國防後勤物流相關之倉儲、轉運中心與車隊場域，配合本計畫進行裝置布署、資料蒐集與導入效益驗證，作為本案之在地示範場域與後續國內擴散之基礎。
+
+- **驗證項目（依分項計畫呈現）**
+
+  - **分項計畫 A（M1–M11）｜智慧感測器可靠度優化**
+    - 電池壽命相關指標建立與穩定度（以 3 個不同批次資料比較波動度）
+     - RUL 預測誤差 MAE ≤ 10 天  
+       （以 20% hold-out 測試集驗證）
+     - 資料品質與穩定度指標達標  
+       （以同一感測器訊號前後品質差異量測）
+     - 感測器資料完整性 ≥ 95%、可用度 ≥ 95%  
+       （以 30 天連續回傳紀錄計算）
+
+  - **分項計畫 B（M1–M5）｜NLQ 與報告生成 AI 自主式化**
+     - NLQ 查詢正確率 ≥ 90%  
+       （以 200+ 查詢樣本比對人工標準答案）
+     - NLQ 延遲 P95 < 180 秒  
+       （以壓力測試 500–1,000 QPS 測量）
+    - 報告AI自主式生成完成率 ≥ 95%  
+       （以 100 份報告自動產出比對人工版本）
+     - 人工作業時數降低 ≥ 70%  
+       （以 baseline 與導入後實測時數比較）
+
+  - **分項計畫 C（M4–M15）｜敏感貨品環境異常偵測與報告（MVP）**
+     - 溫/濕度異常偵測 F1-score ≥ 0.88  
+       （以完整事件樣本集測試）
+     - 違規／異常事件提前預警率 ≥ 70%  
+       （至少 30 分鐘前發出告警；視場域擴充外生特徵）
+     - 事件報告 SLA（P95） ≤ 2 分鐘  
+       （異常→報告生成→推播端到端）
+
+  - **分項計畫 D（M4–M15）｜路線異常、竊盜偵測（Smart TOTE）**
+     - 路線偏離偵測 AUC ≥ 0.90  
+       （以 20 條實際路線異常樣本驗證）
+     - 竊盜／未授權開啟告警 F1-score ≥ 0.85  
+       （以 BLE 壓力、光感、開啟事件比對）
+     - ETA 預測誤差 MAE ≤ 15 分鐘  
+       （以真實運輸歷史資料與測試集驗證）
+     - 開啟／壓力變化事件偵測準確率 ≥ 95%  
+       （以 50 次以上開闔測試取得）
+
+
+### （2）分項計畫
+
+#### 分項計畫A｜智慧感測器可靠度優化
+
+目標在於將感測器可靠度由約 90% 提升並降低非計畫性停擺，聚焦建置 AI 化電池壽命（RUL）預測模型，實現預測性維護。
+
+**A1. 目標與成功標準（Objectives & Success Criteria）**
+- 可靠度（Availability）≥95%、RUL MAE ≤ 10 天（資料完整性 ≥ 95%）。
+
+**A2. 取得與準備資料（Data Acquisition & Preparation）**
+- 使用裝置電壓、溫度、傳輸頻率與維護紀錄等資料，補齊缺漏並建立壽命與劣化趨勢。
+
+**A3. 建立數據集（Dataset for Modeling）**
+- 整合歷史資料與事件標註（故障/維護），形成可回溯的訓練與驗證集。
+
+-**A4. 建模與訓練（Modeling & Training）**
+- 採用 **RNN/LSTM/TFT（Temporal Fusion Transformer）**等時序深度學習模型，分析電池放電曲線與電壓衰退趨勢，直接建立電池壽命（RUL）預測模型。
+- 使用 **生存分析（Survival Analysis）**技術預測 RUL，考量右截斷資料與不確定性。
+- 輔以簡單規則與門檻檢查，確保模型輸出穩定與可落地。
+
+**A5. 評估與優化（Evaluation & Optimization）**
+- 以準確度與預測誤差為主進行評估，提供簡明可解釋的結果說明。
+
+**A6. 佈署與展示（Deployment & Showcase）**
+-- 提供電池壽命預測（RUL）API 與儀表板，支援預測性維護排程，及時預警電池壽命風險變化，優化維保決策。
+
+> 本分項 MVP 驗收指標：可靠度（Availability）≥95%、RUL MAE ≤10 天（資料完整性 ≥95%）。PoC 項目（不列為硬性驗收）：多場域長期壽命趨勢分析、跨客戶電池壽命模型泛化能力評估等。
+
+#### 分項計畫B｜按需報告與自然語言查詢（NLQ）
+
+讓高層與營運人員以自然語言即時取得洞見，並自動生成週/月報與優先警示彙報。
+
+**B1. 目標與成功標準**
+- 報告製作時間下降 ≥ 50%；NLQ P95 延遲 < 60 秒；正確率 ≥ 90%。
+
+**B2. 取得與準備資料**
+- 建立指標語義層與資料字典，串接時序/事件資料與外部摘要。
+
+**B3. 建立數據集**
+- 彙整常見查詢樣式與報表模板，建立可維護的資料目錄。
+
+**B4. 建模與訓練**
+- 以白名單與唯讀權限連接資料庫，限制查詢範圍並避免對數值事實做臆測。
+- 建立 Executive Report Agent（彙報智能體）：編排指標擷取→語意摘要→異常說明→建議行動，支援多輪追問（Follow-up Query）與上下文維持。
+
+**B5. 評估與優化**
+- 以正確率與延遲為主監測，建立拒答與審計機制，持續調整模板。
+
+**B6. 佈署與展示**
+- 上線 NLQ API、Interactive Dashboard、Executive Auto-Report Agent 與定期報表；提供高階彙報＋互動問答（Follow-up / Drill-down）；支援由分項 C／D 之異常事件直接觸發報告生成與推播（Alert→Report Pipeline）。
+
+> 本分項 MVP 驗收指標：NLQ 查詢正確率 ≥90%、P95 延遲 <60 秒，報告製作人力時數下降 ≥50%。PoC 項目（不列為硬性驗收）：多智能體報告編排邏輯優化、跨語系（如英文）高階管理報告模板擴充等。
+
+#### 分項計畫C｜環境異常偵測與 AI 自主式事件報告（MVP）
+
+針對溫/濕度敏感貨品（如咖啡豆），先以「異常偵測＋告警→AI 報告」為 MVP，快速落地可操作的事件摘要與處置建議；視需要再擴充外生特徵與預測模型以提升提前預警能力。
+
+**C1. 目標與成功標準**
+- 溫/濕度異常偵測 F1-score ≥ 0.88；違規提前預警率 ≥ 70%；事件報告 SLA（P95） ≤ 2 分鐘；違規率下降 ≥ 30%。
+
+**C2. 取得與準備資料**
+- 使用溫/濕度（T/H）、箱體開關事件、位置/路段資訊（必要資料）。
+
+**C3. 建立數據集**
+- 建立異常標註資料集（長時間超標、短時間劇烈波動），並對齊裝櫃/開箱等事件時間軸；保留審計軌跡。
+
+**C4. 建模與訓練（MVP→擴充）**
+- MVP：變化點偵測（如 CUSUM/BOCPD/滾動 IQR）＋統計門檻與簡單規則；事件對齊與標籤生成（疑似裝櫃前/途中環境/頻繁開箱）。
+- 擴充：視場域需求加入多變量時序模型（如 LSTM/GRU/TFT）與其他外生特徵以強化提前預警與可解釋性。
+
+**C5. 評估與優化**
+- 監測異常偵測 F1-score、提前預警率、警示誤報率與報告 SLA；建立資料/模型漂移監控與週期性再訓練策略。
+
+**C6. 佈署與展示**
+- 異常即時觸發分項計畫 B 的 AI 自主式事件報告（沿用模板），以 Email 推播事件摘要（時間窗、影響批次、對齊證據、建議處置），Dashboard 提供一鍵 drill‑down 與 NLQ 跳轉（C×B 整合）。
+
+> 本分項 MVP 驗收指標：溫/濕度異常偵測 F1-score ≥0.88、違規提前預警率 ≥70%、事件報告 SLA（P95） ≤2 分鐘、違規率下降 ≥30%。PoC 項目（不列為硬性驗收）：多場域 T/H 模型共享與協同調校、跨區域環境風險熱點圖等。
+
+#### 分項計畫D｜竊盜偵測與路線監控
+
+透過路線偏離、可疑停留與路線行為建模，辨識潛在繞路與竊盜，並優化警示優先序。
+
+**D1. 目標與成功標準**
+- 偵測 AUC ≥ 0.90、F1-score ≥ 0.85；ETA MAE 改善 ≥ 25%；警示誤報率 ≤ 15%；關鍵警示回應時間 < 30 分鐘。
+
+**D2. 取得與準備資料**
+- 使用 GPS 位置、速度、停靠點與路線屬性摘要。
+
+**D3. 建立數據集**
+- 以行程切片與異常標註建立資料集，補充路網特徵。
+
+**D4. 建模與訓練**
+- 使用 **時序模型（LSTM/GRU）** 分析 GPS 軌跡與移動模式，辨識偏離、異常停留與速度變化。
+- 採用路網結構與運輸行為特徵建構模型，區分合理延誤與異常繞路。
+- 建立 **動態警示優先序機制**：結合成本敏感學習與營運規則，根據風險程度、歷史模式與即時情境評分警示。
+- 整合 **Smart TOTE 之 BLE Padlock 與壓力感測器**資訊，偵測未授權開箱事件。
+- 實現 **自適應閾值調整**：根據場域特性、時段與貨物類型動態調整異常偵測的敏感度，降低誤報率。
+
+**D5. 評估與優化**
+- 以 AUC/F1 與延遲監測成效，進行 A/B 測試。
+
+**D6. 佈署與展示**
+- 異常/竊盜警示服務；路線回放、根因分析；MCP Agent 編排整合（跨分項）。
+
+> 本分項 MVP 驗收指標：路線偏離偵測 AUC ≥0.90、竊盜／未授權開啟告警 F1 ≥0.85、ETA MAE 改善 ≥25%、警示誤報率 ≤15%、關鍵警示回應時間 <30 分鐘。PoC 項目（不列為硬性驗收）：多場域路網協同建模、跨場域 FL 模型聚合與多智能體警示優先序編排 demo 等。
+
+
+### （4）系統架構, 儀表板, 技術內容說明 
+
+**圖 4-1：儀表板**
+
+![alt text](ai-maas-dashboard-ch-tw.png)
+
+圖 4-1 為本計畫核心營運儀表板，整合呈現電池壽命預測（RUL）、環境異常事件（溫／濕度）、路線與竊盜風險、AI 自動報告與國際場域狀態等關鍵指標；使用者可在同一畫面即時檢視多場域 KPI、告警清單與地圖／時間軸視覺化，縮短跨系統查找與人工彙整時間，作為日常營運監控與例行管理會議之主要介面。
+
+下圖呈現本計畫之端到端系統架構與資料流向（圖 4-2），展示分項計畫 A–D 如何整合為完整的智慧供應鏈監控與風險預警解決方案：
+
+**圖 4-2：系統架構（推論與告警流程）**
+
+**圖 4-2A：前端流程 - 資料收集與告警生成**
+```mermaid 
+flowchart LR
+  %% ========== Device & Model Layer ==========
+  subgraph S["裝置與模型層 (Device & Model Layer)<br/>📡 感測資料經過加密傳輸與身分驗證後，寫入 iTracXing/Arviem Cloud"]
+    S1["Smart TOTE / Gateway<br/>🔐 加密傳輸｜身分驗證<br/>收集感測資料"]
+    S2["AI 模型推論 (Inference)<br/>• 分項 A：電池壽命預測（RUL）模型<br/>• 分項 C：環境異常模型（溫濕度偵測）<br/>• 分項 D：路線/竊盜模型（GPS/開箱異常）<br/>↓ 輸出 risk_score / metrics"]
+  end
+
+  %% ========== Event & Alert Engine ==========
+  subgraph E["事件與告警引擎 (Alert Rule Engine)"]
+    E1["寫入事件佇列 / DB<br/>MODEL_EVAL 事件"]
+    E2["告警規則評估 (Alert Rule Evaluation)<br/>risk_score / 動態閾值 / 條件"]
+    E3["去重與抑制<br/>避免重複告警"]
+    E4["建立 Alert 物件<br/>alert_id / severity / details"]
+  end
+
+  %% Flow
+  S1 --> S2 --> E1
+  E1 --> E2 --> E3 --> E4
+  
+  E4 --> OUTPUT["➡️ Alert 物件傳遞至後端流程"]
+  
+  style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
+```
+
+**圖 4-2B：後端流程 - 報告生成與通知**
+```mermaid 
+flowchart LR
+  INPUT["⬅️ Alert 物件<br/>(來自告警引擎)"]
+  
+  %% ========== (Optional) LLM Explanation ==========
+  subgraph L["(選配) LLM 說明層<br/>👉 分項 B：AI 自主事件報告 / NLQ Dashboard"]
+    L1["將 Alert JSON 放入 Prompt"]
+    L2["LLM 產生中英摘要＋建議行動"]
+  end
+
+  %% ========== Notification Layer ==========
+  subgraph N["通知服務與通路<br/>資安與隱私規範：符合 GDPR/資料合規"]
+    N1["選擇接收人與通道<br/>依客戶/嚴重度"]
+    N2["發送通知<br/>Email / LINE / Slack / Webhook"]
+    N3["紀錄通知歷程<br/>供 SLA / ESG 報表稽核"]
+  end
+
+  %% Flow
+  INPUT --> L1
+  INPUT -->|不使用 LLM 時<br/>直接套固定模板| N1
+  L1 --> L2 --> N1
+  N1 --> N2 --> N3
+  
+  style INPUT fill:#f9f,stroke:#333,stroke-width:2px
+```
+
+> **架構說明與訓練流程補充**：  
+> 本圖為上線後之「**推論與告警流程**」（Inference & Alert Pipeline），展示即時資料如何流經 AI 模型、告警引擎與通知服務。  
+> **模型訓練與再訓練流程**（Training & Re-training）則於離線環境進行，採用歷史資料與標註事件集，並於「貳、計畫內容與實施方法」之「分項計畫 A–D」各節詳述；訓練完成後之模型權重定期佈署至本圖之「AI 模型推論」節點。
+
+**架構說明**：
+
+1. **Device & Model 層**：Smart TOTE 感測器收集溫濕度、GPS、開關狀態等資料，經由分項計畫 A（電池壽命預測（RUL））、C（環境異常）、D（路線/竊盜）之 AI 模型推論，輸出風險分數與指標。
+
+2. **事件與告警引擎**：模型輸出寫入事件佇列，經告警規則評估、去重與抑制後，建立結構化 Alert 物件，確保高優先級事件不被淹沒。
+
+3. **LLM 說明層（選配）**：對應分項計畫 B 之 AI 自主式事件報告功能，可將 Alert JSON 轉換為中英文摘要與建議行動；若不使用 LLM 則直接套用固定模板，兼顧成本與彈性。
+
+4. **通知服務與通路**：依客戶與嚴重度選擇接收人與通道（Email/LINE/Slack/Webhook），並記錄通知歷程供 SLA 與 ESG 報表稽核，確保治理透明度。
+
+此架構設計展現本計畫之三大特色：（1）模組化 AI 功能可獨立擴充；（2）治理機制（去重、審計、SLA）內建於流程；（3）彈性部署（可選配 LLM 或固定模板）降低採用門檻。
+
+
+
+
+#### RUL 預測流程示意
+
+```mermaid
+flowchart LR
+  subgraph Device ["Edge Device (Smart IoT Tracker)"]
+    V["電壓量測 V(t)"]
+    T["溫度量測 T(t) (optional)"]
+    TS[Timestamp 時間戳記]
+  end
+
+  subgraph Cloud ["雲端資料平台 / IoT Backend"]
+    RAW["原始 Telemetry<br/>V, T, TS, 上報頻率, 狀態"]
+    PROC["資料前處理<br/>排序、清洗、補值、對齊 Δt"]
+    FAIL["故障 / 失效事件偵測<br/>最後上報時間、電壓低於門檻"]
+    RULLBL["RUL 標籤計算<br/>RUL(t) = t_failure - t"]
+    FEAT["特徵工程<br/>電壓斜率、平均值、波動度、溫度統計…"]
+  end
+
+  V --> RAW
+  T --> RAW
+  TS --> RAW
+
+  RAW --> PROC
+  PROC --> FAIL
+  PROC --> FEAT
+  FAIL --> RULLBL
+
+  FEAT -.->|輸入特徵→| LSTM_INPUT[(LSTM 輸入張量)]
+  RULLBL -.->|監督標籤→| LSTM_LABEL[(LSTM 目標張量)]
+```
+
+以上圖的 LSTM 輸入／標籤，作為下圖之模型訓練／推論的起點。
+
+```mermaid
+flowchart LR
+  subgraph Model ["AI 模型訓練 / 推論"]
+    LSTM[("LSTM/GRU<br/>時間序列模型")]
+    PRED["RUL 預測<br/>(剩餘可服務壽命 天/小時)"]
+    ALERT["維運決策<br/>更換電池 / 避免派出將掛掉的節點"]
+  end
+
+  LSTM_INPUT[(來自前一圖之特徵)] --> LSTM
+  LSTM_LABEL[(來自前一圖之標籤)] --> LSTM
+  LSTM --> PRED
+  PRED --> ALERT
+```
+
+
+
+如圖 4-3 所示，本計畫之 RUL 預測模組以 NTN（Non-Terrestrial Network，非地面網路） 智慧追蹤器回傳的電壓時間序列、（選用）溫度資訊與時間戳記為基礎，於雲端重建各感測節點之放電軌跡與實際失效時間，計算剩餘可服務壽命（Remaining Useful Life, RUL）標籤。系統採用時間序列預測模型（如 LSTM/GRU）學習「電壓變化型態 × 使用情境」與 RUL 的關聯，於營運階段即時輸出每一節點的剩餘可服務天數，並觸發預防性維護與電池更換決策，以降低非預期離線事件並提升監測可用率。
+
+圖 4-3：RUL 預測流程示意
+
+
+#### 環境異常 (溫濕度) 預測流程示意
+
+```mermaid
+flowchart LR
+  %% 上游：邊緣層與雲端資料平台（以「特徵庫」為連接點）
+
+  subgraph EDGE["邊緣層｜Smart TOTE / IoT 感測器"]
+    T_SENSOR[溫濕度感測器<br/>Temp / RH ]
+    T_GATEWAY[閘道器<br/>BLE / LTE / NTN]
+  end
+
+  subgraph INGEST["雲端資料平台｜資料蒐集與特徵工程"]
+    T_STREAM[串流資料蒐集<br/>Time-series Ingest]
+    T_FEATURE[特徵工程<br/>區段平均值 / 梯度 / 積分暴露量]
+    T_STORE[(Feature Store<br/>特徵庫)]
+  end
+
+  %% Data flow (上游)
+  T_SENSOR --> T_GATEWAY
+  T_GATEWAY --> T_STREAM
+  T_STREAM --> T_FEATURE
+  T_FEATURE --> T_STORE
+```
+
+
+
+```mermaid
+flowchart LR
+  %% 下游：AI/ML、應用層與回饋（由「特徵庫」作為輸入）
+
+  T_STORE[(Feature Store<br/>特徵庫)]
+
+  subgraph AIML["AI/ML 環境異常偵測引擎"]
+    T_MODEL[環境異常偵測模型<br/>LSTM / Isolation Forest / BOCPD]
+    T_RULE[規範規則比對<br/>Good Distribution Practice / SOP 門檻]
+    T_SCORE[(風險評分引擎<br/>Risk Score 0–100)]
+  end
+
+  subgraph APPS["應用層｜警示與報表"]
+    T_ALERT[即時告警服務<br/>SMS / Email / ChatOps]
+    T_DASH[監控儀表板<br/>冷鏈路線 / 貨況視覺化]
+    T_REPORT[稽核與合規報表<br/>客訴 / 理賠 / 稽核文件]
+  end
+
+  subgraph FEEDBACK["回饋與持續學習"]
+    T_LABEL[人工標註與回饋<br/>真實異常 / 誤報標記]
+    T_RETRAIN[週期性重訓流程<br/>Model Retraining Pipeline]
+  end
+
+  %% Data flow（下游）
+  T_STORE --> T_MODEL
+  T_STORE --> T_RULE
+
+  T_MODEL -->|異常機率 / Score| T_SCORE
+  T_RULE -->|門檻違規事件| T_SCORE
+
+  T_SCORE -->|高風險| T_ALERT
+  T_SCORE --> T_DASH
+  T_SCORE --> T_REPORT
+
+  %% Feedback loop
+  T_ALERT --> T_LABEL
+  T_DASH --> T_LABEL
+  T_LABEL --> T_RETRAIN
+  T_RETRAIN --> T_MODEL
+```
+
+圖 4-4：環境異常 (溫濕度) 預測流程示意
+
+本節說明環境異常（溫濕度）預測的端到端流程與責任分工。上游由 Smart TOTE／IoT 感測器透過閘道器將溫度、相對濕度與時間戳資料以串流方式匯入雲端，完成清洗、對齊與特徵工程（區段平均、梯度、累積暴露量），統一寫入特徵庫供下游消費。下游以異常偵測模型（如 LSTM、Isolation Forest、BOCPD）結合規範門檻（GDP／場域 SOP）進行風險評分並觸發告警，同步更新儀表板與生成稽核／合規報表。告警與儀表板的使用回饋（真異常／誤報標記）會回流模型重訓管線，形成持續學習閉環，確保 F1-score、提前預警率與報告 SLA 等關鍵指標穩定達標。
+
+
+#### 路線異常與竊盜偵測
+
+```mermaid 
+flowchart LR
+  %% 圖 1：邊緣裝置與雲端匯入 → 特徵庫
+  subgraph Edge["邊緣／智慧物聯裝置"]
+    GPS[路由資料<br/>GPS、速度、路線 ID]
+    LOCK[鎖狀態<br/>開/關、竄改事件]
+    PRESS[壓力感測器<br/>kPa、壓力變化 ΔP]
+  end
+
+  subgraph Ingest["雲端資料平台"]
+    RAW[遙測資料匯入<br/>時間序列儲存]
+    FEAT[特徵工程<br/>路徑偏移、停留時間、<br/>開鎖事件、壓力統計]
+    FEAT_HUB[(特徵庫 Feature Store)]
+  end
+
+  GPS --> RAW
+  LOCK --> RAW
+  PRESS --> RAW
+
+  RAW --> FEAT
+  FEAT -->|特徵 features| FEAT_HUB
+```
+
+```mermaid
+flowchart LR
+  %% 圖 2：AI / 機器學習 → 應用服務（消費特徵庫）
+  FEAT_HUB[(特徵庫 Feature Store)]
+
+  subgraph AI["AI／機器學習異常偵測引擎"]
+    ISOF[非監督式模型<br/>Isolation Forest / LSTM AE]
+    RISK[(風險評分<br/>risk_score 0–1)]
+    RULES[[規則引擎<br/>地理圍籬、開鎖時間窗、<br/>壓力門檻]]
+    FUSE[決策融合<br/>結合 ML 分數與規則]
+  end
+
+  subgraph Apps["應用服務層"]
+    ALERT[即時告警<br/>SMS / Email / LINE / Webhook]
+    DASH[營運儀表板<br/>地圖、時間軸、事件檢視]
+    REPORT[AI 報表<br/>每日／每週風險彙總]
+  end
+
+  FEAT_HUB --> ISOF
+  FEAT_HUB --> RISK
+
+  ISOF --> RISK
+  RISK --> FUSE
+  RULES --> FUSE
+
+  FUSE --> ALERT
+  FUSE --> DASH
+  FUSE --> REPORT
+
+```
+
+如圖 4-5 所示，本計畫以「邊緣→雲端→特徵庫→AI/規則→決策輸出」之端到端流程運作：邊緣智慧鎖與智慧貨箱回傳 GPS 行車軌跡、鎖狀態（開關／竄改）、壓力感測等時間序列資料，雲端資料平台完成即時匯入與時序化儲存後，進行特徵工程（路徑偏移、停留時間、異常開鎖事件統計、壓力量測變化等），並統一寫入特徵庫（Feature Store），提供一致且可重用的模型輸入。AI 異常偵測模組（如 Isolation Forest、LSTM Autoencoder）自特徵庫學習「正常運輸行為」，輸出異常分數並轉換為 0–1 風險分數（risk_score）；同時規則引擎依營運需求設定地理圍籬、開鎖時間窗與壓力門檻等。決策融合（Decision Fusion）綜合 AI 風險分數與規則觸發，推送即時告警（SMS/Email/LINE/Webhook）、在營運儀表板標註異常事件，並自動生成每日／每週風險分析報表，協助快速掌握高風險運輸路徑與異常場站。
+
+### 多方協作聯邦學習（FL）作為可擴張商機與機會
+
+```mermaid
+flowchart LR
+
+  %% ===========================
+  %%   iTracXing 平台
+  %% ===========================
+  subgraph ITX["iTracXing 平台（台灣）"]
+    ITX_Data["iTracXing 資料<br>BLE / Padlock / NTN / TOTE"]
+    ITX_ML["iTracXing 在地 FL 訓練節點"]
+    ITX_UI["iTracXing 儀表板<br>（限 iTracXing 客戶）"]
+  end
+
+  ITX_Data --> ITX_ML
+  ITX_ML --> ITX_UI
+
+
+  %% ===========================
+  %%   Arviem 平台
+  %% ===========================
+  subgraph ARV["Arviem 平台（歐盟／美國／亞太）"]
+    ARV_Data["Arviem 資料<br>JA Device / Motion / GPS"]
+    ARV_ML["Arviem 在地 FL 訓練節點"]
+    ARV_UI["Arviem 儀表板<br>（限 Arviem 客戶）"]
+  end
+
+  ARV_Data --> ARV_ML
+  ARV_ML --> ARV_UI
+
+
+  %% ===========================
+  %%   Vector 平台
+  %% ===========================
+  subgraph VEC["Vector 平台（美國／全球零售迴路）"]
+    VEC_Data["Vector LPMS 資料<br>零售／逆物流／Smart TOTE"]
+    VEC_ML["Vector 在地 FL 訓練節點"]
+    VEC_UI["Vector 儀表板<br>（限 Vector 客戶）"]
+  end
+
+  VEC_Data --> VEC_ML
+  VEC_ML --> VEC_UI
+
+
+  %% ===========================
+  %%   聯邦學習聚合層
+  %% ===========================
+  ITX_ML -->|加密 ΔW| AGG
+  ARV_ML -->|加密 ΔW| AGG
+  VEC_ML -->|加密 ΔW| AGG
+
+  subgraph FED["聯邦學習聚合層"]
+    AGG["安全聚合器<br>FedAvg / FedProx / FedAdam<br>（不共享任何原始資料）"]
+    GM["全球共享模型<br>物流風險預測 AI"]
+  end
+
+  AGG --> GM
+
+  %% 重新下發全球更新模型
+  GM -->|更新模型 Wₜ₊₁| ITX_ML
+  GM -->|更新模型 Wₜ₊₁| ARV_ML
+  GM -->|更新模型 Wₜ₊₁| VEC_ML
+```
+圖 4-6
+
+聯邦學習將在未來 5–10 年成為 AI 系統的核心組成。驅動力來自隱私法規收緊（GDPR／PIPL／PDPA）、多方協作資料不得集中、Edge/IoT 訓練外移、雲端與裝置端共同演進，以及大型科技公司持續投入。對物流與供應鏈而言（貨主／承運人／貨代／冷鏈／保險／港口／衛星 IoT），FL 可在不共享原始資料的前提下，跨機構協同訓練共享模型，直接解決「資料不可集中」的採用障礙。
+
+- 為何現在：跨境與隱私法規迫使「不傳原始資料也能學習」；Edge/IoT 的資料量與個人化需求提升，使裝置端訓練＋雲端聚合成為必需。
+- 商機定位：供應鏈 AI 的標準組件（Deloitte／McKinsey／BCG 之趨勢一致）；以「FL‑Ready 模型與管線」成為渠道夥伴（Arviem／Vector）可快速嵌入的合規 AI 能力。
+- 收費模式（可擴張）：  
+  - FL 訓練即服務（Federated Training as a Service）：按節點／輪次／模型大小計費。  
+  - 合規 AI 套件授權（FL‑Ready Models）：RUL／環境異常／路線偏離／竊盜偵測等。  
+  - 邊緣節點管理與合規顧問：GDPR/PIA／資料治理／審計。
+- 成長引擎：  
+  1) 渠道擴張（Arviem 客戶群 → 多國場域複製）。  
+  2) 模型網路效應（多場域參與 → 全球共享模型性能提升）。  
+  3) Edge 佈署增量（Smart TOTE／Gateway 節點數增加 → 維運與訂閱收入累積）。
+- 進入策略：  
+  - MVP 先交付集中式可用模型；隨場域與法規導入 FL 聚合（FedAvg／FedProx）。  
+  - 以「資料不出域、僅參數上傳」的技術／合規白皮書與審計工具，降低採用門檻。  
+  - 與夥伴共同品牌的 FL SDK／API，縮短集成週期。
+- 風險與緩解：資料品質差異／聯邦非 IID／節點不穩定 → 採分層聚合、適應式加權、節點健康檢查與回滾；合規變動 → 外部顧問年度審查與政策保留策略。
+
+結論：FL 不是獨立市場，而是「隱私保護的多方協作型 AI」之底層能力。以 FL‑Ready 的供應鏈 AI 組件與服務為核心，結合渠道夥伴與邊緣節點增長，可形成高毛利、可複製、跨國擴張的商業版圖。
+
+
+### AI 模組 × 里程碑 × KPI 總覽
+
+> 說明：本表僅列出本計畫主要 AI 模組與技術路線，區分 **MVP／必達** 與 **延伸／進階** 項目，讓審查委員可在 1 分鐘內看懂技術重點與達成目標。
+
+| 模組 | 類型 | 關鍵里程碑 (月) | 期末 KPI | 備註 |
+| --- | --- | --- | --- | --- |
+| 電池壽命預測（RUL，智慧追蹤器） | **MVP** | M6 完成初版 RUL 模型與資料管線、M12 場域驗證 | RUL MAE ≤ 10 天、提前預警率 ≥ 80%、意外離線事件降低 ≥ 30% | **必達**；對應痛點一（監測節點可靠度與電池壽命）、分項計畫 A |
+| 環境異常偵測＋風險評分（溫／濕度＋事件對齊） | **MVP** | M6 完成原型、M12 場域驗證 | F1 ≥ 0.85、違規率下降 ≥ 30%、事件報告 SLA（P95） ≤ 2 分鐘 | **必達**；對應痛點三（環境敏感貨品風險）、分項計畫 C |
+| NLQ ＋ 自動報告（AI 自主彙總與管理儀表板） | **MVP** | M6 原型、M12 內部試用、M18 場域導入 | NLQ 正確率 ≥ 90%、P95 延遲 ≤ 60 秒、報告製作人力時數降低 ≥ 50% | **必達**；對應痛點二（報表產出耗時）、分項計畫 B |
+| 路線／竊盜異常偵測（Smart TOTE＋GPS／Padlock） | **MVP** | M12 模型 Demo、M18 場域驗證 | 路線偏離 AUC ≥ 0.90、竊盜／未授權開啟 F1 ≥ 0.85、關鍵警示回應時間 < 30 分鐘 | **必達**；對應痛點四（繞行／竊盜）、分項計畫 D |
+| 多方協作聯邦學習（Federated Learning、多方資料協作） | **延伸** | M12 完成 FL 架構設計與 PoC 規劃、M18 完成至少 1 組跨場域 PoC | 至少 2–3 個節點參與 FL 訓練；完成 1 份「隱私保護與聯邦學習白皮書」；集中式 vs. FL 模型性能差距 ≤ 5% | **進階**；強調 **collaboration／GPDR／alliance**：多方協作、資料不出域、支援國際與在地夥伴建立 AI 聯盟（不列為必達驗收門檻，作為技術與商業延伸） |
+| Training AI Coding / vibe coding 流程 | 支援 | M3 建立內部開發指引、M9 納入 CI 流程、持續優化 | 典型開發工時縮短 ≥ 20–30%、重大缺陷率不上升（與 2024 基準相比） | 內部研發 **效率提升／品質控管**；支援 A–D 分項開發，不列為對外查核 KPI |
+
+
+
+### （5）國際合作效益
+
+本計畫由 ItracXing（台灣）主導，攜手 Arviem AG（瑞士）共同推進。Arviem 擔任本案之國際場域（International Testbed）。
+
+- 合作範疇：
+  - Arviem：提供全球場域、IoT 裝置與資料存取、共同驗證與客戶導入（出口價值）。
+
+- 對台灣之價值：
+  - 國際合作示範：以台灣為技術中心，建立「AI-MaaS for Logistics」輸出路徑。
+  - 人才與技術升級：學研與實務雙向交流，導入 GDPR/AI Act 等國際合規實務。
+
+### 四、計畫執行時程及查核點
+
+本節之甘特圖與後續「預定進度表與查核點」以及「AI 功能—里程碑—KPI 對應表」互相對應，以里程碑代碼 A.1／B.1／B.2／C.1 統一標示。
+
+### 甘特圖（2026/01–2027/06，18個月；分項計畫視角）
 
 ```mermaid
 gantt
-  title Supply Chain AI Monitoring & Risk Warning — Work Package Gantt (2026/01–2027/06, 18 months)
+  title 供應鏈AI監控與風險預警系統 — 工作包甘特圖（2026/01–2027/06，18個月）
   dateFormat  YYYY-MM-DD
   axisFormat  %Y-%m
   excludes    weekends
 
-  section Work Package A Battery RUL Prediction
-  A1–A3: Battery life models & data pipelines      :a1, 2026-01-01, 4m
-  A4–A6: RUL/TFT & survival analysis               :a2, 2026-04-15, 6m
+  section 分項計畫A 電池壽命預測（RUL）
+  A1–A3：電池壽命模型與資料管道      :a1, 2026-01-01, 4m
+   A4–A6：RUL/TFT與生存分析           :a2, 2026-04-15, 6m
 
-  section Work Package B Reporting Automation & NLQ
-  B1–B3: NL-to-SQL & RAG                           :b1, 2026-01-01, 3.5m
-  B4–B6: Auto reporting & Executive Alert          :b2, 2026-03-01, 2.5m
+   section 分項計畫B 報告自動化與自然語言查詢（NLQ）
+   B1–B3：NL-to-SQL與RAG            :b1, 2026-01-01, 3.5m
+   B4–B6：自動報告與Executive Alert  :b2, 2026-03-01, 2.5m
 
-  section Work Package C Environmental Anomalies & AI Incident Reports (MVP)
-  C1–C3: Rules/change-points & event alignment     :c1, 2026-04-01, 8m
-  C4–C6: Alert → AI report integration & explainability :c2, 2026-10-01, 4m
+  section 分項計畫C 環境異常偵測與AI自主式事件報告（MVP）
+  C1–C3：異常規則/變化點與事件對齊  :c1, 2026-04-01, 8m
+  C4–C6：告警→AI報告整合與解釋性     :c2, 2026-10-01, 4m
 
-  section Work Package D Route / Theft Detection
-  D1–D4: LSTM/graph models & dynamic alerts        :d1, 2026-04-01, 9m
-  D5–D6: Adaptive sampling & deployment            :d2, 2026-10-01, 5m
+  section 分項計畫D 路線異常／竊盜偵測
+  D1–D4：LSTM 時序模型與動態警示      :d1, 2026-04-01, 9m
+   D5–D6：自適應採樣與佈署          :d2, 2026-10-01, 5m
 
-  milestone Work Package B / Early usable (A.1)      :m1, 2026-05-31, 0d
-  milestone Subprojects C/D mid validation (B.1)   :m2, 2026-09-30, 0d
-  milestone Subprojects A/C/D site validation (B.2):m3, 2027-03-31, 0d
-  milestone Final acceptance (C.1)                 :m4, 2027-06-30, 0d
+   milestone 分項B/初期可用（A.1）   :m1, 2026-05-31, 0d
+   milestone 分項C/D中期驗證（B.1）  :m2, 2026-09-30, 0d
+   milestone 分項A/C/D場域驗證（B.2）:m3, 2027-03-31, 0d
+  milestone 最終驗收（C.1）         :m4, 2027-06-30, 0d
 ```
 
-### Planned Schedule and Checkpoints
 
-### Planned schedule (fiscal year; at least one checkpoint every 6 months)
+### 預定進度表與查核點
 
-- 2026/01–2026/05 (M1–M5; Milestone A.1)
-  - Goal: Subprojects A/B early usability
-  - Key deliverables:
-    - Work Package A: battery life data pipelines and preprocessing (A1–A3), initial RUL model
-    - Work Package B: NL-to-SQL & RAG basics (B1–B3), auto-reporting & Executive Alert prototype live (early B4–B6)
-  - Checkpoint: A.1 (end of 2026/05)
+### 預定進度表（年度=會計年度；每6個月至少1項查核點）
 
-- 2026/04–2026/09 (M4–M9; Milestone B.1)
-  - Goal: Subprojects C/D mid-stage models
-  - Key deliverables:
-    - Work Package C: rules/change-points & event alignment (C1–C3), alert → AI report integration meeting F1/SLA goals
-    - Work Package D: route/theft detection LSTM/graph models (D1–D4), dynamic alert logic running in test sites
-  - Checkpoint: B.1 (end of 2026/09)
+- 2026/01–2026/05（M1–M5；對應里程碑 A.1）  
+  - 目標：分項計畫A/B 初期可用  
+  - 主要成果：  
+    - 分項A：電池壽命相關資料管道與前處理流程完成（A1–A3），初版電池壽命預測模型建立  
+    - 分項B：NL-to-SQL 與 RAG 基礎功能可用（B1–B3），自動報告與 Executive Alert 原型上線（B4–B6 前期）  
+  - 查核點：A.1（2026/05底）
 
-- 2026/04–2027/03 (M4–M15; Milestone B.2)
-  - Goal: Subprojects A/C/D site validation
-  - Key deliverables:
-    - Work Package A: RUL model running continuously in sites, availability and MAE meet targets
-    - Work Package C: environmental anomalies meet early-warning rate and report SLA in sites
-    - Work Package D: real routes A/B tests meet F1 and ETA MAE improvement targets
-  - Checkpoint: B.2 (end of 2027/03)
+- 2026/04–2026/09（M4–M9；對應里程碑 B.1）  
+  - 目標：分項計畫C／D 中期模型完成  
+  - 主要成果：  
+    - 分項C：異常規則/變化點與事件對齊完成（C1–C3），告警→AI 報告整合可用並達到預期 F1/SLA  
+    - 分項D：路線異常／竊盜偵測 LSTM 時序模型完成（D1–D4），動態警示邏輯可在測試場域運作  
+  - 查核點：B.1（2026/09底）
 
-- 2027/01–2027/06 (M13–M18; Milestone C.1)
-  - Goal: end-to-end integration and acceptance (A–D)
-  - Key deliverables:
-    - Cross-module integration and stability, data sync success ≥ 98%
-    - Final acceptance tests and production deployment, service availability ≥ 99.5%
-    - Final technical docs and acceptance reports
-  - Checkpoint: C.1 (end of 2027/06)
+- 2026/04–2027/03（M4–M15；對應里程碑 B.2）  
+  - 目標：分項計畫A／C／D 場域驗證  
+  - 主要成果：  
+    - 分項A：電池壽命預測（RUL）模型在實際場域連續運轉，可靠度與 MAE 達標  
+    - 分項C：環境異常偵測在場域達成提前預警率與報告 SLA 目標  
+    - 分項D：路線異常／竊盜偵測在真實物流路線上完成 A/B 測試，F1 與 ETA MAE 改善達標  
+  - 查核點：B.2（2027/03底）
 
-### Checkpoint Details
+- 2027/01–2027/06（M13–M18；對應里程碑 C.1）  
+  - 目標：整體結案與驗收（A–D 成果整合與上線）  
+  - 主要成果：  
+    - 完成端到端跨模組整合與穩定性驗證，資料同步成功率 ≥ 98%  
+    - 完成最終驗收測試與上線部署，服務可用性 ≥ 99.5%  
+    - 產出結案技術文件與驗收報告  
+  - 查核點：C.1（2027/06底）
 
-A.1 (end of 2026/05) — Subprojects A/B early usable:
-  - Initial battery life prediction with MAE ≤ 15 days
-  - Anomaly detection accuracy ≥ 85%
-  - MCP DB integration complete, supports real-time queries
-  - Auto-reporting and executive alerting live
-  - Deliverables: system prototype, technical docs, test report
+### 預定查核點說明
 
-B.1 (end of 2026/09) — Subprojects C/D mid-stage:
-  - Alert optimization model trained, F1-score ≥ 0.85
-  - Deliverables: training report, initial validation results
+**A.1（2026/05底）—分項計畫A/B／初期可用**：
 
-B.2 (end of 2027/03) — Subprojects A/C/D site validation complete:
-  - Battery RUL meets target (RUL MAE ≤ 10 days)
-  - False alert rate ≤ 15% (≥ 40% reduction vs baseline)
-  - Predictive maintenance validated; lab and field tests passed
-  - Site validation report complete
-  - Deliverables: site data, RUL performance report, maintenance benefit analysis
+  - 電池壽命預測模型初步建立，預測 MAE ≤15天
+  - 異常偵測準確率≥85%
+  - MCP資料庫整合完成，支援即時查詢
+  - 自動報告與高階警示彙報系統上線
+  - 交付：系統原型、技術文件、測試報告
+- **B.1（2026/09底）—分項計畫C／D中期**：
 
-C.1 (end of 2027/06) — Final integration and acceptance:
-  - End-to-end cross-module integration, data sync success ≥ 98%
-  - Production deployment complete, full API docs
-  - Service availability ≥ 99.5%, defect rate trending down
-  - Final acceptance tests and closure documents
+  - 警示優化模型訓練完成，F1-score≥0.85
+  - 交付：模型訓練報告、初步驗證結果
+- **B.2（2027/03底）—分項計畫A／C／D場域驗證完成**：
 
-### Milestone-based Disbursement and Key Decision Points
+  - 電池壽命預測準確度達標（RUL MAE ≤10天）
+  - 警示誤報率≤15%（較基準降低≥40%）
+  - 預測性維護機制驗證完成，實驗室與場域測試通過
+  - 場域驗證報告完成
+  - 交付：場域測試數據、電池壽命模型性能報告、預測性維護效益分析
+**C.1（2027/06底）—整體結案與驗收**：
 
-To ensure quality and controllability, adopt milestone-based disbursement and set a Go/No-Go decision at M15.
+  - 端到端跨模組整合完成，資料同步成功率 ≥ 98%
+  - 生產環境部署完成，API 文件完整
+  - 服務可用性 ≥ 99.5%，整合缺陷率呈連續下降
+  - 完成最終驗收測試與結案文件
 
-#### Disbursement Schedule (mapped to subproject groups)
+### 經費撥付與關鍵決策點（里程碑管控）
 
-| Milestone | Period | Key milestones (subprojects) | Disbursement | Amount | Retainage |
+為確保計畫執行品質與成果可控性，採取**里程碑撥付**機制，並於M15設立**Go/No-Go決策點**。
+
+#### 經費撥付時程表（以里程碑對應分項計畫群組）
+
+
+| 里程碑     | 期間    | 關鍵里程碑（分項計畫對應）               | 撥付比例 | 撥付金額    | 保留金     |
+| --------------- | --------- | ---------------------------------------- | ---------- | ------------- | ------------ |
+| 里程碑 A（A.1） | M1-M5   | 分項計畫B 初期可用 + 分項計畫A 資料管道/前處理 | 40%      | 3,600K      | —         |
+| 里程碑 B（B.1/B.2） | M4-M15  | 分項計畫C/D 模型與驗證 + 分項計畫A RUL/壽命延長 | 35%      | 3,150K      | —         |
+| 里程碑 C（C.1） | M13-M18 | 整體結案驗收 + 生產部署（跨分項整合） | 20%      | 1,800K      | 5% (450K)* |
+| 最終驗收        | M18+    | 通過驗收測試                             | 5%       | 450K        | —         |
+| **總計**      | —      | —                          | **100%** |  **9,000K** | —         |
+
+*最終5%保留金於通過驗收測試、專利申請提交、技術文件交付後撥付。
+
+#### 關鍵決策點：M6 Go/No-Go Review（指標映射至 分項計畫A／B／D）
+
+於M6里程碑（2026年6月）進行**重大審查**，需達成**4項指標中至少3項**方可繼續後續工作包執行：
+
+
+| 指標項目              | 目標值    | 最低通過標準 | 驗證方式               |
+| ----------------------- | ----------- | -------------- | ------------------------ |
+| 1. 異常偵測準確率     | ≥90%     | ≥85%        | 測試集驗證報告 |
+| 2. 感測器可靠度提升   | ≥5%      | ≥3%         | 實測上線率與離線事件統計 |
+| 3. Arviem場域部署協議 | 已簽署    | LOI確認      | 合作協議書或意向書     |
+| 4. 專利申請進度       | 1件已申請 | 1件準備中    | 申請文件或草稿         |
+
+**決策準則**：
+
+- **通過（GO）**：達成3/4項指標 → 繼續後續工作包，按原計畫撥付
+- **有條件通過**：達成2/4項指標 → 提交改善計畫，後續預算保留10%，M9再審查
+- **暫停（NO-GO）**：達成<2項指標 → 終止計畫或大幅調整範圍，後期預算不撥付
+
+#### 風險控管機制
+
+1. **月度進度報告**：每月提交進度摘要與財務使用狀況
+2. **季度技術審查**：每季由外部專家進行技術審查
+3. **預算彈性調整**：應急準備金600K可於經管理單位核准後調度
+4. **人力風險備援**：若關鍵人員異動，需於30日內提出接替方案
+
+此機制確保政府補助資金使用效率，並於早期發現問題時及時調整，保障計畫成果品質。
+
+### 五、預期效益
+
+---
+
+#### （一）量化效益（技術與營運指標）
+
+> 彙整本計畫在「技術與營運」兩大層面的量化效益，包括感測器可靠度、異常偵測性能、報告與決策效率、服務可用性與衍生投資等，並說明量測方式與查核頻率。
+
+1. **核心技術與營運指標（KPI 摘要）**
+
+| 指標                                   | 基準值（Baseline）                      | 期末目標（Target）                       | 測量方法／資料來源                                                   |
+|----------------------------------------|-----------------------------------------|------------------------------------------|----------------------------------------------------------------------|
+| 感測器可靠度（Availability）           | 90%（2024 年均值）                      | ≥95%                                     | IoT 裝置監控系統，依每日上線率與資料完整性計算，每月彙整             |
+| RUL 預測準確率                         | 無基準（新模型）                        | ≥90%                                     | 分項 A 模型驗證集之分類準確率，每季更新                              |
+| RUL 預測誤差（MAE）                    | 無基準（rule-based baseline）          | ≤10 天                                   | RUL 預測 vs 實際壽命之 MAE，每季更新                                 |
+| 環境異常偵測 F1-score                  | 現況 rule-based 約 0.7                  | ≥0.88                                    | 以完整事件樣本集計算 F1，每季查核                                     |
+| 路線偏離偵測 AUC／竊盜警示 F1-score   | 無（首次導入）                          | AUC ≥0.90、F1 ≥0.85                      | 以獨立測試集與場域資料驗證，每季查核                                 |
+| NLQ 查詢成功率                         | 無（首次導入）                          | ≥92%                                     | 透過標註查詢與 NL-to-SQL 比對正確率，每季檢視                        |
+| NLQ P95 延遲                           | 人工查詢 >10 分鐘；無延遲基準          | <60 秒                                   | 透過 NLQ Gateway 與 APM 日誌，每週／每月檢視                         |
+| 風險回應時間（Incident Response Time） | 約 45–90 分鐘（人工流程）               | 縮短 ≥40%                                | 事件觸發→處置完成之時間差，月報查核                                   |
+| 報告製作人力時數                       | 約 200 小時／月                         | 降低 ≥50%（≤100 小時／月）              | PMO 工時系統統計，每月追蹤                                            |
+| 服務可用性（Service Availability）     | 99.0%（現況監控值）                     | ≥99.5%                                   | 監控平台（Grafana／Datadog）每週／每月彙總                            |
+
+2. **衍生投資與人力效益（千元；非本期核心 KPI）**
+
+| 成果項目                          | 執行前 | 第 1 年度 | 第 2 年度 | 佐證方式                         |
+|-----------------------------------|-------:|----------:|----------:|----------------------------------|
+| 申請／核定專利數                |      0 |         2 |         3 | 專利申請書及審查進度文件         |
+| 衍生投資金額                    |      0 |     6,500 |     6,500 | 投資合作協議書及 MOU            |
+| 新增就業機會（人）              |      0 |         5 |        10 | 勞動契約與公司人事紀錄           |
+| 提升計畫參與研發人員薪資水準(%) |      - |      +10% |      +15% | 薪資單與人事部佐證資料           |
+
+衍生投資金額細項（單位：千元；屬結案後延伸投資，非本期核心 KPI）：
+
+| 投資項目                         | 投資主體           | 投資金額 | 說明                                                                                     |
+|----------------------------------|--------------------|---------:|------------------------------------------------------------------------------------------|
+| 智慧物流邊緣節點測試與驗證合作   | 外部研究機構       |    3,000 | 智慧物流邊緣節點試煉場域部署及性能驗證，建置測試節點與 AI 加速伺服器                     |
+| Edge AI Platform 共研投資       | ItracXing & Arviem |    2,000 | 延伸本計畫 AI 模組至邊緣運算節點，支援低延遲運算與智慧物流監控                           |
+| 國際輸出合作（全球場域）        | Arviem AG          |    1,500 | 將智慧物流監控整合方案輸出至 Arviem 客戶場域，作為跨境驗證合作                           |
+
+合計衍生投資金額：約 NT$6,500 千元。
+
+---
+
+#### （二）質化效益
+
+> 說明本計畫對申請單位、產業生態系、國際能見度與人才培育之長期影響，補充量化指標無法呈現之價值。
+
+1. **對申請單位（ItracXing）之效益**
+
+- 技術升級：  
+  - 建立電池壽命預測（RUL）、環境異常偵測、路線／竊盜偵測與 NLQ 報表等完整 AI 模組，形成可複製的「AI Logistics MaaS」產品線。  
+  - 建立可解釋 AI、聯邦學習與多智能體協作等能力，強化未來 AI 合規與治理專案競爭力。
+
+- 產品與商業模式：  
+  - 由專案導入轉型為「IoT 裝置 + AI-MaaS／LaaS 訂閱」服務模式，提高毛利與估值。  
+  - 完成至少 1–2 個可複製之國際場域示範案例（國際場域：Arviem；國內場域：Simique），作為往後標竿案例。
+
+- 人才育成：  
+  - 培養具「AI＋物流／製造」跨域能力之研發與實務人才 ≥6 名，其中女性研發人力 ≥1 名。  
+  - 累積跨國協作與 GDPR／AI Act 等合規實務經驗。
+
+2. **對產業與在地生態系之效益**
+
+- 產業示範：  
+  - 完成至少 1 個具代表性的 AI 導入示範場域（如國際海運／溫濕度敏感貨品／電子組裝供應鏈），形成可複製之導入藍圖與 SOP。  
+  - 透過技術工作坊、產業論壇與標竿案例分享，帶動系統整合商、電信與設備廠合作。
+
+- 技術外溢：  
+  - 以開放 API、技術白皮書與部分工具開源等方式，降低中小企業導入門檻，提升整體產業數位化與 AI 化程度。
+
+3. **國際能見度與智財佈局**
+
+- 國際合作示範：  
+  - 與 Arviem 等國際夥伴於歐洲／全球場域完成實證，提升台灣在「AI＋智慧物流」領域能見度。
+  - Arviem 並已表示，若本計畫獲核定並順利執行，將積極評估於台灣設立常駐據點或分公司，作為亞洲區營運與技術協作樞紐；相關意向可透過 Letter of Intent（LOI）佐證，預期可帶動在地就業與長期技術合作，強化本計畫在「國際合作深度與外商投資帶動效益」之貢獻。
+
+- 智財與輸出：  
+  - 結案前完成 2–3 件專利申請（含至少 1 件 PCT）。  
+  - 建立「AI-MaaS for Logistics」輸出架構，預期結案後三年內國際客戶收入約占衍生營收 70%。
+
+---
+
+#### （三）節能減碳效益
+
+> 說明本計畫如何透過「電池壽命優化、路線最佳化、廢棄物防止與 IoT 設備延壽」達成節能減碳與 ESG 效益，並以透明假設與示意公式說明 CO₂ 減量構成。
+
+1. **CO₂ 減量構成與示意數值（CO₂ 計算公式）**
+
+- 🔋 **電池優化 — 減少電池製造碳排：≈ 1,950 kg CO₂e**  
+  透過電池壽命預測（RUL）與預測性維護，降低不必要的電池汰換與過早報廢，對應每顆電池製造碳排之減少。  
+- 🚛 **路線優化 — 減少燃油消耗：≈ 1,728 kg CO₂e**  
+  透過路線異常偵測與 ETA 最佳化，減少無效繞行與怠速停留所造成之燃油消耗。  
+- 📦 **廢棄物防止 — 防止產品損壞：≈ 11,000 kg CO₂e**  
+  透過環境異常提前預警與 AI 自主式事件報告，降低溫濕度敏感貨品報廢與重製需求，依單位產品廢棄所對應之碳排係數換算。  
+- 📱 **IoT 設備延壽 — 延長設備使用壽命：≈ 46 kg CO₂e**  
+  以電池與裝置健康管理延長 IoT 設備使用年限，減少新設備製造與報廢所帶來之碳排。  
+
+- **示意總減量：**  
+  ΔCO₂,total ≈ 1,950 + 1,728 + 11,000 + 46 ≈ **14,725 kg CO₂e**（示意值，用於說明單一代表性場域／年度之減碳構成）。
+
+2. **計算邊界聲明**
+
+- 四項減碳分項（電池優化、路線優化、廢棄物防止、IoT 設備延壽）彼此互斥，同一事件僅計算一次，避免重複計算。  
+- 「每批次」定義為：從起運點到終點的完整 end‑to‑end 運送任務（含中途倉儲與轉運）。  
+- 廢棄物防止僅計產品損失所對應之碳排，不重複計入運輸能耗（運輸能耗已列入「路線優化／燃油減量」項下）。  
+- 上述 14,725 kg CO₂e 為代表性示範場域／年度之示意估算；多場域、多年度累加後，與前述 KPI 表中「三年累計 CO₂ 排放量減少約 10–15%（約 80+ 噸 CO₂e）」相互對應。
+
+3. **量測方法與數據來源**
+
+**🎯 計算標準**  
+- 依據 **ISO 14064‑1 溫室氣體盤查標準** 建立組織層級排放盤查與追蹤架構。  
+- 對應 **GHG Protocol 範疇 1–3**，將燃油使用（Scope 1）、購電／冷媒（Scope 2）及運輸外包／產品廢棄（Scope 3）分別歸類。  
+- 參考 **環保署碳足跡計算指引** 與相關技術文件，做為排放係數與活動數據選取依據。
+
+**📡 數據來源**  
+- 即時 IoT 感測器與 Smart TOTE 裝置之行駛里程、燃油推估、裝置壽命與環境異常紀錄。  
+- 行政院環保署與國際公開資料庫所提供之排放係數（能源、運輸、廢棄物等）。  
+- 產業基準數據（環境產品宣告 EPD、LCA 報告與供應商提供之產品碳足跡）作為單位產品／設備之基準值。
+
+**💡 排放係數基準（示意）**  
+- 電池製造：約 **75 kg CO₂e／顆**（來源：EPD／電池環境產品宣告）。  
+- 柴油燃燒：約 **2.68 kg CO₂e／L**（來源：環保署公布排放係數）。  
+- 食品廢棄：約 **2.5 kg CO₂e／kg**（來源：LCA 文獻與環境產品宣告）。  
+- IoT 設備製造：約 **45 kg CO₂e／個**（來源：產業平均與供應商環境宣告）。  
+
+4. **資料與方法透明度**
+
+- 各分項減碳量將以實際里程、感測器與設備壽命、環境異常事件與退貨／報廢統計為基礎，並依上述排放係數進行換算。  
+- 結案報告中將揭露各分項之計算假設、活動數據、排放係數來源與不確定度說明，確保 CO₂ 減量估算具可查核性與一致性。
+
+---
+
+#### （四）商業化規劃與目標（結案後三年內）
+
+> 聚焦「結案後三年內」之具體商業化路徑、營收結構與目標指標，並與本期技術與場域驗證成果相銜接。
+
+1. **市場定位與可開發市場（SAM→SOM）**
+
+- 以全球智慧物流與物流 IoT 市場為背景，鎖定高價值貨品（電子零組件、精密設備、咖啡豆等）之跨境與溫濕度敏感貨品運輸場景，提供「IoT 裝置＋AI-MaaS 訂閱服務」整合方案。  
+- 以 Arviem 既有 >5,000 家跨國企業客戶為潛在基礎，保守假設三年內導入 1% 客戶（約 50 家），每家平均年訂閱金額約 USD 12,000，可形成每年約 NT$19.2M 服務收入（三年約 NT$57.6M），再加計 IoT 裝置銷售與顧問／授權收入，三年累積產值約 NT$120M，出口比重約 70%。
+
+2. **Smart TOTE 商業模式與收益試算（代表情境）**
+
+本計畫以 **Smart TOTE（智慧物流箱）＋AI 監控服務** 為核心產品，結合 IoT 硬體與雲端 AI 平台，採訂閱制收費。本期以「每箱每趟 AI 監控費用」作為主力模式，月租與進階方案則作為後續擴充選項。
+
+- **Per-shipment 主力模式**：每一個 Smart TOTE 每完成一次端到端運輸（door-to-door 一整趟），收取約 **USD 2 / TOTE / shipment** 之 AI 監控服務費（不含箱體資產），內容包含 T/H 與位置資料蒐集、環境異常偵測、路線偏離／竊盜風險偵測與 AI 事件報告。此模式導入門檻低，適合 Pilot 與輪轉頻繁客戶。
+- **價值與價格合理性**：以 Smart TOTE 單箱資產價值約 **USD 200**、單批次貨值多在數十萬美元以上估算，USD 2／趟的 AI 監控成本約占貨值或箱體資產價值不到 1%；但只要成功避免一次環境報廢或竊盜事件，即可回收數十至數百趟運輸的 AI 服務費，同時減少重送運輸與 CO₂ 排放，符合 ESG 與風險管理要求，屬高「value-for-money」模式。
+- **延伸月租模式（文字帶到即可）**：針對長期合作客戶，可提供每箱每月約 **USD 8–12 / TOTE / month** 的訂閱方案，包含硬體攤提、連線費用與完整 AI 平台服務，三年可回收約 1.5–2 倍箱體資產價值，作為 per-shipment 模式成熟後的升級選項。
+
+在此收費架構下，以「1,000 個 Smart TOTE × 年均 50 趟 × USD 2／趟」為代表情境：
+
+- 三年累積運輸趟數約為 1,000 箱 × 50 趟／年 × 3 年 ≈ **150,000 趟**；
+- 以 USD 2／趟計算，三年 AI 監控服務收入約 **USD 300,000（約 NT$9.6M；匯率 1:32）**；
+- 若部分客戶於第 2–3 年改採月租（USD 8–12／月／TOTE）模式，AI 訂閱收入將進一步提升，可形成穩定之訂閱型 ARR，作為摘要表中「三年 NT$120M 產值」中 AI-MaaS 收入的重要來源之一；其餘產值則由 IoT 裝置銷售與顧問／授權收入補足，詳後文「三年 NT$120M 產值目標之合理性說明」。
+
+3. **市場驗證與客戶承諾里程碑（對應 M1–M18）**
+
+- 需求驗證期（M1–M6）：  
+  - 完成 ≥20 家潛在客戶訪談與 ≥50 份痛點優先級調查。  
+  - 對 ≥15 家客戶進行定價敏感度測試，收斂 USD 5–15K／月 的可接受區間。
+
+- 客戶承諾期（M6–M9）：  
+  - 取得 LOI ≥2 家、POC 試用協議 ≥1 家。  
+  - 完成 Arviem 正式合作協議 1 份（為 M6 Go/No-Go 之關鍵指標之一）。
+
+- 商業驗證期（M10–M18）：  
+  - Pilot 客戶數於結案前達 2–5 家，裝置部署數達 100–500 台。  
+  - 年經常性收入（ARR）達 USD 30K–150K，客戶留存率 ≥80%、NPS ≥40。
+
+3. **營收預測與收入結構（2026–2029）**
+
+| 項目                       | 2026                     | 2027                      | 2028                      | 2029                      |
+|----------------------------|--------------------------|---------------------------|---------------------------|---------------------------|
+| IoT 裝置銷售（套／均價）   | 75 × $1,000              | 600 × $1,000              | 900 × $1,000              | 1,200 × $1,000            |
+| a. IoT 裝置銷售收入        | $75,000                  | $600,000                  | $900,000                  | $1,200,000                |
+| 服務收入（客戶／均價／期間） | 1 × $3,500/月 × 3 個月  | 2 × $4,000/月 × 12 個月  | 3 × $4,500/月 × 12 個月  | 4 × $5,000/月 × 12 個月  |
+| b. 服務收入                | $10,500                  | $96,000                   | $162,000                  | $240,000                  |
+| c. 顧問／技術授權及其他    | $7,500                   | $56,000                   | $80,000                   | $120,000                  |
+| **總收入=a+b+c（USD）**    | **$93,000**              | **$752,000**              | **$1,142,000**            | **$1,560,000**            |
+| **ARR（NT$，匯率 1:32）**  | **2.98M**                | **24.06M**                | **36.54M**                | **49.92M**                |
+
+4. **收入結構與利潤分配機制**
+
+- 中短期由硬體（IoT 裝置）為主要營收來源，服務（AI-MaaS／顧問／授權）佔比逐年提升，預期 2029 年服務佔比可達約 23%。  
+- 與 Arviem 之渠道銷售利潤以 50%：50% 分成；ItracXing 直銷由 ItracXing 全數認列；技術授權採案別議約。
+
+5. **結案後三年關鍵商業化目標（指標化）**
+
+- 累積導入之付費或長期試用（>6 個月）客戶數 ≥10 家。  
+- 部署 IoT 裝置（Smart TOTE／TC605＋LaaS）總數 ≥1,000 台。  
+- 三年累積 AI-MaaS／顧問／授權相關營收 ≥NT$80M，其中國際客戶收入占比約 70%。
+
+---
+6. **三年 NT$120M 產值目標之合理性說明**
+
+綜合前述市場分析、Smart TOTE 商業模式試算、KPI 與國際合作基礎，本計畫結案後三年之 NT$120M 產值目標係採「保守可達」方式估算，主要假設與推導如下：
+
+- **客戶數量與轉換率假設（對應 Arviem 管道）**：Arviem 目前服務超過 5,000 家國際客戶，若三年內僅有約 1%（約 50 家）進入 PoC／試用階段，且其中約 20%（10 家）轉為付費或長期合作，即可達成本計畫於 KPI 中所設定之「三年內累積付費或長期試用（>6 個月）客戶數 ≥10 家」目標。此假設在國際 SCM 與智慧物流市場中屬相當保守的滲透率。  
+- **裝置規模與 Smart TOTE 收益情境（對應 1,000 台 IoT 裝置 KPI）**：依 KPI 設定，三年內 IoT 裝置（Smart TOTE／TC605＋LaaS）部署總數 ≥1,000 台。以前述「1,000 個 Smart TOTE × 年均 50 趟 × USD 2／趟」之 per-shipment 代表情境估算，三年 AI 監控服務收入約 USD 300,000（約 NT$9.6M），為 AI-MaaS 訂閱收入的一部分；若部分客戶於第 2–3 年改採月租（USD 8–12／月／TOTE）模式，AI 監控訂閱收入將進一步提升，形成穩定 ARR。硬體面以每台裝置含硬體與啟用之平均單價 NT$10,000 計算，三年累積裝置相關收入約 NT$10M，作為整體產值中之 IoT 基礎收入。  
+- **AI‑MaaS／顧問／授權收入拆解**：對於跨國供應鏈與溫濕度敏感貨品客戶而言，每家每年就「AI‑MaaS 訂閱、事件分析與報告、系統優化顧問與技術授權」支付 NT$1–2M 為合理範圍。以保守中位數 NT$1.5M／年估算，10 家客戶三年期累積約 NT$45M（= 10 家 × NT$1.5M／年 × 3 年）。結合前述 Smart TOTE per-shipment／月租情境、裝置汰換與擴充、專案型顧問與白標合作等收入，依「營收預測與收入結構（2026–2029）」表推估，三年內合計約可達 NT$120M 區間，其中約 NT$80M 來自 AI‑MaaS 訂閱與顧問／授權收入、約 NT$40M 來自 IoT 裝置銷售與汰換／擴充，與前述 KPI 所列「三年累積 AI‑MaaS／顧問／授權相關營收 ≥NT$80M」相互呼應。  
+- **與第三方市場規模之對照**：對照第三方研究資料：全球 SCM 市場 2025–2030 年 CAGR 約 8.7%、AI in Logistics 市場 CAGR 約 36.3%、冷鏈監控市場 CAGR 約 12.6%，本案三年 NT$120M 產值相較於全球智慧物流與冷鏈監控市場規模僅為極小比例，主要反映「基於既有國際管道（Arviem）之早期導入案例」，並非大幅高估市場；以 2028–2030 年全球 AI in Logistics 與冷鏈監控市場合計規模保守估計超過 USD 5–6B 計，本案三年 NT$120M（約 USD 3.7–3.8M）之目標約占目標市場之千分之一量級。  
+
+因此，三年 NT$120M 產值目標係以保守客戶數（≥10 家）、合理裝置規模（約 1,000 台）、清楚的 Smart TOTE 收費模式（USD 2／趟與 USD 8–12／月）、可接受之服務 ASP 與第三方市場成長數據為基礎所推估，並與本計畫 KPI（客戶數、裝置規模、國際收入占比）保持一致，具備可查核性與可行性，且可在審查會上直接對應「這個錢到底怎麼賺？」之關鍵提問。
+
+---
+7. **國際展會策略（CES 2026 國際展示與商機開發）**
+
+為支持本計畫研發成果之國際驗證與商業化擴散，申請單位規劃於 **CES 2026**（規劃中）以 **AI‑MaaS＋Smart TOTE NTN 連線能力** 為主軸，進行精簡的國際展示與潛在客戶接觸。CES 相關活動定位為「本計畫研發成果成熟後的國際 Showcase 與商機開發輔助」，而非既有產品之單純行銷活動，並以本計畫完成之電池壽命預測（RUL）、環境異常偵測、路線／竊盜偵測與 NLQ 報表等模組為核心內容。
+
+- 展示重點：以 3–5 分鐘之簡化情境 Demo 呈現「感測器可靠度提升、環境異常提前預警、路線／竊盜風險偵測與高階管理報表」等功能，強調技術價值與實際應用場景，所有展示內容均明確標註為「基於本計畫研發成果之原型／示範」，避免與量產產品混淆。  
+- 合作方式：規劃與國際合作夥伴 **Arviem** 於 CES 期間採聯合攤位或聯合 Pitch 方式，將「台灣研發之 AI‑MaaS 能力＋Smart TOTE NTN 連線」包裝為可在 Arviem 全球客戶導入的整合方案，作為本計畫成果國際輸出的重要示範個案。  
+- 目標成果：聚焦蒐集國際客戶對痛點優先順序、導入障礙與計價模式之回饋，並爭取 **預期 LOI／POC 意向 3–5 家** 作為結案後三年國際營收與裝置擴充之潛在客戶池，相關指標將以「意向文件／會議紀錄」等方式佐證，不列為本期技術里程碑之必要條件，而是商業化加分項。  
+
+此規劃可在不改變本案「以國內外場域技術驗證與 AI 模型研發為主體」之前提下，合理說明如何運用 CES 等國際展會作為成果展示與商機開發的輔助管道，兼顧國際化與審查單位對「不得僅為既有產品優化與行銷活動」之要求。
+
+另外，本計畫所提及之 CES 2026 與其他國際展會參與相關費用（含展位、差旅與行銷物料等），均由申請公司自行編列自籌經費負擔，不動支本案政府補助款，以確保補助經費優先用於 AI 模型研發、場域驗證與相關技術整合工作，避免被解讀為以補助款支應國外行銷活動。倘若因國際展會檔期或外部因素調整 CES 參與形式，申請單位亦可改以線上 Demo、區域性專業展會或與 Arviem 共同舉辦之客戶說明會等方式達成相同之商機開發目的，不影響本案技術與場域驗證之核心目標與查核機制。
+
+
+#### （五）成果廣宣活動規劃
+
+> 說明技術與商業成果達成後，如何透過廣宣與知識擴散放大示範效益，支援後續擴散與國際輸出。
+
+1. **技術發表與專業社群**
+
+- 於國內外研討會（智慧物流、AI in Supply Chain、溫濕度敏感貨品與竊盜防範技術論壇等）發表 1–2 篇技術論文或實證報告。  
+- 面向國內 AI／資料科學社群辦理技術分享會，介紹可解釋 AI 與多智能體協作實務。
+
+2. **產業工作坊與導入藍圖**
+
+- 結案前與公協會或產業聯盟合作辦理 ≥1 場「AI 智慧物流導入工作坊」。  
+- 提供導入藍圖與自評工具（成熟度模型、問卷），協助企業評估導入準備度與優先順序。
+
+3. **展覽與媒體露出**
+
+- 參與國內重要展會（智慧城市展、智慧製造展）與相關國際展會，展示 Smart TOTE、TC605＋LaaS 與 AI 控制台 Demo。  
+- 規劃於 CES 2026 期間與國際合作夥伴 Arviem 共同進行 **AI‑MaaS（AI‑Monitor as a Service）＋Smart TOTE NTN 連線能力** 之聯合 Pitch 與情境示範，將本計畫之「感測器可靠度優化、環境異常預警、路線／竊盜偵測與 NLQ 報表」完整包裝為可商轉之國際解決方案，作為政府補助成果於國際舞台之示範個案。  
+- 透過新聞稿、專訪與技術白皮書，說明本計畫對供應鏈韌性、節能減碳與國際輸出之貢獻。
+
+4. **政府與政策交流**
+
+- 依主管機關需求提供結案成果簡報與政策建議摘要，協助政策單位了解實務場域限制與成功關鍵。
+
+5. **成效追蹤與二次擴散**
+
+- 結案後至少一年內，持續追蹤示範場域實際使用狀況與產業擴散成果。  
+- 視需要辦理追蹤分享會或補充報告，將成功案例轉化為教材與工具。
+
+---
+
+#### （六）效益指標與查核機制（KPI 與技術驗證協議連結）
+
+> 本節將前述效益具體化為可量測之 KPI 表，並連結技術驗證協議，確保效益可被查核。
+
+1. **整體 KPI 表（指標／基準／期末／方法／來源／頻率）**
+
+| KPI 指標                           | Baseline（現況值）          | Target（期末）           | Measurement（量測方式）                             | Data Source（資料來源）         | Frequency（更新頻率） |
+|------------------------------------|-----------------------------|--------------------------|-----------------------------------------------------|----------------------------------|------------------------|
+| 感測器可靠度（Availability）       | 90%（2024 年均值）          | ≥95%                     | 上線率／資料完整率統計                             | iTracXing IoT Sensor DB         | 每月                   |
+| RUL 預測準確率                    | 無基準（新模型）            | ≥90%                     | RUL 預測值 vs 實際壽命                              | 分項 A 模型驗證集               | 每季                   |
+| RUL 預測誤差（MAE）               | 無基準（新模型）            | ≤10 天                   | RUL 預測值與實際壽命之 MAE                         | 分項 A 模型                     | 每季                   |
+| NLQ 回應延遲（P95 Latency）       | 人工查詢 >10 分鐘           | <60 秒                   | API 延遲 P95                                        | 分項 B NLQ Gateway Log          | 每週                   |
+| NLQ 查詢正確率                   | 無（首次導入）              | ≥92%                     | NL-to-SQL Query Accuracy                          | 分項 B 模型                     | 每季                   |
+| 環境異常提前預警率                | 0–2 小時（既有系統）        | ≥70%                     | 預警觸發時間 − 異常發生時間                        | 分項 C Sensor DB                | 每月                   |
+| 環境異常事件報告 SLA（P95）       | 無（首次導入）              | ≤2 分鐘                  | 異常觸發→報告生成→推播端到端延遲                    | 分項 B×C 事件／報告管線         | 每月                   |
+| 路線偏離偵測 AUC                 | 無（首次導入）              | ≥0.90                    | ROC-AUC 評估                                       | 分項 D GPS/NTN 時序資料         | 每季                   |
+| 竊盜警示 F1-score               | 無（首次導入）              | ≥0.85                    | Confusion Matrix → F1 計算                        | 分項 D GPS/NTN／事件標註        | 每季                   |
+| ETA 預測誤差（MAE）              | MAE ≈ 1.8–3.2 小時          | ≥改善 25%                | ETA 推估與實際到達比較                             | 分項 D 模型                     | 每月                   |
+| ESG：無效運輸減少比率            | 無（首次量測）              | ≥10–12%                  | 路線最佳化前後里程比較                              | 分項 D Routing Log              | 每半年                 |
+| ESG：溫濕度敏感貨品環境異常降低  | 異常率 X%（2024）           | ≥15% 改善               | 異常事件統計                                       | 分項 C Sensor DB                | 每季                   |
+| 報告製作人力時數                 | ≈200 小時／月（人工彙整）   | ≤100 小時／月           | PMO 工時系統                                       | PMO／工時系統                   | 每月                   |
+| 服務可用性（Service Availability） | 99.0%（現況監控值）         | ≥99.5%                  | 全年 uptime ／總時間                               | 監控平台（Grafana／Datadog）    | 每週／每月              |
+
+2. **技術驗證協議（確保效益可量測）—概要**
+
+-- 電池壽命預測（RUL）準確度驗證（分項 A／B）：
+  - 場域：（國際場域：Arviem；國內場域：SimiQue，約 100 台裝置，12 個月資料。）
+  - 模型：LSTM／TFT 搭配生存分析。  
+  - 成功標準：RUL 預測準確率 ≥90%、RUL MAE ≤10 天、提前預警率 ≥85%、誤報率 ≤15%。  
+  - 時程：M1–M5 建模，M6–M15 驗證，M16–M18 上線追蹤（對應 A.1、B.2）。
+
+- 警示優化機制性能驗證（分項 C／D）：  
+  - 與既有 rule-based 引擎 A/B 對照。  
+  - 指標：警示誤報率由約 25% 降至 ≤15%，漏報率 ≤5%，F1 ≥0.85，關鍵警示回應時間由約 60 分鐘降至 <30 分鐘。  
+  - 文件：A/B 測試報告、實際場域案例報告、必要時第三方驗證。
+
+3. **量化效益（金額與比例概要）**
+
+- 降低成本：  
+  - 數據傳輸費用（透過採樣／壓縮／邊緣判斷）預期可降低約 60%（依實際帳單比對）。  
+
+- 提升品質與服務可用性：  
+  - 溫濕度敏感貨品環境違規率下降 ≥30%，竊盜／未授權開啟事件偵測 F1 ≥0.85，服務可用性提升至 ≥99.5%。  
+
+- 提升效率：  
+  - 事件響應時間縮短 ≥40–50%，分析人力時數降低 ≥40–50%。  
+
+- 增加營收／產值：  
+  - 以 AI-MaaS／顧問與國際輸出增加營收，結案後三年累積產值約 NT$120M，國際收入占比約 70%。  
+
+上述所有指標皆對應「技術驗證協議」、「預定進度表與查核點」及里程碑（A.1／B.1／B.2／C.1），並以明確量測方式與資料來源確保可查核性。
+
+
+## 六、風險評估與因應對策
+
+本計畫以「AI 風險預測模型＋全球與在地場域資料」為核心，風險主要集中於：  
+(1) 模型與資料品質、(2) 資料與法規合規、(3) 場域與市場採用、(4) 關鍵人力與財務控管、(5) AI 輔助程式開發（vibe coding）導入之流程與品質管理。  
+以下以精簡風險矩陣說明，並特別強調透過**聯邦學習（Federated Learning, FL）**與**區域化部署**，降低跨境資料與合規風險。
+
+### 6-1 核心風險矩陣與應對策略（含聯邦學習與 AI 輔助開發）
+
+| 風險類別 | 具體風險 | 影響程度 | 發生機率 | 主要因應對策（含聯邦學習 / AI 輔助開發） | 負責單位 |
 | --- | --- | --- | --- | --- | --- |
-| Milestone A (A.1) | M1–M5 | Work Package B early usable + Work Package A data pipelines/preprocessing | 40% | 3,600K | — |
-| Milestone B (B.1/B.2) | M4–M15 | Subprojects C/D models & validation + Work Package A RUL/life extension | 35% | 3,150K | — |
-| Milestone C (C.1) | M13–M18 | Final acceptance + production deployment (cross-subproject integration) | 20% | 1,800K | 5% (450K)* |
-| Final acceptance | M18+ | Pass acceptance tests | 5% | 450K | — |
-| Total | — | — | 100% | 9,000K | — |
+| **技術風險** | 模型偏移 / 資料漂移（Model/Data Drift）導致預測失準 | 高 | 中 | 1) 建立**模型監控指標**（預測誤差、異常偵測 F1、風險分數分佈），每日監控；2) 每季例行重訓與交叉驗證，必要時回滾至穩定版本；3) 針對關鍵場域保留「傳統規則引擎」降級方案，確保服務不中斷。 | AI 團隊 |
+| **技術風險** | 異常閾值與風險排序策略不穩定 | 中 | 中 | 1) 多模型備援（統計門檻 + ML 排序，如 LR/XGBoost/LTR）；2) 透過 A/B Test 與實際營運案例校準閾值；3) 對高風險告警採「雙重條件」設計（例如：環境異常＋路線延誤），降低誤報。 | AI 團隊 |
+| **資料風險** | 場域資料品質不佳（缺值、標註不足、感測器離線） | 高 | 中 | 1) 建立資料品質儀表板（缺值率、離線率、異常比率）；2) 以國際既有資料作為**初始訓練集**，國內場域資料用於增量校正；3) 對於稀疏事件（如竊盜）採用**合成資料與情境模擬**補強訓練。 | 資料團隊 |
+| **資料／法規風險** | 跨境資料傳輸限制（GDPR、國防後勤資料敏感），導致無法集中建模 | 高 | 中 | 1) 採用**區域化部署＋聯邦學習（FL）架構**：歐盟、國防等敏感場域資料留在在地節點訓練，只上傳模型參數／梯度，由伺服端（台灣）聚合（FedAvg）；2) 原始時序資料不跨境傳輸，降低法遵風險；3) 搭配資料去識別化與權限控管，並委託外部顧問進行 GDPR/PIA 審查。 | 計畫主持人＋法務＋AI 團隊 |
+| **法規風險** | EU AI Act 對高風險 AI 系統的合規成本提升 | 中 | 中 | 1) 針對供應鏈風險預測模型，優先採用**可解釋 AI（例如 SHAP、特徵貢獻度）**，保留決策理由；2) 結合前述 FL，避免建立單一集中式「黑箱模型」；3) 每年至少一次由外部律師／合規顧問審視 EU AI Act/GDPR 最新要求並調整流程。 | 法務＋外部顧問 |
+| **場域／市場風險** | 國際或國內場域合作進度落後，導致實證不足或產值無法達標 | 高 | 中 | 1) 先行簽署 MOU/LOI，並規劃**季度聯合檢討會議**；2) 設定**備援場域**（至少 1 家國內物流/冷鏈業者），如主場域延宕，可啟動備援試導入；3) 預留「市場驗證預算」支應小規模 POC，以加速收斂商業模式。 | BD＋計畫主持人 |
+| **採用率風險** | 端用戶（營運人員、管理者）對新系統採用意願不足 | 中 | 中 | 1) 儀表板與報告設計採「共創工作坊」，由場域使用者參與；2) 每家場域至少一次教育訓練與 SOP 手冊；3) 以**活躍查詢數、報表使用次數、告警回覆率**作為採用率 KPI，未達標則滾動調整 UX。 | PMO＋前端團隊 |
+| **技術／流程風險** | AI 輔助程式開發（vibe coding）導致程式品質、資安或可維護性不足 | 中 | 中 | 1) 制定**AI 輔助開發使用準則**：AI 產出程式碼不得直接上線，須經同儕 Code Review 與資安檢查；2) 導入靜態程式碼分析、單元測試與安全掃描工具，強化品質門檻；3) 定期舉辦「Training AI Coding / vibe coding」內訓，將 AI 工具定位為**加速輔助**而非取代工程設計，避免過度依賴。 | 技術長＋AI 團隊 |
+| **人力／財務風險** | 關鍵人員流動、預算超支，影響進度與成果 | 中 | 中 | 1) 計畫主持人設**副主持人（接班人）制度**，關鍵設計與決策均文件化（技術 Wiki、架構文件、Code Review）；2) 每月人力與費用實際 vs. 預算檢核；3) 預留應急預算（約總額 3–5%）專供風險事件處理。 | 管理層＋財務＋PM |
 
-*Final 5% released after acceptance tests, patent filing, and technical document delivery.
-
-#### Key Decision: M6 Go/No-Go Review (mapped to Subprojects A/B/D)
-
-At M6 (June 2026), a major review requires meeting at least 3 of 4 criteria to proceed:
-
-| Metric | Target | Minimum pass | Verification |
-| --- | --- | --- | --- |
-| 1. Anomaly detection accuracy | ≥ 90% | ≥ 85% | Test-set validation report |
-| 2. Sensor reliability improvement | ≥ 5% | ≥ 3% | Uptime and offline event stats |
-| 3. Arviem site deployment agreement | Signed | LOI confirmed | Agreement or LOI |
-| 4. Patent filing progress | 1 filed | 1 in preparation | Filing or draft |
-
-Decision rules:
-- Go: meet 3/4 → proceed and disburse per plan
-- Conditional Go: meet 2/4 → submit improvement plan; retain 10% until M9 re-review
-- No-Go: <2 → terminate or materially adjust; withhold later budget
-
-#### Risk Controls
-
-1. Monthly progress reports: summary and financial usage
-2. Quarterly technical reviews: external experts
-3. Budget flexibility: 600K contingency upon approval
-4. Personnel backup: replacement plan within 30 days for key staff changes
-
-This mechanism ensures efficient use of public funds, early issue detection, and timely adjustments to safeguard project outcomes.
-### V. Expected Benefits
+> *註：聯邦學習與區域化部署在本計畫中，定位為「降低資料與法規風險的關鍵技術手段」；AI 輔助程式開發（vibe coding）則透過明確準則與內訓，轉化為提升研發效率而不犧牲品質的工具。*
 
 ---
 
-#### (1) Quantitative Benefits (Technical and Operational Metrics)
+### 6-2 風險監控與聯邦學習治理機制
 
-> Consolidates the project’s quantitative benefits across “technical” and “operational” dimensions, including sensor reliability, anomaly detection performance, reporting and decision efficiency, service availability, and derivative investments. Also describes measurement methods and audit frequency.
+為確保上述風險可被持續監控與調整，本計畫建立以下**可查核的治理機制**：
 
-1. Core technical and operational indicators (KPI summary)
+1. **風險儀表板（Risk Dashboard）**
+   - 每月更新三大指標群：  
+     - 技術指標：模型效能（誤差/F1/AUC）、告警誤報率、模型重訓次數。  
+     - 資料與合規指標：資料缺值率、跨境資料傳輸比率、FL 節點參與率。  
+     - 商業與場域指標：導入家數、活躍使用者數、試導入天數（需 ≥ 45 日）。  
+   - 儀表板作為**週會／月報**基礎，必要時調整工作優先權與資源分配。
 
-| Indicator                                 | Baseline                                 | End Target                                | Measurement method / Data source                                           |
-|-------------------------------------------|-------------------------------------------|-------------------------------------------|----------------------------------------------------------------------------|
-| Sensor reliability (Availability)         | 90% (2024 annual average)                 | ≥95%                                       | IoT device monitoring system; daily online rate and data completeness; monthly summary |
-| RUL prediction accuracy                   | No baseline (new model)                   | ≥90%                                       | Classification accuracy on Work Package A validation set; quarterly updates  |
-| RUL prediction error (MAE)                | No baseline (rule-based baseline)         | ≤10 days                                   | MAE between RUL predictions and actual life; quarterly updates             |
-| Environmental anomaly detection F1-score  | Current rule-based ≈ 0.7                  | ≥0.88                                      | F1 on complete event sample set; quarterly audits                          |
-| Route deviation AUC / theft alert F1      | None (first-time introduction)            | AUC ≥0.90, F1 ≥0.85                        | Validated with independent test set and site data; quarterly audits        |
-| NLQ query success rate                    | None (first-time introduction)            | ≥92%                                       | Accuracy by comparing labeled queries vs NL-to-SQL; quarterly review       |
-| NLQ P95 latency                           | Manual querying >10 minutes; no baseline  | <60 seconds                                | NLQ Gateway and APM logs; weekly/monthly review                            |
-| Incident response time                    | ≈ 45–90 minutes (manual flow)             | ≥40% reduction                             | Time difference from event trigger to completion; monthly audits           |
-| Reporting work-hours                      | ≈ 200 hours/month                         | ≥50% reduction (≤100 hours/month)          | PMO timesheet statistics; monthly tracking                                 |
-| Service availability                      | 99.0% (current monitoring)                | ≥99.5%                                     | Monitoring platform (Grafana / Datadog); weekly/monthly summaries          |
+2. **例行風險檢討節奏**
+   - **週會（核心團隊）**：檢視系統異常、模型監控、場域回饋，必要時啟動模型回滾或緊急修正。  
+   - **月報（對內管理層）**：彙整風險儀表板，檢視是否影響查核點或年度 KPI。  
+   - **季審（含外部專家/顧問）**：對資料／合規、FL 架構與 AI 輔助開發流程進行審查，確認不違反 GDPR/AI Act 或國內法規，並未因 vibe coding 造成品質與資安風險。
 
-2. Derivative investments and workforce benefits (TWD thousand; non-core KPIs for this term)
-
-| Outcome item                      | Before | Year 1 | Year 2 | Evidence                          |
-|-----------------------------------|-------:|-------:|-------:|-----------------------------------|
-| Patents filed / granted           |      0 |      2 |      3 | Patent filings and examination docs |
-| Derivative investment amount      |      0 |  6,500 |  6,500 | Investment MOUs and agreements    |
-| New jobs (headcount)              |      0 |      5 |     10 | Employment contracts and HR records |
-| Increased R&D salary level (%)    |      - |   +10% |   +15% | Payroll and HR supporting documents |
-
-Derivative investment breakdown (unit: TWD thousand; post-project investments, not core KPIs for this term):
-
-| Investment item                     | Investor              | Amount | Description                                                                            |
-|-------------------------------------|-----------------------|-------:|----------------------------------------------------------------------------------------|
-| Smart logistics edge node testing   | External research org |  3,000 | Testbed deployments and performance validation; build test nodes and AI accelerator servers |
-| Edge AI Platform co-investment      | ItracXing & Arviem    |  2,000 | Extend project AI modules to edge computing nodes; support low-latency smart logistics monitoring |
-| International export cooperation    | Arviem AG             |  1,500 | Export integrated smart logistics monitoring solution to Arviem customer sites; cross-border validation |
-
-Total derivative investment: ≈ NT$6,500 thousand.
+3. **聯邦學習治理（FL Governance）**
+   - 針對採用 FL 之場域，建立簡易「模型訓練與聚合紀錄」：  
+     - 每次參與訓練之節點、輪數、聚合結果與差異。  
+     - 若 FL 模型效能顯著低於集中式模型，則啟動「原因分析與參數調整」流程。  
+   - FL 政策文件簡述：哪些場域採 FL、哪些採集中式訓練，理由與切換條件，作為後續查核依據。
 
 ---
 
-#### (2) Qualitative Benefits
+### 6-3 關鍵人員、AI 輔助開發與組織韌性
 
-> Describes the long-term impact on the applicant, industry ecosystem, international visibility, and talent development, supplementing value beyond quantitative indicators.
+考量本計畫高度仰賴 AI 模型與系統整合能力，並大量使用 AI 輔助程式開發工具（Training AI Coding / vibe coding），特別強化**關鍵人員風險與組織韌性**：
 
-1. Benefits to the applicant (ItracXing)
+1. **知識管理與文件化**
+   - 重要架構設計、模型選型與參數決策，均整理於**技術 Wiki**，每月至少更新一次。  
+   - 主要模組（異常偵測、NLQ、風險評分、多場域資料整合、FL 架構等）皆須具備：設計文件、API 規格、測試案例。  
+   - 對於 AI 輔助開發流程，建立**標準提示範本（prompt template）與使用準則**，納入文件化範圍。
 
-- Technology upgrade:
-  - Establish complete AI modules: Battery RUL, environmental anomaly detection, route/theft detection, and NLQ reporting, forming a replicable “AI Logistics MaaS” product line.
-  - Build capabilities in explainable AI, federated learning, and multi-agent orchestration, strengthening competitiveness in future AI compliance and governance projects.
+2. **接班與備援機制**
+   - 由一名具實務經驗之副主持人負責 Day-to-day 管理，主持人與副主持人之間每月至少一次交接會議。  
+   - 各關鍵模組至少 **2 名工程師** 熟悉 code base，並透過 pair programming＋vibe coding 內訓，縮短新進成員熟悉時間，避免「單點人力風險」。
 
-- Products and business model:
-  - Transform from project-based delivery to “IoT devices + AI-MaaS/LaaS subscription,” raising margins and valuation.
-  - Complete 1–2 replicable international site showcases (International: Arviem; Domestic: Simique) as future reference cases.
+3. **AI Coding Training 與留才**
+   - 定期舉辦「Training AI Coding / vibe coding」工作坊，讓團隊成員熟悉如何安全、有效率地使用 AI 工具（含資安、授權與隱私注意事項）。  
+   - 將重要技術成果（例如專利、論文、技術報告）明確掛名研發人員，並在公司內部採成果獎金機制。  
+   - 透過彈性工作安排與技術分享會，降低關鍵人才流失風險，並提升團隊對 AI 工具與新技術的接受度。
 
-- Talent development:
-  - Train ≥6 cross-domain R&D/practitioners in “AI + logistics/manufacturing,” including ≥1 female R&D member.
-  - Accumulate real-world experience in cross-border collaboration and GDPR/AI Act compliance.
+> 透過上述技術／資料／合規／場域／人力與「AI 輔助開發流程」等多層面的風險管理與聯邦學習架構導入，可確保本計畫在面對跨境資料、法規變動、市場不確定性與開發流程變革時，仍具有足夠韌性達成各項查核指標與預期效益。
 
-2. Benefits to industry and local ecosystem
 
-- Industry showcase:
-  - Complete at least one representative AI deployment site (e.g., international maritime / humidity-sensitive goods / electronics assembly supply chain), forming a replicable blueprint and SOP.
-  - Through workshops, industry forums, and benchmark case sharing, foster collaboration among system integrators, telcos, and device vendors.
+## 七、效益衡量與查核點管理  
+*(Effectiveness Measurement & Checkpoint Management)*
 
-- Technology spillover:
-  - Use open APIs, technical whitepapers, and partial tooling open-source to lower adoption barriers for SMEs, raising overall digitization and AI maturity.
+本計畫之效益衡量分為四個層面：  
+1. **技術成效（Technical KPIs）**：模型準確度、系統效能與服務穩定度。  
+2. **營運與採用成效（Operational & Adoption KPIs）**：場域導入天數、使用者採用率與告警成效。  
+3. **產值與市場擴散（Business & Market KPIs）**：營收／產值、導入客戶數、裝置建置量。  
+4. **ESG 與研發效率（ESG & R&D Productivity）**：減碳效益、無效運輸降低，以及 AI 輔助程式開發（vibe coding）帶來的開發效率提升。
 
-3. International visibility and IP strategy
-
-- International cooperation showcase:
-  - Execute proofs in European/global sites with Arviem to boost Taiwan’s visibility in “AI + smart logistics.”
-  - Arviem has indicated that if this project is approved and executed successfully, it will actively evaluate establishing a permanent presence or branch in Taiwan as an Asia operations and technical hub; this intent can be evidenced via LOIs, expected to drive local employment and long-term technical cooperation, reinforcing contributions to “depth of international cooperation and foreign investment attraction.”
-
-- IP and export:
-  - File 2–3 patents (including ≥1 PCT) and register 1–2 software copyrights before closure.
-  - Establish the “AI-MaaS for Logistics” export framework, with international customer revenue expected to account for ~70% of derivative revenue within three years post-project.
+以下說明各項指標架構、分階段查核點與追蹤機制。
 
 ---
 
-#### (3) Energy Saving and Carbon Reduction Benefits
-Explain how this project achieves energy saving, carbon reduction, and ESG benefits through battery life optimization, route optimization, waste prevention, and IoT device life extension, with transparent assumptions and illustrative formulas for CO₂ reduction composition.
+### 7-1 整體 KPI 架構總覽  
 
-1. CO₂ reduction composition and illustrative values (CO₂ calculation formulas)
-
-- Battery optimization — reduced battery manufacturing emissions: ≈ 1,950 kg CO₂e  
-  Use battery Remaining Useful Life (RUL) prediction and predictive maintenance to avoid unnecessary early replacement and disposal, reducing per‑battery manufacturing emissions.
-
-- Route optimization — reduced fuel consumption: ≈ 1,728 kg CO₂e  
-  Route anomaly detection and ETA optimization reduce ineffective detours and idling, cutting fuel use.
-
-- Waste prevention — avoid product damage: ≈ 11,000 kg CO₂e  
-  Early environmental anomaly warnings plus AI autonomous incident reports reduce scrap and rework for temperature/humidity‑sensitive goods, converted using per‑unit product waste emission factors.
-
-- IoT device life extension — longer equipment lifespan: ≈ 46 kg CO₂e  
-  Battery/device health management extends IoT device service life, lowering manufacturing and disposal emissions of new devices.
-
-- Illustrative total reduction:  
-  ΔCO₂,total ≈ 1,950 + 1,728 + 11,000 + 46 ≈ 14,725 kg CO₂e (illustrative value for one representative site/year).
-
-2. Calculation boundary statement
-
-- The four reduction components (battery optimization, route optimization, waste prevention, IoT device life extension) are mutually exclusive; each event is counted once to avoid double counting.  
-- “Per shipment batch” is defined as end‑to‑end transport from origin to destination, including interim warehousing and transshipment.  
-- Waste prevention includes only product loss‑related emissions and does not double count transport energy (transport energy is included under “route optimization/fuel reduction”).  
-- The 14,725 kg CO₂e figure is an illustrative estimate for a representative site/year. Summed across sites/years, it aligns with earlier KPIs: three‑year cumulative CO₂ reduction ≈ 10–15% (≈ 80+ tons CO₂e).
-
-3. Measurement methods and data sources
-
-Calculation standards  
-- Follow ISO 14064‑1 for organizational GHG inventory and tracking.  
-- Map to GHG Protocol Scopes 1–3: fuel use (Scope 1), purchased electricity/refrigerants (Scope 2), outsourced transport/product waste (Scope 3).  
-- Reference Taiwan EPA carbon footprint guidance and related technical documents for emission factors and activity data selection.
-
-Data sources  
-- Real‑time IoT sensors and Smart TOTE devices: mileage, fuel estimation, device lifespan, environmental anomaly logs.  
-- Emission factors from Taiwan EPA and international public databases (energy, transport, waste).  
-- Industry benchmarks (EPD, LCA reports, supplier product carbon footprints) used as per‑unit product/equipment baselines.
-
-Emission factor baselines (illustrative)  
-- Battery manufacturing: ≈ 75 kg CO₂e per cell (source: EPD/battery environmental product declarations).  
-- Diesel combustion: ≈ 2.68 kg CO₂e per liter (source: EPA published emission factors).  
-- Food waste: ≈ 2.5 kg CO₂e per kg (source: LCA literature and environmental product declarations).  
-- IoT device manufacturing: ≈ 45 kg CO₂e per unit (source: industry averages and supplier environmental declarations).
-
----
-
-#### (4) Commercialization Plan and Targets (within three years post-project)
-
-> Focuses on concrete commercialization paths, revenue structure, and target metrics for the three years post-project, linking to this term’s technical and site validations.
-
-1. Market positioning and addressable market (SAM → SOM)
-
-- Based on global smart logistics and logistics IoT markets, target cross-border and T/H-sensitive goods for high-value items (electronic components, precision equipment, coffee beans), offering “IoT devices + AI-MaaS subscription” integrated solutions.
-- With Arviem’s >5,000 multinational customers, conservatively assume 1% adoption (≈50 customers) within three years, each with average annual subscription ~USD 12,000, yielding ~NT$19.2M per year (NT$57.6M across three years). Adding IoT hardware sales, consulting, and licensing, cumulative three-year output ~NT$120M, with export share ~70%.
-
-2. Smart TOTE business model and revenue estimation (representative scenario)
-
-This project’s core product is Smart TOTE + AI monitoring service, combining IoT hardware and a cloud AI platform, charged via subscription. In this term, the primary mode is “per box per shipment AI monitoring fee,” with monthly plans as future options.
-
-- Per-shipment primary mode: charge ~USD 2 per Smart TOTE per end-to-end shipment (door-to-door), covering T/H and location data collection, environmental anomaly detection, route deviation/theft risk detection, and AI incident reporting. Low adoption barrier, suitable for pilots and high turnover customers.
-- Value and pricing rationale: with Smart TOTE asset value ≈ USD 200 and batch shipment values often in hundreds of thousands of USD, USD 2/shipment is under 1% of shipment value or asset cost; preventing one environmental scrap or theft event pays back dozens to hundreds of shipments’ AI fees while cutting re-shipments and CO₂ emissions, meeting ESG and risk management needs—high value-for-money.
-- Extended monthly subscription (brief mention): for long-term customers, offer ~USD 8–12 per TOTE per month, including hardware amortization, connectivity, and full AI platform services. Over three years, recover ~1.5–2x asset value, serving as an upgrade path after per-shipment mode matures.
-
-Under this pricing:
-
-- Three-year total shipments ≈ 1,000 TOTEs × 50 shipments/year × 3 years ≈ 150,000 shipments;
-- At USD 2/shipment, three-year AI monitoring service revenue ≈ USD 300,000 (≈ NT$9.6M at 1:32);
-- If some customers switch to monthly subscriptions in years 2–3 (USD 8–12/month/TOTE), AI subscription revenue increases further, forming stable ARR—one key source of the “NT$120M / three years” output in the summary. The remainder comes from IoT hardware sales and consulting/licensing income; see “Revenue Forecast and Structure (2026–2029)” for details.
-
-3. Market validation and customer commitment milestones (aligned to M1–M18)
-
-- Demand validation (M1–M6):
-  - Complete ≥20 potential customer interviews and ≥50 pain-point priority surveys.
-  - Conduct pricing sensitivity tests with ≥15 customers; converge acceptable range USD 5–15K/month.
-
-- Customer commitment (M6–M9):
-  - Obtain ≥2 LOIs and ≥1 POC trial agreement.
-  - Finalize one formal cooperation agreement with Arviem (a key M6 Go/No-Go indicator).
-
-- Commercial validation (M10–M18):
-  - Achieve 2–5 pilot customers before closure; deploy 100–500 devices.
-  - ARR USD 30K–150K; customer retention ≥80%; NPS ≥40.
-
-3. Revenue forecast and structure (2026–2029)
-
-| Item                          | 2026                     | 2027                      | 2028                      | 2029                      |
-|-------------------------------|--------------------------|---------------------------|---------------------------|---------------------------|
-| IoT device sales (sets / ASP) | 75 × $1,000              | 600 × $1,000              | 900 × $1,000              | 1,200 × $1,000            |
-| a. IoT device revenue         | $75,000                  | $600,000                  | $900,000                  | $1,200,000                |
-| Service revenue (cust/ASP/term) | 1 × $3,500/mo × 3 mo    | 2 × $4,000/mo × 12 mo     | 3 × $4,500/mo × 12 mo     | 4 × $5,000/mo × 12 mo     |
-| b. Service revenue            | $10,500                  | $96,000                   | $162,000                  | $240,000                  |
-| c. Consulting/licensing/other | $7,500                   | $56,000                   | $80,000                   | $120,000                  |
-| Total revenue = a+b+c (USD)   | $93,000                  | $752,000                  | $1,142,000                | $1,560,000                |
-| ARR (NT$, FX 1:32)            | 2.98M                    | 24.06M                    | 36.54M                    | 49.92M                    |
-
-4. Revenue mix and profit split
-
-- Short-to-mid term: hardware (IoT devices) is the main revenue source; services (AI-MaaS / consulting / licensing) share increases yearly, expected to reach ~23% by 2029.
-- Channel sales with Arviem: 50% : 50% profit split; ItracXing direct sales fully recognized by ItracXing; licensing negotiated per case.
-
-5. Key commercialization targets (within three years post-project)
-
-- Cumulative paid or long-term trials (>6 months) ≥10 customers.
-- Deployed IoT devices (Smart TOTE / TC605 + LaaS) ≥1,000 units.
-- Cumulative AI-MaaS / consulting / licensing revenue ≥ NT$80M over three years, with international share ~70%.
-
----
-6. Rationale for the NT$120M three-year output target
-
-Integrating market analysis, Smart TOTE revenue models, KPIs, and international cooperation foundations, the NT$120M three-year post-project output is conservatively attainable, based on:
-
-- Customer count and conversion (Arviem channel): Arviem serves 5,000+ international customers; if ~1% (≈50) enter POC/trial in three years and ~20% (10) convert to paid or long-term, the KPI “≥10 paid or long-term trial customers in three years” is achieved. This is a conservative penetration in international SCM and smart logistics.
-- Device scale and Smart TOTE revenue (1,000 IoT devices KPI): With ≥1,000 devices over three years, using the “1,000 Smart TOTEs × 50 shipments/year × USD 2/shipment” scenario yields ~USD 300K (≈ NT$9.6M) in AI monitoring revenue—part of AI-MaaS subscription income. If some customers switch to monthly (USD 8–12/month/TOTE) in years 2–3, subscription revenue rises and ARR stabilizes. Hardware at NT$10,000 per device average (incl. activation) yields ~NT$10M cumulative device revenue—forming the IoT base in total output.
-- AI‑MaaS / consulting / licensing decomposition: For cross-border supply chains and T/H-sensitive goods, annual payments of NT$1–2M per customer for AI-MaaS subscription, incident analysis/reporting, optimization consulting, and licensing are reasonable. Using NT$1.5M/year as a conservative mid-point, 10 customers yield NT$45M over three years (=10 × 1.5M × 3). Combined with per-shipment/monthly subscription, device refresh/expansion, project consulting, and white-label deals, per the “Revenue Forecast and Structure (2026–2029),” total reaches ~NT$120M, with ~NT$80M from AI-MaaS + consulting/licensing and ~NT$40M from IoT device sales/refresh/expansion, aligning with the KPI “≥NT$80M AI‑MaaS/consulting/licensing revenue in three years.”
-- Third-party market benchmarks: Global SCM CAGR ~8.7% (2025–2030), AI in Logistics CAGR ~36.3%, cold chain monitoring CAGR ~12.6%. The NT$120M target is a tiny fraction of global smart logistics and cold chain markets, mainly reflecting “early-stage adoption via existing international channel (Arviem),” not an overestimate. With combined AI in Logistics and cold chain markets conservatively >USD 5–6B by 2028–2030, NT$120M (~USD 3.7–3.8M) is roughly one-thousandth of the target market.
-
-Thus, the NT$120M three-year target is based on conservative customer count (≥10), reasonable device scale (~1,000), clear Smart TOTE pricing (USD 2/shipment and USD 8–12/month), acceptable service ASPs, and third-party growth data, consistent with project KPIs (customers, devices, international revenue share). It is auditable, feasible, and directly answers “how does this make money?” in reviews.
-
----
-7. International trade show strategy (CES 2026 showcase and business development)
-
-To support international validation and commercialization diffusion of project outcomes, the applicant plans a focused showcase at CES 2026 (in planning) centered on AI‑MaaS + Smart TOTE NTN connectivity, engaging potential customers. CES activities are positioned as “international showcase and biz-dev support for matured project outcomes,” not mere marketing of existing products, featuring the project modules: RUL, environmental anomaly, route/theft detection, and NLQ reporting.
-
-- Showcase focus: 3–5 minute simplified scenario demos highlighting “sensor reliability improvement, early environmental warning, route/theft risk detection, and executive reporting,” emphasizing technical value and real scenarios. All content clearly labeled as “prototypes/demos based on this project’s R&D” to avoid confusion with mass-production products.
-- Cooperation: Plan joint booth or joint pitch with Arviem at CES, packaging “Taiwan-developed AI‑MaaS + Smart TOTE NTN connectivity” as an integrated solution deployable to Arviem’s global customers, serving as an international demonstration of subsidized outcomes.
-- Target outcomes: Collect feedback on pain-point priorities, adoption barriers, and pricing models; aim for 3–5 expected LOIs/POC intents as potential customers for post-project international revenue and device expansion. These indicators will be evidenced via intent letters/meeting records, not counted as core technical milestones, but treated as commercialization value-add.
-
-This plan explains reasonable use of CES as a channel for outcome showcase and biz-dev without altering the premise that this project focuses on domestic/international site validation and AI model R&D. It also meets the requirement that subsidized funds are not for marketing of existing products.
-
-Additionally, all CES 2026 and other international trade show costs (booth, travel, materials) will be covered by the applicant’s own budget, not by this project’s public funds, ensuring subsidies prioritize AI model R&D, site validation, and technical integration. If CES timing or external factors change participation format, the applicant will use online demos, regional professional shows, or joint customer briefings with Arviem to achieve similar biz-dev goals without impacting technical/site validation core objectives or audit mechanisms.
-
-#### (5) Outcome Promotion Plan
-
-> Explains how, after achieving technical and business outcomes, promotion and knowledge diffusion will amplify demonstration effects, supporting further diffusion and international export.
-
-1. Technical publications and professional communities
-
-- Publish 1–2 technical papers or proof reports at domestic/international conferences (smart logistics, AI in supply chain, T/H-sensitive goods, theft prevention).
-- Host technical sharing sessions for domestic AI/data science communities on explainable AI and multi-agent orchestration practices.
-
-2. Industry workshops and adoption blueprint
-
-- Collaborate with associations or industry alliances to host ≥1 “AI smart logistics adoption workshop” before project closure.
-- Provide adoption blueprints and self-assessment tools (maturity models, questionnaires) to help enterprises evaluate readiness and priorities.
-
-3. Exhibitions and media exposure
-
-- Participate in major domestic exhibitions (Smart City Expo, Smart Manufacturing Expo) and relevant international shows, demonstrating Smart TOTE, TC605 + LaaS, and AI console demos.
-- Plan joint pitch and scenario demo with Arviem at CES 2026 for AI‑MaaS + Smart TOTE NTN connectivity, fully packaging project outcomes as a commercializable international solution, serving as a government-subsidized outcome showcase on the global stage.
-- Use press releases, interviews, and technical whitepapers to explain contributions to supply chain resilience, carbon reduction, and international export.
-
-4. Government and policy exchange
-
-- Provide closure briefings and policy recommendations per authority needs to help policymakers understand real-world site constraints and success factors.
-
-5. Outcome tracking and secondary diffusion
-
-- Track site usage and industry diffusion for at least one year post-closure.
-- Conduct follow-up sharing sessions or supplemental reports as needed, turning success cases into materials and tools.
-
----
-
-#### (6) Benefit Indicators and Audit Mechanisms (KPI linked to Technical Validation Agreements)
-
-> This section concretizes benefits into measurable KPI tables and links them to technical validation agreements to ensure auditability.
-
-1. Overall KPI table (Indicator / Baseline / Target / Method / Source / Frequency)
-
-| KPI                                  | Baseline                     | Target                  | Measurement                                     | Data Source                       | Frequency        |
-|--------------------------------------|------------------------------|-------------------------|-------------------------------------------------|------------------------------------|------------------|
-| Sensor reliability (Availability)    | 90% (2024 annual average)    | ≥95%                    | Online rate / data completeness                 | iTracXing IoT Sensor DB            | Monthly          |
-| RUL prediction accuracy              | No baseline (new model)      | ≥90%                    | Predicted RUL vs actual life                    | Work Package A validation set        | Quarterly        |
-| RUL prediction error (MAE)           | No baseline (new model)      | ≤10 days                | MAE between predicted and actual life           | Work Package A model                 | Quarterly        |
-| NLQ response latency (P95)           | Manual >10 minutes           | <60 seconds             | API P95 latency                                 | Work Package B NLQ Gateway log       | Weekly           |
-| NLQ query accuracy                   | None (first-time introduction) | ≥92%                  | NL-to-SQL query accuracy                        | Work Package B model                 | Quarterly        |
-| Environmental early-warning rate     | 0–2 hours (existing systems) | ≥70%                    | Warning trigger time − anomaly time             | Work Package C sensor DB             | Monthly          |
-| Environmental incident report SLA (P95) | None (first-time introduction) | ≤2 minutes           | End-to-end latency: alert → report → push       | Work Package B×C event/report pipeline | Monthly        |
-| Route deviation AUC                  | None (first-time introduction) | ≥0.90                 | ROC-AUC                                         | Work Package D GPS/NTN time series   | Quarterly        |
-| Theft alert F1-score                 | None (first-time introduction) | ≥0.85                 | Confusion matrix → F1                           | Work Package D GPS/NTN / event labels | Quarterly       |
-| ETA prediction error (MAE)           | ≈ 1.8–3.2 hours              | ≥25% improvement        | ETA estimate vs actual arrival                  | Work Package D model                 | Monthly          |
-| ESG: ineffective transport reduction | None (first-time measurement) | ≥10–12%               | Mileage comparison before/after optimization    | Work Package D routing log           | Semiannual       |
-| ESG: reduced T/H anomaly rate        | Anomaly rate X% (2024)       | ≥15% improvement        | Anomaly event statistics                        | Work Package C sensor DB             | Quarterly        |
-| Reporting work-hours                 | ≈200 hours/month (manual)    | ≤100 hours/month        | PMO timesheet system                            | PMO / timesheet system             | Monthly          |
-| Service availability                 | 99.0% (current monitoring)   | ≥99.5%                  | Annual uptime / total time                      | Monitoring (Grafana / Datadog)     | Weekly/Monthly   |
-
-2. Technical validation agreements (ensure measurable benefits) — overview
-
-- Battery RUL accuracy validation (Subprojects A/B):
-  - Sites: (International: Arviem; Domestic: SimiQue; ~100 devices; 12 months of data.)
-  - Models: LSTM/TFT with survival analysis.
-  - Success criteria: RUL accuracy ≥90%, RUL MAE ≤10 days, early-warning rate ≥85%, false alert rate ≤15%.
-  - Timeline: M1–M5 modeling; M6–M15 validation; M16–M18 production tracking (aligned to A.1, B.2).
-
-- Alert optimization mechanism performance validation (Subprojects C/D):
-  - A/B comparison with existing rule-based engine.
-  - Metrics: reduce false alert rate from ~25% to ≤15%, miss rate ≤5%, F1 ≥0.85, reduce critical alert response from ~60 minutes to <30 minutes.
-  - Documentation: A/B test report, real site case reports, third-party validation if needed.
-
-3. Quantified benefits (amounts and ratios — overview)
-
-- Cost reduction:
-  - Data transmission costs (via sampling/compression/edge decisions) expected to decrease ≈60% (compare actual invoices).
-
-- Quality and availability improvement:
-  - T/H-sensitive goods violation rate ↓ ≥30%; theft/unauthorized opening detection F1 ≥0.85; service availability ≥99.5%.
-
-- Efficiency improvement:
-  - Incident response time ↓ ≥40–50%; analysis work-hours ↓ ≥40–50%.
-
-- Revenue/output increase:
-  - AI-MaaS / consulting and international export increase revenue; three-year cumulative output ≈ NT$120M; international share ≈ 70%.
-
-All indicators align with “Technical Validation Agreements,” “Planned Schedule & Checkpoints,” and milestones (A.1 / B.1 / B.2 / C.1), with clear measurement methods and data sources ensuring auditability.
-
-## VI. Risk Assessment and Mitigation
-
-This project centers on “AI risk prediction models + global/local site data.” Risks are mainly in: (1) model/data quality, (2) data and regulatory compliance, (3) site and market adoption, (4) key personnel and financial control, (5) process and quality management for AI-assisted coding (vibe coding). The following succinct risk matrix emphasizes using federated learning (FL) and regionalized deployment to reduce cross-border data and compliance risks.
-
-### 6-1 Core Risk Matrix and Mitigation (incl. FL and AI-assisted development)
-
-| Risk type           | Specific risk                                         | Impact | Likelihood | Main mitigation (incl. FL / AI-assisted dev)                                                                 | Owner            |
-|---------------------|--------------------------------------------------------|--------|------------|--------------------------------------------------------------------------------------------------------------|------------------|
-| Technical           | Model/data drift causing poor predictions              | High   | Medium     | 1) Model monitoring (error, F1, risk score distribution) daily; 2) Quarterly retraining & cross-validation; 3) Rule-engine fallback for critical sites |
-| Technical           | Unstable thresholds and risk ranking                   | Medium | Medium     | 1) Multi-model backup (stats + ML ranking like LR/XGBoost/LTR); 2) A/B tests with ops cases; 3) Dual-condition design for high-risk alerts            |
-| Data                | Poor site data quality (missing, sparse labels, offline) | High | Medium     | 1) Data quality dashboard (missing, offline, anomaly rates); 2) Use international data as initial training; 3) Synthetic data & scenario simulation for sparse events |
-| Data/Regulatory     | Cross-border restrictions (GDPR, defense logistics data) block central training | High | Medium | 1) Regionalized deployment + FL: EU/defense data trained locally; only parameters/gradients uploaded; 2) No raw time-series cross-border; 3) De-identification, RBAC, external GDPR/PIA review |
-| Regulatory          | EU AI Act raises compliance costs for high-risk AI     | Medium | Medium     | 1) Use explainable AI (e.g., SHAP, feature contributions) to retain decision reasons; 2) Combined with FL to avoid single centralized “black box”; 3) Annual external legal/compliance review |
-| Site/Market         | Delayed cooperation at sites → insufficient proofs or missed output | High | Medium     | 1) Pre-sign MOU/LOI; quarterly joint reviews; 2) Backup site (≥1 domestic logistics/cold-chain); 3) Reserve “market validation budget” for small POCs |
-| Adoption            | Low user adoption (ops/managers)                       | Medium | Medium     | 1) Co-creation workshops for dashboards/reports; 2) Training and SOP per site; 3) Adoption KPIs (active queries, report usage, alert response), iterate UX if under target |
-| Process/Quality     | AI-assisted coding (vibe coding) risks in code quality/security/maintainability | Medium | Medium | 1) Clear usage policy: AI code never goes straight to prod; must pass peer review & security checks; 2) Static analysis, unit tests, security scans; 3) Regular “Training AI Coding / vibe coding” workshops |
-| People/Finance      | Key personnel turnover, budget overrun                 | Medium | Medium     | 1) Deputy PI succession; document key designs (tech wiki, architecture docs, code review); 2) Monthly staffing/cost vs budget checks; 3) 3–5% contingency |
-
-Note: FL + regionalized deployment are positioned as key technical means to mitigate data/regulatory risks; AI-assisted coding is governed by clear policies and training to improve dev efficiency without sacrificing quality.
-
----
-
-### 6-2 Risk Monitoring and FL Governance Mechanisms
-
-To ensure continuous monitoring and adjustment, the project establishes the following auditable governance mechanisms:
-
-1. Risk Dashboard
-   - Monthly updates on three indicator groups:
-     - Technical: model performance (error/F1/AUC), false alert rate, retraining count.
-     - Data & compliance: missing rate, cross-border transfer ratio, FL node participation rate.
-     - Business & sites: number of adoptions, active users, trial running days (≥45 required).
-   - Dashboard informs weekly/monthly reviews; adjust priorities and resources when needed.
-
-2. Routine risk review cadence
-   - Weekly (core team): inspect system anomalies, model monitoring, site feedback; trigger rollback or hot fixes as needed.
-   - Monthly (internal management): consolidate risk dashboard; assess impacts on checkpoints or annual KPIs.
-   - Quarterly (incl. external experts/consultants): review data/compliance, FL architecture, and AI-assisted dev processes; ensure no GDPR/AI Act violations and no quality/security risks from vibe coding.
-
-3. Federated Learning (FL) Governance
-   - For sites using FL, maintain simple “training and aggregation logs”:
-     - Participating nodes per round, rounds, aggregation results and differences.
-     - If FL performance is notably below centralized models, initiate “root cause analysis and parameter adjustment.”
-   - FL policy document: which sites use FL vs centralized training, rationale and switch conditions, serving as future audit basis.
-
----
-
-### 6-3 Key Personnel, AI-Assisted Development, and Organizational Resilience
-
-Given the project’s heavy reliance on AI modeling and system integration, and extensive use of AI-assisted programming tools (Training AI Coding / vibe coding), we strengthen key personnel risk and organizational resilience:
-
-1. Knowledge management and documentation
-   - Important architecture designs, model selections, and parameter decisions documented in a technical wiki, updated monthly.
-   - Major modules (anomaly detection, NLQ, risk scoring, multi-site data integration, FL architecture) require design docs, API specs, and test cases.
-   - For AI-assisted dev, establish standard prompt templates and usage guidelines, included in documentation scope.
-
-2. Succession and backup
-   - A deputy PI with practical experience handles day-to-day management; monthly handover between PI and deputy.
-   - Each key module has ≥2 engineers familiar with the codebase; use pair programming + internal vibe coding training to shorten onboarding and avoid single-person dependency.
-
-3. AI Coding Training and retention
-   - Regular “Training AI Coding / vibe coding” workshops covering safe, efficient use of AI tools (including security, licensing, privacy).
-   - Attribute key technical outputs (patents, papers, technical reports) to contributing R&D staff and adopt internal bonus mechanisms.
-   - Flexible work arrangements and tech sharing sessions to reduce attrition and improve team acceptance of AI tools/new tech.
-
-By managing risks across technology/data/compliance/sites/personnel and AI-assisted dev processes, plus FL introduction, the project remains resilient against cross-border data constraints, regulatory changes, market uncertainty, and process shifts, ensuring KPIs and expected benefits are achieved.
-
-### 6-2 Risk Monitoring and Federated Learning Governance Mechanisms
-
-To ensure continuous monitoring and adjustment of the above risks, this project establishes the following auditable governance mechanisms:
-
-1. Risk Dashboard
-  - Monthly updates across three indicator groups:
-    - Technical indicators: model performance (error/F1/AUC), alert false positive rate, model retraining count.
-    - Data and compliance indicators: data missing rate, cross-border data transfer ratio, FL node participation rate.
-    - Business and site indicators: number of adoptions, active users, pilot running days (≥ 45 days required).
-  - The dashboard serves as the basis for weekly meetings/monthly reports, and priorities/resources are adjusted when necessary.
-
-2. Routine Risk Review Cadence
-  - Weekly (core team): review system anomalies, model monitoring, site feedback; initiate model rollback or hot fixes if needed.
-  - Monthly (internal management): consolidate the risk dashboard; check impact on checkpoints or annual KPIs.
-  - Quarterly (with external experts/consultants): audit data/compliance, FL architecture, and AI-assisted development processes, ensuring no violations of GDPR/AI Act or local laws, and preventing quality/security risks due to vibe coding.
-
-3. Federated Learning (FL) Governance
-  - For sites using FL, maintain simple “training and aggregation logs”:
-    - Participating nodes per round, number of rounds, aggregation results and differences.
-    - If FL performance is significantly below centralized models, initiate a “root cause analysis and parameter adjustment” process.
-  - FL policy document: specify which sites use FL vs. centralized training, with rationale and switching conditions, serving as future audit evidence.
-
----
-
-### 6-3 Key Personnel, AI-Assisted Development, and Organizational Resilience
-
-Given the project’s heavy reliance on AI modeling and system integration, and extensive use of AI-assisted development tools (Training AI Coding / vibe coding), we strengthen key personnel risk management and organizational resilience:
-
-1. Knowledge Management and Documentation
-  - Document important architecture designs, model selection, and parameter decisions in a technical wiki, updated at least monthly.
-  - Each core module (anomaly detection, NLQ, risk scoring, multi-site data integration, FL architecture) must include design docs, API specs, and test cases.
-  - For AI-assisted development, establish standard prompt templates and usage guidelines, included within the documentation scope.
-
-2. Succession and Backup
-  - A deputy PI with practical experience manages day-to-day operations; monthly handover meetings between PI and deputy.
-  - At least two engineers per key module are familiar with the codebase; use pair programming + internal vibe coding training to shorten onboarding and avoid single-person dependency.
-
-3. AI Coding Training and Retention
-  - Regular “Training AI Coding / vibe coding” workshops to ensure safe and efficient use of AI tools (including security, licensing, and privacy considerations).
-  - Attribute key technical outputs (e.g., patents, papers, technical reports) to contributing R&D staff and adopt internal bonus mechanisms.
-  - Flexible work arrangements and technical sharing sessions to reduce attrition and improve team acceptance of AI tools and new technologies.
-
-By managing risks across technology, data, compliance, sites, personnel, and AI-assisted development, and introducing federated learning, the project remains resilient against cross-border data constraints, regulatory changes, market uncertainty, and process evolution, ensuring achievement of checkpoints and expected benefits.
-
-## VII. Effectiveness Measurement and Checkpoint Management
-
-This project measures effectiveness across four dimensions:
-1. Technical KPIs: model accuracy, system performance, and service stability.
-2. Operational and Adoption KPIs: site pilot days, user adoption rate, and alert effectiveness.
-3. Business and Market KPIs: revenue/output, number of customers, number of devices deployed.
-4. ESG and R&D Productivity: carbon reduction, ineffective transport reduction, and efficiency gains from AI-assisted development (vibe coding).
-
-Below we outline KPI structure, phased checkpoints, and tracking mechanisms.
-
----
-
-### 7-1 Overall KPI Structure Overview
-
-| Category | KPI | Description | Baseline (FY 2023/Current) | End-of-project Target | Verification Method | Owner |
+| 類別 | KPI 指標 | 說明 | 112 年/現況 (Baseline) | 計畫期末目標值 | 查核方式 | 負責單位 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Technical | Sensor/Device Availability (Uptime) | Percentage of devices reporting data normally | ~90% | ≥ 95% | System logs and monitoring reports | IoT Team |
-| Technical | Environmental/Route Anomaly Detection F1 Score | Evaluate F1 based on labeled or human-verified events | No systematic measurement | ≥ 0.85 | Test dataset + practical case validation report | AI Team |
-| Technical | NLQ Query P95 Latency | Time to respond to risk/report queries via NLQ | Traditional reports take hours of manual compilation | P95 ≤ 60 seconds | System monitoring, query logs | Platform Team |
-| Technical | NLQ Query Success Rate | Percentage of user queries returning valid results | No systematic measurement | ≥ 90% | Usage records and error logs | Platform + AI Team |
-| Operations/Adoption | Pilot Running Days per Site | Actual online operation days per site, meeting program requirements | No systematic measurement | ≥ 45 days per site; at least 1 domestic + 1 international | Site check-in records, system logs | PMO |
-| Operations/Adoption | Active Users (MAU) | Monthly users who log in and run queries or view reports | 0 | ≥ 30 by end (domestic and international sites) | System accounts and activity logs | PMO + Frontend Team |
-| Operations/Adoption | Alert Response Rate | Percentage of alerts confirmed and processed within SLA | No systematic measurement | ≥ 70% | Alert handling records | Site POCs + PMO |
-| Business/Market | Cumulative Customer Adoptions | Customers completing pilots or paid deployments (domestic/international) | 0 | ≥ 10 by end (≥ 3 domestic, ≥ 7 international; may include LOI→PoC→paid) | Contracts/LOI/PoC documents | BD Team |
-| Business/Market | Cumulative Smart TOTE/Tracker Deployments | Number of devices deployed and actively online | 0 | ≥ 1,000 by end | Shipment/installation records | IoT + BD |
-| Business/Market | Cumulative Related Output/Revenue | AI-MaaS subscription, device sales, consulting | 0 | 3-year cumulative ≥ NT$120M (≥ NT$30–40M within project term) | Internal financial reports | Finance + BD |
-| ESG | Ineffective Transport Mileage Reduction | Reduction in “empty runs/re-shipment” mileage due to risk alerts | No systematic measurement | ≥ 10% reduction at demo sites | Site transport records/comparative analysis | PMO + Site Units |
-| ESG | Annual CO₂ Reduction (tCO₂e) | Annual CO₂ reduction estimated from avoided ineffective transport, reduced cargo loss, improved cold-chain temperature control | No systematic measurement | ≥ 80 tCO₂e cumulative in pilot sites | GHG methodology estimation report | PMO + External Consultant |
-| R&D Efficiency | Lead Time (Requirement to Go-Live) | Average time from requirement confirmation to feature go-live | Traditional 8–12 weeks | 4–6 weeks under security and quality controls | Project management tool records | CTO + PMO |
-| R&D Efficiency | AI-Assisted Development Coverage | Percentage of modules developed with “Training AI Coding / vibe coding” (passed manual review) | Limited trials | ≥ 50% of core modules use AI assistance by end | Code review records and markers | CTO + AI Team |
+| **技術成效** | 感測器／裝置可用率（Uptime） | 以實際上線裝置為母體，統計資料正常回傳比例 | 約 90% | ≥ 95% | 系統日誌與監控報表 | IoT 團隊 |
+| **技術成效** | 環境／路線異常偵測 F1 Score | 以標註事件或經人工確認事件為基準，評估異常偵測 F1 | 無系統性量測 | ≥ 0.85 | 測試資料集＋實務案例驗證報告 | AI 團隊 |
+| **技術成效** | NLQ 查詢 P95 延遲 | 管理者使用 NLQ 查詢風險與報表之回應時間 | 傳統報表需數小時人工彙整 | P95 ≤ 60 秒 | 系統監控、查詢日誌 | 平台團隊 |
+| **技術成效** | NLQ 查詢成功率 | 使用者查詢可成功回傳合法結果之比例 | 無系統性量測 | ≥ 90% | 使用紀錄與錯誤日志 | 平台＋AI 團隊 |
+| **營運／採用** | 每場域試導入天數 | 符合 AI 應用躍昇計畫要求，每家場域實際上線運行天數 | 無系統性量測 | 每家場域 ≥ 45 日，至少 1 國內 + 1 國外 | 場域簽到紀錄、系統日誌 | PMO |
+| **營運／採用** | 活躍使用者數（MAU） | 每月登入系統並執行查詢或檢視報表之使用者數 | 0 | 期末 ≥ 30 名 (含國內外場域) | 系統帳號與操作日誌 | PMO＋前端團隊 |
+| **營運／採用** | 告警回應率 | 系統產生告警後，於 SLA 時間內被使用者確認與處理之比例 | 無系統性量測 | ≥ 70% | 告警處理記錄 | 場域窗口＋PMO |
+| **產值／市場** | 累計導入客戶數 | 實際完成試導入或付費導入之客戶（國內／國外） | 0 | 期末 ≥ 10 家（至少 3 家國內、7 家國外，可含 LOI→PoC→付費導入） | 合約／LOI／PoC 文件 | BD 團隊 |
+| **產值／市場** | 累計建置 Smart TOTE/Tracker 數量 | 累計完成建置並實際上線使用之裝置數量 | 0 | 期末 ≥ 1,000 台 | 出貨／建置記錄 | IoT＋BD |
+| **產值／市場** | 累計相關產值／營收 | AI-MaaS 訂閱、設備銷售與顧問服務等累計產值 | 0 | 三年累計 ≥ NT$120M（本計畫期內達成至少 NT$30–40M） | 內部財務報表 | 財務＋BD |
+| **ESG** | 無效運輸里程降低比例 | 因風險預警或異常偵測，而避免之「空跑、重送」運輸里程比例 | 無系統性量測 | 示範場域無效里程比例降低 ≥ 10% | 場域運輸紀錄／對照分析 | PMO＋場域單位 |
+| **ESG** | 年減碳量（tCO₂e） | 依無效運輸、貨損減少與冷鏈失溫改善估算之年減碳量 | 無系統性量測 | 試導入場域年減碳量 ≥ 80 tCO₂e（累計） | GHG 方法論估算報告 | PMO＋外部顧問 |
+| **研發效率** | 需求至上線 Lead Time | 從確認需求到功能上線平均時間 | 傳統流程 8–12 週 | 在安全與品質控管前提下縮短至 4–6 週 | 專案管理工具紀錄 | 技術長＋PMO |
+| **研發效率** | AI 輔助程式開發覆蓋率 | 使用「Training AI Coding / vibe coding」輔助撰寫之模組比例（經人工審查通過） | 少量試驗 | 期末 ≥ 50% 核心模組開發有使用 AI 工具輔助 | Code Review 紀錄與標記 | 技術長＋AI 團隊 |
 
 ---
 
-### 7-2 Phased Checkpoints and Milestone Mapping
+### 7-2 分階段查核點與里程碑對應  
 
-The project spans 18 months with checkpoints at least every six months, mapped to KPIs as follows:
+計畫期間預計 18 個月，依申請須知至少每 6 個月設一查核點。本計畫將查核點與上述 KPI 連結如下：
 
-| Time | Key Milestone | Quantitative Targets (excerpt) | Verification Documents/Methods |
+| 時點 | 主要里程碑 | 需達成之量化指標（節錄） | 查核文件與方式 |
 | --- | --- | --- | --- |
-| Month 6 | Complete core data pipelines and v1 Risk Dashboard; NLQ prototype and single site (internal or sandbox) trial run | - Data ingestion/cleaning flow completed<br>- NLQ P95 latency ≤ 90 seconds (test env)<br>- ≥ 1 test site connected and running ≥ 30 days | System demo, test report, log screenshots |
-| Month 12 | Complete 1 domestic + 1 international pilot; anomaly detection and risk scoring live for trial use | - ≥ 45 days online per site<br>- Anomaly detection F1 ≥ 0.80 (validated with labeled data)<br>- Active users (MAU) ≥ 15<br>- Smart TOTE/Tracker deployments ≥ 300 | Site records, KPI dashboard screenshots, technical report |
-| Month 18 (Final) | Complete multi-site validation and business model verification; achieve core technical and output KPIs | - Anomaly detection F1 ≥ 0.85<br>- NLQ P95 latency ≤ 60 seconds, success rate ≥ 90%<br>- ≥ 10 cumulative customers (domestic/international)<br>- ≥ 1,000 cumulative Smart TOTE/Tracker deployments<br>- ≥ NT$30–40M cumulative output within project term<br>- Ineffective mileage reduction ≥ 10%, annual CO₂ reduction ≥ 80 tCO₂e | KPI dashboard, financial reports, site effectiveness reports, third-party supporting docs |
+| **第 6 個月** | 完成核心資料管線與第一版風險儀表板；完成 NLQ 原型與單一場域（內部或 Sandbox）試運轉 | - 完成資料匯流／清洗流程<br>- NLQ P95 延遲 ≤ 90 秒（測試環境）<br>- 至少 1 個測試場域實際連線運作 ≥ 30 日 | 系統 Demo、測試報告、日誌截圖 |
+| **第 12 個月** | 完成 1 國內 + 1 國外場域試導入；異常偵測與風險評分上線試用 | - 每場域正式上線天數 ≥ 45 日<br>- 異常偵測 F1 ≥ 0.80（以標註資料驗證）<br>- 活躍使用者（MAU）≥ 15 人<br>- 建置 Smart TOTE/Tracker ≥ 300 台 | 場域紀錄、KPI 儀表板截圖、技術報告 |
+| **第 18 個月（期末）** | 完成多場域實證與商業模式驗證，達成主要技術與產值 KPI | - 異常偵測 F1 ≥ 0.85<br>- NLQ P95 延遲 ≤ 60 秒、成功率 ≥ 90%<br>- 累計導入客戶 ≥ 10 家（含國內／國外）<br>- 累計 Smart TOTE/Tracker ≥ 1,000 台<br>- 本計畫期內累計產值 ≥ NT$30–40M<br>- 無效運輸里程降低 ≥ 10%，年減碳量 ≥ 80 tCO₂e | KPI 儀表板、財務報表、場域成效報告、第三方佐證資料 |
 
 ---
 
-### 7-3 Dashboard and Report Tracking Mechanisms
+### 7-3 儀表板與報表追蹤機制  
 
-To ensure KPIs are visible, trackable, and auditable, we implement a unified effectiveness tracking dashboard and reporting mechanism:
+為確保上述 KPI 具備「可視、可追蹤、可查核」特性，本計畫建置統一的**效益追蹤儀表板**與報表機制：
 
-1. KPI Dashboard
-  - Displays key technical/operations/output/ESG indicators:
-    - System and models: Uptime, anomaly detection F1, NLQ latency and success rate.
-    - Sites and adoption: pilot days, MAU, alert response rate.
-    - Output: cumulative revenue/output, customer count, device count.
-    - ESG: ineffective mileage reduction, estimated CO₂ reduction.
-  - Dashboard auto-updates daily for real-time monitoring.
+1. **指標層儀表板（KPI Dashboard）**  
+   - 顯示技術／營運／產值／ESG 等關鍵指標：  
+     - 系統與模型：Uptime、異常偵測 F1、NLQ 延遲與成功率。  
+     - 場域與採用：試導入天數、活躍使用者數、告警回應率。  
+     - 產值：累計營收／產值、客戶數、裝置數。  
+     - ESG：無效運輸里程降低、估算減碳量。  
+   - 儀表板每日自動更新，提供即時監控。
 
-2. Weekly/Monthly Reporting
-  - Weekly: PMO consolidates technical and site progress, major anomalies, and provisional countermeasures.
-  - Monthly: Compare against KPI table, review monthly and cumulative attainment; for unmet items, provide root cause analysis and next-month improvement plan.
-  - When necessary, link monthly reports with finance/output data as internal management and external briefing references.
+2. **週報／月報機制**  
+   - **週報**：由 PMO 彙整當週技術與場域進度、重大異常及暫行對策。  
+   - **月報**：對照本章 KPI 表，檢視當月與累計達成率，針對未達標項目提出原因分析與下月改善計畫。  
+   - 必要時將月報與財務與產值數據串接，作為內部管理與對外簡報依據。
 
-3. Iterative Optimization Process
-  - For indicators under target for two consecutive months, initiate a “KPI Improvement Project” to reassess:
-    - Model and feature design adjustments;
-    - Site process and training optimization;
-    - UI/UX impact on adoption.
-  - For modules using AI-assisted development, specifically track bug rate and maintenance cost; adjust AI Coding guidelines if needed.
+3. **迭代優化流程**  
+   - 對於連續兩個月未達標之指標，啟動「KPI 改善專案」，重新檢視：  
+     - 模型與特徵設計是否需調整；  
+     - 場域端流程與訓練是否需優化；  
+     - UI/UX 是否影響採用率。  
+   - 針對包含 AI 輔助開發的模組，特別檢視 Bug 率與維護成本，必要時調整 AI Coding 使用準則。
 
-4. Audit and Traceability
-  - Record all KPI calculation logic and data sources in a “KPI Calculation Document,” including formulas, table sources, and filters.
-  - Preserve change logs for dashboard versions, model versions, and alert rule modifications for MOEA audits or third-party review.
+4. **審計與留痕（Audit & Traceability）**  
+   - 所有 KPI 計算邏輯與數據來源記錄於「KPI 計算文件」，包含：公式、資料表來源、篩選條件。  
+   - 儀表板版本、模型版本、告警規則異動皆需留存變更記錄，以因應後續 MOEA 查核或第三方審計。
 
 ---
 
-### 7-4 Third-Party Market Benchmarks and Output Reasonableness Checks
+### 7-4 第三方市場基準與產值合理性檢核  
 
-To avoid overly optimistic output and market forecasts, the output estimates reference multiple international studies and cross-check with Arviem’s customer structure as internal reasonableness benchmarks:
+為避免產值與市場預估過於樂觀，本計畫之產值推估已參考多份國際研究，並與 Arviem 既有客戶結構交叉驗證，作為**內部合理性檢核基準**：
 
-1. Market Growth Benchmarks (listed in proposal summary only; not used in checkpoint calculations)
-  - Global SCM, AI in Supply Chain & Logistics, AI in Logistics, and cold-chain monitoring reports show 8–36% CAGR, with smart logistics as a high-growth submarket.
-  - Assuming 1–2% of Arviem’s 5,000+ international customers enter PoC/adoption within three years supports targets of “≥ 10 customers, ≥ 1,000 devices, NT$120M over three years,” which is conservative.
+1. **市場成長基準（僅列於計畫書摘要，不於查核時計算）**  
+   - 全球 SCM、AI in Supply Chain & Logistics、AI in Logistics 與冷鏈監控等市場報告均顯示 8–36% 之年複合成長率，智慧物流屬高成長子市場。  
+   - 本計畫僅假設在 Arviem 既有 5,000+ 國際客戶中，有約 1–2% 客戶於三年內進入 PoC／導入階段，即可支撐「≥10 家客戶、≥1,000 台裝置、三年 NT$120M 產值」之目標，屬相對保守假設。
 
-2. Internal Output Checks
-  - Annually review actual signed customers, device deployments, and AI-MaaS subscription revenue versus original scenarios (conservative/neutral/optimistic).
-  - If progress lags the neutral scenario, BD must propose reinforcement strategies (adjust region/segment/partners) in the monthly report and update next-year targets and internal estimates.
+2. **內部產值檢核方式**  
+   - 每年檢視實際簽約客戶數、裝置建置數與 AI-MaaS 訂閱收入，與原先 Scenario（保守／中性／樂觀）進行對比。  
+   - 若實際進度落後中性 Scenario，BD 團隊需於月報中提出補強策略（調整區域、市場別或合作夥伴），並更新下年度目標與內部預估。
 
-Through the above KPI framework, phased checkpoints, and dashboard/report governance, the project’s technical effectiveness, site adoption, output achievement, and ESG contributions are continuously tracked with quantitative evidence, supporting MOEA review and subsequent audits.
+> 透過上述 KPI 架構、分階段查核點與儀表板／報表治理，本計畫之技術成效、場域採用、產值達成與 ESG 貢獻，皆能以量化方式持續追蹤並提供 MOEA 審查與後續查核依據。
 
-### VII. Intellectual Property Statement
+### 七、智慧財產權說明
+### 智慧財產權（IP）與資料權利摘要
 
-- Core algorithms and system designs will be protected via patents/copyright; IP ownership and licensing per cooperation contracts.
-- Inventory third-party rights (data/packages/modules) to ensure licensing compliance.
-- Patent plan: 2 domestic, 1 international (priority for supply chain anomaly detection and intelligent sampling optimization).
+為符合經濟部 A+ 計畫「技術自主研發」補助要件，智財與資料權利約定如下：
 
-### Application of Results (IP Filing Timeline and Ownership)
+- 背景智財（Background IP）
+  - 計畫開始前既有之各方技術與權利，均歸原權利人所有。
 
-To clarify IP ownership and application timelines, the following items, months, and right holders are listed:
+- 前景智財（Foreground IP）
+  - 單獨產出之成果：由產出該成果之參與方單獨持有，並負責權利取得與維護。
+  - 共同產出且無法切割或界定貢獻之成果：由相關參與方「共同共有」，各方就該共同前景智財享有等比例不分割權益。
+  - 前景揭露：各參與方須於計畫期間「即時且保密」向計畫協調者揭露其產生之前景智財；協調者每半年向全體參與方提交前景智財彙整報告。
+  - 前景利用：單獨持有者得自行利用其前景智財；共同持有者得依共同持有約定使用與利用，並於利用前完成相關共同持有協議。
+  - 本計畫期間由 ItracXing 準旺科技股份有限公司開發或完成之 AI 模型、演算法、原始碼、系統架構與硬體設計等前景智財（Foreground IP），依與國內外合作夥伴簽署之 MOU／合作合約約定，原則上由 ItracXing 單獨持有，且研發工作主要在台灣完成，以符合本計畫「技術自主性與在地研發」之補助原則。
 
-| Filing Item | Type | Region | Planned Filing Month | Right Holder | Notes/Milestones |
+- MOEA／ItracXing 保護條款
+  - 為達成台灣經濟部 A+ 補助計畫目標，凡為完成本計畫目的所必要之前景智財（含共同持有），各方同意授予 ItracXing「非專屬、不可撤回」之商業合理條件授權，用於台灣及必要時之國際市場，涵蓋物流 AI 監控與 AI‑MaaS 服務之使用、改良與商業化。
+
+- 資料權利（Data Rights）
+  - Arviem 提供之原始資料歸 Arviem 所有。
+  - 在本 MOU 期間，ItracXing 取得僅限於本計畫目的之資料使用授權（模型訓練、評估與改良），並遵守資料保護與保密義務。
+  - 於合法使用該資料所訓練之模型與產出之洞見，得構成本計畫前景智財；其利用與授權依上述前景智財與授權框架辦理。
+- 針對第三方權利（資料／套件／模組）進行盤點，確保授權合規。
+- 專利申請規劃：國內 2 件、國外 1 件（優先供應鏈異常偵測與智能採樣優化）。
+
+### 成果應用（智財申請時程與權利歸屬）
+
+為釐清智財權歸屬與成果應用時程，明確列出申請項目、月份與權利人如下：
+
+| 擬申請項目 | 類型 | 申請地區 | 預計申請月份 | 權利人 | 備註/里程碑 |
 | --- | --- | --- | --- | --- | --- |
-| IoT Sampling Optimization via Event Triggers and Variance-Driven Method | Invention/Utility Patent | TW | 2026/05 filing (IDF 2026/03, draft 2026/04) | ItracXing Technology Co., Ltd. | Subprojects A/B early outputs |
-| Explainable Supply Chain Anomaly Detection System | Invention Patent | TW | 2026/06 filing (novelty search 2026/04) | ItracXing Technology Co., Ltd. | Subprojects A/B integration (A2→B1) |
-| Multi-Agent Supply Chain Monitoring with Federated Learning | PCT (International) | PCT | 2026/10 filing (priority from TW case) | ItracXing Technology Co., Ltd. | International layout, extend to US/EU |
-| Battery RUL Prediction Module | Software Copyright | TW | 2026/02 registration | ItracXing Technology Co., Ltd. | Work Package A outputs (A2/A3) |
-| Multi-Agent Task Scheduler (MCP/Agent Orchestrator) | Software Copyright | TW | 2026/08 registration | ItracXing Technology Co., Ltd. | Subprojects C/D outputs (B1/B2) |
+| 事件觸發與變異度驅動之 IoT 採樣優化方法 | 發明/新型專利 | TW | 2026/05 送件（IDF 2026/03、初稿 2026/04） | ItracXing 準旺科技股份有限公司 | 分項計畫A/B 前期成果 |
+| 可解釋式供應鏈異常偵測系統 | 發明專利 | TW | 2026/06 送件（檢索 2026/04） | ItracXing 準旺科技股份有限公司 | 分項計畫A／B 串接（A2→B1） |
+| Multi-Agent Supply Chain Monitoring with Federated Learning | PCT（國際） | PCT | 2026/10 送件（優先自 TW 案） | ItracXing 準旺科技股份有限公司 | 國際佈局（後續營運），延伸 US/EU 進入 |
 
-Ownership and Licensing Principles
-- IP owner: unless otherwise agreed in writing, owned by ItracXing Technology Co., Ltd.
-- Partner licensing: non-exclusive, non-transferable usage per contract (domain/territory/term as agreed) for partner and its customers.
-- Background IP: existing technologies remain with each party; rights to derivative improvements as per contract.
-- Joint R&D deliverables: default owned by ItracXing; partners obtain usage rights per contract; for joint patent filings, share ratios will be stated in filing documents.
+權利歸屬與授權原則
+- 智財權利人：除另有書面約定，均由「ItracXing 準旺科技股份有限公司」持有。
+- 合作方授權：依合作合約提供非專屬、不可轉授之使用授權（領域/地域/期限以契約約定），用於合作方及其客戶服務。
+- 背景技術（Background IP）：各方既有技術仍歸各方所有；衍生改良之權屬依約定處理。
+- 共同研發交付件：預設由 ITracXing 持有，合作方依合約取得使用授權；若需共同申請專利，將於申請文件載明持分比例。
+ - 上開權利歸屬與授權原則，與各場域合作備忘錄（MOU）中「智慧財產權與數據權利（IP）」條款一致，並明確符合本計畫對前景智財（Foreground IP）自主研發與在地化之要求。
 
-Internal Controls and Timeline
-- IDF submission: M2 (2026/02) first round, rolling updates.
-- Novelty/patentability search: M3 (2026/03) completed.
-- Patent drafting and review: draft by M4 (2026/04), filings in M5–M6.
-- PCT layout: M10 (2026/10); enter national phases within 12–30 months per market selection.
-- Open-source/third-party licensing inventory: establish SBOM and licensing registry; complete compliance review before filing.
+內部管控與時程節點
+- IDF（發明揭露）提報：M2（2026/02）完成首輪，滾動更新。
+- 新穎性/專利性檢索：M3（2026/03）完成檢索與記錄。
+- 專利撰稿與審稿：M4（2026/04）完成初稿、M5–M6 送件。
+- PCT 佈局：M10（2026/10）；進入國別申請於 12–30 月內依市場選擇。
+- 開源/第三方授權盤點：建立 SBOM 與授權清冊，送件前完成合規審查。
 
 ---
 
-## VIII. R&D Team Description
+## 參、研發團隊說明
 
-Summary: This section presents the PI and core team’s credentials, division of work, and person-month commitments aligned with work package progress to reinforce feasibility and execution capability.
+【摘要】本節呈現主持人與核心團隊之資歷、分工與投入月數，並對齊工作包進度，強化可行性與執行力。
 
-### 1. PI Credentials
+### 一、計畫主持人資歷說明
 
-- Name: Jeff Shuo | Title: CIO | Gender: Male | Industry: Information Services
-- Key Achievements: 20+ years in AI/IoT systems; led multi-agent collaboration, AI security, and supply chain blockchain projects. US/TW cross-border team management with proven achievements in AI safety, compliance, explainable systems, and productization.
-- Education/Experience/Projects:
-  - Education:
-   - M.S. in Electrical Engineering and Computer Science, University of Illinois at Chicago (1992)
-   - MBA, San Diego State University (2005)
-  - Experience:
-   - AI Agent Architect
-    - Lead, design, integration of LLM, dynamic thresholds, LangChain/LangGraph, RAG, MCP, ReAct multi-agent collaboration
-    - Supply chain security
-   - Qualcomm Inc. — Director of Engineering (2004–2018)
-    - Led 100+ IoT/AR/VR/smart device projects; managed 50+ engineers
-    - Python/Keras/Node.js automated resource allocation system
-   - HTC Corp. — Sr. Technical Manager (2003–2004)
-    - Led protocol engineering; developed first Windows Mobile Phone
-   - Qualcomm Inc. — Sr. Engineer (1997–2003)
-    - Embedded drivers; CDMA/GlobalStar phones; RF/LCD/Bluetooth/ATE software
-   - Motorola Inc. — Sr. Engineer (1994–1997)
-    - Overseas CDMA base station/phone factory support; Windows OOD/OOP calibration software
-   - IBM — Software Engineer (1993–1994)
-    - AS/400 I/O subsystem C++ driver development
-  - Projects:
-   - Phoenix Multi-Agent SOC (2024–2025): multi-agent collaboration, AI security, compliance review
-   - SecuX AI SOC; supply chain blockchain labels; HSM secure signing
-   - Qualcomm/HTC/Google smart devices; embedded systems
-  - Technical Expertise:
-   - Multi-agent collaboration (LangChain, LangGraph, AutoGPT, ReAct, MCP)
-   - AI safety, compliance, explainability
-   - Embedded RTOS, ARM, Linux/Yocto, IoT (BLE, NB-IoT)
-   - Blockchain/Web3 (ERC-1056, ERC-3643, DID, RWA Tokenization)
-   - Security hardware (HSM, FIDO2, PKI)
-  - Person-months: 18 (100%)
+- 姓名：Jeff Shuo｜職稱：CIO｜性別：男｜產業領域：資訊服務
+- 重要成就：20年以上AI/IoT系統領域經驗，主導多智能體協作、AI安全、供應鏈區塊鏈專案。美國/台灣跨國團隊管理，具備AI安全、合規、可解釋性系統設計與產品化實績。
+- **學歷/經歷/參與計畫**：
+  - 學歷：
+    - M.S. Electrical Engineering and Computer Science, University of Illinois at Chicago (1992)
+    - MBA, San Diego State University (2005)
+  - 經歷：
+    - AI Agent Architect
+      - 主導, 設計，整合 LLM, 動態閾值, LangChain/LangGraph、RAG、MCP、ReAct 等多智能體協作技術
+      - 供應鏈安全
+    - Qualcomm Inc. — Director of Engineering（2004–2018）
+      - 領導100+ IoT/AR/VR/智慧裝置專案，50+工程師團隊管理
+      - Python/Keras/Node.js自動化資源分配系統
+    - HTC Corp. — Sr. Technical Manager（2003–2004）
+      - 領導協定工程團隊，開發首款Windows Mobile Phone
+    - Qualcomm Inc. — Sr. Engineer（1997–2003）
+      - 嵌入式驅動、CDMA/GlobalStar手機、RF/LCD/Bluetooth/ATE軟體
+    - Motorola Inc. — Sr. Engineer（1994–1997）
+      - 海外CDMA基地台/手機工廠支援，Windows OOD/OOP校正軟體
+    - IBM — Software Engineer（1993–1994）
+      - AS/400 I/O子系統C++驅動開發
+  - 參與計畫/專案：
+    - Phoenix Multi-Agent SOC（2024–2025）：多智能體協作、AI安全、合規審查
+    - SecuX AI SOC、供應鏈區塊鏈標籤、HSM安全簽章
+    - Qualcomm/HTC/Google智慧裝置、嵌入式系統
+  - 技術專長：
+    - 多智能體協作（LangChain, LangGraph, AutoGPT, ReAct, MCP）
+    - AI安全、合規、可解釋性系統設計
+    - 嵌入式RTOS、ARM、Linux/Yocto、IoT（BLE, NB-IoT）
+    - 區塊鏈/Web3（ERC-1056, ERC-3643, DID, RWA Tokenization）
+    - 安全硬體（HSM, FIDO2, PKI）
+  - 投入月數：18個月（100%）
+ 
 
-### 2. Project Staffing Summary (Headcount)
+### 二、參與計畫人力統計（單位：人）
 
-The table summarizes participating organizations, education breakdown, gender ratio, average tenure, and open positions for review/audit.
+下表彙整本計畫參與人力之公司別、學歷結構、性別比例、平均年資與待聘人數，以供審查與查核。
 
-| Organization | PhD | MS | BS | Gender (M/F) | Avg Tenure | Open Positions |
-| --- | ---: | ---: | ---: | --- | ---: | ---: |
-| ItracXing | 1 | 4 | 1 | 5 / 1 | 8 years | 1 |
-| Research Center | 1 | 1 | 0 | 1 / 1 | 10 years | 0 |
-| Total | 2 | 5 | 1 | 6 / 2 | 9 years | 1 |
+| 公司別          | 博士 | 碩士 | 學士 | 性別（男/女） | 平均年資 | 待聘人數 |
+| ----------------- | ------ | ------ | ------ | --------------- | ---------- | ---------- |
+| ItracXing       | 1    | 4    | 1    | 5 / 1         | 8年      | 1        |
+| 學研中心 | 1    | 1    | 0    | 1 / 1         | 10年     | 0        |
+| 合計            | 2    | 5    | 1    | 6 / 2         | 9年      | 1        |
 
-### 3. Team CVs
+### 三、參與計畫人員簡歷表
 
-This section lists the PI, key R&D staff, general R&D, and open positions, with education, expertise, division of work, and person-month commitments matching the total 120 person-months and planned schedule.
+本節列出主持人、關鍵研發人員、一般研發與待聘人員之學歷、專長、分工與投入月數，與前述 120 人月總量及預定進度相互對應。
+| 姓名        | 職稱／角色             | 學歷                                       | 專長／分工                                                                                                                                                                                                 | 投入月數 | 性別 | 公司        | 對應分項          |
+| --------- | ----------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | -- | --------- | --------------- |
+| Jeff Shuo | CIO／計畫主持人         | 碩士 (Univ. of Illinois at Chicago Electrical Engineering and Computer Science, MBA San Diego State Univ. ) | 多智能體協作、AI 安全、嵌入式與 IoT–Edge–Cloud 架構設計、國際場域整合；負責全案技術決策、架構審查與跨分項整合，主導分項 A 之電池壽命預測（RUL）技術方向，協調分項 B 之 NLQ/報表需求與 A/C/D 之資料與模型銜接，並統籌整體結案與驗收規劃。 | 18   | 男  | ITracXing | A、B、C、D    |
+| 盧孝彰       | 韌體工程師／IoT Edge 開發 | 碩士（Musician’s Institute GIT Performance） | 精通 C/C++、Python、Java、Go，多執行緒與通訊協定、記憶體管理與效能優化；熟悉 ARM Cortex、RTOS、UART/SPI/I2C 驅動與硬體測試；具嵌入式 AI/ML 經驗，熟悉 RESTful API、MQTT、WebSocket；負責分項 A 之感測器端韌體、電池與狀態監測資料上報，並支援分項 C（溫濕度／品質監測）與分項 D（Smart TOTE 鎖具／壓力感測與定位）之 Edge 端整合。 | 12   | 男  | ITracXing | A、C、D         |
+| 林昶睿       | 專案經理／AI 應用規劃      | 學士（國立勤益科大資工系）                            | 具 Python 與影像辨識背景（TensorFlow、YOLO），應用於人臉辨識、情緒分析與年齡預測；具大數據分析與統計建模實務；熟悉 NLP、語音辨識（STT）、LLM 文字生成與 Chatbot，並具多模態 AI 互動優化實務經驗；負責分項 B 之 NLQ／自動報告與多智能體 AI 架構設計，協助分項 A/C/D 之模型設計與評估，並統籌整體結案之 Demo 劇本與內容整合。 | 12   | 男  | ITracXing | A、B、C、D    |
+| 蔡以民       | 後端工程師             | 碩士（國立勤益科大資工系）                            | 後端系統開發與維運（API 設計、資料庫規劃、伺服器部署），熟悉 TypeScript、Node.js、Golang、FastAPI；具 TensorFlow、OpenCV、Scikit-learn 基礎，能配合 AI 團隊實作服務；熟悉 Docker、Nginx、CI/CD，自動化部署至正式環境；負責分項 A–D 之後端服務與資料管線實作（含電池壽命預測（RUL）、NLQ、環境預測、路線／竊盜偵測等 API／ETL），並支援整體結案之整合測試與上線部署。 | 12   | 男  | ITracXing | A、B、C、D    |
+| 郭冠宏       | 網頁全端工程師           | 碩士（國立勤益科大資工系）                            | 全端開發（React、Vue.js、Next.js、Node.js、FastAPI），即時儀表板與資料視覺化（Chart.js、D3.js、ECharts）；RESTful API 串接與權限驗證；熟悉 Hugging Face、LangChain、OpenAI API 等 AI 服務整合；負責分項 A–D 之前後端整合、監控介面與 Smart TOTE／風險預警 Dashboard，並統籌整體結案展示介面與國際 Demo 網站／管理後台。 | 12   | 男  | ITracXing | A、B、C、D    |
+| 朱只耘       | Flutter 工程師       | 學士（國立勤益科大資工系）                            | 精通 Flutter（Dart、MVVM、Provider、Riverpod），可獨立開發 iOS/Android App；熟悉 RESTful API、GraphQL、WebSocket 串接；具行動端 AI 整合（對話、推薦、行為預測、語音控制），熟悉 Firebase、SQLite、Hive；負責分項 B–D 之行動端 App 與現場使用者介面（如異常推播、現場處置回報與查詢），並支援國際客戶 PoC 場景之行動展示與輕量使用情境。 | 10   | 男  | ITracXing | B、C、D       |
+| （待聘）      | AI 工程師            | 碩士（AI／資工）                                | 聯邦學習（Federated Learning）、模型調校與大規模訓練；預計負責中後期 AI 模型訓練與驗證，優先支援分項 C/D 之多場域資料建模與部署，並視需求補強分項 A/B 之高階模型優化與維運人力（作為各分項尚未覆蓋能力之備援與擴充）。 | 12   | 女  | ITracXing | C、D（視需求 A/B） |
 
-| Name | Title/Role | Education | Expertise/Responsibilities | Person-Months | Gender | Company | Subprojects |
-| --- | --- | --- | --- | ---: | --- | --- | --- |
-| Jeff Shuo | CIO/PI | MS (Univ. of Illinois at Chicago EECS), MBA (SDSU) | Multi-agent collaboration; AI safety; embedded and IoT–Edge–Cloud architecture; international site integration. Leads overall technical decisions, architecture review, cross-subproject integration; leads Work Package A (battery RUL), aligns Work Package B (NLQ/reporting) with A/C/D data and models; oversees final acceptance planning. | 18 | M | ItracXing | A, B, C, D |
-| Hsiao-Chang Lu | Firmware Engineer/IoT Edge Dev | MS (Musician’s Institute GIT Performance) | C/C++/Python/Java/Go, multithreading, protocols, memory/performance optimization; ARM Cortex, RTOS, UART/SPI/I2C drivers and hardware testing; embedded AI/ML; REST/MQTT/WebSocket. Responsible for Work Package A sensor firmware and battery/state monitoring uploads; supports Work Package C (T/H monitoring) and Work Package D (Smart TOTE lock/pressure/location) edge integration. | 12 | M | ItracXing | A, C, D |
-| Chang-Rui Lin | PM/AI Application Planner | BS (NCUT CS) | Python and vision (TensorFlow, YOLO): face recognition, emotion analysis, age prediction; big data and stats modeling; NLP, STT, LLM text generation, chatbot; multimodal AI interaction optimization. Leads Work Package B NLQ/auto-reporting and multi-agent AI architecture; assists A/C/D modeling/evaluation; oversees final demo script and content integration. | 12 | M | ItracXing | A, B, C, D |
-| Yi-Min Tsai | Backend Engineer | MS (NCUT CS) | Backend dev/Ops (API design, DB planning, server deployment); TypeScript/Node.js/Golang/FastAPI; TensorFlow/OpenCV/Scikit-learn foundations; Docker/Nginx/CI/CD; automated production deployment. Implements backend services and data pipelines for A–D (RUL, NLQ, environmental, route/theft APIs/ETL); supports integration testing and production deployment. | 12 | M | ItracXing | A, B, C, D |
-| Kuan-Hung Kuo | Web Full-Stack Engineer | MS (NCUT CS) | Full-stack (React, Vue.js, Next.js, Node.js, FastAPI); realtime dashboards and data viz (Chart.js, D3.js, ECharts); REST API integration and auth; integrates AI services (Hugging Face, LangChain, OpenAI API). Responsible for A–D frontend/backend integration, monitoring UI, Smart TOTE/risk alert dashboards; oversees final showcase UI and international demo site/admin. | 12 | M | ItracXing | A, B, C, D |
-| Zhi-Yun Chu | Flutter Engineer | BS (NCUT CS) | Flutter (Dart, MVVM, Provider, Riverpod); independent iOS/Android app dev; REST/GraphQL/WebSocket integration; mobile AI integration (chat, recommendation, behavior prediction, voice control); Firebase/SQLite/Hive. Builds mobile apps and onsite UIs for B–D (alert push, incident reporting, queries); supports international customer PoC mobile demos/light usage scenarios. | 10 | M | ItracXing | B, C, D |
-| (To Hire) | AI Engineer | MS (AI/CS) | Federated learning, model tuning, large-scale training; responsible for mid/late-stage modeling/validation; prioritizes multi-site modeling/deployment for C/D; supports A/B advanced optimization/Ops as needed (backup capacity for uncovered skills). | 12 | F | ItracXing | C, D (A/B as needed) |
 
-## IX. Project Budget Requirements (TWD thousand)
 
-Summary: This section explains personnel, leasing/cloud, contracted R&D, travel, and contingency funds. Government subsidy and self-funding are each 50%, with milestone-based disbursement to control risk. All amounts/ratios are fully detailed for audit.
+## 肆、計畫經費需求（千元）
 
-### 1. Budget by Category
+【摘要】本節說明人事、租賃／雲端、合作研發、差旅與風險準備金等各科目經費配置，補助款與自籌款各 50%，並以里程碑節點控管撥付風險；所有金額與比例均已依實際規劃完整填列，可供查核。
 
-#### (1) Personnel for Innovation/R&D Staff
+### 一、各科目預算編列表
 
-| Role | Avg Monthly Salary (A) | Person-Months (B) | Year 1 Personnel (A×B) | Notes |
-| --- | ---: | ---: | ---: | --- |
-| PI | 141 | 18 | 2,538 | Full-time |
-| PM | 86 | 18 | 1,548 | Full-time |
-| AI Engineers × 2 | 85 | 36 | 3,060 | Includes 1 to hire |
-| Full-stack/IoT Engineers × 2 | 80 | 24 | 1,920 | — |
-| IoT Systems Engineers × 2 | 79 | 16 | 1,264 | 8 months × 2 people |
-| Finance Control | 81 | 12 | 972 | Admin support (excluded from R&D person-months) |
-| Administrative Assistant | 65 | 12 | 780 | Admin support (excluded from R&D person-months) |
-| Subtotal (Company Personnel) | — | 108 (R&D) + 24 (Admin) | 12,082 | Amount unit: TWD thousand; includes 2,982 reclassified |
+#### （一）創新或研究發展人員之人事費
 
-#### (2) Consumables and Raw Materials
+| 職務別                  | 平均月薪 (A) |        人月數 (B) | 第 1 年度人事費 (A×B) | 備註                             |
+|-------------------------|-------------:|-------------------:|-----------------------:|----------------------------------|
+| 計畫主持人             |          141 |                 18 |                  2,538 | 專任                             |
+| 專案經理               |           86 |                 18 |                  1,548 | 專任                             |
+| AI 工程師 × 2          |           85 |                 36 |                  3,060 | 含待聘 1 人                      |
+| 全端／IoT 工程師 × 2   |           80 |                 24 |                  1,920 | —                                |
+| IoT 系統工程師 × 2     |           79 |                 16 |                  1,264 | 8 個月 × 2 人                    |
+| 財務控管               |           81 |                 12 |                    972 | 行政支援（不列入 R&D 人月統計） |
+| 行政助理               |           65 |                 12 |                    780 | 行政支援（不列入 R&D 人月統計） |
+| 小計（公司計入人事費） |            — | 108（R&D）＋24（行政） |           12,082 千元 | 金額單位：千元；含轉列 2,982 千元 |
 
-| Item | Unit | Qty | Unit Price | Year 1 | Description |
-| --- | --- | ---: | ---: | ---: | --- |
-| Subtotal (cost reclassified to Personnel) | — | — | — | 0 | Consumables reclassified to Personnel |
+#### （二）消耗性器材及原材料費
 
-#### (3) Equipment Use/Maintenance/Cloud/EDA Leasing
+| 項目                          | 單位 | 數量 | 單價 | 第 1 年度 | 用途說明                            |
+|-------------------------------|------|-----:|-----:|----------:|-------------------------------------|
+| 合計（本科目成本併入人事費） | —    |    — |    — |         0 | 消耗性器材費用改列為 0，轉列至「人事費」 |
 
-By template; equipment use is allocated via depreciation A×B/60 (A=original value; B=months used). Cloud/leasing by “monthly fee × months.” Cloud resources primarily for inference and testing.
+#### （三）設備使用／維護／雲端／ EDA 租賃費
 
-##### 3-1 Equipment Use (Depreciation A×B/60)
+> 依模板分表填列；設備使用費以折舊分攤 A×B/60 計算（A=原值；B=投入月數），雲端／租賃以「月費 × 月數」計列，雲端資源以訓練及推論用途為主。
 
-| Equipment | Original A | Months B | Allocation (A×B/60) | Year 1 | Description |
-| --- | ---: | ---: | ---: | ---: | --- |
-| Subtotal (cost reclassified to Personnel) | — | — | — | 0 | Equipment depreciation reclassified to Personnel |
+##### 3-1 設備使用費（折舊分攤：A×B/60）
 
-##### 3-2 Cloud/EDA Leasing/Services (Monthly)
+| 設備名稱                    | 原值 A | 投入月數 B | 分攤 (A×B/60) | 第 1 年度 | 用途說明                                |
+|-----------------------------|-------:|-----------:|---------------:|----------:|-----------------------------------------|
+| 小計（本科目成本併入人事費） |     — |          — |              — |         0 | 設備折舊費用改列為 0，轉列至「人事費」 |
 
-| Item | Pricing | Monthly | Months | Year 1 | Description |
-| --- | --- | ---: | ---: | ---: | --- |
-| API Services and LLM Inference (OpenAI/Anthropic) | Pay-as-you-go | 15 | 12 | 180 | NLQ interface, prompt engineering tests, RAG |
-| Monitoring/Logs/APM (DataDog/NewRelic) | Monthly | 8 | 13 | 104 | Performance monitoring, anomaly alerts, log analysis, observability |
-| Containerized Deployment (K8s/ECS/AKS) | Monthly | 7 | 14 | 98 | M6–M18 microservices deployment, edge proxy management, CI/CD |
-| AI Dev Assistant Tools (IDE plugins/collab) | Monthly | 6 | 13 | 78 | Dev productivity tools (AI coding assist, review acceleration, doc generation) |
-| Code Security and Quality Scan (SAST/dependency checks) | Monthly | 5 | 14 | 70 | Supply chain security, vulnerability scans, compliance checks |
-| Subtotal | — | — | — | 530 | TWD thousand; only essential inference/monitoring/deployment services retained; dev tools added |
+##### 3-2 雲端／EDA 租賃／服務費（按月）
 
-Cloud Resources and Dev Tools Strategy (Revised)
-1. Early (M1–M5): No local training; use cloud inference, demo/test containers, and basic monitoring; introduce AI dev assistants and SAST, establish CI/CD.
-2. Mid (M6–M17): Iterate features via cloud services and data pipelines; backups via offline geo-redundant storage (no local training hardware).
-3. Late (M18): Complete production deployment and acceptance; cloud resources act as Minimal Viable Service hosting/monitoring; no model training.
-4. Cost control: disable high-cost instances; strictly pay-as-you-go with budget caps; auto-shutdown off-hours; major changes require PR/review; monthly cost reviews and budget alerts.
+| 項目                                      | 計價方式 | 月費 | 月數 | 第 1 年度 | 用途說明                                                                  |
+|-------------------------------------------|----------|-----:|-----:|----------:|---------------------------------------------------------------------------|
+| API 服務與 LLM 推論（OpenAI／Anthropic） | 按量計費 |   15 |   12 |       180 | 自然語言查詢介面、提示工程測試、RAG 檢索增強生成                         |
+| 監控／日誌／APM（DataDog／NewRelic）     | 月租     |    8 |   13 |       104 | 系統效能監控、異常警示、日誌分析、可觀測性平台                           |
+| 容器化部署（K8s／ECS／AKS）              | 月租     |    7 |   14 |        98 | M6–M18 微服務部署、邊緣代理管理、CI/CD 管道                              |
+| AI 開發助理工具（IDE 外掛／協作）        | 月租     |    6 |   13 |        78 | 開發者生產力工具（例如：AI 程式輔助、評審加速、文件生成）               |
+| 程式碼安全與品質掃描（SAST／依賴檢查）   | 月租     |    5 |   14 |        70 | 供應鏈安全與弱點掃描、合規檢查                                           |
+| 雲端運算資源（GPU/CPU 訓練與實驗）       | 月租／按量 |   25 |   11 |       275 | RUL／異常偵測／路線模型等 AI 訓練與反覆實驗，含資料前處理與特徵工程     |
+| 小計                                      | —        |   — |   — |       805 | 金額單位：千元；**涵蓋訓練與推論、監控／部署必要服務，以及開發／安全工具** |
 
-##### 3-3 Equipment Maintenance (Annual/Spare Parts)
+**雲端資源與開發工具策略（修訂版）**
 
-| Item | Unit | Qty | Unit Price | Year 1 | Description |
-| --- | --- | ---: | ---: | ---: | --- |
-| Subtotal (cost reclassified to Personnel) | — | — | — | 0 | Maintenance reclassified to Personnel |
+1. 初期（M1–M5）：不進行本地訓練；採雲端推論、Demo／測試用容器與基礎監控；導入 AI 開發助理與 SAST 工具並建立 CI/CD。
+2. 中期（M6–M17）：以雲端服務與資料管道進行功能迭代與 A/B 測試；資料備援以離線異地備份為主（不使用本地訓練設備）。
+3. 後期（M18）：完成生產部署與驗收；雲端資源作為最小可用服務（Minimal Viable Service）的託管與監控，不涉及模型訓練。
+4. 成本控制機制：停用高成本運算實例；所有資源採按量計費與預算上限；非工作時段自動關閉；重大變更需經 PR／審核；月度成本檢視與預算警示。
 
-##### 3-4 Total (3-1 + 3-2)
+##### 3-3 設備維護費（年度維護與備品）
 
-| Total |  |  |  | Year 1 | Notes |
-| --- | --- | --- | --- | ---: | --- |
-| — | — | — | — | 530 | TWD thousand; includes only 3-2 Cloud/EDA services |
+| 項目                          | 單位 | 數量 | 單價 | 第 1 年度 | 用途說明                              |
+|-------------------------------|------|-----:|-----:|----------:|---------------------------------------|
+| 小計（本科目成本併入人事費） | —    |    — |    — |         0 | 設備維護費用改列為 0，轉列至「人事費」 |
 
-### (4) Technology Introduction, Contracted Research, and Cooperative R&D (Revised)
+##### 3-4 合計（3-1 ＋ 3-2）
 
-#### 1. Budgeting Principles
+| 合計 |      |      |      | 第 1 年度 | 備註                                           |
+|------|------|------|------|----------:|------------------------------------------------|
+| —    | —    | —    | —    |       530 | 金額單位：千元；僅計入「3-2 雲端／EDA 服務費」 |
 
-R&D is primarily performed in-house. Only items needing third-party neutrality, credibility, or compliance (e.g., penetration testing, AI/GDPR compliance reviews, patent filing) are contracted, with contracted spend at 12.5% of total, meeting program rules.
+### （四）技術引進、委託研究與合作研發費（修正版）
 
-Domestic/international partners (Arviem AG, Taiwan logistics sites, international academic centers) support via cooperation or in-kind contributions to strengthen validation and international collaboration while ensuring auditability.
+#### 1. 經費編列原則
 
-#### 2. Contracted Research and Professional Services
+本計畫之研究與開發作業以申請單位自主研發為主。僅將需具備第三方中立性、公信力或合規性之項目（如資安滲透測試、AI／GDPR 合規審查、專利申請等）列入委託支出，並確保委託支出占總經費 **12.5%**，符合本計畫相關規範。
 
-| Category | Partner/Provider | Contracted Scope | Amount (TWD thousand) | Deliverables |
-| --- | --- | --- | ---: | --- |
-| 1. Contracted Research | External research org (incl. ITRI/academia) | FL architecture design, joint AI modeling, model validation | 800 | Model validation report, training datasets |
-| 2. Consulting and Compliance | External technical consultant | Data governance, GDPR/PIA | 436 | GDPR/PIA compliance documents |
-| 3. Patents and Professional Docs | Patent agents/legal | Patent drafting/filing, technical whitepapers | 581 | 3 patent filings, technical whitepaper |
-| 4. Testing and Validation | Third-party validators (incl. logistics/cold-chain sites) | Site device deployment tests, data quality validation, IoT field tests, open/close event accuracy tests | 436 | Site performance test report, data quality validation report |
-| Contracted Total | — | — | 2,253 | — |
+國內外合作單位（Arviem AG、台灣物流合作場域、國際學術研究中心）採合作模式或實物方式支援，以強化技術驗證與國際合作效益，並確保計畫成果具可查核性。
 
-- Total project budget: 18,000
-- Contracted total: 2,253
-- Contracted ratio: 12.5%
+#### 2. 委託研究與專業服務
 
-#### 3. Cooperative R&D and Academic Research
+| 類別               | 合作單位／提供者                      | 委託內容                                                        | 金額（千元） | 交付成果                        |
+|--------------------|----------------------------------------|-----------------------------------------------------------------|-------------|---------------------------------|
+| **1. 委託研究費** | 外部研究機構（含 ITRI／學研）         | FL 聯邦學習架構設計、AI 模型共同開發、模型驗證                | **800**     | 模型驗證報告、訓練資料集        |
+| **2. 顧問與合規服務** | 外部技術顧問                         | 資料治理、GDPR／隱私影響評估（PIA）                           | **436**     | GDPR／PIA 合規審查文件         |
+| **3. 專利與專業文件** | 專利代理／法律顧問                   | 專利撰寫、申請、技術白皮書文件化                              | **581**     | 3 件專利申請文件、技術白皮書   |
+| **4. 測試與驗證服務** | 第三方驗證單位（含物流／溫濕度敏感貨品場域業者） | 場域端設備布署測試、資料品質驗證、IoT 實測、開關事件準確率測試 | **436**     | 場域性能測試報告、資料品質驗證報告 |
+| **委外合計**       | —                                      | —                                                               | **2,253**   | —                               |
 
-| Partner | Scope | Funding Type | Amount (TWD thousand) | Notes |
-| --- | --- | --- | ---: | --- |
-| International Academic Center | Federated learning and data collaboration research | Academic cooperation | 581 | Research collaboration |
-| Arviem AG | Global cross-border data, international sites | In-kind/data contribution | 580 | International cooperation |
-| Taiwan logistics/cold-chain site (third-party testing provider) | Site deployment tests, data quality validation, event accuracy tests, environmental stress tests | Third-party testing | 100 | Validation support (adjust as needed) |
+- 計畫總經費：**18,000 千元**  
+- 委外總額：**2,253 千元**  
+- 委外占比：**12.5%**
 
-#### 4. Training and Tooling
+#### 3. 合作研發與學術研究
 
-| Item | Scope | Funding Type | Amount (TWD thousand) | Notes |
-| --- | --- | --- | ---: | --- |
-| Dev tools and internal training | AI dev assistant, secure coding training, quarterly workshops | Training/Tools | 771 | Capability building |
+| 合作單位                                   | 合作內容                               | 經費形式        | 金額（千元） | 備註                   |
+|--------------------------------------------|----------------------------------------|-----------------|-------------|------------------------|
+| 國際學術合作中心                           | 聯邦學習與資料協同研究                 | 學術合作        | 581         | 研究合作               |
+| Arviem AG                                  | 全球跨境資料、國際場域                 | 實物與資料貢獻  | 580         | 國際合作               |
+| 台灣物流／溫濕度敏感貨品業者（第三方場域測試服務提供者） | 場域布署測試、資料品質驗證、事件準確率測試、環境壓力測試 | 第三方測試服務  | 100         | 驗證支援（視需求調整） |
 
-#### 5. Summary
+#### 4. 教育訓練與工具導入
 
-| Category | Amount (TWD thousand) | Share | Notes |
-| --- | ---: | ---: | --- |
-| Contracted research/pro services | 2,253 | 12.5% | Contracted |
-| Academic cooperation | 581 | 3.2% | Research |
-| International cooperation (in-kind) | 580 | 3.2% | Intl collaboration |
-| Tools and training | 771 | 4.3% | Capability uplift |
-| Taiwan site cooperation | 0–100 | 0.5% | Validation support |
-| Total Budget | 18,000 | 100% | — |
+| 項目                  | 內容                                      | 經費形式 | 金額（千元） | 備註     |
+|-----------------------|-------------------------------------------|----------|-------------|----------|
+| 開發者工具與內部訓練 | AI 開發助理、程式安全訓練、季度工作坊     | 訓練／工具費 | 771         | 能力強化 |
 
-#### 6. Compliance Notes
+#### 5. 總表
 
-Contracted spend is 12.5%, meeting subsidy rules. Contracted items include third-party testing, compliance reviews, and professional documentation for credibility. Core technology (battery RUL, NLQ, anomaly detection, multi-agent collaboration, data pipelines) is led and completed by the applicant to ensure technical autonomy. Domestic/international partners support via cooperation or in-kind contributions to deepen validation, usability, and international expansion while meeting Taiwan’s audit requirements.
+| 類別                     | 金額（千元） | 占總經費比 | 備註     |
+|--------------------------|-------------|------------|----------|
+| 委託研究與專業服務       | 2,253       | 12.5%      | 委外支出 |
+| 學術合作                 | 581         | 3.2%       | 研究合作 |
+| 國際合作（實物貢獻）     | 580         | 3.2%       | 國際協作 |
+| 工具與教育訓練           | 771         | 4.3%       | 能力提升 |
+| 台灣場域合作             | 0–100       | 0.5%       | 驗證支援 |
+| **總經費**               | **18,000**  | **100%**   | —        |
 
-### (5) Domestic Travel
+#### 6. 合規性說明
 
-Only for necessary introduction/contracting/validation trips.
+> 本計畫委託支出占比為 **12.5%**，符合相關補助規範。委託項目包含第三方測試、合規審查與專業文件等具公信力之工作項目。核心技術開發（電池壽命預測（RUL）、NLQ、異常偵測、多智能體協作、資料管線等）由申請單位主導完成，確保技術能力與成果自主性。國內外合作單位以合作或實物方式支援，提升驗證深度、技術可用性與國際拓展能力，並符合台灣驗證環境與查核需求。
 
-| Item | Unit | Qty | Unit Price | Year 1 | Description |
-| --- | --- | ---: | ---: | ---: | --- |
-| Research center validation/meeting travel | Trip | 12 | 8 | 96 | Validation coordination, test meetings (HSP/CTSP) |
-| Site testing (port/warehouse) travel | Trip | 16 | 7 | 112 | Onsite deployment, sensor calibration, inspection |
-| Customer/partner technical exchanges | Trip | 8 | 5 | 40 | Arviem/partner technical alignment |
-| Expert meetings/review report travel | Trip | 7 | 6 | 42 | Reviews and milestone checkpoint meetings |
-| Total | — | — | — | 290 | TWD thousand |
+### （五）國內差旅費
 
-### (6) Patent Application Incentives
+> 僅限引進／委託／驗證必要差旅。
 
-Domestic NT$30K per case; international NT$100K per case. Recognition requires supporting expense evidence.
+| 項目                        | 單位 | 數量 | 單價 | 第 1 年度 | 用途說明                        |
+|-----------------------------|------|-----:|-----:|----------:|---------------------------------|
+| 學研中心驗證與會議差旅     | 次   |   12 |    8 |        96 | 驗證協調、測試會議（竹科／中科） |
+| 場域測試（港區／倉儲）差旅 | 次   |   16 |    7 |       112 | 實地部署、感測器校正與巡檢      |
+| 客戶／合作夥伴技術交流     | 次   |    8 |    5 |        40 | Arviem／合作單位技術銜接會議   |
+| 專家會議／審查報告差旅     | 次   |    7 |    6 |        42 | 審查與里程碑查核會議            |
+| 合計                        | —    |   —  |   — |       290 | 金額單位：千元                  |
 
-| Item | Unit | Qty | Unit Price | Year 1 | Description |
-| --- | --- | ---: | ---: | ---: | --- |
-| Domestic patent application incentive | Case | 2 | 22 | 44 | Supply chain anomaly detection and intelligent sampling |
-| International patent application incentive | Case | 1 | 72 | 72 | Multi-agent collaboration/explainability |
-| Total | — | — | — | 116 | TWD thousand |
+### （六）專利申請獎勵金
 
-### (7) Contingency and Risk Management
+> 國內每案 30、國外每案 100（千元）；完成申請即可認列（仍須舉證相關費用）。
 
-Flexible budget for technical risks, market changes, and execution uncertainty.
+| 項目               | 單位 | 數量 | 單價 | 第 1 年度 | 用途說明                      |
+|--------------------|------|-----:|-----:|----------:|-------------------------------|
+| 國內專利申請獎勵   | 件   |    2 |   22 |        44 | 供應鏈異常偵測與智能採樣優化  |
+| 國外專利申請獎勵   | 件   |    1 |   72 |        72 | 多智能體協作／可解釋性相關    |
+| 合計               | —    |   —  |   — |       116 | 金額單位：千元                |
 
-| Item | Unit | Qty | Unit Price | Year 1 | Description |
-| --- | --- | ---: | ---: | ---: | --- |
-| Technical risk contingency | Lot | 1 | 218 | 218 | Model retraining, algorithm tuning, extra test resources |
-| Market validation and customer development | Lot | 1 | 145 | 145 | Customer interviews, PoC demos, market research |
-| Execution risk buffer | Lot | 1 | 72 | 72 | Hiring delays, equipment failures, schedule adjustment |
-| Total | — | — | — | 435 | TWD thousand; ensures execution flexibility and risk control |
+### （七）應急準備金與風險管理
 
-### 2. Expenditure Allocation (Summary)
+> 針對技術風險、市場變動與執行不確定性設立之彈性預算。
 
-Budget Adjustment Notes
+| 項目               | 單位 | 數量 | 單價 | 第 1 年度 | 用途說明                                 |
+|--------------------|------|-----:|-----:|----------:|------------------------------------------|
+| 技術風險應急準備金 | 批   |    1 |  218 |       218 | 模型重訓、演算法調整、額外測試資源       |
+| 市場驗證與客戶開發 | 批   |    1 |  145 |       145 | 客戶訪談、POC 展示、市場調研             |
+| 執行風險緩衝       | 批   |    1 |   72 |        72 | 人力招聘延遲、設備故障、時程調整         |
+| 合計               | —    |   —  |   — |       435 | 金額單位：千元；**確保計畫執行彈性與風險控制** |
 
-| Account | Subsidy | Self-Fund | Total | Share |
-| --- | ---: | ---: | ---: | ---: |
-| 1. Personnel | 6,041 | 6,041 | 12,082 | 67.1% |
-| 2. Consumables/Raw Materials | 0 | 0 | 0 | 0.0% |
-| 3. Equipment Use/Cloud Leasing | 265 | 265 | 530 | 2.9% |
-| 4. Equipment Maintenance | 0 | 0 | 0 | 0.0% |
-| 5. Tech Introduction/Co-op R&D | 2,273 | 2,274 | 4,547 | 25.3% |
-| 6. Domestic Travel | 145 | 145 | 290 | 1.6% |
-| 7. Patent Incentives | 58 | 58 | 116 | 0.6% |
-| 8. Contingency & Risk Mgmt | 218 | 217 | 435 | 2.4% |
-| Total Development Budget | 9,000 | 9,000 | 18,000 | 100% |
-| Percent | 50.0% | 50.0% | 100% | — |
+### 二、歲出預算分配表（彙總表）
 
-Note: Total budget NT$18,000K ensures sufficient cloud resources and maintenance for the full 18-month R&D term. Government subsidy remains 50.0%.
+#### 預算調整說明
 
-## X. Attachments (add as needed)
+| 會計科目                  |   補助款 |   自籌款 |     合計 |   占比 |
+|---------------------------|---------:|---------:|---------:|-------:|
+| 1. 人事費                 |    6,041 |    6,041 |   12,082 |  67.1% |
+| 2. 消耗性器材及原材料費   |        0 |        0 |        0 |   0.0% |
+| 3. 設備使用費／雲端租賃費 |      265 |      265 |      530 |   2.9% |
+| 4. 設備維護費             |        0 |        0 |        0 |   0.0% |
+| 5. 技術引進／合作研發費   |    2,273 |    2,274 |    4,547 |  25.3% |
+| 6. 國內差旅費             |      145 |      145 |      290 |   1.6% |
+| 7. 專利申請獎勵金         |       58 |       58 |      116 |   0.6% |
+| 8. 應急準備金與風險管理   |      218 |      217 |      435 |   2.4% |
+| **總開發經費**           |  **9,000** |  **9,000** | **18,000** | **100%** |
+| **百分比**               |  **50.0%** |  **50.0%** |  **100%** |    —   |
 
-1. Attachment 1: Previously applied government programs (category/status/amount/benefits/differences).
-2. Attachment 2: Cooperation contract (per template).
-3. Attachment 3: Technology introduction/contracted research/validation proposals and agreements.
-4. Attachment 4: Consultant and domestic/international expert consent letters.
-5. Attachment 5: Others (e.g., security audit, privacy impact assessment, publicity plan).
+**註**：總預算 18,000K，確保雲端資源與設備維護充足，支援完整 18 個月研發需求。政府補助比例維持 50.0%。
 
-## XI. Conclusion
 
-Summary: This section ties pain points to outcomes, reiterating quantitative KPIs, checkpoints, and governance mechanisms are complete, with diffusion and export potential.
+## 伍、附件（請視需要增列）
 
-This project centers on “AI decision-making × supply chain monitoring × international cooperation,” focusing on improving reliability and decision efficiency for manufacturing and logistics. Within the 18-month R&D cycle and limited budget, it can deliver highly feasible results, meeting MOEA’s AI Application Enhancement Program criteria in innovation, technical excellence, and market value.
+1. 附件一：曾申請之政府計畫（類別／狀態／金額／效益／差異）。
+2. 附件二：合作契約書（依範本）。
+3. 附件三：技術引進／委託研究／驗證之計畫書與協議書。
+4. 附件四：顧問與國內外專家願任同意書。
+5. 附件五：其他（如資安稽核、隱私影響評估、廣宣規劃）。
 
-Editorial Notes:
-- All amounts are “TWD thousand,” rounded; subsidy share ≤ 50%.
-- “Checkpoints,” “person-months,” and “expenditure categories” are consistent across tables; closure month is listed as an acceptance checkpoint.
-- Maintain both public summary and restricted-detail versions (attachments include contracts/personnel, etc.).
+## 拾、結論
+
+【摘要】本節總結痛點到成效之對應，重申量化KPI、查核點與治理機制已完備，具擴散性與輸出潛力。
+
+本計畫以「AI 智慧決策 × 供應鏈監測 × 國際合作」為核心，聚焦提升製造與物流產業可靠度與決策效率。18 個月研發週期可於有限預算下展現高可行性成果，並符合經濟部「AI 應用躍昇計畫」之創新性、技術優越性與市場價值審查重點。
+
+> **編註**：
+>
+> - 金額一律為「新台幣千元」並四捨五入；補助比例不超過 50%。
+> - 各表之「查核點」、「投入月數」、「歲出科目」應前後一致；結案月需列入驗收查核點。
+> - 需同時保留可公開之摘要與限閱之細節版本（附件含合約/人事等）。
