@@ -134,7 +134,7 @@
   - 文件中明定乙方提供實際倉儲／車隊／轉運中心作為「國內示範場域」，並配合提供必要之去識別化營運數據與場域資源，以完成本計畫「**至少 1 家國際＋1 家國內場域驗證**」KPI。  
   - 同步規範數據權利與保密義務，並重申本計畫期間所開發 AI 模型、演算法與軟體著作權歸 ItracXing 所有，避免日後在智財歸屬上產生爭議。
 
-上述合作文件一方面做為本計畫 KPI 與查核點（如場域驗證、國際合作、三年產值與國際收入占比等）之佐證來源，另一方面也具體回應審查委員對「國際合作是否具體落地」、「國內示範場域是否已明確到位」、「智財與資料權利是否清楚界定」等潛在疑慮，以提高計畫整體可行性與執行信心。
+上述合作文件一方面做為本計畫 KPI 與查核點（如場域驗證、國際合作、三年產值與國際收入占比等）之佐證來源，另一方面也具體回應對「國際合作是否具體落地」、「國內示範場域是否已明確到位」、「智財與資料權利是否清楚界定」等潛在疑慮，以提高計畫整體可行性與執行信心。
 
 #### 5. 風險緩衝
 所有目標採「保守可達」：若任一模型在中期 (M9–M10) 評估低於預期（例如 F1-score <0.83），啟動備援策略（特徵增強 / 閾值調教 / 模型混合）確保結案前達標；商業指標以 LOI/POC 滾動更新，未達時加速第二渠道拓拓展。
@@ -188,11 +188,14 @@
 #### （1）國際競品比較
 | 項目 | FedEx（含 SenseAware） | Maersk（含 Captain Peter / RCM） | RKC Logistics LLC | **ItracXing & Arviem 聯盟（★本案）** |
 | --- | --- | --- | --- | --- |
-| 供應鏈角色定位 | 全球整合快遞 / 小包裹承運人（integrator） | 全球海運與整合物流（特別是冷鏈／冷凍櫃） | 美國中小企業導向之卡車運輸與貨運經紀（3PL / broker + carrier） | ItracXing：台灣 AI 供應鏈監控平台；Arviem：瑞士第三方貨運可視化服務商（>5,000 家跨國貨主） |
-| 監控 / 可視化產品 | SenseAware ID / M4：多感測裝置＋雲端平台，即時監控位置、溫度、氣壓、衝擊等 | Remote Container Management（RCM）＋ Captain Peter：冷凍櫃溫度、濕度、氣體、位置等監控與告警 | 使用合作 TMS／tracking portal，提供貨況查詢與帳款管理，無自有 IoT 感測硬體 | Smart TOTE（智慧物流箱）＋ AI-MaaS：整合 BLE Padlock、壓力、溫濕度、GPS / LTE / NTN，搭配 RUL、環境異常、路線／竊盜偵測、NLQ 報表等 AI 模型 |
-| 監控相關商業模式 | Subscription 訂閱＋ Single Journey 單趟收費，皆作為 FedEx 運輸的高價加值服務，鎖定醫療、高價貨 | 作為 Maersk Reefer 冷凍櫃的數位加值服務，多綁在 Maersk 船隊運價與合約中，非獨立對外銷售 | 典型 3PL／貨運經紀模式：靠運費價差與服務費獲利；追蹤功能為附加數位服務，非高價 IoT 監控產品 | 1) USD 2 / TOTE / shipment per-shipment 收費；2) 每箱月租 USD 8–12；3) AI-MaaS / 顧問 / 授權 NT$1–2M / 客戶 / 年；4) 通路利潤與 Arviem 50:50 分成 |
-| 資料與生態位階 | 裝置與資料完全屬 FedEx 生態系，客戶只能在 FedEx 平台查看，無跨承運人／開放 FL 能力 | 以 Maersk 自有冷凍櫃與船隊為中心，資料與平台由 Maersk 掌控，生態偏封閉 | 依賴 TMS / 車隊提供的標準事件回報，資料粒度有限，缺乏高頻、多感測 IoT 資料 | ItracXing 保有 Foreground IP；Arviem 提供全球場域與客戶；支援跨場域聯邦學習（FL），可將模型白牌輸出給多家物流商與 3PL |
-| 與本案差異重點 | 封閉型、單一承運人專屬方案：強在全球網路與可靠性，但無法白牌輸出給其他物流商 | 海運冷鏈＋單一船公司主導：強在 Reefer 船隊 visibility，主要服務自家船公司 | 服務導向 3PL，缺少 IoT＋AI 監控產品，在 RUL、環境風險預測等 AI 能力較弱 | 開放型、多承運人的 AI 監控平台：以 Smart TOTE＋AI-MaaS＋FL-Ready 平台為核心，可成為 FedEx / Maersk 類承運人與 RKC 類 3PL 的技術供應者與白牌夥伴 |
+| 供應鏈角色定位 | 全球整合快遞 / 小包裹承運人（integrator） | 全球海運與整合物流（特別是冷鏈／冷凍櫃） | 美國中小企業導向之卡車運輸與貨運經紀（3PL / broker + carrier），以整合運力與管理中小企業託運為主 | ItracXing：台灣 AI 供應鏈監控與 AI-MaaS 平台；Arviem：瑞士第三方貨運可視化服務商（>5,000 家跨國貨主） |
+| 監控 / 可視化產品 | SenseAware ID / M4：多感測裝置＋雲端平台，即時監控位置、溫度、氣壓、衝擊等 | Remote Container Management（RCM）＋ Captain Peter：冷凍櫃溫度、濕度、氣體、位置等監控與告警 | 多採用合作 TMS／第三方 real-time transportation visibility（RTTV）與 tracking portal，提供貨況查詢與帳款管理，本身無自有 IoT 感測硬體與 AI 平台 | Smart TOTE（智慧物流箱）＋ AI-MaaS：整合 BLE Padlock、壓力、溫濕度、GPS / LTE / NTN，搭配 RUL、環境異常、路線／竊盜偵測、NLQ 報表等 AI 模型 |
+| 監控相關商業模式 | Subscription 訂閱＋ Single Journey 單趟收費，皆作為 FedEx 運輸的高價加值服務，鎖定醫療、高價貨 | 作為 Maersk Reefer 冷凍櫃的數位加值服務，多綁在 Maersk 船隊運價與合約中，非獨立對外銷售 | 典型 3PL／貨運經紀模式：靠運費價差與服務費獲利；追蹤與可視化功能多透過第三方 RTTV / TMS 平台提供，為附加數位服務，非高價 IoT 監控產品 | 1) USD 2 / TOTE / shipment per-shipment 收費；2) 每箱月租 USD 8–12；3) AI-MaaS / 顧問 / 授權 NT$1–2M / 客戶 / 年；4) 通路利潤與 Arviem 50:50 分成 |
+| 資料與生態位階 | 裝置與資料完全屬 FedEx 生態系，客戶只能在 FedEx 平台查看，無跨承運人／開放 FL 能力 | 以 Maersk 自有冷凍櫃與船隊為中心，資料與平台由 Maersk 掌控，生態偏封閉 | 高度仰賴外部 TMS / RTTV 平台提供事件與定位資料，資料粒度與感測維度受限，本身不掌握 IoT 裝置與 AI 模型之核心 IP | ItracXing 保有 Foreground IP；Arviem 提供全球場域與客戶；支援跨場域聯邦學習（FL），可將模型白牌輸出給多家物流商與 3PL |
+| 與本案差異重點 | 封閉型、單一承運人專屬方案：強在全球網路與可靠性，但無法白牌輸出給其他物流商 | 海運冷鏈＋單一船公司主導：強在 Reefer 船隊 visibility，主要服務自家船公司 | 服務導向 3PL，屬「第三方平台與承運人之使用者」，缺少自有 IoT＋AI 監控產品，在 RUL、環境風險預測等 AI 能力較弱 | 開放型、多承運人的 AI 監控平台：以 Smart TOTE＋AI-MaaS＋FL-Ready 平台為核心，可成為 FedEx／Maersk 類承運人與 RKC 類 3PL 的技術供應者與白牌夥伴 |
+
+> 補充說明：  
+> 實務上，RKC 類型之中小型 3PL 多為國際 real-time transportation visibility（RTTV）與智慧標籤平台的使用者，而非 IoT＋AI 技術供應商。真正在全球市場與 Arviem 同一層級競爭的，主要是一小群提供 RTTV 平台與智慧標籤方案的國際業者；本計畫之 ItracXing × Arviem 聯盟，則以台灣研發之 Smart TOTE 與 AI-MaaS 為核心，未來可作為此類 RTTV 平台與 3PL 的 AI 技術與白牌合作夥伴，而非單純承運人或 3PL 的直接競品。
 
 
 
@@ -303,7 +306,9 @@
 
 #### （1-2）國際 SOTA（State of the Art）與本計畫技術指標對照
 
-為凸顯技術優越性與可查核性，本節擇要列出三項關鍵指標，對照國際常見或文獻/產業報告中可見之 SOTA/通行水準與本計畫目標值，所有本計畫目標數值均與前述 KPI 表保持一致。下列國際數據為近年電池壽命（RUL）預測、冷鏈監控與運輸可視化等公開研究，以及實務上 real-time transportation visibility 平台案例之彙整範圍（例如 Energies、iScience 等期刊之相關綜述，[Real-time Transportation Visibility Platforms Reviews, Gartner]、project44／Uber Freight 等 ETA 案例說明），供審查委員參考其量級合理性，並對照本計畫設定之目標指標。
+為凸顯技術優越性與可查核性，本節擇要列出三項關鍵指標，對照國際常見或文獻/產業報告中可見之 SOTA/通行水準與本計畫目標值，所有本計畫目標數值均與前述 KPI 表保持一致。下列國際數據為近年電池壽命（RUL）預測、冷鏈監控與運輸可視化等公開研究，以及實務上 real-time transportation visibility 平台案例之彙整範圍（例如 Energies、iScience 等期刊之相關綜述，[Real-time Transportation Visibility Platforms Reviews, Gartner]、project44／Uber Freight 等 ETA 案例說明），供讀者參考其量級合理性，並對照本計畫設定之目標指標。
+
+相較於上述國際 real-time transportation visibility 平台與文獻所示之 RUL／ETA 指標化成果，國內多數冷鏈與物流場域仍以簡單門檻式溫度警報與單點 GPS 回報為主，缺乏以 F1-score、AUC、MAE 等量化指標驗證之 AI 模型與跨段 ETA 預測機制。本計畫即針對此落差進行補強。
 
 #### ① 電池壽命預測（RUL）
 
@@ -345,6 +350,8 @@
 > - project44, *“ETA reimagined: Transforming project44’s prediction engine”*, 2025；Uber Freight, *“A look inside the AI engine powering on-time arrivals”*, 2023：說明國際平台透過 AI 提升 ETA 準確度與異常預警的實務成果。  
 
 上述指標將透過前述「技術驗證協議」與第三方測試／場域驗證報告進行查核，並納入里程碑 B.1／B.2 之審查基準，以確保「技術優越性」不僅為定性敘述，而能以量化數據對照國際水準。
+
+綜合上述三項指標對照可見，本計畫在電池壽命預測（RUL）、環境異常偵測與路線／竊盜偵測三個面向，皆設定高於文獻與國際平台典型水準之目標；並透過自研時序模型、多源感測資料融合與 Smart TOTE 硬體整合，形成具自主性之 AI 技術與可累積之核心智財（IP）。
 
 ---
 
@@ -436,7 +443,7 @@
 **A3. 建立數據集（Dataset for Modeling）**
 - 整合歷史資料與事件標註（故障/維護），形成可回溯的訓練與驗證集。
 
--**A4. 建模與訓練（Modeling & Training）**
+- **A4. 建模與訓練（Modeling & Training）**
 - 採用 **RNN/LSTM/TFT（Temporal Fusion Transformer）**等時序深度學習模型，分析電池放電曲線與電壓衰退趨勢，直接建立電池壽命（RUL）預測模型。
 - 使用 **生存分析（Survival Analysis）**技術預測 RUL，考量右截斷資料與不確定性。
 - 輔以簡單規則與門檻檢查，確保模型輸出穩定與可落地。
@@ -445,7 +452,7 @@
 - 以準確度與預測誤差為主進行評估，提供簡明可解釋的結果說明。
 
 **A6. 佈署與展示（Deployment & Showcase）**
--- 提供電池壽命預測（RUL）API 與儀表板，支援預測性維護排程，及時預警電池壽命風險變化，優化維保決策。
+- 提供電池壽命預測（RUL）API 與儀表板，支援預測性維護排程，及時預警電池壽命風險變化，優化維保決策。
 
 > 本分項 MVP 驗收指標：可靠度（Availability）≥95%、RUL MAE ≤10 天（資料完整性 ≥95%）。PoC 項目（不列為硬性驗收）：多場域長期壽命趨勢分析、跨客戶電池壽命模型泛化能力評估等。
 
@@ -544,7 +551,7 @@
 ```mermaid 
 flowchart LR
   %% ========== Device & Model Layer ==========
-  subgraph S["裝置與模型層 (Device & Model Layer)<br/>📡 感測資料經過加密傳輸與身分驗證後，寫入 iTracXing/Arviem Cloud"]
+  subgraph S["裝置與模型層 (Device & Model Layer)<br/>感測資料經過加密傳輸與身分驗證後，寫入 iTracXing/Arviem Cloud"]
     S1["Smart TOTE / Gateway<br/>🔐 加密傳輸｜身分驗證<br/>收集感測資料"]
     S2["AI 模型推論 (Inference)<br/>• 分項 A：電池壽命預測（RUL）模型<br/>• 分項 C：環境異常模型（溫濕度偵測）<br/>• 分項 D：路線/竊盜模型（GPS/開箱異常）<br/>↓ 輸出 risk_score / metrics"]
   end
@@ -561,7 +568,7 @@ flowchart LR
   S1 --> S2 --> E1
   E1 --> E2 --> E3 --> E4
   
-  E4 --> OUTPUT["➡️ Alert 物件傳遞至後端流程"]
+  E4 --> OUTPUT["Alert 物件傳遞至後端流程"]
   
   style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
 ```
@@ -569,10 +576,10 @@ flowchart LR
 **圖 4-2B：後端流程 - 報告生成與通知**
 ```mermaid 
 flowchart LR
-  INPUT["⬅️ Alert 物件<br/>(來自告警引擎)"]
+  INPUT["Alert 物件<br/>(來自告警引擎)"]
   
   %% ========== (Optional) LLM Explanation ==========
-  subgraph L["(選配) LLM 說明層<br/>👉 分項 B：AI 自主事件報告 / NLQ Dashboard"]
+  subgraph L["(選配) LLM 說明層<br/>分項 B：AI 自主事件報告 / NLQ Dashboard"]
     L1["將 Alert JSON 放入 Prompt"]
     L2["LLM 產生中英摘要＋建議行動"]
   end
@@ -884,7 +891,7 @@ flowchart LR
 
 ### AI 模組 × 里程碑 × KPI 總覽
 
-> 說明：本表僅列出本計畫主要 AI 模組與技術路線，區分 **MVP／必達** 與 **延伸／進階** 項目，讓審查委員可在 1 分鐘內看懂技術重點與達成目標。
+> 說明：本表僅列出本計畫主要 AI 模組與技術路線，區分 **MVP／必達** 與 **延伸／進階** 項目，讓讀者可在 1 分鐘內看懂技術重點與達成目標。
 
 | 模組 | 類型 | 關鍵里程碑 (月) | 期末 KPI | 備註 |
 | --- | --- | --- | --- | --- |
@@ -1138,13 +1145,13 @@ gantt
 
 1. **CO₂ 減量構成與示意數值（CO₂ 計算公式）**
 
-- 🔋 **電池優化 — 減少電池製造碳排：≈ 1,950 kg CO₂e**  
+ - **電池優化 — 減少電池製造碳排：≈ 1,950 kg CO₂e**  
   透過電池壽命預測（RUL）與預測性維護，降低不必要的電池汰換與過早報廢，對應每顆電池製造碳排之減少。  
-- 🚛 **路線優化 — 減少燃油消耗：≈ 1,728 kg CO₂e**  
+ - **路線優化 — 減少燃油消耗：≈ 1,728 kg CO₂e**  
   透過路線異常偵測與 ETA 最佳化，減少無效繞行與怠速停留所造成之燃油消耗。  
-- 📦 **廢棄物防止 — 防止產品損壞：≈ 11,000 kg CO₂e**  
+ - **廢棄物防止 — 防止產品損壞：≈ 11,000 kg CO₂e**  
   透過環境異常提前預警與 AI 自主式事件報告，降低溫濕度敏感貨品報廢與重製需求，依單位產品廢棄所對應之碳排係數換算。  
-- 📱 **IoT 設備延壽 — 延長設備使用壽命：≈ 46 kg CO₂e**  
+ - **IoT 設備延壽 — 延長設備使用壽命：≈ 46 kg CO₂e**  
   以電池與裝置健康管理延長 IoT 設備使用年限，減少新設備製造與報廢所帶來之碳排。  
 
 - **示意總減量：**  
@@ -1159,17 +1166,17 @@ gantt
 
 3. **量測方法與數據來源**
 
-**🎯 計算標準**  
+**計算標準**  
 - 依據 **ISO 14064‑1 溫室氣體盤查標準** 建立組織層級排放盤查與追蹤架構。  
 - 對應 **GHG Protocol 範疇 1–3**，將燃油使用（Scope 1）、購電／冷媒（Scope 2）及運輸外包／產品廢棄（Scope 3）分別歸類。  
 - 參考 **環保署碳足跡計算指引** 與相關技術文件，做為排放係數與活動數據選取依據。
 
-**📡 數據來源**  
+**數據來源**  
 - 即時 IoT 感測器與 Smart TOTE 裝置之行駛里程、燃油推估、裝置壽命與環境異常紀錄。  
 - 行政院環保署與國際公開資料庫所提供之排放係數（能源、運輸、廢棄物等）。  
 - 產業基準數據（環境產品宣告 EPD、LCA 報告與供應商提供之產品碳足跡）作為單位產品／設備之基準值。
 
-**💡 排放係數基準（示意）**  
+**排放係數基準（示意）**  
 - 電池製造：約 **75 kg CO₂e／顆**（來源：EPD／電池環境產品宣告）。  
 - 柴油燃燒：約 **2.68 kg CO₂e／L**（來源：環保署公布排放係數）。  
 - 食品廢棄：約 **2.5 kg CO₂e／kg**（來源：LCA 文獻與環境產品宣告）。  
@@ -1301,7 +1308,7 @@ gantt
 
 #### （六）效益指標與查核機制（KPI 與技術驗證協議連結）
 
-> 本節將前述效益具體化為可量測之 KPI 表，並連結技術驗證協議，確保效益可被查核。
+> 前述效益具體化為可量測之 KPI 表，並連結技術驗證協議，確保效益可被查核。
 
 1. **整體 KPI 表（指標／基準／期末／方法／來源／頻率）**
 
