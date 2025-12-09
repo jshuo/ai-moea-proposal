@@ -187,6 +187,7 @@
 
 #### （1）國際競品比較
 | 項目 | FedEx（含 SenseAware） | Maersk（含 Captain Peter / RCM） | RKC Logistics LLC | **ItracXing & Arviem 聯盟（★本案）** |
+| --- | --- | --- | --- | --- |
 | 供應鏈角色定位 | 全球整合快遞 / 小包裹承運人（integrator） | 全球海運與整合物流（特別是冷鏈／冷凍櫃） | 美國中小企業導向之卡車運輸與貨運經紀（3PL / broker + carrier） | ItracXing：台灣 AI 供應鏈監控平台；Arviem：瑞士第三方貨運可視化服務商（>5,000 家跨國貨主） |
 | 監控 / 可視化產品 | SenseAware ID / M4：多感測裝置＋雲端平台，即時監控位置、溫度、氣壓、衝擊等 | Remote Container Management（RCM）＋ Captain Peter：冷凍櫃溫度、濕度、氣體、位置等監控與告警 | 使用合作 TMS／tracking portal，提供貨況查詢與帳款管理，無自有 IoT 感測硬體 | Smart TOTE（智慧物流箱）＋ AI-MaaS：整合 BLE Padlock、壓力、溫濕度、GPS / LTE / NTN，搭配 RUL、環境異常、路線／竊盜偵測、NLQ 報表等 AI 模型 |
 | 監控相關商業模式 | Subscription 訂閱＋ Single Journey 單趟收費，皆作為 FedEx 運輸的高價加值服務，鎖定醫療、高價貨 | 作為 Maersk Reefer 冷凍櫃的數位加值服務，多綁在 Maersk 船隊運價與合約中，非獨立對外銷售 | 典型 3PL／貨運經紀模式：靠運費價差與服務費獲利；追蹤功能為附加數位服務，非高價 IoT 監控產品 | 1) USD 2 / TOTE / shipment per-shipment 收費；2) 每箱月租 USD 8–12；3) AI-MaaS / 顧問 / 授權 NT$1–2M / 客戶 / 年；4) 通路利潤與 Arviem 50:50 分成 |
