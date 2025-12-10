@@ -92,7 +92,7 @@ All IP existing prior to this Project remains the property of the respective own
 
 ### MOEA / ItracXing safeguard
 
-Notwithstanding the foregoing, the Parties acknowledge that, in order to comply with the policy objectives and subsidy requirements of the Taiwan MOEA A+ program, the Taiwanese applicant ItracXing must retain sufficient rights to use, further develop and commercialise Project Foreground in the field of logistics AI monitoring and AI-MaaS services. Accordingly, with respect to any Foreground IP (including jointly owned Foreground IP) that is necessary to achieve the objectives of the MOEA-funded Project, the Parties agree to grant ItracXing a **non-exclusive, irrevocable licence**, on commercially reasonable terms to be agreed in separate commercial arrangements, to exploit such Foreground IP for commercialisation in Taiwan and, where appropriate, internationally.
+Notwithstanding the foregoing, the Parties acknowledge that, in order to comply with the policy objectives and subsidy requirements of the Taiwan MOEA A+ program, the Taiwanese applicant ItracXing must retain sufficient rights to use, further develop and commercialise Project Foreground in the field of logistics AI monitoring and AI-MaaS services. Accordingly, with respect to any Foreground IP (including jointly owned Foreground IP) that is necessary to achieve the objectives of the MOEA-funded Project, the Parties agree to grant ItracXing a **non-exclusive licence**, on commercially reasonable terms to be agreed in separate commercial arrangements, to exploit such Foreground IP for commercialisation in Taiwan and, where appropriate, internationally.
 
 ### Data rights
 
