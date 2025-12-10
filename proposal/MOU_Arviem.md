@@ -1,102 +1,139 @@
-# MEMORANDUM OF UNDERSTANDING (MOU)
-**ON STRATEGIC COOPERATION FOR AI-DRIVEN SUPPLY CHAIN MONITORING**
+# MEMORANDUM OF UNDERSTANDING (MOU)  
+## ON STRATEGIC COOPERATION FOR AI-DRIVEN SUPPLY CHAIN MONITORING
 
-**Date:** Dec 9th, 2025
+**Date:** Dec 10th, 2025
 
-**BETWEEN:**
+## BETWEEN
 
-**Party A:**
-**ItracXing Technology Co., Ltd. (準旺科技股份有限公司)**
-A company organized and existing under the laws of Taiwan (R.O.C.).
-(Hereinafter referred to as "**ItracXing**")
+**Party A:** ItracXing Technology Co., Ltd. (準旺科技股份有限公司)  
+A company organized and existing under the laws of Taiwan (R.O.C.).  
+(Hereinafter referred to as **"ItracXing"**)
 
 **AND**
 
-**Party B:**
-**Arviem AG**
-A company organized and existing under the laws of Switzerland.
-(Hereinafter referred to as "**Arviem**")
+**Party B:** Arviem AG  
+A company organized and existing under the laws of Switzerland, with fully owned daughter companies in America, Germany and Greece and Institutional Partners in Singapore and Vietnam  
+(Hereinafter referred to as **"Arviem"**)
 
-(ItracXing and Arviem are hereinafter collectively referred to as the "**Parties**".)
+(ItracXing and Arviem are hereinafter collectively referred to as the **"Parties"**.)
 
 ---
 
 ## 1. BACKGROUND & OBJECTIVE
 
-**WHEREAS**, ItracXing is applying for the **"A+ Enterprise Innovation R&D Program – AI Application Enhancement Project"** (hereinafter "**The Project**") supported by the Ministry of Economic Affairs (MOEA), Taiwan, with the project title: **"AI Smart Supply Chain Risk Prediction and Communication Integration System Development"**;
+- WHEREAS, ItracXing is applying for the **"A+ Enterprise Innovation R&D Program – AI Application Enhancement Project"** (hereinafter **"The Project"**) supported by the Ministry of Economic Affairs (MOEA), Taiwan, with the project title: **"AI Smart Supply Chain Risk Prediction and Communication Integration System Development"**;
+- WHEREAS, Arviem is a global leader in real-time cargo monitoring and supply chain visibility IoT solutions, services and products;
+- WHEREAS, the Parties desire to establish a strategic partnership to jointly develop, validate, and commercialize AI-driven logistics solutions.
 
-**WHEREAS**, Arviem is a global leader in real-time cargo monitoring and supply chain visibility;
+NOW, THEREFORE, the Parties agree as follows:
 
-**WHEREAS**, the Parties desire to establish a strategic partnership to jointly develop, validate, and commercialize AI-driven logistics solutions.
-
-**NOW, THEREFORE**, the Parties agree as follows:
+---
 
 ## 2. SCOPE OF COOPERATION
 
 The cooperation shall cover two phases to ensure both the successful submission of the proposal and the subsequent execution of the Project.
 
-### Phase 1: Proposal Preparation & Feasibility (Immediate)
-To accelerate proposal submission and demonstrate early commitment, **Arviem agrees to provide USD 10,000 (ten thousand U.S. dollars) to ItracXing**.
-*   **Purpose:** To offset costs for professional proposal writing, documentation, translation, and preliminary feasibility analysis for the MOEA application.
-*   **Payment:** ItracXing shall invoice Arviem upon signing of this MOU.
+### Project Execution & Field Validation (Jan 1, 2026 – Jun 30, 2027)
 
-### Phase 2: Project Execution & Field Validation (Jan 1, 2026 – Jun 30, 2027)
 Subject to the approval of the MOEA grant, the Parties agree to collaborate on the following technical and operational tasks:
 
-1.  **International Testbed (Field Validation):**
-    *   Arviem shall provide access to **global shipping routes and logistics scenarios** to serve as the "International Testbed" for the Project.
-    *   This includes validating ItracXing’s **"Smart TOTE"** devices and **"AI-MaaS"** platform in real-world cross-border environments.
+#### International Testbed (Field Validation)
 
-2.  **Data Collaboration & AI Model Training:**
-    *   Arviem agrees to share relevant **historical and real-time logistics data** (including but not limited to sensor logs, GPS tracks, and event records) to support the training of ItracXing’s AI models.
-    *   **Target Models:**
-        *   **BHI/RUL:** Battery Health Index and Remaining Useful Life prediction.
-        *   **Anomaly Detection:** Environmental (Temp/Humidity) risk prediction.
-        *   **Route Risk:** Theft and route deviation detection.
+- Arviem shall provide access to global shipping routes and logistics scenarios to serve as the **"International Testbed"** for the Project.
+- This includes validating ItracXing’s **智慧周轉箱（Smart TOTE）** devices and Arviem’s **"AI-MaaS"** platform in real-world cross-border environments.
 
-3.  **Market Pilot & Commercialization:**
-    *   Upon successful validation, Arviem will evaluate the adoption of the developed AI solutions for its global customer base.
-    *   Joint marketing activities (e.g., CES 2026) to showcase the Project results.
+#### Data Collaboration & AI Model Training
+
+- Arviem agrees to share relevant historical and real-time logistics data (including but not limited to sensor logs, GPS tracks, and event records) to support the training of Arviem/ItracXing AI models.
+
+**Target Models:**
+- **RUL:** Remaining Useful Life prediction
+- **Customer incident Reporting:** automated and on Demand incident reporting to customers
+- **Anomaly Detection:** Environmental (Temp/Humidity) risk prediction
+- **Route Risk:** Theft and route deviation detection
+
+#### Market Pilot & Commercialization
+
+- Upon successful validation, Arviem will evaluate the adoption of the developed AI solutions for its global customer base.
+- Joint marketing activities (e.g., **CES 2026**) to showcase the Project results.
+
+---
 
 ## 3. ROLES & RESPONSIBILITIES
 
-*   **ItracXing:**
-    *   Lead the R&D of core AI algorithms (BHI, RUL, NLQ, Anomaly Detection).
-    *   Develop the "Smart TOTE" hardware and "AI-MaaS" cloud platform.
-    *   Ensure compliance with MOEA requirements and project deliverables.
+### ItracXing
 
-*   **Arviem:**
-    *   Provide domain expertise, client use cases, and EU market requirements.
-    *   Facilitate field testing and data access.
-    *   Provide feedback on UI/UX and operational feasibility.
+- Co-lead the R&D of core AI algorithms.
+- Develop the **智慧周轉箱（Smart TOTE）** hardware.
+- Ensure compliance with MOEA requirements and project deliverables.
+
+### Arviem
+
+- Co-lead the R&D of core AI algorithms.
+- Develop the **"AI-MaaS"** solutions.
+- Provide domain expertise, client use cases, feedback and EU market requirements.
+- Facilitate field testing and data access.
+
+---
 
 ## 4. INTELLECTUAL PROPERTY (IP)
 
 To comply with MOEA subsidy requirements regarding autonomous technology development:
 
-1.  **Background IP:** All IP existing prior to this Project remains the property of the respective owner.
-2.  **Project IP (Foreground IP):** All AI models, algorithms, source code, and hardware designs developed by ItracXing under this Project **shall remain the sole property of ItracXing**, and shall be primarily developed and maintained in Taiwan (R.O.C.) by ItracXing's R&D team.
-3.  **Data Rights:** Raw data provided by Arviem remains the property of Arviem. ItracXing is granted a license to use such data for the purpose of the Project and model training.
+### Background IP
+All IP existing prior to this Project remains the property of the respective owner.
 
-## 5. TERM AND TERMINATION
+### Foreground IP
 
-*   **Effective Date:** This MOU is effective upon signing.
-*   **Duration:** This MOU shall remain valid through the end of the Project period (**June 30, 2027**), unless terminated earlier.
-*   **Termination:** Either Party may terminate this MOU with 30 days' written notice.
+- **Ownership.** Any Foreground that is generated solely by or on behalf of one Participant shall be exclusively owned by that Participant and that Participant shall be responsible for securing ownership of such Foreground.
+- **Joint ownership.** Any Foreground generated by or on behalf of more than one Participant and for which Foreground it is not possible to (i) establish the respective contribution of each Participant, or (ii) separate their contribution for the purpose of applying for, obtaining or maintaining protection of the Foreground, shall be jointly owned by such Participants. Each such Participant shall have an equal and undivided interest in such joint Foreground.
+- **Disclosing the Foreground.** Each Participant shall promptly disclose in confidence to the Project Coordinator all Foreground generated by it during the term of this Consortium Agreement. The Project Coordinator shall further disclose such Foreground in confidence to the other Participants by providing a bi-annual report on generated Foreground.
+- **Exploitation of the Foreground.** Each Participant shall have the right to exploit such Foreground solely owned by it. Each Participant that owns joint Foreground shall be entitled to use the jointly owned Foreground, unless otherwise agreed in a joint ownership agreement to be concluded between the joint owners before any exploitation of Foreground takes place.
 
-## 6. GOVERNING LAW
+### MOEA / ItracXing safeguard
 
-This MOU shall be governed by and construed in accordance with the laws of **Taiwan (R.O.C.)**.
+Notwithstanding the foregoing, the Parties acknowledge that, in order to comply with the policy objectives and subsidy requirements of the Taiwan MOEA A+ program, the Taiwanese applicant ItracXing must retain sufficient rights to use, further develop and commercialise Project Foreground in the field of logistics AI monitoring and AI-MaaS services. Accordingly, with respect to any Foreground IP (including jointly owned Foreground IP) that is necessary to achieve the objectives of the MOEA-funded Project, the Parties agree to grant ItracXing a **non-exclusive, irrevocable licence**, on commercially reasonable terms to be agreed in separate commercial arrangements, to exploit such Foreground IP for commercialisation in Taiwan and, where appropriate, internationally.
+
+### Data rights
+
+- Raw data provided by Arviem remains the property of Arviem.
+- For the duration of this MOU, ItracXing is granted a licence to use such data solely for the purposes of this Project, including model training, evaluation and improvement, in accordance with applicable data protection and confidentiality obligations.
+- The Parties acknowledge that trained models and derived insights resulting from the lawful use of such data under this MOU may form part of the Project Foreground and, where applicable, may be used by ItracXing in accordance with the licensing framework set out above.
 
 ---
 
-**IN WITNESS WHEREOF**, the Parties have caused this MOU to be executed by their duly authorized representatives.
+## 5. TERM AND TERMINATION
 
-<br>
+- **Effective Date:** This MOU is effective upon signing.
+- **Duration:** This MOU shall remain valid through the end of the Project period (June 30, 2027), unless terminated earlier.
+- **Termination:** Either Party may terminate this MOU with 30 days' written notice.
 
-| **For and on behalf of**<br>**ItracXing Technology Co., Ltd.** | **For and on behalf of**<br>**Arviem AG** |
-| :--- | :--- |
-| <br><br>___________________________ | <br><br>___________________________ |
-| **Name:** Jeff Shuo | **Name:** [Authorized Signatory] |
-| **Title:** CIO | **Title:** [Title] |
-| **Date:** __________________ | **Date:** __________________ |
+---
+
+## 6. GOVERNING LAW
+
+This MOU shall be governed by and construed in accordance with the laws of Taiwan (R.O.C.).
+
+---
+
+## SIGNATURES
+
+IN WITNESS WHEREOF, the Parties have caused this MOU to be executed by their duly authorized representatives.
+
+**For and on behalf of**  
+ItracXing Technology Co., Ltd.
+
+**For and on behalf of**  
+Arviem AG
+
+---
+
+___________________________  
+**Name:** Jeff Shuo  
+**Title:** CIO  
+**Date:** __________________
+
+___________________________  
+**Name:** Robert A. Kuipers  
+**Title:** Chief AI Officer  
+**Date:** __________________
