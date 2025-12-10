@@ -72,7 +72,3 @@ If a table is labeled “空表/示意” or contains only headers with no meani
 
 ---
 
-## Output requirement (hard rule)
-
-- Output **only** the **complete revised Markdown document** that can directly replace the original.
-- Do **not** include explanations, comments, or change logs.
