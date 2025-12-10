@@ -1,52 +1,9 @@
 ``` mermaid 
-flowchart LR
+flowchart TD
 
     %% ===========================
-    %%   iTracXing Platform
+    %%   Federated Learning Aggregator (Center)
     %% ===========================
-    subgraph ITX["iTracXing Platform (Taiwan)"]
-        ITX_Data["iTracXing Data<br>BLE / Padlock / NTN / TOTE"]
-        ITX_ML["iTracXing Local FL Training Node"]
-        ITX_UI["iTracXing Dashboard<br>(iTracXing Customers Only)"]
-    end
-
-    ITX_Data --> ITX_ML
-    ITX_ML --> ITX_UI
-
-
-    %% ===========================
-    %%   Arviem Platform
-    %% ===========================
-    subgraph ARV["Arviem Platform (EU/US/APAC)"]
-        ARV_Data["Arviem Data<br>JA Device / Motion / GPS"]
-        ARV_ML["Arviem Local FL Training Node"]
-        ARV_UI["Arviem Dashboard<br>(Arviem Customers Only)"]
-    end
-
-    ARV_Data --> ARV_ML
-    ARV_ML --> ARV_UI
-
-
-    %% ===========================
-    %%   Vector Platform
-    %% ===========================
-    subgraph VEC["Vector Platform (USA/Global Retail Loops)"]
-        VEC_Data["Vector LPMS Data<br>Retail / Reverse Logistics / Smart TOTE"]
-        VEC_ML["Vector Local FL Training Node"]
-        VEC_UI["Vector Dashboard<br>(Vector Customers Only)"]
-    end
-
-    VEC_Data --> VEC_ML
-    VEC_ML --> VEC_UI
-
-
-    %% ===========================
-    %%   Federated Learning Aggregator
-    %% ===========================
-    ITX_ML -->|Encrypted ΔW| AGG
-    ARV_ML -->|Encrypted ΔW| AGG
-    VEC_ML -->|Encrypted ΔW| AGG
-
     subgraph FED["Federated Learning Aggregation Layer"]
         AGG["Secure Aggregator<br>FedAvg / FedProx / FedAdam<br>(No raw data ever shared)"]
         GM["Global Shared Model<br>Predictive Logistics AI"]
@@ -54,10 +11,67 @@ flowchart LR
 
     AGG --> GM
 
-    %% Redistribute global updated model
-    GM -->|Updated Model Wₜ₊₁| ITX_ML
-    GM -->|Updated Model Wₜ₊₁| ARV_ML
+
+    %% ===========================
+    %%   Partner Platforms Around Center
+    %% ===========================
+
+   %% Left side: Vector (USA/Global Retail)
+    subgraph VEC["Vector Platform (USA/Global Retail Loops)"]
+        VEC_Data["Vector LPMS Data<br>Retail / Reverse Logistics / Smart TOTE"]
+        VEC_ML["Vector Local FL Training Node"]
+        VEC_UI["Vector Dashboard<br>(Vector Customers Only)"]
+    end
+    VEC_Data --> VEC_ML
+    VEC_ML --> VEC_UI
+    VEC_ML -->|Encrypted ΔW| AGG
     GM -->|Updated Model Wₜ₊₁| VEC_ML
+
+
+    %% Left side: Arviem (EU/US/APAC)
+    subgraph ARV["Arviem Platform (EU/US/APAC)"]
+        ARV_Data["Arviem Data<br>JA Device / Motion / GPS"]
+        ARV_ML["Arviem Local FL Training Node"]
+        ARV_UI["Arviem Dashboard<br>(Arviem Customers Only)"]
+    end
+    ARV_Data --> ARV_ML
+    ARV_ML --> ARV_UI
+    ARV_ML -->|Encrypted ΔW| AGG
+    GM -->|Updated Model Wₜ₊₁| ARV_ML
+
+
+    %% Right side: iTracXing (Taiwan)
+    subgraph ITX["iTracXing Platform (Taiwan)"]
+        ITX_Data["iTracXing Data<br>BLE / Padlock / NTN / TOTE"]
+        ITX_ML["iTracXing Local FL Training Node"]
+        ITX_UI["iTracXing Dashboard<br>(iTracXing Customers Only)"]
+    end
+    ITX_Data --> ITX_ML
+    ITX_ML --> ITX_UI
+    ITX_ML -->|Encrypted ΔW| AGG
+    GM -->|Updated Model Wₜ₊₁| ITX_ML
+
+    %% Right side: Simique (Taiwan)
+    subgraph SIM["Simique Platform (Taiwan)"]
+        SIM_Data["Simique Data<br>IoT / Logistics / Simulation"]
+        SIM_ML["Simique Local FL Training Node"]
+        SIM_UI["Simique Dashboard<br>(Simique Customers Only)"]
+    end
+    SIM_Data --> SIM_ML
+    SIM_ML --> SIM_UI
+    SIM_ML -->|Encrypted ΔW| AGG
+    GM -->|Updated Model Wₜ₊₁| SIM_ML
+
+    %% Right side: DESHING (Taiwan)
+    subgraph DES["DESHING Platform (Taiwan)"]
+        DES_Data["DESHING Data<br>IoT / Logistics / Operations"]
+        DES_ML["DESHING Local FL Training Node"]
+        DES_UI["DESHING Dashboard<br>(DESHING Customers Only)"]
+    end
+    DES_Data --> DES_ML
+    DES_ML --> DES_UI
+    DES_ML -->|Encrypted ΔW| AGG
+    GM -->|Updated Model Wₜ₊₁| DES_ML
 
 
 ``` 
