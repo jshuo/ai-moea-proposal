@@ -31,7 +31,7 @@ NOW, THEREFORE, the Parties agree as follows:
 
 ## 2. SCOPE OF COOPERATION
 
-The cooperation shall cover two phases to ensure both the successful submission of the proposal and the subsequent execution of the Project.
+The cooperation under this MOU shall focus on the execution of the Project, including international field validation, data collaboration and subsequent commercialisation of the resulting AI-driven logistics solutions.
 
 ### Project Execution & Field Validation (Jan 1, 2026 – Jun 30, 2027)
 
