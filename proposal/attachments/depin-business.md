@@ -49,7 +49,7 @@ flowchart TB
 
   REV -->|Allocate %| POOL
   POOL --> RULES
-  RULES -->|Payouts (Token / Stablecoin)| N1
+  RULES -->|Payouts: Token or Stablecoin| N1
   RULES -->|Coverage bonus| N2
   RULES -->|Quality/rarity bonus| N3
 
