@@ -1,76 +1,50 @@
 ```mermaid 
-
 flowchart TD
-  %% =========================
-  %% DePIN Model: Smart TOTE + Smart HUB
-  %% =========================
-
-  subgraph Payers["Demand Side (Who pays)"]
-    CUST["Shippers / 3PLs / Insurers<br/>Pay for outcomes: fewer losses, compliance, SLA"]
+  subgraph Payers["Fiat payers (Opex)"]
+    CUST["Shippers / 3PLs / Insurers<br/>Pay for outcomes + optional NTN premium"]
   end
 
-  subgraph DePIN["DePIN Network Layer (On-chain settlement)"]
-    REG["Node Registry<br/>Device ID + Operator ID"]
-    PROOF["Proof Engine<br/>PoUD (Useful Data) + PoC (Coverage)"]
-    SCORE["Contribution Scoring<br/>uptime / coverage / data quality / verified events"]
-    POOL["Reward Pool (Revenue Share)<br/>funded by customer payments"]
-    PAY["Payout Contract<br/>rewards -> operators"]
+  subgraph Operators["Node operators (CapEx funders)"]
+    OP_HUB["HUB Operator<br/>3PL/Carrier/Port/Fleet<br/>buys & runs Smart HUB"]
+    OP_TOTE["TOTE Pool Operator<br/>Shipper/3PL/Pool Manager<br/>buys/leases Smart TOTE"]
   end
 
-  subgraph Oracles["Oracles (Verifiable metrics)"]
-    ORA["Scoring Oracle<br/>computes scores from signed telemetry<br/>(auditable)"]
+  subgraph Devices["DePIN devices (product nodes)"]
+    TOTE["Smart TOTE<br/>(BLE data/event node)"]
+    HUB["Smart HUB/Gateway<br/>(LTE + NTN coverage node)"]
   end
 
-  subgraph Nodes["Supply Side (Who buys hardware / runs nodes)"]
-    OP_HUB["HUB Operator<br/>3PL / Carrier / Port / Fleet<br/>buys & runs Smart HUB"]
-    OP_TOTE["TOTE Operator<br/>Shipper / 3PL / Pool manager<br/>buys/leases & manages Smart TOTE"]
+  subgraph Trust["Trust layer"]
+    PUF["PUF UID + Attestation<br/>Device identity + signed telemetry"]
   end
 
-  subgraph Hardware["DePIN Devices (Nodes)"]
-    TOTE["Smart TOTE (BLE Sensor Node)<br/>events: door/temp/shock/humidity"]
-    HUB["Smart HUB (LTE + NTN Gateway Node)<br/>coverage: uplink + fallback"]
+  subgraph Platform["Value delivery"]
+    AI["iTracXing AI-MaaS<br/>Risk scoring / prediction"]
+    EVID["Arviem Control Tower<br/>Alerts + evidence packs"]
+    BILL["Fiat Billing<br/>subscription/per shipment/per container-day/API"]
   end
 
-  subgraph Trust["Trust / Anti-Fraud"]
-    PUF["PUF UID + Attested Keys<br/>device identity + signed telemetry"]
+  subgraph Settlement["Fiat DePIN settlement (no tokens)"]
+    SCORE["Contribution scoring<br/>HUB: uptime/coverage/latency/NTN efficiency<br/>TOTE: data quality/verified events/tote-hours"]
+    SPLIT["Revenue split<br/>Cost bucket + Platform fee + Reward Pool (X%)"]
+    PAY["Fiat payouts<br/>bank transfer / invoice credit / rebate / netting"]
   end
 
-  subgraph Platform["Enterprise Platform (Off-chain services)"]
-    AI["iTracXing AI Risk Engine<br/>risk score / prediction"]
-    EVID["Arviem Control Tower<br/>evidence packs / workflows"]
-    BILL["Billing (Off-chain)<br/>subscription / per shipment / per container-day / API / NTN premium"]
-  end
-
-  %% --- Who buys hardware (CapEx) ---
-  OP_TOTE -->|CapEx / Lease| TOTE
+  OP_TOTE -->|CapEx/Lease| TOTE
   OP_HUB  -->|CapEx| HUB
 
-  %% --- Device identity & signed data ---
   PUF --> TOTE
   PUF --> HUB
   TOTE -->|Signed BLE events/summary| HUB
-  HUB -->|Signed uplink via LTE or NTN| ORA
+  HUB -->|LTE/NTN uplink| AI
+  AI --> EVID -->|Outcomes + evidence| CUST
 
-  %% --- Proof & scoring ---
-  ORA --> REG
-  ORA --> PROOF
-  PROOF --> SCORE
-
-  %% --- Customer revenue funds rewards (DePIN economics) ---
-  CUST -->|Opex payment| BILL
-  BILL -->|Allocate X% revenue share| POOL
-
-  %% --- Rewards paid to node operators ---
+  CUST -->|Fiat payment| BILL --> SPLIT
+  AI --> SCORE
   SCORE --> PAY
-  POOL --> PAY
-  PAY -->|Coverage rewards PoC<br/>uptime, coverage, latency, NTN efficiency| OP_HUB
-  PAY -->|Useful data rewards PoUD<br/>data quality, verified events, tote-hours| OP_TOTE
-
-  %% --- Outcomes delivered back to customers ---
-  HUB --> AI
-  AI --> EVID
-  EVID -->|Outcomes + Evidence Packs| CUST
-
+  SPLIT -->|Fund Reward Pool| PAY
+  PAY -->|Coverage rewards| OP_HUB
+  PAY -->|Useful-data rewards| OP_TOTE
 
 
 ```
