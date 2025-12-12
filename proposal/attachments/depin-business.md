@@ -1,64 +1,76 @@
 ```mermaid 
-flowchart TB
+
+flowchart TD
   %% =========================
-  %% Business-Only View: Money, Value, Incentives
+  %% DePIN Model: Smart TOTE + Smart HUB
   %% =========================
 
-  subgraph DEM["Demand Side (Customers)"]
-    A["Shippers / Brands<br/>High-value, cold chain"]
-    B["3PL / Carriers<br/>Visibility + SLA"]
-    C["Insurers / Auditors<br/>Claims + ESG evidence"]
+  subgraph Payers["Demand Side (Who pays)"]
+    CUST["Shippers / 3PLs / Insurers<br/>Pay for outcomes: fewer losses, compliance, SLA"]
   end
 
-  subgraph OFFER["What They Buy (Products)"]
-    S1["Telemetry-as-a-Service<br/>Tracking + alerts"]
-    S2["AI-MaaS Insights<br/>Risk forecasts / ETA confidence / RUL"]
-    S3["Compliance & Evidence Packs<br/>Signed reports, audit trails"]
-    S4["Premium Coverage Tier (NTN)<br/>Ocean / remote / dead zones"]
+  subgraph DePIN["DePIN Network Layer (On-chain settlement)"]
+    REG["Node Registry<br/>Device ID + Operator ID"]
+    PROOF["Proof Engine<br/>PoUD (Useful Data) + PoC (Coverage)"]
+    SCORE["Contribution Scoring<br/>uptime / coverage / data quality / verified events"]
+    POOL["Reward Pool (Revenue Share)<br/>funded by customer payments"]
+    PAY["Payout Contract<br/>rewards -> operators"]
   end
 
-  subgraph PLATFORM["ItracXing / Smart TOTE Network Operator"]
-    REV["Revenue Streams<br/>Subscription / per-shipment / API usage"]
-    COST["Cost Structure<br/>Device ops + Cloud + Support + Airtime (NTN/LTE)"]
-    PROF["Profit<br/>Revenue - Costs - Rewards"]
+  subgraph Oracles["Oracles (Verifiable metrics)"]
+    ORA["Scoring Oracle<br/>computes scores from signed telemetry<br/>(auditable)"]
   end
 
-  subgraph SUPPLY["Supply Side (DePIN Node Operators)"]
-    N1["Node Operators<br/>Deploy & maintain devices"]
-    N2["Coverage Providers<br/>Hard routes earn more"]
-    N3["High-quality Data Contributors<br/>Rare events earn bonus"]
+  subgraph Nodes["Supply Side (Who buys hardware / runs nodes)"]
+    OP_HUB["HUB Operator<br/>3PL / Carrier / Port / Fleet<br/>buys & runs Smart HUB"]
+    OP_TOTE["TOTE Operator<br/>Shipper / 3PL / Pool manager<br/>buys/leases & manages Smart TOTE"]
   end
 
-  subgraph INC["Incentive Mechanism"]
-    POOL["Reward Pool<br/>(Funded by revenue share<br/>+ optional token emissions early)"]
-    RULES["Reward Rules<br/>Uptime + Coverage + Data Quality + SLA + Rarity"]
+  subgraph Hardware["DePIN Devices (Nodes)"]
+    TOTE["Smart TOTE (BLE Sensor Node)<br/>events: door/temp/shock/humidity"]
+    HUB["Smart HUB (LTE + NTN Gateway Node)<br/>coverage: uplink + fallback"]
   end
 
-  %% Flows
-  A -->|Pay| REV
-  B -->|Pay| REV
-  C -->|Pay| REV
+  subgraph Trust["Trust / Anti-Fraud"]
+    PUF["PUF UID + Attested Keys<br/>device identity + signed telemetry"]
+  end
 
-  S1 --> REV
-  S2 --> REV
-  S3 --> REV
-  S4 --> REV
+  subgraph Platform["Enterprise Platform (Off-chain services)"]
+    AI["iTracXing AI Risk Engine<br/>risk score / prediction"]
+    EVID["Arviem Control Tower<br/>evidence packs / workflows"]
+    BILL["Billing (Off-chain)<br/>subscription / per shipment / per container-day / API / NTN premium"]
+  end
 
-  REV --> PROF
-  COST --> PROF
+  %% --- Who buys hardware (CapEx) ---
+  OP_TOTE -->|CapEx / Lease| TOTE
+  OP_HUB  -->|CapEx| HUB
 
-  REV -->|Allocate %| POOL
-  POOL --> RULES
-  RULES -->|Payouts: Token or Stablecoin| N1
-  RULES -->|Coverage bonus| N2
-  RULES -->|Quality/rarity bonus| N3
+  %% --- Device identity & signed data ---
+  PUF --> TOTE
+  PUF --> HUB
+  TOTE -->|Signed BLE events/summary| HUB
+  HUB -->|Signed uplink via LTE or NTN| ORA
 
-  %% Value feedback loop
-  N1 -->|More deployed nodes| S1
-  N2 -->|NTN-enabled coverage| S4
-  N3 -->|Better data| S2
-  S2 -->|Higher ROI| A
-  S3 -->|Lower disputes| C
+  %% --- Proof & scoring ---
+  ORA --> REG
+  ORA --> PROOF
+  PROOF --> SCORE
+
+  %% --- Customer revenue funds rewards (DePIN economics) ---
+  CUST -->|Opex payment| BILL
+  BILL -->|Allocate X% revenue share| POOL
+
+  %% --- Rewards paid to node operators ---
+  SCORE --> PAY
+  POOL --> PAY
+  PAY -->|Coverage rewards PoC<br/>uptime, coverage, latency, NTN efficiency| OP_HUB
+  PAY -->|Useful data rewards PoUD<br/>data quality, verified events, tote-hours| OP_TOTE
+
+  %% --- Outcomes delivered back to customers ---
+  HUB --> AI
+  AI --> EVID
+  EVID -->|Outcomes + Evidence Packs| CUST
+
 
 
 ```
