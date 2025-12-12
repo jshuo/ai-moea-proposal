@@ -1,87 +1,64 @@
 ```mermaid 
 flowchart TB
   %% =========================
-  %% Demand Side (Pays)
+  %% Business-Only View: Money, Value, Incentives
   %% =========================
-  subgraph DEM["Demand Side (Who Pays)"]
-    C1["Shippers / Brands<br/>High-value cargo, cold chain"]
-    C2["3PL / Carriers<br/>SLA + visibility"]
-    C3["Insurers / Auditors<br/>Claims evidence, ESG compliance"]
+
+  subgraph DEM["Demand Side (Customers)"]
+    A["Shippers / Brands<br/>High-value, cold chain"]
+    B["3PL / Carriers<br/>Visibility + SLA"]
+    C["Insurers / Auditors<br/>Claims + ESG evidence"]
   end
 
-  PAY["Payments<br/>Fiat / Stablecoin / Token"]
-  C1 --> PAY
-  C2 --> PAY
-  C3 --> PAY
-
-  %% =========================
-  %% DePIN + AI-MaaS Platform
-  %% =========================
-  subgraph PLAT["Smart TOTE DePIN + AI-MaaS Platform"]
-    REG["Device Registry<br/>PUF UID + FIDO onboarding<br/>Public key binding / Revocation list"]
-    ING["Ingestion Layer<br/>API Gateway / Broker"]
-    VERIFY["Telemetry Verification<br/>Signature check + Anti-replay<br/>Quality checks"]
-    STORE["Telemetry Store<br/>Time-series + Event log"]
-    AI["AI-MaaS Models<br/>Risk prediction / Anomaly detection<br/>ETA confidence / RUL"]
-    MARKET["Data & Insight Products<br/>Dashboards / API / Reports<br/>Evidence packs"]
-    BILL["Billing & Pricing Engine<br/>Per shipment / per day / premium tiers"]
-    REWARD["Reward Engine (DePIN)<br/>Uptime / Coverage / Quality / Rarity<br/>SLA compliance scoring"]
-    TREAS["Treasury / Reward Pool<br/>Funded by revenue + (optional) emissions"]
-    FEE["Platform Profit<br/>Platform fee + AI fee + Marketplace fee<br/>- Ops - Airtime - Rewards"]
+  subgraph OFFER["What They Buy (Products)"]
+    S1["Telemetry-as-a-Service<br/>Tracking + alerts"]
+    S2["AI-MaaS Insights<br/>Risk forecasts / ETA confidence / RUL"]
+    S3["Compliance & Evidence Packs<br/>Signed reports, audit trails"]
+    S4["Premium Coverage Tier (NTN)<br/>Ocean / remote / dead zones"]
   end
 
-  PAY --> BILL
-  BILL --> FEE
-  BILL --> TREAS
-  TREAS --> REWARD
-
-  %% =========================
-  %% Node Side (Earns)
-  %% =========================
-  subgraph NODES["Node Side (Who Earns)"]
-    OP1["Node Operators<br/>3PL / Carrier / Shipper<br/>Operate Smart TOTE fleets"]
-    OP2["Coverage Providers<br/>Ocean / Remote rail / Dead zones"]
-    OP3["High-value Data Contributors<br/>Rare events: shock/temp excursion<br/>Clean data, low spoofing"]
+  subgraph PLATFORM["ItracXing / Smart TOTE Network Operator"]
+    REV["Revenue Streams<br/>Subscription / per-shipment / API usage"]
+    COST["Cost Structure<br/>Device ops + Cloud + Support + Airtime (NTN/LTE)"]
+    PROF["Profit<br/>Revenue - Costs - Rewards"]
   end
 
-  REWARD -->|"Tokens / Stablecoin rewards"| OP1
-  REWARD -->|"Coverage bonus"| OP2
-  REWARD -->|"Rarity + quality bonus"| OP3
-
-  %% =========================
-  %% Smart TOTE Telemetry Path
-  %% =========================
-  subgraph EDGE["Smart TOTE / HUB (Physical Node)"]
-    DEV["Smart TOTE Device<br/>Sensors: GPS/Temp/Humidity/Shock/Door/Battery"]
-    SIGN["Sign Telemetry<br/>Device private key<br/>Bound to PUF UID / FIDO"]
-    TX["Connectivity Selection<br/>LTE/NB-IoT default<br/>NTN fallback (satellite)"]
+  subgraph SUPPLY["Supply Side (DePIN Node Operators)"]
+    N1["Node Operators<br/>Deploy & maintain devices"]
+    N2["Coverage Providers<br/>Hard routes earn more"]
+    N3["High-quality Data Contributors<br/>Rare events earn bonus"]
   end
 
-  DEV --> SIGN --> TX --> ING
-  REG --> VERIFY
-  ING --> VERIFY --> STORE --> AI --> MARKET
-
-  %% =========================
-  %% Products & Premium NTN Tiers
-  %% =========================
-  subgraph SKU["Premium Products Enabled by NTN"]
-    P1["Ocean-lane Monitoring Plan<br/>Heartbeat checkpoints + event alerts"]
-    P2["High-risk Corridor Theft Plan<br/>Alerts even when LTE is missing"]
-    P3["Cold Chain Compliance Plan<br/>Signed evidence packs + SLA"]
+  subgraph INC["Incentive Mechanism"]
+    POOL["Reward Pool<br/>(Funded by revenue share<br/>+ optional token emissions early)"]
+    RULES["Reward Rules<br/>Uptime + Coverage + Data Quality + SLA + Rarity"]
   end
 
-  MARKET --> P1
-  MARKET --> P2
-  MARKET --> P3
-  P1 --> BILL
-  P2 --> BILL
-  P3 --> BILL
+  %% Flows
+  A -->|Pay| REV
+  B -->|Pay| REV
+  C -->|Pay| REV
 
-  %% =========================
-  %% Why Signing Matters for Incentives
-  %% =========================
-  NOTE["Why signed telemetry matters:<br/>Authenticity + integrity + auditability<br/>Enables rewards, SLA proofs, claims evidence"]
-  SIGN -.-> NOTE
-  VERIFY -.-> NOTE
+  S1 --> REV
+  S2 --> REV
+  S3 --> REV
+  S4 --> REV
+
+  REV --> PROF
+  COST --> PROF
+
+  REV -->|Allocate %| POOL
+  POOL --> RULES
+  RULES -->|Payouts (Token / Stablecoin)| N1
+  RULES -->|Coverage bonus| N2
+  RULES -->|Quality/rarity bonus| N3
+
+  %% Value feedback loop
+  N1 -->|More deployed nodes| S1
+  N2 -->|NTN-enabled coverage| S4
+  N3 -->|Better data| S2
+  S2 -->|Higher ROI| A
+  S3 -->|Lower disputes| C
+
 
 ```
