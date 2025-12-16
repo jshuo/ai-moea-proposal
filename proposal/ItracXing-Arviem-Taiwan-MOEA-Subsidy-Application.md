@@ -624,24 +624,24 @@ The following diagrams present the end‑to‑end system architecture and data f
 ```mermaid 
 flowchart LR
   %% ========== Device & Model Layer ==========
-  subgraph S["裝置與模型層 (Device & Model Layer)<br/>感測資料經過加密傳輸與身分驗證後，寫入 iTracXing/Arviem Cloud"]
-    S1["Smart TOTE / Gateway<br/>🔐 加密傳輸｜身分驗證<br/>收集感測資料"]
-    S2["AI 模型推論 (Inference)<br/>• 分項 A：電池壽命預測（RUL）模型<br/>• 分項 C：環境異常模型（溫濕度偵測）<br/>• 分項 D：路線/竊盜模型（GPS/開箱異常）<br/>↓ 輸出 risk_score / metrics"]
+  subgraph S["Device & Model Layer<br/>Sensor data is encrypted and authenticated before being written into the iTracXing/Arviem Cloud"]
+    S1["Smart TOTE / Gateway<br/>🔐 Encrypted transmission｜Identity authentication<br/>Collects sensor data"]
+    S2["AI Model Inference<br/>• Work Package A: Battery RUL prediction model<br/>• Work Package C: Environmental anomaly model (temperature/humidity)<br/>• Work Package D: Route/theft model (GPS/open-box anomalies)<br/>↓ Outputs risk_score / metrics"]
   end
 
   %% ========== Event & Alert Engine ==========
-  subgraph E["事件與告警引擎 (Alert Rule Engine)"]
-    E1["寫入事件佇列 / DB<br/>MODEL_EVAL 事件"]
-    E2["告警規則評估 (Alert Rule Evaluation)<br/>risk_score / 動態閾值 / 條件"]
-    E3["去重與抑制<br/>避免重複告警"]
-    E4["建立 Alert 物件<br/>alert_id / severity / details"]
+  subgraph E["Event & Alert Engine"]
+    E1["Write to event queue / DB<br/>MODEL_EVAL events"]
+    E2["Alert Rule Evaluation<br/>risk_score / dynamic thresholds / conditions"]
+    E3["De-duplication & Suppression<br/>Avoid duplicate alerts"]
+    E4["Create Alert object<br/>alert_id / severity / details"]
   end
 
   %% Flow
   S1 --> S2 --> E1
   E1 --> E2 --> E3 --> E4
   
-  E4 --> OUTPUT["Alert 物件傳遞至後端流程"]
+  E4 --> OUTPUT["Alert object handed off to backend flow"]
   
   style OUTPUT fill:#f9f,stroke:#333,stroke-width:2px
 ```
@@ -649,24 +649,24 @@ flowchart LR
 **Figure 3‑2B: Back-End Flow – Report Generation and Notification**
 ```mermaid 
 flowchart LR
-  INPUT["Alert 物件<br/>(來自告警引擎)"]
+  INPUT["Alert object<br/>(from alert engine)"]
   
   %% ========== (Optional) LLM Explanation ==========
-  subgraph L["(選配) LLM 說明層<br/>分項 B：AI 自主事件報告 / NLQ Dashboard"]
-    L1["將 Alert JSON 放入 Prompt"]
-    L2["LLM 產生中英摘要＋建議行動"]
+  subgraph L["(Optional) LLM Explanation Layer<br/>Work Package B: AI incident reports / NLQ dashboard"]
+    L1["Embed Alert JSON in prompt"]
+    L2["LLM generates bilingual summary + recommended actions"]
   end
 
   %% ========== Notification Layer ==========
-  subgraph N["通知服務與通路<br/>資安與隱私規範：符合 GDPR/資料合規"]
-    N1["選擇接收人與通道<br/>依客戶/嚴重度"]
-    N2["發送通知<br/>Email / LINE / Slack / Webhook"]
-    N3["紀錄通知歷程<br/>供 SLA / ESG 報表稽核"]
+  subgraph N["Notification Services and Channels<br/>Security & privacy: GDPR / data compliance aligned"]
+    N1["Select recipients and channels<br/>Per customer / severity"]
+    N2["Send notifications<br/>Email / LINE / Slack / Webhook"]
+    N3["Log notification history<br/>For SLA / ESG report audits"]
   end
 
   %% Flow
   INPUT --> L1
-  INPUT -->|不使用 LLM 時<br/>直接套用事先定義之固定格式| N1
+  INPUT -->|When LLM is disabled<br/>apply predefined fixed templates directly| N1
   L1 --> L2 --> N1
   N1 --> N2 --> N3
   
@@ -674,37 +674,37 @@ flowchart LR
 ```
 
 > **Architecture description and training flow supplement:**  
-> The diagram shows the “inference and alert pipeline” for production, illustrating how real‑time data flows through AI models, the alert engine, and notification services.  
-> The **model training and retraining pipeline** is executed offline using historical data and labeled event sets, and is described in detail under “II. Project Content and Implementation Methods” in each of work packages A–D. Trained model weights are periodically deployed to the “AI model inference” nodes shown here.
+> The diagrams show the **production inference and alert pipeline**, illustrating how real‑time data flows through AI models, the alert engine, and notification services.  
+> The **model training and retraining pipeline** runs offline on historical data and labeled event sets and is described in detail under “II. Project Content and Implementation Methods” for work packages A–D. Trained model weights are periodically deployed to the “AI Model Inference” nodes shown here.
 
 **Architecture description:**
 
 1. **Device & Model Layer:** Smart TOTE sensors collect temperature, humidity, GPS, and open/close status data. Work Package A (RUL prediction), Work Package C (environmental anomalies), and Work Package D (route/theft) models perform inference and output risk scores and metrics.
 
-2. **Event and Alert Engine:** Model outputs are written to an event queue, then processed by alert rule evaluation, de‑duplication, and suppression logic to create structured alert objects, ensuring that high‑priority events are not buried.
+2. **Event and Alert Engine:** Model outputs are written to an event queue, then processed by alert rule evaluation, de‑duplication, and suppression logic to create structured alert objects, ensuring that high‑priority events are surfaced instead of buried.
 
-3. **LLM Explanation Layer (Optional):** Corresponding to Work Package B’s AI‑generated incident reporting, alert JSON can be converted to bilingual summaries and recommended actions. If LLMs are not used, predefined fixed templates are applied to balance cost and flexibility.
+3. **LLM Explanation Layer (Optional):** Corresponding to Work Package B’s AI‑generated incident reporting, alert JSON can be converted into bilingual summaries and recommended actions. When LLMs are not used, predefined fixed templates are applied to control cost while preserving basic functionality.
 
-4. **Notification Services and Channels:** Based on customer and severity, recipients and channels (email/LINE/Slack/webhook) are selected, and notification history is recorded to support SLA and ESG reporting, ensuring governance transparency.
+4. **Notification Services and Channels:** Based on customer and severity, the system selects recipients and channels (email/LINE/Slack/webhook), and records notification history to support SLA and ESG reporting and ensure governance transparency.
 
-This architecture highlights three key design features: (1) modular AI functions that can be extended independently; (2) built‑in governance (de‑duplication, audit, SLA) throughout the pipeline; and (3) flexible deployment (LLM optional vs. fixed templates) to lower adoption barriers.
+This architecture highlights three design features: (1) modular AI functions that can be extended independently; (2) governance built into each stage (de‑duplication, audit, SLA); and (3) flexible deployment (LLM‑optional vs. fixed templates) to reduce adoption barriers.
 
 #### RUL Prediction Flow
 
 ```mermaid
 flowchart LR
   subgraph Device ["Edge Device (Smart IoT Tracker)"]
-    V["電壓量測 V(t)"]
-    T["溫度量測 T(t) (optional)"]
-    TS[Timestamp 時間戳記]
+    V["Voltage reading V(t)"]
+    T["Temperature reading T(t) (optional)"]
+    TS[Timestamp]
   end
 
-  subgraph Cloud ["雲端資料平台 / IoT Backend"]
-    RAW["原始 Telemetry<br/>V, T, TS, 上報頻率, 狀態"]
-    PROC["資料前處理<br/>排序、清洗、補值、對齊 Δt"]
-    FAIL["故障 / 失效事件偵測<br/>最後上報時間、電壓低於門檻"]
-    RULLBL["RUL 標籤計算<br/>RUL(t) = t_failure - t"]
-    FEAT["特徵工程<br/>電壓斜率、平均值、波動度、溫度統計…"]
+  subgraph Cloud ["Cloud Data Platform / IoT Backend"]
+    RAW["Raw telemetry<br/>V, T, TS, reporting frequency, status"]
+    PROC["Preprocessing<br/>sorting, cleaning, imputation, Δt alignment"]
+    FAIL["Failure event detection<br/>last report time, voltage below threshold"]
+    RULLBL["RUL label calculation<br/>RUL(t) = t_failure - t"]
+    FEAT["Feature engineering<br/>voltage slope, mean, variance, temperature stats…"]
   end
 
   V --> RAW
@@ -716,27 +716,27 @@ flowchart LR
   PROC --> FEAT
   FAIL --> RULLBL
 
-  FEAT -.->|輸入特徵→| LSTM_INPUT[(LSTM 輸入張量)]
-  RULLBL -.->|監督標籤→| LSTM_LABEL[(LSTM 目標張量)]
+  FEAT -.->|features →| LSTM_INPUT[(LSTM input tensor)]
+  RULLBL -.->|labels →| LSTM_LABEL[(LSTM target tensor)]
 ```
 
-The LSTM inputs and labels in the diagram above feed into the following model training and inference stages:
+The LSTM inputs and labels above feed into model training and inference:
 
 ```mermaid
 flowchart LR
-  subgraph Model ["AI 模型訓練 / 推論"]
-    LSTM[("LSTM/GRU<br/>時間序列模型")]
-    PRED["RUL 預測<br/>(剩餘可服務壽命 天/小時)"]
-    ALERT["維運決策<br/>更換電池 / 避免派出將掛掉的節點"]
+  subgraph Model ["AI Model Training / Inference"]
+    LSTM[("LSTM/GRU<br/>time-series model")]
+    PRED["RUL prediction<br/>(remaining useful life in days/hours)"]
+    ALERT["Ops decision<br/>battery replacement / avoid dispatching failing nodes"]
   end
 
-  LSTM_INPUT[(來自前一圖之特徵)] --> LSTM
-  LSTM_LABEL[(來自前一圖之標籤)] --> LSTM
+  LSTM_INPUT[(features from previous diagram)] --> LSTM
+  LSTM_LABEL[(labels from previous diagram)] --> LSTM
   LSTM --> PRED
   PRED --> ALERT
 ```
 
-As shown in Figure 3‑3, the RUL prediction module is based on voltage time series from NTN (Non‑Terrestrial Network) smart trackers, optional temperature data, and timestamps. The cloud reconstructs discharge curves and actual failure times for each device to compute Remaining Useful Life (RUL) labels. Time‑series models (e.g., LSTM/GRU) learn the relationship between “voltage patterns × usage context” and RUL. During operations, each node’s remaining service life (in days) is predicted in real time to trigger preventive maintenance and battery replacement decisions, reducing unplanned offline events and improving monitoring availability.
+As shown in Figure 3‑3, the RUL prediction module is based on voltage time series from NTN smart trackers, optional temperature data, and timestamps. The cloud reconstructs discharge curves and actual failure times for each device to compute Remaining Useful Life (RUL) labels. Time‑series models (e.g., LSTM/GRU) learn the relationship between “voltage patterns × usage context” and RUL. In operation, each node’s remaining service life (in days) is predicted in real time to trigger preventive maintenance and battery replacement, reducing unplanned offline events and improving monitoring availability.
 
 Figure 3‑3: RUL Prediction Flow
 
@@ -744,20 +744,20 @@ Figure 3‑3: RUL Prediction Flow
 
 ```mermaid
 flowchart LR
-  %% 上游：邊緣層與雲端資料平台（以「特徵庫」為連接點）
+  %% Upstream: Edge + Cloud (Feature Store as the handoff point)
 
-  subgraph EDGE["邊緣層｜Smart TOTE / IoT 感測器"]
-    T_SENSOR[溫濕度感測器<br/>Temp / RH ]
-    T_GATEWAY[閘道器<br/>BLE / LTE / NTN]
+  subgraph EDGE["Edge Layer｜Smart TOTE / IoT Sensors"]
+    T_SENSOR[Temp/Humidity sensors<br/>Temp / RH]
+    T_GATEWAY[Gateway<br/>BLE / LTE / NTN]
   end
 
-  subgraph INGEST["雲端資料平台｜資料蒐集與特徵工程"]
-    T_STREAM[串流資料蒐集<br/>Time-series Ingest]
-    T_FEATURE[特徵工程<br/>區段平均值 / 梯度 / 積分暴露量]
-    T_STORE[(Feature Store<br/>特徵庫)]
+  subgraph INGEST["Cloud Data Platform｜Ingestion & Feature Engineering"]
+    T_STREAM[Streaming ingestion<br/>time-series ingest]
+    T_FEATURE[Feature engineering<br/>segment means / gradients / exposure integrals]
+    T_STORE[(Feature Store)]
   end
 
-  %% Data flow (上游)
+  %% Data flow (upstream)
   T_SENSOR --> T_GATEWAY
   T_GATEWAY --> T_STREAM
   T_STREAM --> T_FEATURE
@@ -766,35 +766,35 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  %% 下游：AI/ML、應用層與回饋（由「特徵庫」作為輸入）
+  %% Downstream: AI/ML, Applications, Feedback (Feature Store as input)
 
-  T_STORE[(Feature Store<br/>特徵庫)]
+  T_STORE[(Feature Store)]
 
-  subgraph AIML["AI/ML 環境異常偵測引擎"]
-    T_MODEL[環境異常偵測模型<br/>LSTM / Isolation Forest / BOCPD]
-    T_RULE[規範規則比對<br/>Good Distribution Practice / SOP 門檻]
-    T_SCORE[(風險評分引擎<br/>Risk Score 0–100)]
+  subgraph AIML["AI/ML Environmental Anomaly Engine"]
+    T_MODEL[Environmental anomaly model<br/>LSTM / Isolation Forest / BOCPD]
+    T_RULE[Policy / rule checks<br/>GDP / SOP thresholds]
+    T_SCORE[(Risk scoring engine<br/>Risk Score 0–100)]
   end
 
-  subgraph APPS["應用層｜警示與報表"]
-    T_ALERT[即時告警服務<br/>SMS / Email / ChatOps]
-    T_DASH[監控儀表板<br/>冷鏈路線 / 貨況視覺化]
-    T_REPORT[稽核與合規報表<br/>客訴 / 理賠 / 稽核文件]
+  subgraph APPS["Application Layer｜Alerts & Reporting"]
+    T_ALERT[Real-time alerting<br/>SMS / Email / ChatOps]
+    T_DASH[Monitoring dashboard<br/>cold-chain routes / cargo status visualization]
+    T_REPORT[Audit & compliance reports<br/>claims / disputes / audit files]
   end
 
-  subgraph FEEDBACK["回饋與持續學習"]
-    T_LABEL[人工標註與回饋<br/>真實異常 / 誤報標記]
-    T_RETRAIN[週期性重訓流程<br/>Model Retraining Pipeline]
+  subgraph FEEDBACK["Feedback & Continuous Learning"]
+    T_LABEL[User labeling & feedback<br/>true anomaly / false positive flags]
+    T_RETRAIN[Periodic retraining pipeline]
   end
 
-  %% Data flow（下游）
+  %% Data flow (downstream)
   T_STORE --> T_MODEL
   T_STORE --> T_RULE
 
-  T_MODEL -->|異常機率 / Score| T_SCORE
-  T_RULE -->|門檻違規事件| T_SCORE
+  T_MODEL -->|anomaly probability / score| T_SCORE
+  T_RULE -->|threshold violations| T_SCORE
 
-  T_SCORE -->|高風險| T_ALERT
+  T_SCORE -->|high risk| T_ALERT
   T_SCORE --> T_DASH
   T_SCORE --> T_REPORT
 
@@ -807,23 +807,23 @@ flowchart LR
 
 Figure 3‑4: Environmental Anomaly (Temperature/Humidity) Prediction Flow
 
-The above diagrams describe the end‑to‑end flow and responsibility split for environmental anomaly (temperature/humidity) prediction. Upstream, Smart TOTE / IoT sensors send temperature, relative humidity, and timestamps through gateways as streaming data into the cloud. The platform performs cleaning, alignment, and feature engineering (segment averages, gradients, cumulative exposure) and writes unified features into a feature store for downstream use. Downstream, anomaly detection models (e.g., LSTM, Isolation Forest, BOCPD) are combined with regulatory thresholds (GDP / local SOP) to compute risk scores and trigger alerts, update dashboards, and generate audit/compliance reports. User feedback on alerts and dashboards (true anomaly / false positive tags) feeds back into the retraining pipeline, forming a continuous learning loop to keep F1-score, early warning rate, and report SLA within target.
+The diagrams above describe the end‑to‑end flow and division of responsibilities for environmental anomaly prediction. Upstream, Smart TOTE / IoT sensors send temperature, relative humidity, and timestamps via gateways as streaming data into the cloud. The platform performs cleaning, alignment, and feature engineering (segment averages, gradients, cumulative exposure) and writes unified features into a feature store for downstream use. Downstream, anomaly detection models (e.g., LSTM, Isolation Forest, BOCPD) are combined with regulatory thresholds (GDP / local SOP) to compute risk scores and trigger alerts, update dashboards, and generate audit/compliance reports. User feedback on alerts and dashboards (true anomaly / false positive labels) feeds into the retraining pipeline, forming a continuous learning loop that keeps F1-score, early warning rate, and report SLA within target.
 
 #### Route Anomaly and Theft Detection
 
 ```mermaid 
 flowchart LR
-  %% 圖 1：邊緣裝置與雲端匯入 → 特徵庫
-  subgraph Edge["邊緣／智慧物聯裝置"]
-    GPS[路由資料<br/>GPS、速度、路線 ID]
-    LOCK[鎖狀態<br/>開/關、竄改事件]
-    PRESS[壓力感測器<br/>kPa、壓力變化 ΔP]
+  %% Figure 1: Edge devices & cloud ingest → Feature Store
+  subgraph Edge["Edge / Smart IoT Devices"]
+    GPS[Route data<br/>GPS, speed, route ID]
+    LOCK[Lock status<br/>open/closed, tamper events]
+    PRESS[Pressure sensor<br/>kPa, ΔP]
   end
 
-  subgraph Ingest["雲端資料平台"]
-    RAW[遙測資料匯入<br/>時間序列儲存]
-    FEAT[特徵工程<br/>路徑偏移、停留時間、<br/>開鎖事件、壓力統計]
-    FEAT_HUB[(特徵庫 Feature Store)]
+  subgraph Ingest["Cloud Data Platform"]
+    RAW[Telemetry ingest<br/>time-series storage]
+    FEAT[Feature engineering<br/>route deviation, dwell time,<br/>unlock events, pressure stats]
+    FEAT_HUB[(Feature Store)]
   end
 
   GPS --> RAW
@@ -831,25 +831,25 @@ flowchart LR
   PRESS --> RAW
 
   RAW --> FEAT
-  FEAT -->|特徵 features| FEAT_HUB
+  FEAT -->|features| FEAT_HUB
 ```
 
 ```mermaid
 flowchart LR
-  %% 圖 2：AI / 機器學習 → 應用服務（消費特徵庫）
-  FEAT_HUB[(特徵庫 Feature Store)]
+  %% Figure 2: AI / ML → Application services (consuming Feature Store)
+  FEAT_HUB[(Feature Store)]
 
-  subgraph AI["AI／機器學習異常偵測引擎"]
-    ISOF[非監督式模型<br/>Isolation Forest / LSTM AE]
-    RISK[(風險評分<br/>risk_score 0–1)]
-    RULES[[規則引擎<br/>地理圍籬、開鎖時間窗、<br/>壓力門檻]]
-    FUSE[決策融合<br/>結合 ML 分數與規則]
+  subgraph AI["AI / ML Anomaly Detection Engine"]
+    ISOF[Unsupervised models<br/>Isolation Forest / LSTM AE]
+    RISK[(Risk score<br/>risk_score 0–1)]
+    RULES[[Rule engine<br/>geo-fences, unlock windows,<br/>pressure thresholds]]
+    FUSE[Decision fusion<br/>combine ML scores and rules]
   end
 
-  subgraph Apps["應用服務層"]
-    ALERT[即時告警<br/>SMS / Email / LINE / Webhook]
-    DASH[營運儀表板<br/>地圖、時間軸、事件檢視]
-    REPORT[AI 報表<br/>每日／每週風險彙總]
+  subgraph Apps["Application Services Layer"]
+    ALERT[Real-time alerts<br/>SMS / Email / LINE / Webhook]
+    DASH[Operations dashboard<br/>maps, timelines, event views]
+    REPORT[AI reports<br/>daily / weekly risk summaries]
   end
 
   FEAT_HUB --> ISOF
@@ -862,10 +862,9 @@ flowchart LR
   FUSE --> ALERT
   FUSE --> DASH
   FUSE --> REPORT
-
 ```
 
-As shown in Figure 3‑5, the project follows an end‑to‑end “edge → cloud → feature store → AI/rules → decision outputs” flow. Edge smart locks and smart boxes send GPS trajectories, lock status (open/closed/tampering), and pressure readings as time series. The cloud platform ingests and stores the data, performs feature engineering (route deviation, dwell time, anomalous unlock event statistics, pressure variations), and writes all features into a unified feature store. AI anomaly detection models (e.g., Isolation Forest, LSTM Autoencoder) learn “normal transport behavior” and output anomaly scores, which are converted to normalized risk scores (0–1). In parallel, the rule engine applies business‑driven geo‑fences, unlock time windows, and pressure thresholds. Decision fusion combines AI risk scores and rules to send real‑time alerts (SMS/email/LINE/webhooks), flag anomalies on the operations dashboard, and automatically generate daily/weekly risk reports, helping users quickly identify high‑risk routes and abnormal facilities.
+As shown in Figure 3‑5, the project follows an end‑to‑end “edge → cloud → feature store → AI/rules → decisions” flow. Edge smart locks and smart boxes send GPS trajectories, lock status (open/closed/tampering), and pressure readings as time series. The cloud ingests and stores the data, performs feature engineering (route deviation, dwell time, abnormal unlock statistics, pressure variations), and writes features into a unified feature store. AI anomaly detection models (e.g., Isolation Forest, LSTM Autoencoder) learn “normal transport behavior” and output anomaly scores, which are normalized to risk scores (0–1). In parallel, the rule engine applies business geo‑fences, unlock time windows, and pressure thresholds. Decision fusion combines AI risk scores and rules to send real‑time alerts (SMS/email/LINE/webhooks), highlight anomalies on the operations dashboard, and automatically generate daily/weekly risk reports, helping users quickly identify high‑risk routes and problematic assets.
 
 ### Federated Learning (FL) for Multi-Party Collaboration as a Scalable Business Opportunity
 
@@ -873,12 +872,12 @@ As shown in Figure 3‑5, the project follows an end‑to‑end “edge → clou
 flowchart LR
 
   %% ===========================
-  %%   iTracXing 平台
+  %%   iTracXing Platform
   %% ===========================
-  subgraph ITX["iTracXing 平台（台灣）"]
-    ITX_Data["iTracXing 資料<br>BLE / Padlock / NTN / TOTE"]
-    ITX_ML["iTracXing 在地 FL 訓練節點"]
-    ITX_UI["iTracXing 儀表板<br>（限 iTracXing 客戶）"]
+  subgraph ITX["iTracXing Platform (Taiwan)"]
+    ITX_Data["iTracXing data<br>BLE / Padlock / NTN / TOTE"]
+    ITX_ML["iTracXing local FL training node"]
+    ITX_UI["iTracXing dashboard<br>(for iTracXing customers only)"]
   end
 
   ITX_Data --> ITX_ML
@@ -886,12 +885,12 @@ flowchart LR
 
 
   %% ===========================
-  %%   Arviem 平台
+  %%   Arviem Platform
   %% ===========================
-  subgraph ARV["Arviem 平台（歐盟／美國／亞太）"]
-    ARV_Data["Arviem 資料<br>JA Device / Motion / GPS"]
-    ARV_ML["Arviem 在地 FL 訓練節點"]
-    ARV_UI["Arviem 儀表板<br>（限 Arviem 客戶）"]
+  subgraph ARV["Arviem Platform (EU / US / APAC)"]
+    ARV_Data["Arviem data<br>JA Device / Motion / GPS"]
+    ARV_ML["Arviem local FL training node"]
+    ARV_UI["Arviem dashboard<br>(for Arviem customers only)"]
   end
 
   ARV_Data --> ARV_ML
@@ -899,12 +898,12 @@ flowchart LR
 
 
   %% ===========================
-  %%   Vector 平台
+  %%   Vector Platform
   %% ===========================
-  subgraph VEC["Vector 平台（美國／全球零售迴路）"]
-    VEC_Data["Vector LPMS 資料<br>零售／逆物流／Smart TOTE"]
-    VEC_ML["Vector 在地 FL 訓練節點"]
-    VEC_UI["Vector 儀表板<br>（限 Vector 客戶）"]
+  subgraph VEC["Vector Platform (US / global retail loops)"]
+    VEC_Data["Vector LPMS data<br>Retail / reverse logistics / Smart TOTE"]
+    VEC_ML["Vector local FL training node"]
+    VEC_UI["Vector dashboard<br>(for Vector customers only)"]
   end
 
   VEC_Data --> VEC_ML
@@ -912,23 +911,23 @@ flowchart LR
 
 
   %% ===========================
-  %%   聯邦學習聚合層
+  %%   Federated Learning Aggregation Layer
   %% ===========================
-  ITX_ML -->|加密 ΔW| AGG
-  ARV_ML -->|加密 ΔW| AGG
-  VEC_ML -->|加密 ΔW| AGG
+  ITX_ML -->|Encrypted ΔW| AGG
+  ARV_ML -->|Encrypted ΔW| AGG
+  VEC_ML -->|Encrypted ΔW| AGG
 
-  subgraph FED["聯邦學習聚合層"]
-    AGG["安全聚合器<br>FedAvg / FedProx / FedAdam<br>（不共享任何原始資料）"]
-    GM["全球共享模型<br>物流風險預測 AI"]
+  subgraph FED["Federated Learning Aggregation Layer"]
+    AGG["Secure aggregator<br>FedAvg / FedProx / FedAdam<br>(no raw data is ever shared)"]
+    GM["Global shared model<br>Logistics risk prediction AI"]
   end
 
   AGG --> GM
 
-  %% 重新下發全球更新模型
-  GM -->|更新模型 Wₜ₊₁| ITX_ML
-  GM -->|更新模型 Wₜ₊₁| ARV_ML
-  GM -->|更新模型 Wₜ₊₁| VEC_ML
+  %% Distribute updated global model
+  GM -->|Update model Wₜ₊₁| ITX_ML
+  GM -->|Update model Wₜ₊₁| ARV_ML
+  GM -->|Update model Wₜ₊₁| VEC_ML
 ```
 
 Figure 3‑6
