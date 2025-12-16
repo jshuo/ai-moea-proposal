@@ -60,6 +60,10 @@ Project Management Organization: Taipei Computer Association
 | Representative | Dr. Chow |
 | Main Business | AI supply chain monitoring systems, IoT device management, data analytics platforms |
 
+
+
+
+
 ### Project Abstract (≤200 words)
 
 Industry mapping: **Item 7 of the Eight Key Industries (electronics assembly extension: smart manufacturing / logistics and transportation)**.  
