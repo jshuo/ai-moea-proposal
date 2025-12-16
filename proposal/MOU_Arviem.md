@@ -9,7 +9,7 @@
 **BETWEEN:**
 
 
-**Party A:** **ItracXing Technology Co., Ltd. (準旺科技股份有限公司)** A company organized and existing under the laws of Taiwan (R.O.C.). (Hereinafter referred to as "**ItracXing**")
+**Party A:** **ItracXing Technology Co., Ltd.（準旺科技股份有限公司）** A company organized and existing under the laws of Taiwan (R.O.C.). (Hereinafter referred to as "**ItracXing**")
 
 
 **AND**
