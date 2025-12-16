@@ -49,7 +49,7 @@ Project Management Organization: Taipei Computer Association
 
 ---
 
-## Project Abstract
+
 
 ### Applicant Company Profile
 
@@ -60,9 +60,9 @@ Project Management Organization: Taipei Computer Association
 | Representative | Dr. Chow |
 | Main Business | AI supply chain monitoring systems, IoT device management, data analytics platforms |
 
----
 
-### Project Abstract (≤200 words)
+
+## Project Abstract (≤200 words)
 
 Industry mapping: **Item 7 of the Eight Key Industries (electronics assembly extension: smart manufacturing / logistics and transportation)**.  
 Global supply chains lose more than NT$900 billion annually due to theft and temperature/humidity excursions, with particularly severe impact on high-value electronics and precision components. This project is led by Taiwan-based 準旺(ItracXing), in collaboration with Swiss partner Arviem (a global cargo and container IoT telemetry integrator), to jointly develop an AI-powered shipment condition monitoring and **Smart TOTE** solution. The project focuses on **four AI-driven capabilities**: (1) multi-sensor data fusion and high-reliability monitoring; (2) anomaly detection and real-time alerting; (3) environmental risk prediction with packaging/transport optimization recommendations; and (4) route deviation, abnormal dwell, and theft risk early warning.  
