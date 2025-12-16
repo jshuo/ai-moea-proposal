@@ -118,7 +118,7 @@ This MOU shall be governed by and construed in accordance with the laws of Taiwa
 
 
 
-IN WITNESS WHEREOF, the Parties have caused this MOU to be executed by their duly authorized representatives.
+IN WITNESS WHEREOF, the Parties have caused this MOU to be executed by their duly authorized representatives. The undersigned signatories hereby confirm that they have reviewed the "ItracXing-Arviem-Taiwan-MOEA-Subsidy-Application.pdf" and agree to the terms and scope of cooperation outlined in both this MOU and the referenced subsidy application.
 
 
 | For and on behalf of<br>ItracXing Technology Co., Ltd. | For and on behalf of<br>Arviem AG |
