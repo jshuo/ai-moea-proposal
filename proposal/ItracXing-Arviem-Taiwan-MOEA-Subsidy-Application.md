@@ -64,6 +64,19 @@ Project Management Organization: Taipei Computer Association
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Project Abstract (≤200 words)
 
 Industry mapping: **Item 7 of the Eight Key Industries (electronics assembly extension: smart manufacturing / logistics and transportation)**.  
