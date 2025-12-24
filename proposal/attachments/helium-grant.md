@@ -4,7 +4,7 @@
 
 ## 1) Executive Summary
 
-Logistics operators managing high-value and cold-chain shipments experience significant losses and compliance risk due to delayed detection of temperature excursions, tampering, route anomalies, and device downtime—especially at sites with limited terrestrial backhaul. This project will deliver an NTN-backhauled Helium IoT Data-Only Hotspot Smart Hub and a Helium-native risk monitoring application (“Smart TOTE Risk Intelligence”) that routes LoRaWAN telemetry through the Helium IoT Network and converts it into AI-driven risk scoring, real-time alerts, automated incident reports, and predictive maintenance insights.
+Logistics operators managing high-value and cold-chain shipments experience significant losses and compliance risk due to delayed detection of temperature excursions, tampering, route anomalies, and device downtime—especially at sites with limited terrestrial backhaul. This project will deliver an NTN-backhauled Helium IoT Data-Only Hotspot Smart Hub and a Helium-native risk monitoring application (“Smart TOTE Risk Intelligence”) that routes LoRaWAN telemetry through the Helium IoT Network and converts it into AI-driven risk scoring, real-time alerts, incident reporting workflows, and predictive maintenance insights.
 
 This project benefits the Helium Network by enabling a repeatable enterprise deployment model that increases active Helium IoT gateways and endpoint activity, and produces sustained, measurable Helium IoT traffic from commercial logistics operations—validating decentralized wireless performance in demanding supply-chain environments.
 
@@ -13,7 +13,7 @@ This project benefits the Helium Network by enabling a repeatable enterprise dep
 - **Primary Deliverables:**
 	1. Helium IoT Data-Only Hotspot Smart Hub with NTN backhaul
 	2. Helium-native data pipeline and AI risk monitoring application (alerts, dashboards, incident reports)
-	3. Field-validated deployment playbook, operations toolkit, and network usage reporting package
+	3. Field-validated deployment and operations readiness, plus monthly network usage and outcome reporting
 
 ## Helium Foundation Criteria Alignment
 
@@ -66,6 +66,7 @@ A production application that:
 	- Alert optimization to reduce false positives while preserving detection performance
 	- Predictive maintenance for device health (battery and connectivity reliability)
 - Provides: real-time alerts, automated incident evidence bundles, and operational dashboards
+- Provides: real-time alerts, standardized incident evidence bundles, and operational dashboards
 
 ## 4) Helium-Native Architecture (How This Uses Helium)
 
@@ -98,7 +99,7 @@ The project is designed for partner collaboration to ensure real-world validatio
 
 | Partner | Role | Contribution |
 | --- | --- | --- |
-| ITracXing (Tracking) | Prime applicant and system integrator | Helium IoT gateway integration, NTN backhaul integration, ingestion pipeline, AI models, alerts/reporting UX, deployment playbook, operations tooling |
+| ITracXing (Tracking) | Prime applicant and system integrator | Helium IoT gateway integration, NTN backhaul integration, ingestion pipeline, AI models, alerts/reporting UX, deployment and operations processes |
 | Arviem (prospective) | Potential domain and validation collaborator | Logistics workflows, exception taxonomy, chain-of-custody validation methods, international freight use-case alignment (subject to pilot alignment) |
 | Vector (3PL / logistics operator) (prospective) | Potential field pilot and operational validation collaborator | Pilot site hosting, acceptance testing, operational workflow validation, measurement of incident response and operational impact (subject to pilot alignment) |
 | AT&T (prospective; discussions planned at CES 2026) | Potential enterprise connectivity and benchmarking collaborator | Backhaul benchmarking methodology (terrestrial fallback vs NTN), enterprise deployment best practices, operational readiness input (subject to 2026 partnership discussions) |
@@ -116,10 +117,10 @@ The project is designed for partner collaboration to ensure real-world validatio
 | Milestone | Timeline | Scope of Work | Acceptance Criteria | Funding |
 | --- | --- | --- | --- | ---: |
 | M1 — Architecture and Helium Integration Baseline | Months 1–3 | Finalize hub architecture; Helium IoT Data-Only Hotspot integration baseline; NTN backhaul prototype; telemetry schema; security and device lifecycle | Hub prototype routes test packets via Helium; hub health telemetry visible; lab packet delivery ≥95% | $50,000 |
-| M2 — Data Pipeline and MVP Application | Months 4–6 | Helium telemetry ingestion; event normalization; MVP dashboards and alerting; pilot onboarding toolkit | End-to-end: Helium packet → event store → dashboard; alerting operational; onboarding workflow ready | $55,000 |
-| M3 — AI Models and Field Pilot Phase 1 | Months 7–10 | Deploy initial hubs/endpoints; train and validate anomaly/risk models; predictive maintenance baseline; automated incident reporting | Field pilot: ≥5 hubs, ≥300 endpoints; alert F1 ≥0.80; automated incident report generation live | $70,000 |
+| M2 — Data Pipeline and MVP Application | Months 4–6 | Helium telemetry ingestion; event normalization; MVP dashboards and alerting; pilot onboarding workflow | End-to-end: Helium packet → event store → dashboard; alerting operational; onboarding workflow ready | $55,000 |
+| M3 — AI Models and Field Pilot Phase 1 | Months 7–10 | Deploy initial hubs/endpoints; train and validate anomaly/risk models; predictive maintenance baseline; incident reporting workflow | Field pilot: ≥5 hubs, ≥300 endpoints; alert F1 ≥0.80; incident reporting workflow live | $70,000 |
 | M4 — Scale Pilot and Reliability Hardening | Months 11–15 | Expand deployments; improve model performance; strengthen operations tooling; reliability/observability hardening | ≥30 hubs active; ≥1,500 endpoints active; hub availability ≥99%; packet delivery ≥97%; alert F1 ≥0.85 | $45,000 |
-| M5 — Production Package and Replication Playbook | Months 16–18 | Production hardening; partner enablement; replication playbook; network usage and outcome reporting package | Deployment kit + SOP complete; documented onboarding/ops; sustained stable traffic ≥90 consecutive days | $30,000 |
+| M5 — Production Readiness and Partner Enablement | Months 16–18 | Production hardening; partner enablement; operational readiness for replication; network usage and outcome reporting | Operational onboarding and support processes ready; sustained stable traffic ≥90 consecutive days | $30,000 |
 
 **Total Grant Request:** US$250,000
 
@@ -157,7 +158,7 @@ Budget is allocated by milestone as defined in Section 7.
 ### B) Ecosystem impact (secondary ROI)
 
 - A repeatable deployment model for sites blocked by traditional backhaul constraints (enabled via NTN)
-- A replication playbook that reduces friction for future enterprise onboarding
+- Operational readiness that reduces friction for future enterprise onboarding
 
 ### C) Business outcomes tied to Helium usage
 
@@ -166,7 +167,7 @@ This proposal ties Helium network usage to measurable enterprise outcomes, repor
 - Incident detection lead time (minutes)
 - Temperature excursion severity reduction (degree-minutes) and mitigation time
 - False-alert reduction (%), measured as alert precision/recall and F1
-- Evidence bundle automation rate (%) and time-to-claim documentation (minutes)
+- Evidence bundle completeness rate (%) and time-to-claim documentation (minutes)
 
 ## 10) Customer Value and Business Model
 
@@ -202,7 +203,7 @@ This proposal ties Helium network usage to measurable enterprise outcomes, repor
 ### Application KPIs
 
 - Alert quality: F1 ≥0.85 by Month 15
-- Incident report automation: ≥80% of incidents produce complete evidence bundles automatically
+- Incident reporting completeness: ≥80% of incidents produce complete evidence bundles via a standardized workflow
 - Predictive maintenance impact: ≥30% reduction in unexpected device downtime versus baseline
 
 ## 12) Execution Capability
@@ -229,7 +230,7 @@ The project is designed to sustain itself after the grant period through:
 
 - **Commercial subscriptions** for monitoring + reporting (tiered pricing by asset count and analytics level)
 - **Managed deployment and operations** offerings for enterprise sites (installation, monitoring, SLA support)
-- **Partner-led replication** using the playbook (repeatable onboarding/ops) to reduce marginal deployment cost
+- **Partner-led replication** using repeatable onboarding and operations processes to reduce marginal deployment cost
 
 ## Network Usage Measurement & Reporting
 
@@ -243,7 +244,7 @@ We will provide monthly reporting suitable for Helium Foundation review:
 ## 13) Key Risks and Mitigations
 
 - Gateway onboarding/operational constraints: start Helium gateway integration in M1; implement repeatable provisioning; validate small scale before scaling
-- Field variability (RF and installation differences): deployment kit + site survey checklist; remote diagnostics; staged rollout
+- Field variability (RF and installation differences): site survey checklist; remote diagnostics; staged rollout
 - Model generalization across lanes: phased deployment; iterative learning; structured acceptance tests with partner validation
 - NTN backhaul cost/latency variability: buffer-and-forward design; adaptive sampling policies; terrestrial fallback where available
 - Partner readiness/scheduling: defined milestone checkpoints; clear responsibilities and escalation path
@@ -256,12 +257,3 @@ Funding this project delivers:
 - Measurable growth in Helium IoT usage (gateways, endpoints, packets, sustained activity)
 - A repeatable deployment model for sites historically constrained by backhaul availability
 - A production-ready Helium-native application that demonstrates decentralized wireless viability in real operations
-
-## 15) Deliverables (Submission-Ready Artifacts)
-
-At completion, we will provide a package suitable for Helium Foundation review and replication:
-
-- **Deployment kit:** hub provisioning checklist, installation guide, site survey template, and onboarding SOP
-- **Operations toolkit:** uptime/health dashboards, alert routing rules, incident report templates, and observability runbooks
-- **Network usage reporting:** monthly KPI report template + exported metrics (active hubs/endpoints, throughput, delivery rate, sustained activity)
-- **Pilot results summary:** quantified operational outcomes tied to Helium usage (reduced loss, fewer false alerts, improved response)
