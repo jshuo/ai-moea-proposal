@@ -1,6 +1,6 @@
 # Project Name
 
-**Build Helium-Native Applications: NTN-Backhauled Helium IoT Smart Hub + Smart TOTE Risk Intelligence for AI Supply-Chain Risk Monitoring**
+**NTN-Backhauled Helium IoT Smart Hub + Smart TOTE Risk Intelligence for AI Supply-Chain Risk Monitoring**
 
 ## 1) Executive Summary
 
@@ -51,7 +51,7 @@ Helium IoT can support scalable, decentralized telemetry transport for enterpris
 The Smart Hub will function as a Helium IoT Data-Only Hotspot gateway that:
 
 - Receives LoRaWAN packets from shipment/tote sensor nodes (and/or Smart TOTE-integrated LoRaWAN modules) and site sensors
-- Forwards packets into Helium IoT using Helium-compatible gateway routing
+- Forwards packets into Helium IoT using Semtech Packet Forwarder + Helium gateway software (gateway-rs/helium_gateway) and standard Data-Only Hotspot onboarding
 - Uses NTN backhaul in connectivity-constrained locations
 - Includes fleet operations capabilities: health telemetry, remote configuration, diagnostics, and uptime reporting
 
@@ -65,7 +65,6 @@ A production application that:
 	- Risk/anomaly detection (temperature/humidity excursion patterns, tamper signals, route deviation indicators)
 	- Alert optimization to reduce false positives while preserving detection performance
 	- Predictive maintenance for device health (battery and connectivity reliability)
-- Provides: real-time alerts, automated incident evidence bundles, and operational dashboards
 - Provides: real-time alerts, standardized incident evidence bundles, and operational dashboards
 
 ## 4) Helium-Native Architecture (How This Uses Helium)
@@ -95,7 +94,7 @@ Helium IoT is a core dependency in the architecture:
 
 ## 6) Collaboration and Partner Roles (Prospective)
 
-The project is designed for partner collaboration to ensure real-world validation and scale readiness. At the time of submission, the partners below are **prospective** (not yet formally briefed on this Helium grant, and not yet committed).
+The project is designed for partner collaboration to ensure real-world validation and scale readiness. At the time of submission, the partners below are **prospective**; pilot onboarding outreach is scheduled during M1–M2; LOIs are targeted in 2026.
 
 | Partner | Role | Contribution |
 | --- | --- | --- |
@@ -104,7 +103,7 @@ The project is designed for partner collaboration to ensure real-world validatio
 | Vector (3PL / logistics operator) (prospective) | Potential field pilot and operational validation collaborator | Pilot site hosting, acceptance testing, operational workflow validation, measurement of incident response and operational impact (subject to pilot alignment) |
 | AT&T (prospective; discussions planned at CES 2026) | Potential enterprise connectivity and benchmarking collaborator | Backhaul benchmarking methodology (terrestrial fallback vs NTN), enterprise deployment best practices, operational readiness input (subject to 2026 partnership discussions) |
 
-**Partnership status note:** No external partners have been formally briefed on this Helium grant submission yet. The collaboration targets listed above reflect planned outreach and pilot onboarding in 2026; participation will be confirmed via separate discussions and (where needed) letters of intent.
+**Partnership status note:** Partners are prospective at submission. Outreach and pilot onboarding discussions are scheduled during M1–M2; LOIs (where appropriate) are targeted in 2026.
 
 ### Collaboration Governance
 
@@ -153,7 +152,7 @@ Budget is allocated by milestone as defined in Section 7.
 - Packets over a 90-day sustained window: 16,200,000 packets
 - Annualized packets: 65,700,000 packets/year
 
-**Reporting cadence:** Monthly network usage reporting including: active gateways/endpoints, packet throughput, delivery rate, uptime, and sustained activity windows. Where available, we will also report Data Credits consumption based on Helium Console usage/invoices.
+**Reporting cadence:** Monthly network usage reporting including: active gateways/endpoints, packet throughput, delivery rate, uptime, and sustained activity windows. Where available, we will also report Data Credits consumption from Helium Console exports/invoices (actuals).
 
 ### B) Ecosystem impact (secondary ROI)
 
@@ -239,7 +238,7 @@ We will provide monthly reporting suitable for Helium Foundation review:
 - Active gateways (Smart Hubs), active endpoints, daily/weekly packet throughput
 - Packet delivery rate (field) and hub availability
 - Sustained activity windows (e.g., continuous 90-day stable traffic)
-- Where available, **Data Credits consumption** based on Helium Console exports/invoices
+- Where available, **Data Credits consumption** from Helium Console exports/invoices (actuals)
 
 ## 13) Key Risks and Mitigations
 
