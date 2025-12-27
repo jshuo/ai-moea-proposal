@@ -21,6 +21,7 @@ import argparse
 import math
 import os
 import pickle
+import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Dict, Iterable, List, Optional, Tuple
@@ -29,6 +30,56 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+
+_WIN_TAG_RE = re.compile(r"_?(?P<n>\d+)(?P<unit>[dh])$")
+
+
+def _tag_to_hours(tag: str) -> float:
+    m = _WIN_TAG_RE.search(tag)
+    if not m:
+        raise ValueError(f"Unrecognized window tag: {tag}")
+    n = float(m.group("n"))
+    unit = m.group("unit")
+    return n * 24.0 if unit == "d" else n
+
+
+def _hours_to_tag(hours: float) -> str:
+    # Prefer hour tags for clarity on short histories (e.g., 72h).
+    if hours <= 0:
+        raise ValueError("hours must be > 0")
+    if abs(hours - round(hours)) < 1e-9:
+        return f"{int(round(hours))}h"
+    # fallback (should not happen with CLI defaults)
+    return f"{hours:g}h"
+
+
+def _window_steps(dt_minutes: int, hours: float, *, min_steps: int = 2) -> int:
+    steps = int(round((hours * 60.0) / float(dt_minutes)))
+    return max(int(min_steps), steps)
+
+
+def _warn_if_history_short(
+    aligned: pd.DataFrame,
+    *,
+    long_hours: float,
+    label: str,
+    q: float = 0.5,
+) -> None:
+    if "timestamp" not in aligned.columns or "device_id" not in aligned.columns:
+        return
+    g = aligned.copy()
+    g["timestamp"] = pd.to_datetime(g["timestamp"], utc=False)
+    spans = (g.groupby("device_id")["timestamp"].max() - g.groupby("device_id")["timestamp"].min())
+    spans_h = spans.dt.total_seconds() / 3600.0
+    if len(spans_h) == 0:
+        return
+    ref = float(spans_h.quantile(q))
+    if ref + 1e-9 < float(long_hours):
+        print(
+            f"Warning: {label} median history is ~{ref:.1f}h, but long rolling window is {float(long_hours):g}h. "
+            "Consider using --feat-long-hours to match available history (e.g., 72 for a 72h window)."
+        )
 
 
 def _require_torch():
@@ -74,6 +125,12 @@ def read_telemetry_csv(path: str, include_temp: bool) -> pd.DataFrame:
             f"CSV missing required columns: {sorted(missing)}\n"
             f"Found columns: {list(df.columns)}"
         )
+
+    # Optional: some datasets include a per-device failure timestamp to allow
+    # correct RUL labeling for windows that do not include the threshold crossing.
+    for col in ("t_fail", "failure_ts", "failure_timestamp"):
+        if col in df.columns:
+            df[col] = pd.to_datetime(df[col], utc=False, errors="coerce")
     return df
 
 
@@ -92,6 +149,8 @@ class SimConfig:
     duplicate_prob: float = 0.01
     outlier_prob: float = 0.01
     jitter_std_minutes: float = 8.0
+    voltage_noise_std: float = 0.03
+    voltage_outlier_std: float = 0.25
 
     # Damage-accumulation simulator parameters (used when sim_mode == "damage")
     # Temperature generation and clipping (°C)
@@ -112,6 +171,10 @@ class SimConfig:
     k_temp: float = 0.030
     base_rate_min: float = 0.006
     base_rate_max: float = 0.020
+
+    # Simple-mode curvature range (used when sim_mode == "simple").
+    simple_alpha_min: float = 1.2
+    simple_alpha_max: float = 2.2
 
 
 def _temp_at_hour(
@@ -218,9 +281,9 @@ def simulate_telemetry(
                 frac = min(max(damage, 0.0), 1.0)
                 v_true = v0 - (v0 - cfg.v_fail) * (frac**curve)
 
-                v_meas = float(v_true + rng.normal(0.0, 0.03))
+                v_meas = float(v_true + rng.normal(0.0, float(cfg.voltage_noise_std)))
                 if rng.random() < cfg.outlier_prob:
-                    v_meas += float(rng.normal(0.0, 0.25))
+                    v_meas += float(rng.normal(0.0, float(cfg.voltage_outlier_std)))
 
                 row: Dict[str, object] = {
                     "device_id": device_id,
@@ -242,7 +305,7 @@ def simulate_telemetry(
             true_failure[device_id] = t_fail
 
             n_steps = int(math.ceil(t_fail_d * 24 * 60 / cfg.dt_minutes)) + 1
-            alpha = float(rng.uniform(1.2, 2.2))  # degradation curvature
+            alpha = float(rng.uniform(float(cfg.simple_alpha_min), float(cfg.simple_alpha_max)))  # degradation curvature
 
             for step in range(n_steps):
                 nominal_ts = device_start + step * dt
@@ -258,9 +321,9 @@ def simulate_telemetry(
                 frac = min(max(t_h / t_fail_h, 0.0), 1.0)
                 v_true = v0 - (v0 - cfg.v_fail) * (frac**alpha)
 
-                v_meas = float(v_true + rng.normal(0.0, 0.03))
+                v_meas = float(v_true + rng.normal(0.0, float(cfg.voltage_noise_std)))
                 if rng.random() < cfg.outlier_prob:
-                    v_meas += float(rng.normal(0.0, 0.25))
+                    v_meas += float(rng.normal(0.0, float(cfg.voltage_outlier_std)))
 
                 row: Dict[str, object] = {
                     "device_id": device_id,
@@ -322,6 +385,15 @@ def preprocess_and_align(
     freq = f"{dt_minutes}min"
 
     for device_id, g in df.groupby("device_id", sort=False):
+        # Preserve an optional per-device failure timestamp if present.
+        t_fail_val = None
+        for col in ("t_fail", "failure_ts", "failure_timestamp"):
+            if col in g.columns:
+                parsed = pd.to_datetime(g[col], utc=False, errors="coerce")
+                if parsed.notna().any():
+                    t_fail_val = pd.Timestamp(parsed.dropna().iloc[0])
+                break
+
         g = g.dropna(subset=["timestamp", "voltage"]).sort_values("timestamp")
         g = g.drop_duplicates(subset=["timestamp"], keep="last")
         g = g.set_index("timestamp")
@@ -341,6 +413,9 @@ def preprocess_and_align(
 
         g["device_id"] = device_id
         g = g.reset_index()
+
+        if t_fail_val is not None:
+            g["t_fail"] = t_fail_val
         aligned.append(g)
 
     return pd.concat(aligned, ignore_index=True)
@@ -391,11 +466,48 @@ def _rolling_slope(values: np.ndarray) -> float:
     return float(((x - x_mean) * (y - y_mean)).sum() / denom)
 
 
+def _infer_window_tags_from_feature_cols(feature_cols: List[str]) -> List[str]:
+    tags: List[str] = []
+    for c in feature_cols:
+        m = _WIN_TAG_RE.search(c)
+        if m:
+            tags.append(f"{m.group('n')}{m.group('unit')}")
+    # unique but stable
+    seen = set()
+    out: List[str] = []
+    for t in tags:
+        if t not in seen:
+            out.append(t)
+            seen.add(t)
+    return out
+
+
+def _make_feature_cols_hours(include_temp: bool, short_hours: float, long_hours: float) -> List[str]:
+    short_tag = _hours_to_tag(float(short_hours))
+    long_tag = _hours_to_tag(float(long_hours))
+    cols = [
+        "v",
+        f"v_mean_{short_tag}",
+        f"v_std_{short_tag}",
+        f"v_min_{short_tag}",
+        f"v_max_{short_tag}",
+        f"v_slope_{short_tag}",
+        f"v_mean_{long_tag}",
+        f"v_std_{long_tag}",
+        f"v_slope_{long_tag}",
+        "v_delta",
+    ]
+    if include_temp:
+        cols += ["temp", f"temp_mean_{short_tag}", f"temp_std_{short_tag}"]
+    return cols
+
+
 def make_features_and_labels(
     aligned: pd.DataFrame,
     include_temp: bool,
     threshold_v: float,
     dt_minutes: int,
+    feature_cols: Optional[List[str]] = None,
 ) -> pd.DataFrame:
     """Per-device features + per-timestep RUL label (in days)."""
 
@@ -404,7 +516,14 @@ def make_features_and_labels(
     for device_id, g in aligned.groupby("device_id", sort=False):
         g = g.sort_values("timestamp").reset_index(drop=True)
 
-        t_fail = detect_failure_time(g, threshold_v=threshold_v)
+        if "t_fail" in g.columns:
+            parsed = pd.to_datetime(g["t_fail"], utc=False, errors="coerce")
+            if parsed.notna().any():
+                t_fail = pd.Timestamp(parsed.dropna().iloc[0]).to_pydatetime()
+            else:
+                t_fail = detect_failure_time(g, threshold_v=threshold_v)
+        else:
+            t_fail = detect_failure_time(g, threshold_v=threshold_v)
         t = pd.to_datetime(g["timestamp"]).dt.tz_localize(None)
 
         rul_days = (pd.Timestamp(t_fail) - t).dt.total_seconds() / (3600.0 * 24.0)
@@ -419,27 +538,39 @@ def make_features_and_labels(
             "v": v,
         })
 
-        # windows in steps
-        w_short = max(12, int(round(24 * 60 / dt_minutes)))        # ~1 day
-        w_long = max(24, int(round(7 * 24 * 60 / dt_minutes)))     # ~7 days
-
-        out["v_mean_1d"] = v.rolling(w_short, min_periods=2).mean()
-        out["v_std_1d"] = v.rolling(w_short, min_periods=2).std()
-        out["v_min_1d"] = v.rolling(w_short, min_periods=2).min()
-        out["v_max_1d"] = v.rolling(w_short, min_periods=2).max()
-        out["v_slope_1d"] = v.rolling(w_short, min_periods=2).apply(_rolling_slope, raw=True)
-
-        out["v_mean_7d"] = v.rolling(w_long, min_periods=2).mean()
-        out["v_std_7d"] = v.rolling(w_long, min_periods=2).std()
-        out["v_slope_7d"] = v.rolling(w_long, min_periods=2).apply(_rolling_slope, raw=True)
-
         out["v_delta"] = v.diff().fillna(0.0)
+
+        # If feature_cols are provided (predict/eval or explicitly chosen schema), compute exactly the
+        # windows needed. This keeps compatibility with legacy *_1d/*_7d models while enabling 24h/72h.
+        tags = _infer_window_tags_from_feature_cols(feature_cols) if feature_cols is not None else ["24h", "72h"]
+
+        for tag in tags:
+            hours = _tag_to_hours(tag)
+            w = _window_steps(dt_minutes, hours)
+            if tag.endswith("d"):
+                suffix = tag
+            else:
+                suffix = tag
+            out[f"v_mean_{suffix}"] = v.rolling(w, min_periods=2).mean()
+            out[f"v_std_{suffix}"] = v.rolling(w, min_periods=2).std()
+            out[f"v_slope_{suffix}"] = v.rolling(w, min_periods=2).apply(_rolling_slope, raw=True)
+            # min/max are typically only used for the shorter window; compute only if requested
+            if feature_cols is None or (f"v_min_{suffix}" in (feature_cols or [])):
+                out[f"v_min_{suffix}"] = v.rolling(w, min_periods=2).min()
+            if feature_cols is None or (f"v_max_{suffix}" in (feature_cols or [])):
+                out[f"v_max_{suffix}"] = v.rolling(w, min_periods=2).max()
 
         if include_temp:
             temp = g["temp"].astype(float)
             out["temp"] = temp
-            out["temp_mean_1d"] = temp.rolling(w_short, min_periods=2).mean()
-            out["temp_std_1d"] = temp.rolling(w_short, min_periods=2).std()
+            for tag in tags:
+                suffix = tag
+                if (feature_cols is not None) and (f"temp_mean_{suffix}" not in feature_cols) and (f"temp_std_{suffix}" not in feature_cols):
+                    continue
+                hours = _tag_to_hours(tag)
+                w = _window_steps(dt_minutes, hours)
+                out[f"temp_mean_{suffix}"] = temp.rolling(w, min_periods=2).mean()
+                out[f"temp_std_{suffix}"] = temp.rolling(w, min_periods=2).std()
 
         # fill initial NaNs created by rolling
         out = out.ffill().bfill()
@@ -452,6 +583,7 @@ def make_features(
     aligned: pd.DataFrame,
     include_temp: bool,
     dt_minutes: int,
+    feature_cols: Optional[List[str]] = None,
 ) -> pd.DataFrame:
     """Per-device feature engineering only (no RUL labels).
 
@@ -472,26 +604,32 @@ def make_features(
             "v": v,
         })
 
-        w_short = max(12, int(round(24 * 60 / dt_minutes)))        # ~1 day
-        w_long = max(24, int(round(7 * 24 * 60 / dt_minutes)))     # ~7 days
-
-        out["v_mean_1d"] = v.rolling(w_short, min_periods=2).mean()
-        out["v_std_1d"] = v.rolling(w_short, min_periods=2).std()
-        out["v_min_1d"] = v.rolling(w_short, min_periods=2).min()
-        out["v_max_1d"] = v.rolling(w_short, min_periods=2).max()
-        out["v_slope_1d"] = v.rolling(w_short, min_periods=2).apply(_rolling_slope, raw=True)
-
-        out["v_mean_7d"] = v.rolling(w_long, min_periods=2).mean()
-        out["v_std_7d"] = v.rolling(w_long, min_periods=2).std()
-        out["v_slope_7d"] = v.rolling(w_long, min_periods=2).apply(_rolling_slope, raw=True)
-
         out["v_delta"] = v.diff().fillna(0.0)
+
+        tags = _infer_window_tags_from_feature_cols(feature_cols) if feature_cols is not None else ["24h", "72h"]
+        for tag in tags:
+            hours = _tag_to_hours(tag)
+            w = _window_steps(dt_minutes, hours)
+            suffix = tag
+            out[f"v_mean_{suffix}"] = v.rolling(w, min_periods=2).mean()
+            out[f"v_std_{suffix}"] = v.rolling(w, min_periods=2).std()
+            out[f"v_slope_{suffix}"] = v.rolling(w, min_periods=2).apply(_rolling_slope, raw=True)
+            if feature_cols is None or (f"v_min_{suffix}" in (feature_cols or [])):
+                out[f"v_min_{suffix}"] = v.rolling(w, min_periods=2).min()
+            if feature_cols is None or (f"v_max_{suffix}" in (feature_cols or [])):
+                out[f"v_max_{suffix}"] = v.rolling(w, min_periods=2).max()
 
         if include_temp:
             temp = g["temp"].astype(float)
             out["temp"] = temp
-            out["temp_mean_1d"] = temp.rolling(w_short, min_periods=2).mean()
-            out["temp_std_1d"] = temp.rolling(w_short, min_periods=2).std()
+            for tag in tags:
+                suffix = tag
+                if (feature_cols is not None) and (f"temp_mean_{suffix}" not in feature_cols) and (f"temp_std_{suffix}" not in feature_cols):
+                    continue
+                hours = _tag_to_hours(tag)
+                w = _window_steps(dt_minutes, hours)
+                out[f"temp_mean_{suffix}"] = temp.rolling(w, min_periods=2).mean()
+                out[f"temp_std_{suffix}"] = temp.rolling(w, min_periods=2).std()
 
         out = out.ffill().bfill()
         feats.append(out)
@@ -781,6 +919,35 @@ def main():
         help="Generate a synthetic telemetry CSV (device_id,timestamp,voltage[,temp]) and exit.",
     )
     p.add_argument(
+        "--emit-failure-timestamp",
+        action="store_true",
+        help=(
+            "With --generate-csv: include a per-device failure timestamp column (t_fail). "
+            "This enables correct labeling even when the failure event is not observed in the window."
+        ),
+    )
+    p.add_argument(
+        "--window-hours",
+        type=float,
+        default=None,
+        help=(
+            "With --generate-csv: keep only a per-device window of this many hours ending at (t_fail - end_rul_days). "
+            "Requires --window-end-rul-min-days and --window-end-rul-max-days."
+        ),
+    )
+    p.add_argument(
+        "--window-end-rul-min-days",
+        type=float,
+        default=None,
+        help="With --generate-csv and --window-hours: minimum true RUL (days) at the end of the window.",
+    )
+    p.add_argument(
+        "--window-end-rul-max-days",
+        type=float,
+        default=None,
+        help="With --generate-csv and --window-hours: maximum true RUL (days) at the end of the window.",
+    )
+    p.add_argument(
         "--shift-max-timestamp-to",
         type=str,
         default=None,
@@ -828,6 +995,24 @@ def main():
         help="With --eval-csv: optionally write evaluation rows to this CSV (per-sequence by default; per-device if --eval-latest-only).",
     )
     p.add_argument(
+        "--eval-min-timestamp",
+        type=str,
+        default=None,
+        help=(
+            "With --eval-csv: optional lower bound (inclusive) on sequence end timestamp before applying selection mode. "
+            "Use YYYY-MM-DD or ISO datetime like 2025-12-15T23:00:00."
+        ),
+    )
+    p.add_argument(
+        "--eval-max-timestamp",
+        type=str,
+        default=None,
+        help=(
+            "With --eval-csv: optional upper bound (inclusive) on sequence end timestamp before applying selection mode. "
+            "Use YYYY-MM-DD or ISO datetime like 2025-12-26T21:00:00."
+        ),
+    )
+    p.add_argument(
         "--eval-latest-only",
         action="store_true",
         help="With --eval-csv: evaluate only the latest available sequence per device (one row per device).",
@@ -845,6 +1030,67 @@ def main():
         help="With --eval-csv: evaluate one row per device at a specific true RUL horizon in days (pick the sequence whose y_true is closest to this value).",
     )
     p.add_argument(
+        "--eval-at-rul-max-dist-days",
+        type=float,
+        default=None,
+        help=(
+            "With --eval-at-rul-days: after selecting the closest row per device, drop devices whose |y_true-target| exceeds this. "
+            "Useful when you want y_true to be really near the target (e.g. target=10, max_dist=0.5)."
+        ),
+    )
+    p.add_argument(
+        "--eval-at-pred-hours",
+        type=float,
+        default=None,
+        help=(
+            "Deprecated (use --eval-at-pred-days). With --eval-csv: evaluate one row per device at a specific predicted RUL horizon in hours. "
+            "Picks the sequence whose y_pred is closest to this value (ties broken by latest timestamp)."
+        ),
+    )
+    p.add_argument(
+        "--eval-at-pred-days",
+        type=float,
+        default=None,
+        help=(
+            "With --eval-csv: evaluate one row per device at a specific predicted RUL horizon in days. "
+            "Picks the sequence whose y_pred is closest to this value (ties broken by latest timestamp). "
+            "Use this to answer: 'when did the model say ~10 days remaining?'."
+        ),
+    )
+    p.add_argument(
+        "--eval-at-pred-max-dist-days",
+        type=float,
+        default=None,
+        help=(
+            "With --eval-at-pred-days: after selecting the closest row per device, drop devices whose |y_pred-target| exceeds this."
+        ),
+    )
+    p.add_argument(
+        "--eval-pred-lt-days",
+        type=float,
+        default=None,
+        help=(
+            "With --eval-csv: filter to rows with predicted RUL strictly less than this many days, then pick the latest timestamp per device. "
+            "Use this to answer: 'show me the latest time when the model predicted <10 days remaining'."
+        ),
+    )
+    p.add_argument(
+        "--eval-pred-lte-days",
+        type=float,
+        default=None,
+        help=(
+            "With --eval-csv: filter to rows with predicted RUL less than or equal to this many days, then pick the latest timestamp per device."
+        ),
+    )
+    p.add_argument(
+        "--eval-keep-all-matches",
+        action="store_true",
+        help=(
+            "With --eval-pred-lt-days/--eval-pred-lte-days: keep all matching rows (do not reduce to one row per device). "
+            "Useful when you want the full timeline of when devices were under the threshold."
+        ),
+    )
+    p.add_argument(
         "--acc-tol-days",
         type=float,
         default=10.0,
@@ -857,12 +1103,37 @@ def main():
     p.add_argument("--devices", type=int, default=80)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--dt-minutes", type=int, default=60)
+    p.add_argument("--v-fail", type=float, default=SimConfig.v_fail, help="Synthetic mode only: failure voltage (end-of-life) level.")
+    p.add_argument(
+        "--v-start-std",
+        type=float,
+        default=SimConfig.v_start_std,
+        help="Synthetic mode only: per-device starting voltage standard deviation (lower makes devices more consistent).",
+    )
     p.add_argument(
         "--sim-mode",
         choices=["simple", "damage"],
         default="simple",
         help="Synthetic mode only: simulation regime. 'damage' makes lifetime identifiable from early telemetry.",
     )
+    p.add_argument(
+        "--simple-alpha-min",
+        type=float,
+        default=SimConfig.simple_alpha_min,
+        help="Synthetic mode only (sim-mode=simple): minimum degradation curvature alpha.",
+    )
+    p.add_argument(
+        "--simple-alpha-max",
+        type=float,
+        default=SimConfig.simple_alpha_max,
+        help="Synthetic mode only (sim-mode=simple): maximum degradation curvature alpha.",
+    )
+    p.add_argument("--missing-prob", type=float, default=SimConfig.missing_prob, help="Synthetic mode only: missing telemetry probability per step.")
+    p.add_argument("--duplicate-prob", type=float, default=SimConfig.duplicate_prob, help="Synthetic mode only: duplicate telemetry probability per step.")
+    p.add_argument("--outlier-prob", type=float, default=SimConfig.outlier_prob, help="Synthetic mode only: voltage outlier probability per step.")
+    p.add_argument("--jitter-std-minutes", type=float, default=SimConfig.jitter_std_minutes, help="Synthetic mode only: timestamp jitter std-dev in minutes.")
+    p.add_argument("--voltage-noise-std", type=float, default=SimConfig.voltage_noise_std, help="Synthetic mode only: Gaussian measurement noise std-dev for voltage.")
+    p.add_argument("--voltage-outlier-std", type=float, default=SimConfig.voltage_outlier_std, help="Synthetic mode only: extra Gaussian noise std-dev added on outlier samples.")
     p.add_argument(
         "--min-failure-days",
         type=int,
@@ -882,6 +1153,18 @@ def main():
     p.add_argument("--batch-size", type=int, default=256)
     p.add_argument("--lr", type=float, default=2e-3)
     p.add_argument("--hidden", type=int, default=48)
+
+    p.add_argument(
+        "--feature-schema",
+        choices=["hours", "legacy-1d-7d"],
+        default="hours",
+        help=(
+            "Feature window naming/behavior. 'hours' produces columns like v_mean_24h/v_mean_72h (recommended for 72h history). "
+            "'legacy-1d-7d' keeps v_mean_1d/v_mean_7d for backwards compatibility."
+        ),
+    )
+    p.add_argument("--feat-short-hours", type=float, default=24.0, help="With --feature-schema=hours: short rolling window in hours (default: 24).")
+    p.add_argument("--feat-long-hours", type=float, default=72.0, help="With --feature-schema=hours: long rolling window in hours (default: 72).")
     p.add_argument(
         "--focus-rul-days",
         type=float,
@@ -914,24 +1197,66 @@ def main():
 
     cfg = SimConfig(
         dt_minutes=args.dt_minutes,
+        v_fail=float(args.v_fail),
+        v_start_std=float(args.v_start_std),
         threshold_v=float(args.threshold_v),
         min_failure_days=int(args.min_failure_days),
         max_failure_days=int(args.max_failure_days),
         sim_mode=str(args.sim_mode),
         temp_min_c=float(args.temp_min_c),
         temp_max_c=float(args.temp_max_c),
+        missing_prob=float(args.missing_prob),
+        duplicate_prob=float(args.duplicate_prob),
+        outlier_prob=float(args.outlier_prob),
+        jitter_std_minutes=float(args.jitter_std_minutes),
+        voltage_noise_std=float(args.voltage_noise_std),
+        voltage_outlier_std=float(args.voltage_outlier_std),
+        simple_alpha_min=float(args.simple_alpha_min),
+        simple_alpha_max=float(args.simple_alpha_max),
     )
 
     # ---------------------------------------------------------------------
     # GENERATE MODE: synthetic telemetry -> CSV (proposal-scale days)
     # ---------------------------------------------------------------------
     if args.generate_csv is not None:
-        df, _ = simulate_telemetry(
+        df, true_fail = simulate_telemetry(
             devices=args.devices,
             seed=args.seed,
             include_temp=args.include_temp,
             cfg=cfg,
         )
+
+        if args.emit_failure_timestamp:
+            df["t_fail"] = df["device_id"].map({k: pd.Timestamp(v) for k, v in true_fail.items()})
+
+        if args.window_hours is not None:
+            if args.window_end_rul_min_days is None or args.window_end_rul_max_days is None:
+                raise SystemExit(
+                    "For --window-hours, you must also provide --window-end-rul-min-days and --window-end-rul-max-days."
+                )
+            window_hours = float(args.window_hours)
+            if window_hours <= 0:
+                raise SystemExit("--window-hours must be > 0")
+            end_min = float(args.window_end_rul_min_days)
+            end_max = float(args.window_end_rul_max_days)
+            if end_max < end_min:
+                raise SystemExit("--window-end-rul-max-days must be >= --window-end-rul-min-days")
+
+            window = pd.Timedelta(hours=window_hours)
+
+            # Deterministic per-device sampling so outputs are reproducible for a given seed.
+            win_rng = np.random.default_rng(int(args.seed) + 177)
+            device_ids = df["device_id"].unique()
+            end_rul_days = {
+                dev: float(win_rng.uniform(end_min, end_max)) if end_max > end_min else float(end_min)
+                for dev in device_ids
+            }
+            t_fail_map = {k: pd.Timestamp(v) for k, v in true_fail.items()}
+            window_end_map = {dev: t_fail_map[dev] - pd.Timedelta(days=end_rul_days[dev]) for dev in device_ids}
+
+            ts = pd.to_datetime(df["timestamp"], utc=False)
+            window_end = df["device_id"].map(window_end_map)
+            df = df[(ts >= (window_end - window)) & (ts <= window_end)].copy()
 
         if args.shift_max_timestamp_to is not None and args.shift_each_device_max_to is not None:
             raise SystemExit("Provide only one of --shift-max-timestamp-to or --shift-each-device-max-to")
@@ -947,6 +1272,8 @@ def main():
                 )
             delta = pd.Timestamp(target) - current_max
             df["timestamp"] = df["timestamp"] + delta
+            if "t_fail" in df.columns:
+                df["t_fail"] = pd.to_datetime(df["t_fail"], utc=False) + delta
 
         if args.shift_each_device_max_to is not None:
             df["timestamp"] = pd.to_datetime(df["timestamp"], utc=False)
@@ -975,6 +1302,8 @@ def main():
                 for dev in device_ids
             }
             df["timestamp"] = df["timestamp"] + df["device_id"].map(delta_map)
+            if "t_fail" in df.columns:
+                df["t_fail"] = pd.to_datetime(df["t_fail"], utc=False) + df["device_id"].map(delta_map)
 
         out_path = args.generate_csv
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
@@ -1001,6 +1330,23 @@ def main():
     if args.eval_csv is not None:
         if args.eval_at_rul_hours is not None and args.eval_at_rul_days is not None:
             raise SystemExit("Provide only one of --eval-at-rul-hours or --eval-at-rul-days.")
+        if args.eval_at_pred_hours is not None and args.eval_at_pred_days is not None:
+            raise SystemExit("Provide only one of --eval-at-pred-hours or --eval-at-pred-days.")
+        if args.eval_pred_lt_days is not None and args.eval_pred_lte_days is not None:
+            raise SystemExit("Provide only one of --eval-pred-lt-days or --eval-pred-lte-days.")
+
+        # Selection modes are mutually exclusive.
+        selection_flags = [
+            bool(args.eval_latest_only),
+            bool(args.eval_at_rul_hours is not None or args.eval_at_rul_days is not None),
+            bool(args.eval_at_pred_hours is not None or args.eval_at_pred_days is not None),
+            bool(args.eval_pred_lt_days is not None or args.eval_pred_lte_days is not None),
+        ]
+        if sum(selection_flags) > 1:
+            raise SystemExit(
+                "Provide only one selection mode: "
+                "--eval-latest-only OR --eval-at-rul-days/--eval-at-rul-hours OR --eval-at-pred-days/--eval-at-pred-hours OR --eval-pred-lt-days/--eval-pred-lte-days."
+            )
         if args.load_model is None or args.load_scaler is None:
             raise SystemExit("For --eval-csv, you must provide --load-model and --load-scaler.")
 
@@ -1099,13 +1445,71 @@ def main():
         out_df["y_pred_hours"] = out_df["y_pred_days"] * 24.0
         out_df["abs_err_hours"] = out_df["abs_err_days"] * 24.0
 
+        if args.eval_min_timestamp is not None:
+            tmin = pd.to_datetime(args.eval_min_timestamp, utc=False)
+            if pd.isna(tmin):
+                raise SystemExit(
+                    "Failed to parse --eval-min-timestamp. Use YYYY-MM-DD or ISO datetime like 2025-12-15T23:00:00."
+                )
+            out_df = out_df[out_df["timestamp"] >= pd.Timestamp(tmin)].copy()
+
+        if args.eval_max_timestamp is not None:
+            tmax = pd.to_datetime(args.eval_max_timestamp, utc=False)
+            if pd.isna(tmax):
+                raise SystemExit(
+                    "Failed to parse --eval-max-timestamp. Use YYYY-MM-DD or ISO datetime like 2025-12-26T21:00:00."
+                )
+            out_df = out_df[out_df["timestamp"] <= pd.Timestamp(tmax)].copy()
+
+        target_pred_days = None
+        if args.eval_at_pred_days is not None:
+            target_pred_days = float(args.eval_at_pred_days)
+        elif args.eval_at_pred_hours is not None:
+            target_pred_days = float(args.eval_at_pred_hours) / 24.0
+
+        pred_threshold_days = None
+        pred_threshold_inclusive = False
+        if args.eval_pred_lt_days is not None:
+            pred_threshold_days = float(args.eval_pred_lt_days)
+            pred_threshold_inclusive = False
+        elif args.eval_pred_lte_days is not None:
+            pred_threshold_days = float(args.eval_pred_lte_days)
+            pred_threshold_inclusive = True
+
         target_days = None
         if args.eval_at_rul_days is not None:
             target_days = float(args.eval_at_rul_days)
         elif args.eval_at_rul_hours is not None:
             target_days = float(args.eval_at_rul_hours) / 24.0
 
-        if target_days is not None:
+        if pred_threshold_days is not None:
+            if pred_threshold_inclusive:
+                out_df = out_df[out_df["y_pred_days"] <= pred_threshold_days].copy()
+            else:
+                out_df = out_df[out_df["y_pred_days"] < pred_threshold_days].copy()
+
+            if not args.eval_keep_all_matches:
+                out_df = (
+                    out_df.sort_values(["device_id", "timestamp"])
+                        .groupby("device_id", as_index=False)
+                        .tail(1)
+                        .reset_index(drop=True)
+                )
+        elif target_pred_days is not None:
+            out_df["_dist"] = (out_df["y_pred_days"] - target_pred_days).abs()
+            out_df = (
+                out_df.sort_values(["device_id", "_dist", "timestamp"], ascending=[True, True, False])
+                    .groupby("device_id", as_index=False)
+                    .head(1)
+                    .drop(columns=["_dist"])
+                    .reset_index(drop=True)
+            )
+            if args.eval_at_pred_max_dist_days is not None:
+                max_d = float(args.eval_at_pred_max_dist_days)
+                if max_d < 0:
+                    raise SystemExit("--eval-at-pred-max-dist-days must be >= 0")
+                out_df = out_df[(out_df["y_pred_days"] - target_pred_days).abs() <= max_d].copy()
+        elif target_days is not None:
             out_df["_dist"] = (out_df["y_true_days"] - target_days).abs()
             out_df = (
                 out_df.sort_values(["device_id", "_dist", "timestamp"])\
@@ -1114,6 +1518,11 @@ def main():
                     .drop(columns=["_dist"])\
                     .reset_index(drop=True)
             )
+            if args.eval_at_rul_max_dist_days is not None:
+                max_d = float(args.eval_at_rul_max_dist_days)
+                if max_d < 0:
+                    raise SystemExit("--eval-at-rul-max-dist-days must be >= 0")
+                out_df = out_df[(out_df["y_true_days"] - target_days).abs() <= max_d].copy()
         elif args.eval_latest_only:
             out_df = (
                 out_df.sort_values(["device_id", "timestamp"])\
@@ -1123,19 +1532,52 @@ def main():
             )
 
         mode_suffix = ""
-        if target_days is not None:
+        if pred_threshold_days is not None:
+            op = "<=" if pred_threshold_inclusive else "<"
+            mode_suffix = f" (latest where predicted RUL {op} {float(pred_threshold_days):g}d)"
+        elif target_pred_days is not None:
+            mode_suffix = f" (at ~{float(target_pred_days):g}d predicted RUL)"
+        elif target_days is not None:
             mode_suffix = f" (at ~{float(target_days):g}d true RUL)"
         elif args.eval_latest_only:
             mode_suffix = " (latest-only)"
         print("Evaluation on --eval-csv" + mode_suffix)
         print(f"  samples: {len(out_df):,}  devices: {out_df['device_id'].nunique()}")
+        if len(out_df):
+            y_stats = out_df["y_true_days"].describe(percentiles=[0.05, 0.5, 0.95])
+            y_min = float(y_stats["min"])
+            y_p05 = float(y_stats["5%"])
+            y_med = float(y_stats["50%"])
+            y_p95 = float(y_stats["95%"])
+            y_max = float(y_stats["max"])
+            print(f"  y_true_days:  min={y_min:.3f}  p05={y_p05:.3f}  median={y_med:.3f}  p95={y_p95:.3f}  max={y_max:.3f}")
+
+            acc_tol = float(args.acc_tol_days)
+            if y_max - y_min <= 1e-9:
+                print("Warning: y_true_days has ~zero variance; check labeling (t_fail/threshold) and windowing.")
+            elif acc_tol >= (y_max - y_min):
+                print(
+                    "Warning: --acc-tol-days is >= the full y_true range; Acc@tol may be trivially 100%. "
+                    "Consider a smaller tolerance or evaluate at a specific horizon (e.g., --eval-at-rul-days 10 --eval-at-rul-max-dist-days 0.5)."
+                )
         mae_days = float(out_df["abs_err_days"].mean())
         rmse_days = rmse(out_df["y_true_days"].to_numpy(), out_df["y_pred_days"].to_numpy())
         acc_tol = float(args.acc_tol_days)
         acc_at_tol = float((out_df["abs_err_days"] <= acc_tol).mean()) if len(out_df) else float("nan")
+        max_err = float(out_df["abs_err_days"].max()) if len(out_df) else float("nan")
         print(f"  MAE(days):   {mae_days:.3f}")
         print(f"  RMSE(days):  {rmse_days:.3f}")
+        print(f"  MaxErr(days): {max_err:.3f}")
         print(f"  Acc@{acc_tol:g}d:   {acc_at_tol*100:.1f}%")
+        if len(out_df):
+            curve_tols = [1.0, 2.0, 5.0, 10.0]
+            curve = [
+                f"{t:g}d:{((out_df['abs_err_days'] <= t).mean()*100):.1f}%"
+                for t in curve_tols
+            ]
+            print("  Acc curve:  " + "  ".join(curve))
+            if acc_at_tol >= 0.999 and acc_tol >= 5.0:
+                print("Note: Acc@10d can saturate on easy synthetic sets; prefer smaller tolerances (e.g., 1-2d) or horizon-based eval.")
 
         if args.eval_output_csv is not None:
             out_df.to_csv(args.eval_output_csv, index=False)
@@ -1276,17 +1718,33 @@ def main():
     )
     print(f"   aligned rows: {len(aligned):,}  (resampled)")
 
+    # Choose feature columns.
+    if args.feature_schema == "legacy-1d-7d":
+        feature_cols = _base_feature_cols(include_temp=args.include_temp)
+        long_hours_for_warning = 7.0 * 24.0
+    else:
+        if args.feat_long_hours <= 0 or args.feat_short_hours <= 0:
+            raise SystemExit("--feat-short-hours/--feat-long-hours must be > 0")
+        if args.feat_long_hours < args.feat_short_hours:
+            raise SystemExit("--feat-long-hours must be >= --feat-short-hours")
+        feature_cols = _make_feature_cols_hours(
+            include_temp=args.include_temp,
+            short_hours=float(args.feat_short_hours),
+            long_hours=float(args.feat_long_hours),
+        )
+        long_hours_for_warning = float(args.feat_long_hours)
+    _warn_if_history_short(aligned, long_hours=long_hours_for_warning, label="training")
+
     print("3) Failure detection + RUL labeling + feature engineering...")
     feat = make_features_and_labels(
         aligned,
         include_temp=args.include_temp,
         threshold_v=cfg.threshold_v,
         dt_minutes=args.dt_minutes,
+        feature_cols=feature_cols,
     )
 
-    base_cols = _base_feature_cols(include_temp=args.include_temp)
-
-    X, y, dev = make_sequences(feat, seq_len=args.seq_len, feature_cols=base_cols)
+    X, y, dev = make_sequences(feat, seq_len=args.seq_len, feature_cols=feature_cols)
     print(f"   sequences: X={X.shape}  y={y.shape}")
 
     print("4) Train/test split by device (avoids leakage)...")
@@ -1363,7 +1821,7 @@ def main():
             path=args.save_model,
             model_type=args.model,
             seq_len=args.seq_len,
-            feature_cols=base_cols,
+            feature_cols=feature_cols,
             hidden=args.hidden,
             state_dict=state,
         )
